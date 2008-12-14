@@ -20,7 +20,7 @@ int main (int argc, char *argv[])
 	}
 	else
 	{
-		n = cGetinteger(10);
+		n = getinteger(10);
 	}
       if (n <=0)
       {
@@ -33,7 +33,10 @@ int main (int argc, char *argv[])
 
 void Hanoi(unsigned int n, char source,char dest,char help)
 {
-	if (n==1){printf("Move disk from %c to %c\n",source,dest);}
+	if (n==1)
+	{
+		printf("Move disk from %c to %c\n",source,dest);
+	}
 
 	else //if n>1
 	{
