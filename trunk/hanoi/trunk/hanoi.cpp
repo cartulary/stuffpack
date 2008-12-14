@@ -1,16 +1,8 @@
-/*no box*/
-
 //Includes
 #include <stdio.h>
 #include <string>
 #include "functions.cpp"
-/*
-#include "genlib.h"
-#include "simpio.h"
-#include "strlib.h"
-*/
 #include <ctype.h>
-#include <curses.h>
 
 //definitions
 
@@ -20,7 +12,8 @@ void Hanoi(unsigned int n, char source,char dest,char help);
 int main (void)
 {
 	unsigned int n;
-	n = getinteger(10);
+	n= cGetinteger(10);
+	return 0;
 	Hanoi(n, 'a','b','c');
 	return 0;
 }
