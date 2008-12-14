@@ -13,7 +13,6 @@ int main (void)
 {
 	unsigned int n;
 	n= cGetinteger(10);
-	return 0;
 	Hanoi(n, 'a','b','c');
 	return 0;
 }
