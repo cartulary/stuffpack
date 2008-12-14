@@ -1,7 +1,10 @@
 NAME = hanoi
 CC := g++
-CCFLAGS := -Wall -Wextra -ansi -pedantic -Weffc++
-CCFLAGS += -Wabi -Wctor-dtor-privacy -Wnon-virtual-dtor -Weffc++  -Wstrict-null-sentinel -Wformat=2  -Wswitch-default -Wunused-parameter
+CCFLAGS := -g -pipe
+CCFLAGS += -Wall -Wextra -ansi -pedantic -Weffc++ -Wabi
+CCFLAGS += -Wformat=2 -Wformat-y2k -Wno-format-extra-args -Wno-format-zero-length -Wformat-nonliteral -Wformat-security
+CCFLAGS += -Wctor-dtor-privacy -Wnon-virtual-dtor -Wstrict-null-sentinel -Wswitch-default -Wunused-parameter -Wstrict-null-sentinel -Woverloaded-virtual -Wsign-promo
+CCGLAGS += -ffor-scope
 CCFLAGS += -lform -lncurses
 PREFIX = /usr/local
 
