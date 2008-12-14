@@ -4,8 +4,6 @@
 #include "functions.cpp"
 #include <ctype.h>
 
-//definitions
-
 //prototypes of function
 void Hanoi(unsigned int n, char source,char dest,char help);
 
