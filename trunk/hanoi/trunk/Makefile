@@ -1,0 +1,15 @@
+NAME = hanoi
+CC := g++
+CCFLAGS := -Wall -Wextra -ansi -pedantic -Weffc++
+CCFLAGS += -Wabi -Wctor-dtor-privacy -Wnon-virtual-dtor -Weffc++  -Wstrict-null-sentinel -Wformat=2  -Wswitch-default -Wunused-parameter
+PREFIX = /usr/local
+
+#compiling options
+.PHONY:	build clean forceclean
+build:	hanoi.cpp
+	CC $(CCFLAGS) -o $(NAME).bin hanoi.cpp 	
+clean: 	
+	@echo "cleaning...use make forceclean for unattended clean"
+	-rm -irv *.bin
+forceclean:
+	-rm -rfv *.bin
