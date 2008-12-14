@@ -15,8 +15,6 @@
 
 //prototypes of function
 void Hanoi(unsigned int n, char source,char dest,char help);
-//Create global vars
-unsigned int move;
 
 int main (void)
 {
@@ -33,7 +31,7 @@ void Hanoi(unsigned int n, char source,char dest,char help)
 	else //if n>1
 	{
 		Hanoi(n-1,source,help,dest);
-		printf("Move 1 disk from %c to %c\n", source, dest);
+		printf("Move disk from %c to %c\n", source, dest);
 		Hanoi(n-1,help,dest,source);
 	}
 }

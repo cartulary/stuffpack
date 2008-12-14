@@ -10,13 +10,12 @@
 #include "strlib.h"
 */
 #include <ctype.h>
+#include <curses.h>
 
 //definitions
 
 //prototypes of function
 void Hanoi(unsigned int n, char source,char dest,char help);
-//Create global vars
-unsigned int move;
 
 int main (void)
 {
