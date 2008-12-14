@@ -1,11 +1,5 @@
 #include "functions.h"
-#include <stdio.h>
-#include <curses.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <iostream>
 
-using namespace std;
 int cGetinteger(int base)
 {
  	char mesg[]="How many blocks do you have: ";
