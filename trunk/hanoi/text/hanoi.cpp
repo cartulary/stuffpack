@@ -2,6 +2,7 @@
 
 //Includes
 #include <stdio.h>
+#include <iostream>
 #include <string>
 #include "functions.cpp"
 /*
@@ -11,15 +12,21 @@
 */
 #include <ctype.h>
 
-//definitions
+using namespace std;
 
 //prototypes of function
 void Hanoi(unsigned int n, char source,char dest,char help);
 
 int main (void)
 {
-	unsigned int n;
+	int n;
+	cout << "Please enter an integer" << endl;
 	n = getinteger(10);
+	if (n == -1)
+	{
+		cerr << "You have not entered an integer " << endl;
+		return 1; //error
+	}
 	Hanoi(n, 'a','b','c');
 	return 0;
 }
