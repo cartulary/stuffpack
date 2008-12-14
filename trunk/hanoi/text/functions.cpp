@@ -1,6 +1,6 @@
 #include "functions.h"
 
-int getinteger(int base)
+long int getinteger(int base)
 {
 	char ch;
   	int val=0;

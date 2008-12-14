@@ -1,39 +1,42 @@
-/*no box*/
-
 //Includes
 #include <stdio.h>
-#include <iostream>
 #include <string>
 #include "functions.cpp"
-/*
-#include "genlib.h"
-#include "simpio.h"
-#include "strlib.h"
-*/
 #include <ctype.h>
-
-using namespace std;
+#include <stdlib.h>
+#include <limits.h>
+#include <iostream>
 
 //prototypes of function
 void Hanoi(unsigned int n, char source,char dest,char help);
 
-int main (void)
+int main (int argc, char *argv[])
 {
-	int n;
-	cout << "Please enter an integer" << endl;
-	n = getinteger(10);
-	if (n == -1)
+	long n;
+	/* If the amount was passed through a command line argument use it */
+	if (argc > 1) 
 	{
-		cerr << "You have not entered an integer " << endl;
-		return 1; //error
+		n = strtol(argv[1],NULL,10);
 	}
+	else
+	{
+		n = getinteger(10);
+	}
+      if (n <=0)
+      {
+            cerr << "Please enter a valid integer" << endl;
+            exit(1);
+      }
 	Hanoi(n, 'a','b','c');
 	return 0;
 }
 
 void Hanoi(unsigned int n, char source,char dest,char help)
 {
-	if (n==1){printf("Move 1 disk from %c to %c\n",source,dest);}
+	if (n==1)
+	{
+		printf("Move disk from %c to %c\n",source,dest);
+	}
 
 	else //if n>1
 	{
