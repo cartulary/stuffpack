@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "getinteger.h"
+#include "functions.h"
 
 int getinteger(int base)
 {
