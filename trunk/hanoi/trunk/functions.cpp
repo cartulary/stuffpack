@@ -1,6 +1,6 @@
 #include "functions.h"
 
-long cGetinteger(int base)
+long getinteger(int base)
 {
  	char mesg[]="How many blocks do you have: ";
 	char str[80];

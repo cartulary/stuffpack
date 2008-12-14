@@ -20,7 +20,7 @@ int main (int argc, char *argv[])
 	}
 	else
 	{
-		n = cGetinteger(10);
+		n = getinteger(10);
 	}
       if (n <=0)
       {

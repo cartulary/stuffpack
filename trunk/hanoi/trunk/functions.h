@@ -4,6 +4,6 @@
 #include <limits.h>
 #include <iostream>
 
-int getinteger(int);
+long int getinteger(int);
 
 using namespace std;
