@@ -3,14 +3,30 @@
 #include <string>
 #include "functions.cpp"
 #include <ctype.h>
+#include <stdlib.h>
+#include <limits.h>
+
 
 //prototypes of function
 void Hanoi(unsigned int n, char source,char dest,char help);
 
-int main (void)
+int main (int argc, char *argv[])
 {
-	unsigned int n;
-	n= cGetinteger(10);
+	long n;
+	/* If the amount was passed through a command line argument use it */
+	if (argc > 1) 
+	{
+		n = strtol(argv[1],NULL,10);
+	}
+	else
+	{
+		n = cGetinteger(10);
+	}
+      if (n <=0)
+      {
+            cerr << "Please enter a valid integer" << endl;
+            exit(1);
+      }
 	Hanoi(n, 'a','b','c');
 	return 0;
 }

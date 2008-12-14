@@ -1,6 +1,6 @@
 #include "functions.h"
 
-int cGetinteger(int base)
+long cGetinteger(int base)
 {
  	char mesg[]="How many blocks do you have: ";
 	char str[80];
@@ -15,11 +15,6 @@ int cGetinteger(int base)
 		getstr(str);
 		endwin();
 		finalVal = strtol(str,NULL,base);
-	}
-	if (finalVal <=0)
-	{
-		cerr << "Please enter a valid integer" << endl;
-		exit(1);
 	}
 	return finalVal;
 }
