@@ -4,7 +4,7 @@ long int getinteger(int base)
 {
 	char ch;
   	int val=0;
-	cout << "Please enter an integer" << endl;
+	printf("Please enter an integer\n");
   	while ((ch = getchar()) != '\n')
 	{
     		if (ch >= '0' && ch <= '0'+base-1)
