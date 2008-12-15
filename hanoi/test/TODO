@@ -1,0 +1,11 @@
+Create the following tests for all branches
+
+	normal positive numbers (cli)
+	normal positive numbers (input)
+	negitive numbers (cli)	
+	negitive numbers (input)
+	text (cli)
+	text (input)
+	the number "0" (both)
+	overflows
+	compiles without warnings
