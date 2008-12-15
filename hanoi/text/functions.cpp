@@ -1,5 +1,5 @@
 #include "functions.h"
-
+using namespace std;
 long int getinteger(int base)
 {
 	char ch;
