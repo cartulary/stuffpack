@@ -11,11 +11,11 @@ long int getinteger(int base)
 		{
     			if (ch >= '0' && ch <= '0'+base-1)
 			{
-		      	val = base*val + (ch-'0');
+		      	val = (base*val + (ch-'0'));
 			}
-			else
+			else 
 			{
-	      		return ERROR;
+				val = 0;
 			}
 		}
 	}
