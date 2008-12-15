@@ -1,5 +1,6 @@
 DIST = text
 DISTPATH = text
+LANG=c++
 .include <../Makefile>
 
 #compiling options

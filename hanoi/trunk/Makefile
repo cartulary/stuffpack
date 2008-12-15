@@ -1,7 +1,7 @@
-DIST = trunk
-DISTPATH = trunk/
+DIST = text
+DISTPATH = text
+LANG = c
 .include <../Makefile>
-CCFLAGS += -lncurses
 
 #compiling options
 .PHONY:	build clean forceclean

@@ -1,5 +1,6 @@
 DIST = ncurses
 DISTPATH = ncurses
+LANG = c++
 .include <../Makefile>
 CCFLAGS += -lncurses
 

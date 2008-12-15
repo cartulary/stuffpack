@@ -5,7 +5,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <limits.h>
-
+#include <iostream>
 
 //prototypes of function
 void Hanoi(unsigned int n, char source,char dest,char help);
