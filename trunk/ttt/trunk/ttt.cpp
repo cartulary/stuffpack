@@ -46,7 +46,7 @@ void showBoard(int board[BOARD_SIZE][BOARD_SIZE])
 	{
 		for (j=0; j<=BOARD_SIZE - 1; j++)
 		{
-			showText = (char)((BOARD_SIZE * i) - (BOARD_SIZE - j));
+			showText = (char)((BOARD_SIZE * (i + 1) ) - (BOARD_SIZE - j - 1));
 			printf("%c ",playerToText(board[i][j],showText));
 		}
 		cout << endl;
