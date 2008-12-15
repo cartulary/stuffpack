@@ -1,9 +1,10 @@
 #include <stdio.h>
-#include <curses.h>
+#include <string>
 #include <stdlib.h>
 #include <limits.h>
 #include <iostream>
 
-#define ERROR -1
-
 long int getinteger(int);
+char* getcharcters(int);
+
+using namespace std;

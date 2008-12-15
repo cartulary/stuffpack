@@ -1,27 +1,34 @@
 #include "functions.h"
-using namespace std;
+
+/* Retrieves a positive integer from the user. */
 long int getinteger(int base)
 {
+  	int n = 0;
+  	
+  	cout << "Please enter a positive integer:" << endl;
+  	n = strtol(getcharcters(10),NULL,10);
+  	
+  	if (n <= 0)
+  	{
+  		n = getinteger(base);
+  	}
+  	
+  	return n;
+}
+
+/* Retrieves character input from the user, up to the specified maximum quantity. */
+char* getcharcters(int max)
+{
+	char str[max + 1];
 	char ch;
-  	long int val=0;
-	cout << "Please enter an integer" << endl;
-  	while ((ch = getchar()) != '\n')
+	int i = 0;
+	
+	while ((ch = getchar()) != '\n' && i < max)
 	{
-    		if (ch >= '0' && ch <= '0'+base-1)
-		{
-	      	val = base*val + (ch-'0');
-		}
-		else
-		{
-      		return ERROR;
-		}
+		str[i] = ch;
+		i++;
 	}
-	if (val > 0)
-	{
-	  	return val;
-	}
-	else
-	{
-		return ERROR;
-	}
+	
+	str[max] = NULL; //I hope this is the right way to terminate a char array.
+	return str;
 }
