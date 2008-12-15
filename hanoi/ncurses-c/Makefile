@@ -1,7 +1,8 @@
-DIST = text
-DISTPATH = text-c
+DIST = ncurses
+DISTPATH = ncurses-c
 LANG = c
 .include <../Makefile>
+CCFLAGS += -lncurses
 
 #compiling options
 .PHONY:	build clean forceclean
