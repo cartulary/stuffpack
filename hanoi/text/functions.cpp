@@ -4,16 +4,19 @@ long int getinteger(int base)
 {
 	char ch;
   	int val=0;
-	cout << "Please enter an integer" << endl;
-  	while ((ch = getchar()) != '\n')
+	while (val <= 0)
 	{
-    		if (ch >= '0' && ch <= '0'+base-1)
+		cout << "Please enter an integer" << endl;
+  		while ((ch = getchar()) != '\n')
 		{
-	      	val = base*val + (ch-'0');
-		}
-		else
-		{
-      		return ERROR;
+    			if (ch >= '0' && ch <= '0'+base-1)
+			{
+		      	val = base*val + (ch-'0');
+			}
+			else
+			{
+	      		return ERROR;
+			}
 		}
 	}
   	return val;
