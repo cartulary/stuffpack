@@ -1,0 +1,1 @@
+seg fault if getinteger() is used and a integer is not present -> fix in getinteger as thats kinda the point
