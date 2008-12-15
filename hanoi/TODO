@@ -1,2 +1,3 @@
 hanoi.c is pretty much the same in every version - find some way to keep a single copy.
 rename getinteger to getnumber() or such??
+create test cases for all programs to test output 
