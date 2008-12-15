@@ -17,6 +17,7 @@
 
 void showBoard(int board[BOARD_SIZE][BOARD_SIZE]);
 char playerToText(int player, char ifNot);
+int spotToNum(int x,int y);
 
 using namespace std;
 
@@ -46,11 +47,16 @@ void showBoard(int board[BOARD_SIZE][BOARD_SIZE])
 	{
 		for (j=0; j<=BOARD_SIZE - 1; j++)
 		{
-			showText = (char)((BOARD_SIZE * (i + 1) ) - (BOARD_SIZE - j - 1));
+			showText = (char)(spotToNum(i,j));
 			printf("%c ",playerToText(board[i][j],showText));
 		}
 		cout << endl;
 	}
+}
+
+int spotToNum(int x,int y)
+{
+	return ((BOARD_SIZE * (y + 1) ) - (BOARD_SIZE - x - 1));
 }
 
 char playerToText(int player,char ifNot)
