@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <curses.h>
 #include <stdlib.h>
 #include <limits.h>
 #include <iostream>
