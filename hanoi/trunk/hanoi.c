@@ -1,7 +1,7 @@
 //Includes
 #include <stdio.h>
 #include <string>
-#include "functions.cpp"
+#include "functions.c"
 #include <ctype.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -24,7 +24,7 @@ int main (int argc, char *argv[])
 	}
       if (n <=0)
       {
-            cerr << "Please enter a valid integer" << endl;
+            printf("Please enter a valid integer\f");
             exit(1);
       }
 	Hanoi(n, 'a','b','c');
