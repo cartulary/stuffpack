@@ -16,30 +16,19 @@
 #define BOARD_SIZE 3
 
 void showBoard(int board[BOARD_SIZE][BOARD_SIZE]);
+char playerToText(int player, char ifNot);
+
 using namespace std;
 
 int main(void)
 {
-	int player = PLAYER_NO;
-	int wantSquare;
-	int row,col;
 	int board[BOARD_SIZE][BOARD_SIZE] =
 		{
  			{ PLAYER_NO, PLAYER_NO, PLAYER_NO},
  			{ PLAYER_NO, PLAYER_NO, PLAYER_NO},
  			{ PLAYER_NO, PLAYER_NO, PLAYER_NO}
 		};
-	int i,j,k;
-
 	showBoard(board);
-
-	printf("\n\n");
-      printf(" %d | %d | %d\n", board[0][0], board[0][1], board[0][2]);
-      printf("---+---+---\n");
-      printf(" %d | %d | %d\n", board[1][0], board[1][1], board[1][2]);
-      printf("---+---+---\n");
-      printf(" %d | %d | %d\n", board[2][0], board[2][1], board[2][2]);
-
 	return 0;
 }
 
@@ -51,24 +40,28 @@ bool checkWin(int board[BOARD_SIZE][BOARD_SIZE])
 void showBoard(int board[BOARD_SIZE][BOARD_SIZE])
 {
 	int i,j;
-	char charToShow;
+	char showText;
 	/* i is row; j is col */
-	for (i=0; i<=BOARD_SIZE-1; i++)
+	for (i=0; i<=BOARD_SIZE - 1; i++)
 	{
-		for (j=0; j<=BOARD_SIZE-1; j++)
+		for (j=0; j<=BOARD_SIZE - 1; j++)
 		{
-			charToShow = (char)((BOARD_SIZE * i) - (BOARD_SIZE - j)); //get the "number"
-			if (board[i][j]==PLAYER_X)
-			{
-				charToShow = TEXT_X;
-			}
-			if (board[i][j]==PLAYER_O)
-			{
-				charToShow = TEXT_X;
-			}
-
-			cout << board[i][j] << " ";
+			showText = (char)((BOARD_SIZE * i) - (BOARD_SIZE - j));
+			printf("%c ",playerToText(board[i][j],showText));
 		}
 		cout << endl;
 	}
+}
+
+char playerToText(int player,char ifNot)
+{
+	if (player==PLAYER_X)
+	{
+		return TEXT_X;
+	}
+	if (player==PLAYER_O)
+	{
+		return TEXT_O;
+	}
+	return ifNot+48;
 }
