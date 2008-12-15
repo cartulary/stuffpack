@@ -1,7 +1,7 @@
 DIST = text
 DISTPATH = text
 LANG = c++
-.include <../Makefile>
+.include <../Makefile.inc>
 
 #compiling options
 .PHONY:	build clean forceclean
