@@ -3,21 +3,25 @@
 long int getinteger(int base)
 {
 	char ch;
-  	int val=0;
-	while (val <= 0)
+  	long int val=0;
+	cout << "Please enter an integer" << endl;
+  	while ((ch = getchar()) != '\n')
 	{
-		cout << "Please enter an integer" << endl;
-  		while ((ch = getchar()) != '\n')
+    		if (ch >= '0' && ch <= '0'+base-1)
 		{
-    			if (ch >= '0' && ch <= '0'+base-1)
-			{
-		      	val = (base*val + (ch-'0'));
-			}
-			else 
-			{
-				val = 0;
-			}
+	      	val = base*val + (ch-'0');
+		}
+		else
+		{
+      		return ERROR;
 		}
 	}
-  	return val;
+	if (val > 0)
+	{
+	  	return val;
+	}
+	else
+	{
+		return ERROR;
+	}
 }
