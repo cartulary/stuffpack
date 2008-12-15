@@ -1,11 +1,11 @@
 //Includes
 #include <stdio.h>
 #include <string>
-#include "functions.c"
+#include "functions.cpp"
 #include <ctype.h>
 #include <stdlib.h>
 #include <limits.h>
-#include <iostream>
+
 
 //prototypes of function
 void Hanoi(unsigned int n, char source,char dest,char help);
@@ -24,8 +24,7 @@ int main (int argc, char *argv[])
 	}
       if (n <=0)
       {
-            printf("Please enter a valid integer\n");
-		/* this has to go to std error soon) */
+            cerr << "Please enter a valid integer" << endl;
             exit(1);
       }
 	Hanoi(n, 'a','b','c');
