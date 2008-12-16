@@ -1,5 +1,4 @@
 CFLAGS := -g -pipe
-
 .ifdef $(LANG) == c++
 CC := g++
 CFLAGS += -Weffc++
