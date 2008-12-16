@@ -2,14 +2,16 @@ DIST = ncurses
 DISTPATH = ncurses
 LANG = c++
 .include	<../Makefile.inc>
-CFLAGS += -lncurses
+CFLAGS += -lncurses 
 
 #compiling options
 .PHONY:	build clean
 
-build:	main.o 
-	CC $(CFLAGS) -o $(NAME).bin main.cpp
-clean: 	
-	-rm -rfv *.o
+build:	main.cpp
 
+clean: 	
+	rm -fv *.o
 main.cpp: ../hanoi.o functions.o
+	$(CC) $(CFLAGS) -o $(NAME).bin $@
+
+functions.o: functions.h
