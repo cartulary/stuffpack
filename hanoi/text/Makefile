@@ -11,3 +11,4 @@ clean:
 	-rm -rfv *.o
 
 main.cpp: ../hanoi.o functions.o
+functions.o: functions.h
