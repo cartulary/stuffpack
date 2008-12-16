@@ -149,9 +149,9 @@ inline player switchTurn(player toSwitch)
 	switch (toSwitch)
 	{
 		case O:
-			return O;
-		case X:
 			return X;
+		case X:
+			return O;
             default:
                   cerr << "programming error invalid player switch" <<endl;
                   exit(1);
@@ -355,7 +355,7 @@ inline int compMove()
 	}
 	if (board[3][3]==none)
 	{
-		return (3);
+		return (9);
 	}
 	if (board[1][1]==none)
 	{
