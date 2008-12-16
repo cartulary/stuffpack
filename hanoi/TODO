@@ -2,3 +2,4 @@ hanoi.c is pretty much the same in every version - find some way to keep a singl
 rename getinteger to getnumber() or such??
 create test cases for all programs to test output 
 fix Makefile recursive clean
+make the Makefile always use g++ instead of c++
