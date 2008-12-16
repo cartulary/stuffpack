@@ -18,13 +18,9 @@ int main (int argc, char *argv[])
 		/* If n has an incorrect value, ask the user to input a correct one: */
 	}
 	/* If no number of blocks was passed via command line, ask the user to input a number: */
-	else
-	{
-		n = getinteger(10);
-	}
+	/* or if there was an error with the initial input */
 	while (n <= 0)
 	{
-		cerr << "Please enter a valid integer" << endl;
 		n = getinteger(10);
 	}
 
