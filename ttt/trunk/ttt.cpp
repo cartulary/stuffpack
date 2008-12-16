@@ -31,7 +31,7 @@ int nextMoveWin(int lastMove); //tell the computer what to do if there is one op
 int getID(int row, int col); //return a single digit number from a row and a col
 bool isEmpty(int space); //returns true if space passed to it is true
 int compMoveMain(int lastMove); //this is the comp move, it is there to correct some bugs
-int compMove(int lastMove);  //called by compMoveMain due to slight bug.
+int compMove();  //called by compMoveMain due to slight bug.
 long int GetInteger(int base);
 char* getcharcters(int max);
 
@@ -49,7 +49,7 @@ int main (void)
 	bool cont=true;
 	printf("Welcome to tik-tak-toe with a 'k'\n\n");
 	printf("X (the computer) moves first\n");
-	int lastMoveX=1,lastMoveO, nextMove;
+	int lastMoveX=1,lastMoveO;
 	do
 	{
 		cont=(openSpace()); //if there is no open space stop
@@ -146,8 +146,16 @@ inline char playerToString(player toConvert)
 
 inline player switchTurn(player toSwitch)
 {
-	if (toSwitch==X){return(O);}
-	if (toSwitch==O){return(X);}
+	switch (toSwitch)
+	{
+		case O:
+			return O;
+		case X:
+			return X;
+            default:
+                  cerr << "programming error invalid player switch" <<endl;
+                  exit(1);
+	}
 }
 
 inline int getRowFromID(int id)
@@ -316,7 +324,7 @@ inline int compMoveMain(int lastMove)
 	nextMove = nextMoveWin(lastMove); //nextMove becomes the number of the next wining spot, 0 if no next move win
 	if (nextMove==0) //if not next move win, try different set of moves
 	{
-		nextMove = compMove(lastMove);
+		nextMove = compMove();
 	}
 	row = getRowFromID(nextMove);
 	col = getColFromID(nextMove);
@@ -324,7 +332,7 @@ inline int compMoveMain(int lastMove)
 	return (nextMove);
 
 }
-inline int compMove(int lastMove)
+inline int compMove()
 {
 	if (board[1][1]==none) //try going at corner 1 first
 	{
@@ -360,8 +368,10 @@ inline int compMove(int lastMove)
 		{
 			return (tmp);
 		}
-
 	}
+	/* I don't this should ever be reached */
+	cerr << "reaching end of turn function" << endl;
+	return 0;
 }
 
 inline bool isEmpty(int space)
@@ -375,15 +385,15 @@ inline bool isEmpty(int space)
 long int GetInteger(int base)
 {
       int n = 0;
-      
+
       cout << "Please enter a positive integer:" << endl;
       n = strtol(getcharcters(10),NULL,10);
-      
+
       if (n <= 0)
       {
             n = GetInteger(base);
       }
-      
+
       return n;
 }
 

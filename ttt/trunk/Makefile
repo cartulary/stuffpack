@@ -1,3 +1,4 @@
+NAME=ttt
 DIST = trunk
 DISTPATH = trunk/
 LANG=c++
