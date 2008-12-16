@@ -13,4 +13,4 @@ all:		ttt.cpp
 clean: 	
 	rm -fv *.o
 
-ttt.cpp: ttt.h
+ttt.o: ttt.h
