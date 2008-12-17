@@ -4,6 +4,8 @@ Version 0.02
 */
 
 #include "ttt.h"
+#define TURN_PLAYER O
+#define TURN_COMP X
 
 player board[BOARD_SIZE+1][BOARD_SIZE+1]; //a 3x3 board except that the array starts at 0 so it is size+1
 player turn=none; //current turn
@@ -20,6 +22,7 @@ int main (int argc, char* argv[])
 {
       int c;
      	int option_index = 0;
+	char moveFirst;
       while (1)
       {
       	static struct option long_options[] =
@@ -45,18 +48,27 @@ int main (int argc, char* argv[])
 		}
            	printf ("\n");
 	}
-	turn = X;
-	bool cont=true;
 	printf("Welcome to tik-tak-toe with a 'k'\n\n");
-	printf("X (the computer) moves first\n");
+	printf("Do you want to move first? [Y/N] ");
+    	scanf("%c", &moveFirst);
+    	if (moveFirst == 'Y')
+	{
+      	turn = TURN_PLAYER;
+	}
+    	else
+	{
+      	turn = TURN_COMP;
+	}
+
+	bool cont=true;
 	int lastMoveX=1,lastMoveO;
 	do
 	{
 		cont=(openSpace()); //if there is no open space stop
 		if (cont)
 		{
-			if (turn==X) {lastMoveX = compMoveMain(lastMoveX);} //get the move that the player wants to do
-			if (turn==O) {lastMoveO = getMove();} //get the move that the player wants to do
+			if (turn==TURN_COMP) {lastMoveX = compMoveMain(lastMoveX);} //get the move that the player wants to do
+			if (turn==TURN_PLAYER) {lastMoveO = getMove();} //get the move that the player wants to do
 			displayBoard(); //show the board AFTER the move is made
 			cont = (!checkWin()); // continue if no win
 			turn = switchTurn(turn); //change the turn string
@@ -198,7 +210,7 @@ inline int getColFromID(int id)
 inline bool checkWin(void)
 {
 	/*
-	I would check f	or neignbors, but it onvolves the smame amount of time due to checking to see what row.col it is
+	I would check for neignbors, but it involves the smame amount of time due to checking to see what row.col it is
 	*/
 	//All possable win:
 	/*
@@ -251,7 +263,7 @@ bool openSpace()
 
 int nextMoveWin(int lastMove, player whoToWin)
 {
-	whoToWin = O;
+	whoToWin = TURN_COMP; //temporary
 	int row, col;
 	row = getRowFromID(lastMove);
 	col = getColFromID(lastMove);
@@ -341,14 +353,14 @@ inline int compMoveMain(int lastMove)
 {
 	int nextMove;
 	int row, col;
-	nextMove = nextMoveWin(lastMove, X); //nextMove becomes the number of the next wining spot, 0 if no next move win
+	nextMove = nextMoveWin(lastMove, TURN_COMP); //nextMove becomes the number of the next wining spot, 0 if no next move win
 	if (nextMove==0) //if not next move win, try different set of moves
 	{
 		nextMove = compMove();
 	}
 	row = getRowFromID(nextMove);
 	col = getColFromID(nextMove);
-	board[row][col]=X; //set computers move
+	board[row][col]=TURN_COMP; //set computers move
 	return (nextMove);
 
 }
@@ -359,7 +371,7 @@ inline int compMove()
 		return (1);
 	}
 
-	if ((board[1][1]==X||board[1][3]==X||board[3][1]==X||board[3][3]==X)&&isEmpty(5)) //if any corners are filled go to middle
+	if ((board[1][1]==TURN_COMP||board[1][3]==TURN_COMP||board[3][1]==TURN_COMP||board[3][3]==TURN_COMP)&&isEmpty(5)) //if any corners are filled go to middle
 	{
 		return (5);
 	}
