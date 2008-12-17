@@ -6,7 +6,7 @@ Version 0.02
 #include "ttt.h"
 
 player board[BOARD_SIZE+1][BOARD_SIZE+1]; //a 3x3 board except that the array starts at 0 so it is size+1
-player turn; //current turn
+player turn=none; //current turn
 
 /* Flag set by `--verbose'. */
 static int flag_verbose;
@@ -33,9 +33,7 @@ int main (int argc, char* argv[])
             };
            	/* getopt_long stores the option index here. */
       	int option_index = 0;
-     
     	      c = getopt_long (argc, argv, "s:p:", long_options, &option_index);
-     
            	/* Detect the end of the options. */
            	if (c == -1)
 		{
@@ -60,6 +58,7 @@ int main (int argc, char* argv[])
     
              	case 's':
 				startPlayer = optarg[0];
+				turn = stringToPlayer(startPlayer);
 			if (flag_verbose==1)
 			{
                		printf ("option -s with value `%s'\n", optarg);
@@ -75,34 +74,38 @@ int main (int argc, char* argv[])
                	break;
 
              	case '?':
-               	/* getopt_long already printed an error message. */
+              	/* getopt_long already printed an error message. We do not need to continue now. */
                	break;
 
 			default:
-				break;
+				abort();
              }
          }
- 	      /* Instead of reporting `--verbose'
-          and `--brief' as they are encountered,
-          we report the final status resulting from them. */
        	if (flag_verbose)
 		{
          		puts ("verbose flag is set");
 		}
-		if (flag_verbose==1)
+		if (optind < argc)
 		{
-		       /* Print any remaining command line arguments (not options). */
-       		if (optind < argc)
-         		{
-           			printf ("non-option ARGV-elements: ");
-           			while (optind < argc)
+			if (flag_verbose==1)
+			{
+			       /* Print any remaining command line arguments (not options). */
+     	     			printf ("non-option ARGV-elements: ");
+   				while (optind < argc)
 				{
              			printf ("%s ", argv[optind++]);
 				}
-           			putchar ('\n');
-         		}
+     				putchar ('\n');
+			}
 		}
-	turn = X; 
+	if (turn ==  NULL)
+	{
+		turn = X; 
+	}
+	else if (flag_verbose==1)
+	{
+		cout << "starting with " << playerToString(turn) << endl;
+	}
 	bool cont=true;
 	printf("Welcome to tik-tak-toe with a 'k'\n\n");
 	printf("X (the computer) moves first\n");
