@@ -30,7 +30,7 @@ int main (int argc, char* argv[])
             	/* These options set a flag. */
                	{"brief",   no_argument,      &flag_verbose, 	0},
               	{"verbose", no_argument,      &flag_verbose, 	1},
-               	{"nocheat", no_argument,      &flag_difficulty,	0},
+               	{"nocheat", no_argument,      &flag_difficulty,	0}, //active
 			{"easy", 	no_argument,	&flag_difficulty,	1},
 			{"hard",	no_argument,	&flag_difficulty, 2},
               	{0, 0, 0, 0}
@@ -141,7 +141,15 @@ inline int getMove(void)
 		if (move<1||move>9){cont=true;}
 		if (move==99)
 		{
-			return compMoveMain(0,TURN_PLAYER);
+			if (flag_difficulty != 0)
+			{
+				cont = false;
+				return compMoveMain(NULL,TURN_PLAYER);
+			}
+			else
+			{
+				verbosePrint((char*)"Player is not allowed to cheat",1);
+			}
 		}
 		if (board[row][col]!=none){cont=true;} //if there was a move already there then retry
 	} while(cont);
@@ -425,7 +433,6 @@ long int GetInteger(int base)
 	/*TODO this really should be checked somewhere else*/
       int n = 0;
 
-      cout << "Please enter an integer:" << endl;
       n = strtol(getcharcters(10),NULL,10);
 
       if (n <= 0 )
@@ -451,4 +458,15 @@ char* getcharcters(int max)
       
       str[max] = NULL; //I hope this is the right way to terminate a char array.
       return str;
+}
+
+inline void verbosePrint(char* str, bool isError = 0) /*TODO: should change this to some method of passing stdin/stderr/...*/
+{
+	if (flag_verbose==1)
+	{
+		if (isError==1)
+			cerr << str << endl;
+		else
+			cout << str << endl;
+	}
 }

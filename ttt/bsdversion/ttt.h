@@ -23,6 +23,7 @@ int compMoveMain(int lastMove, player whoToMove); //this is the comp move, it is
 int compMove(player whoToMove);  //called by compMoveMain due to slight bug.
 long int GetInteger(int base);
 char* getcharcters(int max);
+void verbosePrint(char* str, bool isError);
 
 //Create global vars
 #define BOARD_SIZE 3
