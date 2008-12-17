@@ -10,45 +10,40 @@ player turn=none; //current turn
 
 /* Flag set by `--verbose'. */
 /* verbose will be 0 (off) or 1 (on)*/
-static int flag_verbose;
+static int flag_verbose = 0;
 /* difficulty will be 0 (no computer moves allowed) 1 (easy) or 2 (hard)*/
-static int flag_difficulty;
+static int flag_difficulty = 1;
 
 using namespace std;
 
 int main (int argc, char* argv[])
 {
       int c;
+     	int option_index = 0;
       while (1)
       {
       	static struct option long_options[] =
             {
             	/* These options set a flag. */
-              	{"verbose", no_argument,      &flag_verbose, 	1},
                	{"brief",   no_argument,      &flag_verbose, 	0},
-               	{"nocheat", no_argument,      &flag_verbose, 	0},
+              	{"verbose", no_argument,      &flag_verbose, 	1},
+               	{"nocheat", no_argument,      &flag_difficulty,	0},
 			{"easy", 	no_argument,	&flag_difficulty,	1},
 			{"hard",	no_argument,	&flag_difficulty, 2},
               	{0, 0, 0, 0}
             };
            	/* getopt_long stores the option index here. */
-      	int option_index = 0;
-    	      c = getopt_long (argc, argv, "s:p:", long_options, &option_index);
-           	/* Detect the end of the options. */
-           	if (c == -1)
+    	      c = getopt_long (argc, argv, "", long_options, &option_index);
+		if (c == -1)
 		{
-            	break;
+			break;
 		}
-		if (flag_verbose==1)
+		printf ("option %s", long_options[option_index].name);
+           	if (optarg)
 		{
-			printf ("option %s", long_options[option_index].name);
-               	if (optarg)
-			{
-                 		printf (" with arg %s", optarg);
-			}
-               	printf ("\n");
+           		printf (" with arg %s", optarg);
 		}
-            break;
+           	printf ("\n");
 	}
 	turn = X;
 	bool cont=true;
