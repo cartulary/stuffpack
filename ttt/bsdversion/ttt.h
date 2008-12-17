@@ -16,7 +16,7 @@ int getRowFromID(int id); //returns the row from a num btwn 1 and 9
 int getColFromID(int id); //returns the col from a num btwn 1 and 9
 bool openSpace(void); //return true if there is an open space
 int getComputerMove(player compPlayer); //get's the computer's move
-int nextMoveWin(int lastMove); //tell the computer what to do if there is one open space for a win
+int nextMoveWin(int lastMove,player whoToWin); //tell the computer what to do if there is one open space for a win
 int getID(int row, int col); //return a single digit number from a row and a col
 bool isEmpty(int space); //returns true if space passed to it is true
 int compMoveMain(int lastMove); //this is the comp move, it is there to correct some bugs

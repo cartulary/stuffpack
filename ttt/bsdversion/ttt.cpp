@@ -9,27 +9,27 @@ player board[BOARD_SIZE+1][BOARD_SIZE+1]; //a 3x3 board except that the array st
 player turn=none; //current turn
 
 /* Flag set by `--verbose'. */
+/* verbose will be 0 (off) or 1 (on)*/
 static int flag_verbose;
+/* difficulty will be 0 (no computer moves allowed) 1 (easy) or 2 (hard)*/
+static int flag_difficulty;
 
 using namespace std;
 
 int main (int argc, char* argv[])
 {
-	char startPlayer;
-	int numPlayers;
       int c;
       while (1)
       {
       	static struct option long_options[] =
             {
             	/* These options set a flag. */
-              	{"verbose", no_argument,       &flag_verbose, 1},
-               	{"brief",   no_argument,       &flag_verbose, 0},
-               	/* These options don't set a flag.
-                  We distinguish them by their indices. */
-               	{"startPlayer",  required_argument,  0, 's'},
-               	{"players",	  required_argument,  0, 'p'},
-               	{0, 0, 0, 0}
+              	{"verbose", no_argument,      &flag_verbose, 	1},
+               	{"brief",   no_argument,      &flag_verbose, 	0},
+               	{"nocheat", no_argument,      &flag_verbose, 	0},
+			{"easy", 	no_argument,	&flag_difficulty,	1},
+			{"hard",	no_argument,	&flag_difficulty, 2},
+              	{0, 0, 0, 0}
             };
            	/* getopt_long stores the option index here. */
       	int option_index = 0;
@@ -49,63 +49,8 @@ int main (int argc, char* argv[])
                	printf ("\n");
 		}
             break;
-		switch (c)
-            {
-            	case 0:
-               	/* If this option set a flag, do nothing else now. */
-               	if (long_options[option_index].flag != 0)
-                	 break;
-    
-             	case 's':
-				startPlayer = optarg[0];
-				turn = stringToPlayer(startPlayer);
-			if (flag_verbose==1)
-			{
-               		printf ("option -s with value `%s'\n", optarg);
-			}
-               	break;
-     
-             	case 'p':
-				numPlayers = (int)optarg;
-			if (flag_verbose==1)
-			{
-               		printf ("option -p with value `%s'\n", optarg);
-			}
-               	break;
-
-             	case '?':
-              	/* getopt_long already printed an error message. We do not need to continue now. */
-               	break;
-
-			default:
-				abort();
-             }
-         }
-       	if (flag_verbose)
-		{
-         		puts ("verbose flag is set");
-		}
-		if (optind < argc)
-		{
-			if (flag_verbose==1)
-			{
-			       /* Print any remaining command line arguments (not options). */
-     	     			printf ("non-option ARGV-elements: ");
-   				while (optind < argc)
-				{
-             			printf ("%s ", argv[optind++]);
-				}
-     				putchar ('\n');
-			}
-		}
-	if (turn ==  NULL)
-	{
-		turn = X; 
 	}
-	else if (flag_verbose==1)
-	{
-		cout << "starting with " << playerToString(turn) << endl;
-	}
+	turn = X;
 	bool cont=true;
 	printf("Welcome to tik-tak-toe with a 'k'\n\n");
 	printf("X (the computer) moves first\n");
@@ -120,7 +65,7 @@ int main (int argc, char* argv[])
 			displayBoard(); //show the board AFTER the move is made
 			cont = (!checkWin()); // continue if no win
 			turn = switchTurn(turn); //change the turn string
-			
+
 		}
 	} while (cont);
 	if (checkWin())
@@ -182,6 +127,9 @@ inline int getMove(void)
 		col = getColFromID(move);  //get the column
 		//check for things that are wrong
 		if (move<1||move>9){cont=true;}
+		if (move==0)
+		{
+		}
 		if (board[row][col]!=none){cont=true;} //if there was a move already there then retry
 	} while(cont);
 	board[row][col]=turn;
@@ -306,13 +254,14 @@ bool openSpace()
 	return (false); //if it completes the loop there is no open space
 }
 
-int nextMoveWin(int lastMove)
+int nextMoveWin(int lastMove, player whoToWin)
 {
+	whoToWin = O;
 	int row, col;
 	row = getRowFromID(lastMove);
 	col = getColFromID(lastMove);
 	int emptySpace;
-	
+
 	for (int rowCounter=1;rowCounter<=BOARD_SIZE;rowCounter++)
 	{
 		if (row!=rowCounter)
@@ -322,7 +271,7 @@ int nextMoveWin(int lastMove)
 			{
 				if (board[emptySpace][col]==none)
 				{
-					if (board[row][col]==X) {return (getID(emptySpace, col));}
+					if (board[row][col]==whoToWin) {return (getID(emptySpace, col));}
 				}
 
 			}
@@ -337,13 +286,13 @@ int nextMoveWin(int lastMove)
 			{
 				if (board[row][emptySpace]==none)
 				{
-					if (board[row][col]==X) {return (getID(row, emptySpace));}
+					if (board[row][col]==whoToWin) {return (getID(row, emptySpace));}
 				}
 			}
 		}
 	}	
 
-	//by now you either won't winr you will win by diag
+	//by now you either won't win or you will win by diag
 	bool winDiag=false;
 
 	if (board[1][1]==board[2][2]&&board[3][3]==none&&board[1][1]!=none)
@@ -397,7 +346,7 @@ inline int compMoveMain(int lastMove)
 {
 	int nextMove;
 	int row, col;
-	nextMove = nextMoveWin(lastMove); //nextMove becomes the number of the next wining spot, 0 if no next move win
+	nextMove = nextMoveWin(lastMove, X); //nextMove becomes the number of the next wining spot, 0 if no next move win
 	if (nextMove==0) //if not next move win, try different set of moves
 	{
 		nextMove = compMove();
