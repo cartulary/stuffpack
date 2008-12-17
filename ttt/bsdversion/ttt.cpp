@@ -71,7 +71,7 @@ int main (int argc, char* argv[])
 	}
 	else
 	{
-		printf("\n So you tied... :-(");
+		printf("\n So you tied... :-(\n");
 	}
 }
 
