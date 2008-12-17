@@ -19,8 +19,8 @@ int getComputerMove(player compPlayer); //get's the computer's move
 int nextMoveWin(int lastMove,player whoToWin); //tell the computer what to do if there is one open space for a win
 int getID(int row, int col); //return a single digit number from a row and a col
 bool isEmpty(int space); //returns true if space passed to it is true
-int compMoveMain(int lastMove); //this is the comp move, it is there to correct some bugs
-int compMove();  //called by compMoveMain due to slight bug.
+int compMoveMain(int lastMove, player whoToMove); //this is the comp move, it is there to correct some bugs
+int compMove(player whoToMove);  //called by compMoveMain due to slight bug.
 long int GetInteger(int base);
 char* getcharcters(int max);
 

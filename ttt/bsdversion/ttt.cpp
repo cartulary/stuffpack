@@ -68,7 +68,7 @@ int main (int argc, char* argv[])
 		if (cont)
 		{
 			displayBoard(); //show the board AFTER the move is made
-			if (turn==TURN_COMP) {lastMoveX = compMoveMain(lastMoveX);} //get the move that the player wants to do
+			if (turn==TURN_COMP) {lastMoveX = compMoveMain(lastMoveX, TURN_COMP);} //get the move that the player wants to do
 			if (turn==TURN_PLAYER) {lastMoveO = getMove();} //get the move that the player wants to do
 			cont = (!checkWin()); // continue if no win
 			turn = switchTurn(turn); //change the turn string
@@ -139,8 +139,9 @@ inline int getMove(void)
 		col = getColFromID(move);  //get the column
 		//check for things that are wrong
 		if (move<1||move>9){cont=true;}
-		if (move==0)
+		if (move==99)
 		{
+			return compMoveMain(0,TURN_PLAYER);
 		}
 		if (board[row][col]!=none){cont=true;} //if there was a move already there then retry
 	} while(cont);
@@ -268,7 +269,6 @@ bool openSpace()
 
 int nextMoveWin(int lastMove, player whoToWin)
 {
-	whoToWin = TURN_COMP; //temporary
 	int row, col;
 	row = getRowFromID(lastMove);
 	col = getColFromID(lastMove);
@@ -354,29 +354,29 @@ inline int getID(int row, int col) //returns a number 1 through 9 from a row and
 	return ((3 * row) + col -3);
 }
 
-inline int compMoveMain(int lastMove)
+int compMoveMain(int lastMove, player whoToMove)
 {
 	int nextMove;
 	int row, col;
-	nextMove = nextMoveWin(lastMove, TURN_COMP); //nextMove becomes the number of the next wining spot, 0 if no next move win
+	nextMove = nextMoveWin(lastMove, whoToMove); //nextMove becomes the number of the next wining spot, 0 if no next move win
 	if (nextMove==0) //if not next move win, try different set of moves
 	{
-		nextMove = compMove();
+		nextMove = compMove(whoToMove);
 	}
 	row = getRowFromID(nextMove);
 	col = getColFromID(nextMove);
-	board[row][col]=TURN_COMP; //set computers move
+	board[row][col]=whoToMove; //set computers move
 	return (nextMove);
 
 }
-inline int compMove()
+int compMove(player whoToMove)
 {
 	if (board[1][1]==none) //try going at corner 1 first
 	{
 		return (1);
 	}
 
-	if ((board[1][1]==TURN_COMP||board[1][3]==TURN_COMP||board[3][1]==TURN_COMP||board[3][3]==TURN_COMP)&&isEmpty(5)) //if any corners are filled go to middle
+	if ((board[1][1]==whoToMove||board[1][3]==whoToMove||board[3][1]==whoToMove||board[3][3]==whoToMove)&&isEmpty(5)) //if any corners are filled go to middle
 	{
 		return (5);
 	}
@@ -418,15 +418,17 @@ inline bool isEmpty(int space)
 	col = getColFromID(space);
 	return (board[row][col]==none); //return true or false, based on weathr spot is empty
 }
-/* Retrieves a positive integer from the user. */
+/* Retrieves a integer from the user. */
 long int GetInteger(int base)
 {
+	/* allow 0 for computer move */ 
+	/*TODO this really should be checked somewhere else*/
       int n = 0;
 
-      cout << "Please enter a positive integer:" << endl;
+      cout << "Please enter an integer:" << endl;
       n = strtol(getcharcters(10),NULL,10);
 
-      if (n <= 0)
+      if (n <= 0 )
       {
             n = GetInteger(base);
       }
