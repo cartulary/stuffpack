@@ -106,7 +106,7 @@ inline void displayBoard(void)
 			}
 			else
 			{
-				printf(playerToString(current);
+				printf("%c",playerToString(current));
 			}
 			printf("\t|\t");
 		}
