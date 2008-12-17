@@ -12,3 +12,6 @@ CFLAGS += -Wctor-dtor-privacy -Wnon-virtual-dtor -Wstrict-null-sentinel -Wswitch
 CFLAGS += -ffor-scope
 
 PREFIX = /usr/local
+
+
+### update to c99 standard eventually ??? ###
