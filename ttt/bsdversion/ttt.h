@@ -28,10 +28,11 @@ void verbosePrint(char* str, bool isError);
 //Create global vars
 #define BOARD_SIZE 3
 
-#include <unistd.h>
+#include <stdlib.h>
 #include <iostream>
+#include <unistd.h>
+
 #include <stdio.h>
 #include <ctype.h>
 #include "math.h"
-#include "string.h"
 #include <getopt.h>
