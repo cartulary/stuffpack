@@ -3,21 +3,105 @@ Tik-Tak-Toe CTY Final Project
 Version 0.02
 */
 
-//Includes
-#include <iostream>
-#include <stdio.h>
-#include <ctype.h>
-#include "math.h"
-#include "string.h"
-
 #include "ttt.h"
 
 player board[BOARD_SIZE+1][BOARD_SIZE+1]; //a 3x3 board except that the array starts at 0 so it is size+1
 player turn; //current turn
+
+/* Flag set by `--verbose'. */
+static int flag_verbose;
+
 using namespace std;
 
-int main (void)
+int main (int argc, char* argv[])
 {
+	char startPlayer;
+	int numPlayers;
+      int c;
+      while (1)
+      {
+      	static struct option long_options[] =
+            {
+            	/* These options set a flag. */
+              	{"verbose", no_argument,       &flag_verbose, 1},
+               	{"brief",   no_argument,       &flag_verbose, 0},
+               	/* These options don't set a flag.
+                  We distinguish them by their indices. */
+               	{"startPlayer",  required_argument,  0, 's'},
+               	{"players",	  required_argument,  0, 'p'},
+               	{0, 0, 0, 0}
+            };
+           	/* getopt_long stores the option index here. */
+      	int option_index = 0;
+     
+    	      c = getopt_long (argc, argv, "s:p:", long_options, &option_index);
+     
+           	/* Detect the end of the options. */
+           	if (c == -1)
+		{
+            	break;
+		}
+		if (flag_verbose==1)
+		{
+			printf ("option %s", long_options[option_index].name);
+               	if (optarg)
+			{
+                 		printf (" with arg %s", optarg);
+			}
+               	printf ("\n");
+		}
+            break;
+		switch (c)
+            {
+            	case 0:
+               	/* If this option set a flag, do nothing else now. */
+               	if (long_options[option_index].flag != 0)
+                	 break;
+    
+             	case 's':
+				startPlayer = optarg[0];
+			if (flag_verbose==1)
+			{
+               		printf ("option -s with value `%s'\n", optarg);
+			}
+               	break;
+     
+             	case 'p':
+				numPlayers = (int)optarg;
+			if (flag_verbose==1)
+			{
+               		printf ("option -p with value `%s'\n", optarg);
+			}
+               	break;
+
+             	case '?':
+               	/* getopt_long already printed an error message. */
+               	break;
+
+			default:
+				break;
+             }
+         }
+ 	      /* Instead of reporting `--verbose'
+          and `--brief' as they are encountered,
+          we report the final status resulting from them. */
+       	if (flag_verbose)
+		{
+         		puts ("verbose flag is set");
+		}
+		if (flag_verbose==1)
+		{
+		       /* Print any remaining command line arguments (not options). */
+       		if (optind < argc)
+         		{
+           			printf ("non-option ARGV-elements: ");
+           			while (optind < argc)
+				{
+             			printf ("%s ", argv[optind++]);
+				}
+           			putchar ('\n');
+         		}
+		}
 	turn = X; 
 	bool cont=true;
 	printf("Welcome to tik-tak-toe with a 'k'\n\n");
@@ -115,6 +199,22 @@ inline char playerToString(player toConvert)
 			cerr << "programming error invalid player" <<endl;
 			exit(1);
 	}
+}
+
+inline player stringToPlayer(char toConvert)
+{
+      switch (toConvert)
+      {
+            case 'X':
+                  return X;
+            case 'O':
+                  return O;
+            case NULL:
+                  return none;
+            default:
+                  cerr << "programming error invalid char" <<endl;
+                  exit(1);
+      }
 }
 
 inline player switchTurn(player toSwitch)
