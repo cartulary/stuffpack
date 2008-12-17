@@ -67,9 +67,9 @@ int main (int argc, char* argv[])
 		cont=(openSpace()); //if there is no open space stop
 		if (cont)
 		{
+			displayBoard(); //show the board AFTER the move is made
 			if (turn==TURN_COMP) {lastMoveX = compMoveMain(lastMoveX);} //get the move that the player wants to do
 			if (turn==TURN_PLAYER) {lastMoveO = getMove();} //get the move that the player wants to do
-			displayBoard(); //show the board AFTER the move is made
 			cont = (!checkWin()); // continue if no win
 			turn = switchTurn(turn); //change the turn string
 
@@ -100,9 +100,14 @@ inline void displayBoard(void)
 			count++;
 			current = board[row][col];
 			printf("   ");
-			if (current==none){printf("%d",count);}
-			if (current==X){printf("X");}
-			if (current==O){printf("O");}
+			if (current==none)
+			{
+				printf("%d",count);
+			}
+			else
+			{
+				printf(playerToString(current);
+			}
 			printf("\t|\t");
 		}
 		printf("\n--------|---------------|---------------|\n");
