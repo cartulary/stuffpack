@@ -88,7 +88,7 @@ int main (int argc, char* argv[])
 }
 
 
-inline void displayBoard(void)
+void displayBoard(void)
 {
 	player current;
 	int count=0;
@@ -114,7 +114,7 @@ inline void displayBoard(void)
 	}
 	printf("\n");
 }
-inline void initBoard(void)
+void initBoard(void)
 {
 	for (int row=0;row<=BOARD_SIZE;row++)
 	{
@@ -125,7 +125,7 @@ inline void initBoard(void)
 	}
 }
 
-inline int getMove(void)
+int getMove(void)
 {
 	int move;
 	bool cont=true;
@@ -221,7 +221,7 @@ inline int getColFromID(int id)
 	return (tmp); 
 }
 
-inline bool checkWin(void)
+bool checkWin(void)
 {
 	/*
 	I would check for neignbors, but it involves the smame amount of time due to checking to see what row.col it is
