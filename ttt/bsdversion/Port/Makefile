@@ -6,12 +6,13 @@
 #
 
 PORTNAME=		ttt-text
-PORTVERSION=	0.3
+PORTVERSION=	0.4
 CATEGORIES=		games
 MASTER_SITES=	http://stuffpack.googlecode.com/files/
 
 MAINTAINER=	EitanAdlerList@gmail.com
 COMMENT=	Simple one player command line Tic Tac Toe game
+MAN1=		ttt.1
 
 .include <bsd.port.pre.mk>
 do-install:
