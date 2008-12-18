@@ -49,16 +49,24 @@ int main (int argc, char* argv[])
 		}
            	printf ("\n");
 	}
-	printf("Welcome to tik-tak-toe with a 'k'\n\n");
-	printf("Do you want to move first? [Y/N] ");
-    	scanf("%c", &moveFirst);
-    	if (moveFirst == 'Y')
+	cout << "Welcome to tik-tak-toe with a 'k'" << endl;
+	if (flag_num_players > 0)
 	{
-      	turn = TURN_PLAYER;
+		/*FIXME: change this to which player moves first on 2 player mode*/
+		printf("Do you want to move first? [Y/N] ");
+	    	scanf("%c", &moveFirst);
+	    	if (moveFirst == 'Y')
+		{
+      		turn = TURN_PLAYER;
+		}
+    		else
+		{
+	      	turn = TURN_COMP;
+		}
 	}
-    	else
+	else
 	{
-      	turn = TURN_COMP;
+		turn = TURN_COMP; // start with X
 	}
 
 	bool compNow;
@@ -396,16 +404,19 @@ int compMoveMain(int lastMove, player whoToMove)
 }
 int compMove(player whoToMove)
 {
+	verbosePrint("trying first corner");
 	if (board[1][1]==none) //try going at corner 1 first
 	{
 		return (1);
 	}
 
+	verbosePrint("trying middle");
 	if ((board[1][1]==whoToMove||board[1][3]==whoToMove||board[3][1]==whoToMove||board[3][3]==whoToMove)&&isEmpty(5)) //if any corners are filled go to middle
 	{
 		return (5);
 	}
 
+	verbosePrint("trying other corners");
 	//try the corners
 	if (board[1][3]==none)
 	{
@@ -424,6 +435,7 @@ int compMove(player whoToMove)
 		return (1);
 	}
 
+	verbosePrint("trying left overs");
 	for (int tmp=1;tmp<=9;tmp++)
 	{
 		if (isEmpty(tmp))
