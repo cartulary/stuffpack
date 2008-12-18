@@ -1,6 +1,6 @@
 /*
 Tik-Tak-Toe CTY Final Project
-Version 0.02
+Version 0.04
 */
 
 #include "ttt.h"
