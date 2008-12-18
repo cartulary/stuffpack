@@ -63,16 +63,32 @@ int main (int argc, char* argv[])
       	turn = TURN_COMP;
 	}
 
+	bool compNow;
 	bool cont=true;
-	int lastMoveX=1,lastMoveO;
+	int lastMoveO,lastMoveX;
 	do
 	{
 		cont=(openSpace()); //if there is no open space stop
 		if (cont)
 		{
 			displayBoard(); //show the board AFTER the move is made
-			if (turn==TURN_COMP) {lastMoveX = compMoveMain(lastMoveX, TURN_COMP);} //get the move that the player wants to do
-			if (turn==TURN_PLAYER) {lastMoveO = getMove();} //get the move that the player wants to do
+			compNow = FALSE;
+			if (flag_num_players == 0)
+			{
+				compNow = TRUE;
+			}
+			if (flag_num_players == 1 && turn == TURN_COMP)
+			{
+				compNow = true;
+			}
+			if (compNow == TRUE)
+			{
+				lastMoveX = compMoveMain(lastMoveX, turn);
+			}
+			else
+			{
+				lastMoveO = getMove();
+			}
 			cont = (!checkWin()); // continue if no win
 			turn = switchTurn(turn); //change the turn string
 

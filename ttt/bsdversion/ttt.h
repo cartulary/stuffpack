@@ -26,6 +26,9 @@ char* getcharcters(int max);
 void verbosePrint(char* str, bool isError);
 
 //Create global vars
+#define TRUE 1
+#define FALSE 0
+
 #define BOARD_SIZE 3
 
 #include <stdlib.h>
