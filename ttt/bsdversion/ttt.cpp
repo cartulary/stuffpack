@@ -77,6 +77,7 @@ int main (int argc, char* argv[])
 		cont=(openSpace()); //if there is no open space stop
 		if (cont)
 		{
+			printf("Player %c's turn.\n", playerToString(turn));
 			displayBoard(); //show the board AFTER the move is made
 			compNow = FALSE;
 			if (flag_num_players == 0)
