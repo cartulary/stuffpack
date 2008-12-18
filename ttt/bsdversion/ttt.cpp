@@ -404,19 +404,19 @@ int compMoveMain(int lastMove, player whoToMove)
 }
 int compMove(player whoToMove)
 {
-	verbosePrint("trying first corner");
+	verbosePrint((char*)"trying first corner");
 	if (board[1][1]==none) //try going at corner 1 first
 	{
 		return (1);
 	}
 
-	verbosePrint("trying middle");
+	verbosePrint((char*)"trying middle");
 	if ((board[1][1]==whoToMove||board[1][3]==whoToMove||board[3][1]==whoToMove||board[3][3]==whoToMove)&&isEmpty(5)) //if any corners are filled go to middle
 	{
 		return (5);
 	}
 
-	verbosePrint("trying other corners");
+	verbosePrint((char*)"trying other corners");
 	//try the corners
 	if (board[1][3]==none)
 	{
@@ -435,7 +435,7 @@ int compMove(player whoToMove)
 		return (1);
 	}
 
-	verbosePrint("trying left overs");
+	verbosePrint((char*)"trying left overs");
 	for (int tmp=1;tmp<=9;tmp++)
 	{
 		if (isEmpty(tmp))
@@ -489,7 +489,7 @@ char* getcharcters(int max)
       return str;
 }
 
-inline void verbosePrint(char* str, bool isError = 0) /*TODO: should change this to some method of passing stdin/stderr/...*/
+inline void verbosePrint(char* str, bool isError) /*TODO: should change this to some method of passing stdin/stderr/...*/
 {
 	if (flag_verbose==1)
 	{
