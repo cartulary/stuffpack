@@ -10,11 +10,12 @@ Version 0.02
 player board[BOARD_SIZE+1][BOARD_SIZE+1]; //a 3x3 board except that the array starts at 0 so it is size+1
 player turn=none; //current turn
 
-/* Flag set by `--verbose'. */
 /* verbose will be 0 (off) or 1 (on)*/
 static int flag_verbose = 0;
 /* difficulty will be 0 (no computer moves allowed) 1 (easy) or 2 (hard)*/
 static int flag_difficulty = 1;
+/* number of players flag */
+static int flag_num_players = 1;
 
 using namespace std;
 
@@ -33,6 +34,8 @@ int main (int argc, char* argv[])
                	{"nocheat", no_argument,      &flag_difficulty,	0}, //active
 			{"easy", 	no_argument,	&flag_difficulty,	1},
 			{"hard",	no_argument,	&flag_difficulty, 2},
+               	{"nohuman", no_argument,      &flag_num_players,0}, //active
+			{"allhuman",no_argument,	&flag_num_players,2},
               	{0, 0, 0, 0}
             };
            	/* getopt_long stores the option index here. */
