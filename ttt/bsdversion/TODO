@@ -1,5 +1,3 @@
 a) split into multiple files
 b) add computer "hard mode" and "easy mode" (where computer can/can't win). atm it is easy only
 c) use the symetrical winning approach (rotating the board and checking 3 spots)
-e) add 2 player mode
-f) add 0 player mode -> computer plays itself and spits out board each time
