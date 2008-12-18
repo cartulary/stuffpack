@@ -1,0 +1,42 @@
+.\" ttt is a very simple one player Tic Tac Toe game played using the command line. 
+.TH "Tik Tak Toe" "1" "0.3" "Eitan Adler" "games"
+.SH "NAME"
+.LP 
+ttt\-text \- CLI tick tac toe program
+.SH "SYNTAX"
+.LP 
+ttt\-text [ \-\-verbose | \-\-brief	] [ \-\-nocheat ] [ \-\-easy | \-\-hard ] [ \-\-nohuman | \-\-allhuman]
+.SH "DESCRIPTION"
+.LP 
+This program does some very neat things.
+.SH "OPTIONS"
+.LP 
+.TP 
+\fB\-\-verbose\fR
+Outputs extra (sometimes) useful text.
+.TP 
+\fB\-\-brief\fR  (default)
+Doesn't output extra text.
+\fB\-\-nocheat\fR
+Prevents the human player from using the "99" command to cheat.
+.TP 
+\fB\-\-easy\fR  (default)
+Uses an old method known to fail in some cases
+.TP 
+\fB\-\-hard\fR  (not enabled)
+Makes the computer play a perfect game (you could lose or tie but not win)
+.TP 
+\fB\-\-nohuman\fR  
+Makes the computer play itself.
+\fB\-\-allhuman\fR  
+Disables the computer player
+\fB\-\-human\fR (default; future option)
+Play against the computer
+.SH "EXAMPLES"
+.LP 
+To follow the computer play itself step by step use:
+.LP 
+ttt\-text \-\-nohuman \-\-verbose
+.SH "AUTHORS"
+.LP 
+Eitan Adler <EitanAdlerList@gmail.com>
