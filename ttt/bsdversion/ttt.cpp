@@ -4,8 +4,6 @@ Version 0.02
 */
 
 #include "ttt.h"
-#define TURN_PLAYER O
-#define TURN_COMP X
 
 player board[BOARD_SIZE+1][BOARD_SIZE+1]; //a 3x3 board except that the array starts at 0 so it is size+1
 player turn=none; //current turn

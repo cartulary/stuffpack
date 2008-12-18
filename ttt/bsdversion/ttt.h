@@ -31,6 +31,9 @@ void verbosePrint(char* str, bool isError);
 
 #define BOARD_SIZE 3
 
+#define TURN_PLAYER O
+#define TURN_COMP X
+
 #include <stdlib.h>
 #include <iostream>
 #include <unistd.h>
