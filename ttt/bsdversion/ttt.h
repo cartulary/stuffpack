@@ -37,13 +37,11 @@ void verbosePrint(char* str, bool isError = 0 );
 #define MODE_EASY 1
 #define MODE_HARD 2
 
-
-#include <stdlib.h>
-#include <iostream>
-#include <unistd.h>
-#include <sysexits.h>
-
-#include <stdio.h>
 #include <ctype.h>
-#include "math.h"
 #include <getopt.h>
+#include <iostream>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sysexits.h>
+#include <unistd.h>
