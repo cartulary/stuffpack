@@ -43,19 +43,21 @@ int main (int argc, char* argv[])
 		{
 			break;
 		}
-		printf ("option %s", long_options[option_index].name);
+		cout << "option %s" << long_options[option_index].name;
            	if (optarg)
 		{
            		cout << " with arg " << optarg;
 		}
-           	printf ("\n");
+		cout << endl;
 	}
 	cout << "Welcome to tik-tak-toe with a 'k'" << endl;
 	if (flag_num_players > 0)
 	{
 		/*FIXME: change this to which player moves first on 2 player mode */
-		printf("Do you want to move first? [Y/N] ");
+		cout << "Do you want to move first? [Y/N] ";
 	    	scanf("%c", &moveFirst);
+		/* endl after the question */
+		cout << endl;
 	    	if (moveFirst == 'Y')
 		{
       		turn = TURN_PLAYER;
@@ -80,7 +82,7 @@ int main (int argc, char* argv[])
 		cont=(openSpace());
 		if (cont)
 		{
-			printf("Player %c's turn.\n", playerToString(turn));
+			cout << "Player " << playerToString(turn) << "%c's turn." << endl;
 			/* show the board AFTER the move is made */
 			displayBoard();
 			compNow = FALSE;
@@ -113,16 +115,17 @@ int main (int argc, char* argv[])
 	}
 	else
 	{
-		printf("\n So you tied... :-(\n");
+		cout << "So you tied... :-(" << endl;
 	}
 }
 
 
 void displayBoard(void)
 {
+	/*TODO: change from printf*/
 	player current;
 	int count=0;
-	printf("\n");
+	cout << endl;
 	for (int row=1;row<=3;row++)
 	{
 		for (int col=1;col<=3;col++)
@@ -142,7 +145,7 @@ void displayBoard(void)
 		}
 		printf("\n--------|---------------|---------------|\n");
 	}
-	printf("\n");
+	cout << endl;
 }
 void initBoard(void)
 {
