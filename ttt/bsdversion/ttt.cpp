@@ -46,7 +46,7 @@ int main (int argc, char* argv[])
 		printf ("option %s", long_options[option_index].name);
            	if (optarg)
 		{
-           		printf (" with arg %s", optarg);
+           		cout << " with arg " << optarg;
 		}
            	printf ("\n");
 	}
@@ -67,7 +67,8 @@ int main (int argc, char* argv[])
 	}
 	else
 	{
-		turn = TURN_COMP; // start with X
+		/* if there is no player start with X */
+		turn = X;
 	}
 
 	bool compNow;
@@ -75,11 +76,13 @@ int main (int argc, char* argv[])
 	int lastMoveO,lastMoveX;
 	do
 	{
-		cont=(openSpace()); //if there is no open space stop
+		/* if there is no open space - stop */
+		cont=(openSpace());
 		if (cont)
 		{
 			printf("Player %c's turn.\n", playerToString(turn));
-			displayBoard(); //show the board AFTER the move is made
+			/* show the board AFTER the move is made */
+			displayBoard();
 			compNow = FALSE;
 			if (flag_num_players == 0)
 			{
