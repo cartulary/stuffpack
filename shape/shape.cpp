@@ -9,7 +9,7 @@
 void displayShape(void);
 void fill (int col, int row);
 bool stringNull(string str);
-string copyAndReplace(string str, int col, char replaceWith);
+char* copyAndReplace(string str, int col, char replaceWith);
 
 //Create global vars
 string lines[31]; //30 spots
@@ -89,14 +89,6 @@ void fill (int row, int col)
 			if (col>=2) {fill(row, col-1);}
 			if (col<=maxCol-1) {fill(row, col+1);}
 		}
-		else
-		{
-			printf(""); //do nothing
-		}
-	}
-	else
-	{
-		printf(""); //do nothing
 	}
 }
 
@@ -106,7 +98,7 @@ inline bool stringNull(string str)
 	return (str==0);
 }
 
-string copyAndReplace(string str, int col, char replaceWith)
+char* copyAndReplace(string str, int col, char replaceWith)
 {
 	string newstr="";
 	char workWith;

@@ -461,12 +461,13 @@ int compMove(player whoToMove)
 	return 0;
 }
 
+/* return true or false, based on weathr spot is empty */
 inline bool isEmpty(int space)
 {
 	int row, col;
 	row = getRowFromID(space);
 	col = getColFromID(space);
-	return (board[row][col]==none); //return true or false, based on weathr spot is empty
+	return (board[row][col]==none);
 }
 /* Retrieves a integer from the user. */
 long int GetInteger(int base)
