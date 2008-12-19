@@ -442,8 +442,8 @@ int compMove(player whoToMove)
 	}
 
 	verbosePrint((char*)"trying left overs");
-	/* (BOARDSIZE * BOARDSIZE) is needed to test all the available spots*/
-	for (int tmp=1;tmp<=(BOARDSIZE * BOARDSIZE);tmp++)
+	/* (BOARD_SIZE * BOARD_SIZE) is needed to test all the available spots*/
+	for (int tmp=1;tmp<=(BOARD_SIZE * BOARD_SIZE);tmp++)
 	{
 		if (isEmpty(tmp))
 		{
