@@ -41,6 +41,7 @@ void verbosePrint(char* str, bool isError = 0 );
 #include <stdlib.h>
 #include <iostream>
 #include <unistd.h>
+#include <sysexits.h>
 
 #include <stdio.h>
 #include <ctype.h>

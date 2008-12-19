@@ -43,12 +43,15 @@ int main (int argc, char* argv[])
 		{
 			break;
 		}
-		cout << "option %s" << long_options[option_index].name;
-           	if (optarg)
+		if (flag_verbose == true)
 		{
-           		cout << " with arg " << optarg;
+			cout << "option %s" << long_options[option_index].name;
+      	     	if (optarg)
+			{
+	           		cout << " with arg " << optarg;
+			}
+			cout << endl;
 		}
-		cout << endl;
 	}
 	cout << "Welcome to tik-tak-toe with a 'k'" << endl;
 	if (flag_num_players > 0)
@@ -203,7 +206,7 @@ inline char playerToString(player toConvert)
 		default:
 			/*FIXME:have this return to main instead of exiting here*/
 			cerr << "programming error invalid player" <<endl;
-			exit(1);
+			exit(EX_SOFTWARE);
 	}
 }
 
@@ -220,7 +223,7 @@ inline player stringToPlayer(char toConvert)
             default:
 			/*FIXME:have this return to main instead of exiting here*/
                   cerr << "programming error invalid char" <<endl;
-                  exit(1);
+                  exit(EX_SOFTWARE);
       }
 }
 
@@ -235,7 +238,7 @@ inline player switchTurn(player toSwitch)
             default:
 			/*FIXME:have this return to main instead of exiting here*/
                   cerr << "programming error invalid player switch" <<endl;
-                  exit(1);
+                  exit(EX_SOFTWARE);
 	}
 }
 
