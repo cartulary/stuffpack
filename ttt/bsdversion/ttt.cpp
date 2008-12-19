@@ -9,9 +9,9 @@ player board[BOARD_SIZE+1][BOARD_SIZE+1]; //a 3x3 board except that the array st
 player turn=none; //current turn
 
 /* verbose will be 0 (off) or 1 (on)*/
-static int flag_verbose = 0;
+static int flag_verbose = FALSE;
 /* difficulty will be 0 (no computer moves allowed) 1 (easy) or 2 (hard)*/
-static int flag_difficulty = 1;
+static int flag_difficulty = MODE_EASY;
 /* number of players flag */
 static int flag_num_players = 1;
 
@@ -27,13 +27,14 @@ int main (int argc, char* argv[])
       	static struct option long_options[] =
             {
             	/* These options set a flag. */
-               	{"brief",   no_argument,      &flag_verbose, 	0},
-              	{"verbose", no_argument,      &flag_verbose, 	1},
-               	{"nocheat", no_argument,      &flag_difficulty,	0}, //active
-			{"easy", 	no_argument,	&flag_difficulty,	1},
-			{"hard",	no_argument,	&flag_difficulty, 2},
-               	{"nohuman", no_argument,      &flag_num_players,0}, //active
-			{"allhuman",no_argument,	&flag_num_players,2},
+               	{"brief",   	no_argument,      &flag_verbose, 	FALSE},
+              	{"verbose",		no_argument,      &flag_verbose, 	TRUE},
+               	{"nocheat", 	no_argument,      &flag_difficulty,	FALSE}, //defaults to true
+			{"easy", 		no_argument,	&flag_difficulty,	MODE_EASY},
+			{"hard",		no_argument,	&flag_difficulty, MODE_HARD},
+               	{"nohuman", 	no_argument,      &flag_num_players,0}, //active
+               	{"onehuman",	no_argument,      &flag_num_players,0}, //active
+			{"allhuman",	no_argument,	&flag_num_players,2},
               	{0, 0, 0, 0}
             };
            	/* getopt_long stores the option index here. */
@@ -52,7 +53,7 @@ int main (int argc, char* argv[])
 	cout << "Welcome to tik-tak-toe with a 'k'" << endl;
 	if (flag_num_players > 0)
 	{
-		/*FIXME: change this to which player moves first on 2 player mode*/
+		/*FIXME: change this to which player moves first on 2 player mode */
 		printf("Do you want to move first? [Y/N] ");
 	    	scanf("%c", &moveFirst);
 	    	if (moveFirst == 'Y')
@@ -194,6 +195,7 @@ inline char playerToString(player toConvert)
 		case none:
 			return NULL;
 		default:
+			/*FIXME:have this return to main instead of exiting here*/
 			cerr << "programming error invalid player" <<endl;
 			exit(1);
 	}
@@ -210,6 +212,7 @@ inline player stringToPlayer(char toConvert)
             case NULL:
                   return none;
             default:
+			/*FIXME:have this return to main instead of exiting here*/
                   cerr << "programming error invalid char" <<endl;
                   exit(1);
       }
@@ -224,6 +227,7 @@ inline player switchTurn(player toSwitch)
 		case X:
 			return O;
             default:
+			/*FIXME:have this return to main instead of exiting here*/
                   cerr << "programming error invalid player switch" <<endl;
                   exit(1);
 	}
@@ -243,8 +247,8 @@ inline int getColFromID(int id)
 	//from a number between 1 and 9, return the col
 	int tmp;
 	tmp=(id%3);
-	if (tmp==0){tmp=3;}
-	return (tmp); 
+	if (tmp==0) {tmp=3;}
+	return (tmp);
 }
 
 bool checkWin(void)
@@ -383,9 +387,10 @@ int nextMoveWin(int lastMove, player whoToWin)
 	return (winDiag?getID(row,col):0); //return the ID if you will win by diag, or 0 if no win
 }
 
-inline int getID(int row, int col) //returns a number 1 through 9 from a row and col
+/* this function returnss the location from a row and col */
+inline int getID(int row, int col)
 {
-	return ((3 * row) + col -3);
+	return ((BOARD_SIZE * row) + col - BOARD_SIZE);
 }
 
 int compMoveMain(int lastMove, player whoToMove)
@@ -412,22 +417,22 @@ int compMove(player whoToMove)
 	}
 
 	verbosePrint((char*)"trying middle");
-	if ((board[1][1]==whoToMove||board[1][3]==whoToMove||board[3][1]==whoToMove||board[3][3]==whoToMove)&&isEmpty(5)) //if any corners are filled go to middle
+	if ((board[1][1]==whoToMove||board[1][BOARD_SIZE]==whoToMove||board[BOARD_SIZE][1]==whoToMove||board[BOARD_SIZE][BOARD_SIZE]==whoToMove)&&isEmpty(5)) //if any corners are filled go to middle
 	{
 		return (5);
 	}
 
 	verbosePrint((char*)"trying other corners");
 	//try the corners
-	if (board[1][3]==none)
+	if (board[1][BOARD_SIZE]==none)
 	{
 		return (3);
 	}
-	if (board[3][1]==none)
+	if (board[BOARD_SIZE][1]==none)
 	{
 		return (7);
 	}
-	if (board[3][3]==none)
+	if (board[BOARD_SIZE][BOARD_SIZE]==none)
 	{
 		return (9);
 	}
@@ -437,7 +442,8 @@ int compMove(player whoToMove)
 	}
 
 	verbosePrint((char*)"trying left overs");
-	for (int tmp=1;tmp<=9;tmp++)
+	/* (BOARDSIZE * BOARDSIZE) is needed to test all the available spots*/
+	for (int tmp=1;tmp<=(BOARDSIZE * BOARDSIZE);tmp++)
 	{
 		if (isEmpty(tmp))
 		{
@@ -465,7 +471,7 @@ long int GetInteger(int base)
 
       n = strtol(getcharcters(10),NULL,10);
 
-      if (n <= 0 )
+      if ( n <= 0 )
       {
             n = GetInteger(base);
       }
@@ -479,22 +485,22 @@ char* getcharcters(int max)
       char* str = (char*)malloc(max*sizeof(int)+1);
       char ch;
       int i = 0;
-      
+
       while ((ch = getchar()) != '\n' && i < max)
       {
             str[i] = ch;
             i++;
       }
-      
-      str[max] = NULL; //I hope this is the right way to terminate a char array.
+	/* I hope this is the right way to terminate a char array. */
+      str[max] = NULL;
       return str;
 }
 
 inline void verbosePrint(char* str, bool isError) /*TODO: should change this to some method of passing stdin/stderr/...*/
 {
-	if (flag_verbose==1)
+	if (flag_verbose == TRUE)
 	{
-		if (isError==1)
+		if (isError == TRUE)
 			cerr << str << endl;
 		else
 			cout << str << endl;

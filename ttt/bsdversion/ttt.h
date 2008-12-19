@@ -34,6 +34,10 @@ void verbosePrint(char* str, bool isError = 0 );
 #define TURN_PLAYER O
 #define TURN_COMP X
 
+#define MODE_EASY 1
+#define MODE_HARD 2
+
+
 #include <stdlib.h>
 #include <iostream>
 #include <unistd.h>
