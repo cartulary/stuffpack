@@ -520,7 +520,8 @@ char* getcharcters(int max)
       return str;
 }
 
-inline void verbosePrint(string str, bool isError) /*TODO: should change this to some method of passing stdin/stderr/...*/
+/*TODO: should change this to some method of passing stdin/stderr/...*/
+inline void verbosePrint(string str, bool isError)
 {
 	if (flag_verbose == TRUE)
 	{
