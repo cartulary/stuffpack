@@ -4,6 +4,28 @@ typedef enum
       none, X, O
 } player;
 
+//Create global vars
+#define TRUE 1
+#define FALSE 0
+
+#define BOARD_SIZE 3
+
+#define TURN_PLAYER O
+#define TURN_COMP X
+
+#define MODE_EASY 1
+#define MODE_HARD 2
+
+#include <ctype.h>
+#include <getopt.h>
+#include <iostream>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
+#include <sysexits.h>
+#include <unistd.h>
+
 //prototypes of functions
 int getMove(void); //gets a number for the move the player wants to make and ensures accuracy with the current board
 void displayBoard(void); //shows the current board
@@ -23,25 +45,4 @@ int compMoveMain(int lastMove, player whoToMove); //this is the comp move, it is
 int compMove(player whoToMove);  //called by compMoveMain due to slight bug.
 long int GetInteger(int base);
 char* getcharcters(int max);
-void verbosePrint(char* str, bool isError = 0 );
-
-//Create global vars
-#define TRUE 1
-#define FALSE 0
-
-#define BOARD_SIZE 3
-
-#define TURN_PLAYER O
-#define TURN_COMP X
-
-#define MODE_EASY 1
-#define MODE_HARD 2
-
-#include <ctype.h>
-#include <getopt.h>
-#include <iostream>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sysexits.h>
-#include <unistd.h>
+void verbosePrint(std::string str, bool isError = 0 );

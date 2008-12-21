@@ -184,7 +184,7 @@ int getMove(void)
 			}
 			else
 			{
-				verbosePrint((char*)"Player is not allowed to cheat",1);
+				verbosePrint("Player is not allowed to cheat",1);
 			}
 		}
 		if (board[row][col]!=none){cont=true;} //if there was a move already there then retry
@@ -419,19 +419,19 @@ int compMoveMain(int lastMove, player whoToMove)
 }
 int compMove(player whoToMove)
 {
-	verbosePrint((char*)"trying first corner");
+	verbosePrint("trying first corner");
 	if (board[1][1]==none) //try going at corner 1 first
 	{
 		return (1);
 	}
 
-	verbosePrint((char*)"trying middle");
+	verbosePrint("trying middle");
 	if ((board[1][1]==whoToMove||board[1][BOARD_SIZE]==whoToMove||board[BOARD_SIZE][1]==whoToMove||board[BOARD_SIZE][BOARD_SIZE]==whoToMove)&&isEmpty(5)) //if any corners are filled go to middle
 	{
 		return (5);
 	}
 
-	verbosePrint((char*)"trying other corners");
+	verbosePrint("trying other corners");
 	//try the corners
 	if (board[1][BOARD_SIZE]==none)
 	{
@@ -450,7 +450,7 @@ int compMove(player whoToMove)
 		return (1);
 	}
 
-	verbosePrint((char*)"trying left overs");
+	verbosePrint("trying left overs");
 	/* (BOARD_SIZE * BOARD_SIZE) is needed to test all the available spots*/
 	for (int tmp=1;tmp<=(BOARD_SIZE * BOARD_SIZE);tmp++)
 	{
@@ -506,7 +506,7 @@ char* getcharcters(int max)
       return str;
 }
 
-inline void verbosePrint(char* str, bool isError) /*TODO: should change this to some method of passing stdin/stderr/...*/
+inline void verbosePrint(string str, bool isError) /*TODO: should change this to some method of passing stdin/stderr/...*/
 {
 	if (flag_verbose == TRUE)
 	{
