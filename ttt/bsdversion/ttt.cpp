@@ -56,18 +56,24 @@ int main (int argc, char* argv[])
 	cout << "Welcome to tik-tak-toe with a 'k'" << endl;
 	if (flag_num_players > 0)
 	{
-		/*FIXME: change this to which player moves first on 2 player mode */
-		cout << "Do you want to move first? [Y/N] ";
+		if (flag_num_players == 1)
+		{
+			cout << "Do you want to move first? [Y/N] ";
+		}
+		else
+		{
+			cout << "Do you want O to move first? [Y/N] ";
+		}
 	    	scanf("%c", &moveFirst);
 		/* endl after the question */
 		cout << endl;
 	    	if (moveFirst == 'Y')
 		{
-      		turn = TURN_PLAYER;
+      		turn = TURN_PLAYER;  	// O
 		}
     		else
 		{
-	      	turn = TURN_COMP;
+	      	turn = TURN_COMP; 	// X
 		}
 	}
 	else
@@ -85,7 +91,7 @@ int main (int argc, char* argv[])
 		cont=(openSpace());
 		if (cont)
 		{
-			cout << "Player " << playerToString(turn) << "%c's turn." << endl;
+			cout << "Player " << playerToString(turn) << "'s turn." << endl;
 			/* show the board AFTER the move is made */
 			displayBoard();
 			compNow = FALSE;
@@ -308,7 +314,11 @@ bool openSpace()
 	{
 		for (int col=1;col<=BOARD_SIZE;col++)
 		{
-			if (board[row][col]==none){return (true);} //if there is an open space say so
+			/*if there is an open space say so*/
+			if (board[row][col]==none)
+			{
+				return (true);
+			}
 		}
 	}
 	return (false); //if it completes the loop there is no open space
@@ -316,6 +326,7 @@ bool openSpace()
 
 int nextMoveWin(int lastMove, player whoToWin)
 {
+	/*FIXME: segfaults on --nohuman*/
 	int row, col;
 	row = getRowFromID(lastMove);
 	col = getColFromID(lastMove);
@@ -330,7 +341,10 @@ int nextMoveWin(int lastMove, player whoToWin)
 			{
 				if (board[emptySpace][col]==none)
 				{
-					if (board[row][col]==whoToWin) {return (getID(emptySpace, col));}
+					if (board[row][col]==whoToWin)
+					{
+						return (getID(emptySpace, col));
+					}
 				}
 
 			}
