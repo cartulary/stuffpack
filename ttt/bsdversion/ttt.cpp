@@ -1,6 +1,6 @@
 /*
 Tik-Tak-Toe CTY Final Project
-Version 0.04
+Version 0.05
 */
 
 #include "ttt.h"
@@ -105,7 +105,14 @@ int main (int argc, char* argv[])
 			}
 			if (compNow == TRUE)
 			{
-				lastMoveX = compMoveMain(lastMoveX, turn);
+				if (turn == X)
+				{
+					lastMoveX = compMoveMain(lastMoveX, turn);
+				}
+				else
+				{
+					lastMoveO = compMoveMain(lastMoveO, turn);
+				}
 			}
 			else
 			{
@@ -289,7 +296,7 @@ bool checkWin(void)
 	3-5-7
 	*/
 	bool win=false; //assume not win.
-	
+
 	//check all win senarios
 	//win by row
 	if  (board[1][1]==board[1][2]&&board[1][1]==board[1][3]&&board[1][1]!=none){win=true;} 
@@ -317,11 +324,11 @@ bool openSpace()
 			/*if there is an open space say so*/
 			if (board[row][col]==none)
 			{
-				return (true);
+				return (TRUE);
 			}
 		}
 	}
-	return (false); //if it completes the loop there is no open space
+	return (FALSE); //if it completes the loop there is no open space
 }
 
 int nextMoveWin(int lastMove, player whoToWin)
