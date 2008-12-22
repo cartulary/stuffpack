@@ -24,19 +24,19 @@
 	{
 		if (file_exists($file))
 		{
-			fwrite(STDERR,"fatal error: $file exists");
+			fwrite(STDERR,"fatal error: $file exists\n");
 		}
 		else
 		{
 			if ($debug)
 			{
-				echo "starting execution of $file ...";
-				echo "we are done";
+				echo "starting execution of $file ...\n";
+				echo "we are done\n";
 			}
 		}
 	}
 	if ($debug)
 	{
-		echo "we are done\n";
+		echo "we are really done\n";
 	}
 ?>
