@@ -3,7 +3,7 @@ $debug = false;
 @files = ();
 foreach $argnum (0 .. $#ARGV)
 {
-	if ($ARGV[$argnum]=='-debug')
+	if ($ARGV[$argnum] == '-debug')
 	{
 		$debug = true;
 	}
@@ -13,7 +13,7 @@ foreach $argnum (0 .. $#ARGV)
 	}
 }
 
-foreach $argnum (0 .. @files)
+foreach $argnum (0 .. @files -1)
 {
 	$file = @files[$argnum];
 	if ( -e $file )
