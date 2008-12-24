@@ -9,11 +9,9 @@ foreach $argnum (0 .. $#ARGV)
 	}
 	else
 	{
-		#perl does not add itself to the CLI arguments apperently
 		@files = (@files,$ARGV[$argnum]);
 	}
 }
-print "$debug\n";
 
 foreach $argnum (0 .. @files)
 {
