@@ -2,6 +2,7 @@
 <?php
 	$files = array();
 	$debug = false;
+	array_shift($argv);
 	foreach ($argv as $arg)
 	{
 		if ($arg == '-debug')
@@ -10,10 +11,7 @@
 		}
 		else
 		{
-			if ($arg != $argv[0])
-			{
-				$files[] = $arg;
-			}
+			$files[] = $arg;
 		}
 	}
 
