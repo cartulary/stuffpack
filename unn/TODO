@@ -2,7 +2,6 @@ add check to ensure that all version of the program are the same and follow the 
 
 To do:
 C
-Java
 Basic
 C#
 Ada ?
@@ -18,3 +17,4 @@ php
 c++
 bash
 Ruby
+Java

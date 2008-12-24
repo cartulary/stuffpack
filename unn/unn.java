@@ -1,36 +1,46 @@
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.io.File;
+
 public class unn
 {
 	public static void main(String[] args)
 	{
-		Boolean debug = false;
+		Boolean debug = Boolean.FALSE;
 		ArrayList files = new ArrayList();
 		Iterator filesIt;
 
 		for (String arg : args)
 		{
-			if (arg != "-debug")
+			if (!arg.equals("-debug"))
 			{
 				files.add(arg);
 			}
 			else
 			{
-				debug = true;
+				debug = Boolean.TRUE;
 			}
 		}
 		filesIt = files.iterator();
 		String file;
+		File f;
 		while (filesIt.hasNext())
 		{
 			file = filesIt.next().toString(); 
-			if (debug==true)
+    			f = new File(file);
+			if (f.exists())
 			{
-				System.out.println("starting execution of " + file + " ...");
-				System.out.println("we are done");
-
+				System.err.println("fatal error: " + file + " exists");
 			}
-			System.out.println(file);
+			else
+			{
+				if (debug)
+				{
+					System.out.println("starting execution of " + file + " ...");
+					System.out.println("we are done");
+
+				}
+			}
 		}
    	}
 }
