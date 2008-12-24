@@ -13,8 +13,7 @@ for arg in sys.argv:
 
 for file in files:
 	if (os.path.exists(file)):
-		toOut = "fatal error: " + file + " exists\n";
-		sys.stderr.write (toOut);
+		sys.stderr.write ("fatal error: " + file + " exists\n");
 	else:
 		if (debug):
 			print "starting execution of ",file," ...";
