@@ -17,10 +17,6 @@
 		}
 	}
 
-	if ($debug)
-	{
-		echo "debug on\n";
-	}
 	foreach ($files as $file)
 	{
 		if (file_exists($file))
@@ -35,9 +31,5 @@
 				echo "we are done\n";
 			}
 		}
-	}
-	if ($debug)
-	{
-		echo "we are really done\n";
 	}
 ?>
