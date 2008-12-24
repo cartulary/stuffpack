@@ -1,17 +1,17 @@
 add check to ensure that all version of the program are the same and follow the standard"
 
 langs
-C++
 C
 Ruby
 Java
 Basic
 C#
 Ada ?
-Bash ?
 Portable sh
 
 Done:
 python
 perl
 php
+c++
+bash
