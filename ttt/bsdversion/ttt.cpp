@@ -334,6 +334,7 @@ bool openSpace()
 int nextMoveWin(int lastMove, player whoToWin)
 {
 	/*FIXME: segfaults on --nohuman*/
+	/* row is not set correctly when X is whoToWin -> working on debuging*/
 	int row, col;
 	row = getRowFromID(lastMove);
 	col = getColFromID(lastMove);
