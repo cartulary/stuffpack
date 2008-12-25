@@ -1,4 +1,4 @@
-CFLAGS := -g -pipe
+CFLAGS := -g3 -pipe
 .ifdef $(LANG) == c++
 CC := g++
 CFLAGS += -ansi
