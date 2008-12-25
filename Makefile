@@ -11,10 +11,11 @@ CFLAGS += -Wimplicit-function-declaration -Wbad-function-cast -Wdeclaration-afte
 
 CFLAGS += -Wall -Wextra -pedantic -Wabi
 CFLAGS += -Wformat=2 -Wformat-y2k -Wformat-nonliteral -Wformat-security
-CFLAGS += -Wunused -Wunused-parameter -Wunknown-pragmas
+CFLAGS += -Wunused -Wunused-parameter
 CFLAGS += -Wctor-dtor-privacy -Wnon-virtual-dtor -Wstrict-null-sentinel -Wstrict-null-sentinel -Woverloaded-virtual -Wsign-promo
 CFLAGS += -Winit-self -Wmissing-include-dirs -Wfloat-equal
 CFLAGS += -Wfloat-equal -Wundef -Wshadow -Wcast-qual -Wcast-align
+CFLAGS += -fno-gnu-keywords -fabi-version=0
 CFLAGS += -ffor-scope -funroll-loops
 
 PREFIX = /usr/local
