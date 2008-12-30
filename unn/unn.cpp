@@ -42,6 +42,10 @@ int main(int argc, char* argv[])
 			if (debug)
 			{
                   	cout << "starting execution of " << files.at(i) << " ..." << endl;
+			}
+			__asm__("nop;");
+                  if (debug)
+			{
                   	cout << "we are done" << endl;
 			}
 		}
