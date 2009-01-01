@@ -15,6 +15,7 @@ bool catFile(char *file);
 inline const char *itos(int num);
 string vStyle (string str);
 string strReplace (string str, string old, string newStr);
+string asciify(const char *str ,int size);
 
 bool numLineFlag = false, allLineNumFlag = false, squeezeBlankFlag = false;
 bool dispNotPrintingFlag = false, dispDollarFlag = false, dispTabFlag = false;
@@ -33,20 +34,14 @@ int main(int argc, char *argv[])
 				break;
 			case 'b':
 				numLineFlag = true;
-				allLineNumFlag = false; //compat with bsdcat
+				allLineNumFlag = false; //compat with bsdcat (-bn)
 				break;
 			case 'e':
 				dispDollarFlag = dispNotPrintingFlag = true;
 			case 't':
 				dispTabFlag = dispNotPrintingFlag = true;
-				 /* Display non-printing characters (see the -v option), and display
-             tab characters as `^I' */ // include -v
 			case 'v':
-				/* Display non-printing characters so they are visible.  Control
-             characters print as `^X' for control-X; the delete character
-             (octal 0177) prints as `^?'.  Non-ASCII characters (with the high
-             bit set) are printed as `M-' (for meta) followed by the character
-             for the low 7 bits. */
+				dispNotPrintingFlag = true;
 				break;
 			case 's':
 				squeezeBlankFlag = true;
@@ -156,11 +151,11 @@ string vStyle (string str)
 	good = str;
 	if (dispNotPrintingFlag)
 	{
-		/*TODO add conversion between non-ascii and ascii*/
 		if (dispTabFlag)
 		{
 			good = strReplace(str,"\t","^I");
 		}
+		good = asciify(good.c_str(), good.size());
 	}
 	return good;
 }
@@ -174,5 +169,18 @@ string strReplace(string str, string old, string newStr)
         	++pos;
     	}
 	return str;
+}
+
+string asciify(const char *str ,int size)
+{
+	/*FIXME */
+	for (int i = 0; i < size; ++i)
+	{
+		if (!isprint(str[i]))
+		{
+			cout << "die!" << endl;
+		}
+	}
+	return  str;
 }
 
