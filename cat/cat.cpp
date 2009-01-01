@@ -9,13 +9,17 @@
 #include <string>
 #include <sstream>
 
+using namespace std;
+
 bool catFile(char *file);
 inline const char *itos(int num);
+string vStyle (string str);
+string strReplace (string str, string old, string newStr);
 
 bool numLineFlag = false, allLineNumFlag = false, squeezeBlankFlag = false;
 bool dispNotPrintingFlag = false, dispDollarFlag = false, dispTabFlag = false;
 
-using namespace std;
+
 int main(int argc, char *argv[])
 {
 	int c;
@@ -81,10 +85,6 @@ bool catFile(char *file)
 	{
 		postline = "$";
 	}
-	if (dispNotPrintingFlag)
-	{
-		postline += "[np]";
-	}
 	ifstream toCat;
 	int lineNum = 1;
 	toCat.open(file, ios::out);
@@ -99,7 +99,7 @@ bool catFile(char *file)
 				if (line.size() != 0)
 				{
 					lastLineFull = true;
-	                  	printf("%d %s%s\n", lineNum, line.c_str(), postline.c_str());
+	                  	printf("%d %s%s\n", lineNum, vStyle(line).c_str(), postline.c_str());
 					++lineNum;
 				}
 				else
@@ -120,7 +120,7 @@ bool catFile(char *file)
                         if (line.size() != 0)
                         {
                               lastLineFull = true;
-					printf("%s%s\n", line.c_str(),postline.c_str());
+					printf("%s%s\n", vStyle(line).c_str(),postline.c_str());
 				}
 				else
 				{
@@ -148,7 +148,21 @@ inline const char *itos(int num)
 	return oss.str().c_str();
 }
 
-string strReplace(string old, string newStr);
+
+string vStyle (string str)
+{
+	string good;
+	good = str;
+	if (dispNotPrintingFlag)
+	{
+		/*TODO add conversion between non-ascii and ascii*/
+		if (dispTabFlag)
+		{
+			good = strReplace(str,"\t","^I");
+		}
+	}
+	return good;
+}
 
 string strReplace(string str, string old, string newStr)
 {
@@ -158,7 +172,6 @@ string strReplace(string str, string old, string newStr)
       	str.replace( pos, old.size(), newStr );
         	pos++;
     	}
-    	cout << str << endl;
-	return 0;
+	return str;
 }
 
