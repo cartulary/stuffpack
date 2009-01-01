@@ -18,6 +18,7 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 	int c;
+	int toReturn = 0;
       while ((c = getopt (argc, argv, "benstuv")) != -1)
 	{
       	switch (c)
@@ -44,6 +45,7 @@ int main(int argc, char *argv[])
 			if ( ! catFile(argv[i]) )
 			{
       			fprintf (stderr,"cat: %s: No such file or directory\n", argv[i]);
+				toReturn = 1;
 			}
 		}
 		else
@@ -51,7 +53,7 @@ int main(int argc, char *argv[])
 			printf("stdin!\n");
 		}
 	}
-      return 0;
+      return toReturn;
 }
 
 bool catFile(char *file)
