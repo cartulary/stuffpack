@@ -99,8 +99,19 @@ bool catFile(char *file)
 			}
 			else
 			{
-					/*TODO -s*/
+                        if (line.size() != 0)
+                        {
+                              lastLineFull = true;
 					printf("%s\n", line.c_str());
+				}
+				else
+				{
+	                        if ( ! squeezeBlankFlag || lastLineFull)
+                              {
+						printf("\n");
+                              }
+                              lastLineFull = false;
+				}
 			}
     		}
 		toCat.close();
