@@ -84,7 +84,7 @@ int main (int argc, char* argv[])
 
 	bool compNow;
 	bool cont=true;
-	int lastMoveO,lastMoveX;
+	int lastMoveO = 0 ,lastMoveX = 0;
 	do
 	{
 		/* if there is no open space - stop */
@@ -107,11 +107,11 @@ int main (int argc, char* argv[])
 			{
 				if (turn == X)
 				{
-					lastMoveX = compMoveMain(lastMoveX, turn);
+					lastMoveX = compMoveMain(lastMoveX, X);
 				}
 				else
 				{
-					lastMoveO = compMoveMain(lastMoveO, turn);
+					lastMoveO = compMoveMain(lastMoveO, O);
 				}
 			}
 			else
@@ -333,8 +333,6 @@ bool openSpace()
 
 int nextMoveWin(int lastMove, player whoToWin)
 {
-	/*FIXME: segfaults on --nohuman*/
-	/* row is not set correctly when X is whoToWin -> working on debuging*/
 	int row, col;
 	row = getRowFromID(lastMove);
 	col = getColFromID(lastMove);
