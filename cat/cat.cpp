@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 		{
 			if ( ! catFile(argv[i]) )
 			{
-      			printf ("%s failed \n", argv[i]);
+      			fprintf (stderr,"cat: %s: No such file or directory\n", argv[i]);
 			}
 		}
 		else
@@ -53,7 +53,6 @@ bool catFile(char *file)
 	string line;
 	ifstream toCat;
 	int lineNum = 1;
-	string empty = "";
 	toCat.open(file, ios::out);
 
 	if (toCat.is_open())
@@ -63,15 +62,8 @@ bool catFile(char *file)
 			getline(toCat, line);
 			if (numLineFlag)
 			{
-				if ( ! line.compare(empty) != 0)
-				{
-	                  	printf("%s %s\n", itos(lineNum), line.c_str());
-					++lineNum;
-				}
-				else
-				{
-					printf("\n");
-				}
+                  	printf("%d %s %s\n", line.size(), itos(lineNum), line.c_str());
+				++lineNum;
 			}
 			else
 			{
