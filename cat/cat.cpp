@@ -82,7 +82,7 @@ bool catFile(char *file)
 				}
 				else
 				{
-					if ( ! squeezeBlankFlag)
+					if ( ! squeezeBlankFlag || lastLineFull)
 					{
 						if (allLineNumFlag)
 						{
