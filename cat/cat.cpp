@@ -32,7 +32,9 @@ int main(int argc, char *argv[])
 				break;
 			case 'e':
 				dispDollarFlag = dispNotPrintingFlag = true;
-			case 't': /* Display non-printing characters (see the -v option), and display
+			case 't':
+				dispTabFlag = dispNotPrintingFlag = true;
+				 /* Display non-printing characters (see the -v option), and display
              tab characters as `^I' */ // include -v
 			case 'v':
 				/* Display non-printing characters so they are visible.  Control
@@ -79,6 +81,10 @@ bool catFile(char *file)
 	{
 		postline = "$";
 	}
+	if (dispNotPrintingFlag)
+	{
+		postline += "[np]";
+	}
 	ifstream toCat;
 	int lineNum = 1;
 	toCat.open(file, ios::out);
@@ -93,7 +99,7 @@ bool catFile(char *file)
 				if (line.size() != 0)
 				{
 					lastLineFull = true;
-	                  	printf("%d %s", lineNum, line.c_str());
+	                  	printf("%d %s%s\n", lineNum, line.c_str(), postline.c_str());
 					++lineNum;
 				}
 				else
@@ -102,20 +108,19 @@ bool catFile(char *file)
 					{
 						if (allLineNumFlag)
 						{
-							printf("%d ", lineNum);
+							printf("%d %s", lineNum, postline.c_str());
 							++lineNum;
 						}
 					}
 					lastLineFull = false;
 				}
-				printf("%s\n",postline.c_str());
 			}
 			else
 			{
                         if (line.size() != 0)
                         {
                               lastLineFull = true;
-					printf("%s\n", line.c_str());
+					printf("%s%s\n", line.c_str(),postline.c_str());
 				}
 				else
 				{
@@ -142,3 +147,18 @@ inline const char *itos(int num)
 	oss<<num;
 	return oss.str().c_str();
 }
+
+string strReplace(string old, string newStr);
+
+string strReplace(string str, string old, string newStr)
+{
+	string::size_type pos = 0;
+    	while ( (pos = str.find(old, pos)) != string::npos)
+	{
+      	str.replace( pos, old.size(), newStr );
+        	pos++;
+    	}
+    	cout << str << endl;
+	return 0;
+}
+
