@@ -93,7 +93,7 @@ bool catFile(char *file)
 				if (line.size() != 0)
 				{
 					lastLineFull = true;
-	                  	printf("%d %s%s\n", lineNum, line.c_str(),postline.c_str());
+	                  	printf("%d %s", lineNum, line.c_str());
 					++lineNum;
 				}
 				else
@@ -102,16 +102,13 @@ bool catFile(char *file)
 					{
 						if (allLineNumFlag)
 						{
-							printf("%d%s\n",lineNum,postline.c_str());
+							printf("%d ", lineNum);
 							++lineNum;
-						}
-						else
-						{
-							printf("%s\n",postline.c_str());
 						}
 					}
 					lastLineFull = false;
 				}
+				printf("%s\n",postline.c_str());
 			}
 			else
 			{
@@ -124,7 +121,7 @@ bool catFile(char *file)
 				{
 	                        if ( ! squeezeBlankFlag || lastLineFull)
                               {
-						printf("\n");
+						printf("%s\n", postline.c_str());
                               }
                               lastLineFull = false;
 				}
