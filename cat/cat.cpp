@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 		}
 		else
 		{
-			printf("stdin!\n");
+			fprintf(stderr, "can not deal with stdin");
 		}
 	}
       return toReturn;
