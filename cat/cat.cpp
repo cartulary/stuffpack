@@ -25,11 +25,14 @@ int main(int argc, char *argv[])
 		{
 			case 'b':
 				numLineFlag = true;
+				break;
 			case 'n':
 				allLineNumFlag = true;
 				numLineFlag = true;
+				break;
 			case 's':
-				squeezeBlankFlag = false;
+				squeezeBlankFlag = true;
+				break;
 			case 'u':
 				setbuf (stdout, NULL);
 				break;
@@ -71,24 +74,32 @@ bool catFile(char *file)
 			getline(toCat, line);
 			if (numLineFlag)
 			{
-				if (line.size() != 0  || allLineNumFlag)
+				if (line.size() != 0)
 				{
 					lastLineFull = true;
-	                  	printf("%s %s\n", itos(lineNum), line.c_str());
+	                  	printf("%d %s\n", lineNum, line.c_str());
 					++lineNum;
 				}
 				else
 				{
-					if (squeezeBlankFlag && lastLineFull)
+					if ( ! squeezeBlankFlag)
 					{
-						printf("\n");
+						if (allLineNumFlag)
+						{
+							printf("%d\n",lineNum);
+							++lineNum;
+						}
+						else
+						{
+							printf("\n");
+						}
 					}
 					lastLineFull = false;
 				}
 			}
 			else
 			{
-		/*TODO -s*/
+					/*TODO -s*/
 					printf("%s\n", line.c_str());
 			}
     		}
