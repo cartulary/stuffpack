@@ -23,12 +23,23 @@ int main(int argc, char *argv[])
 	{
       	switch (c)
 		{
+			case 'n':
+				allLineNumFlag = true;
+				//no break
 			case 'b':
 				numLineFlag = true;
 				break;
-			case 'n':
-				allLineNumFlag = true;
-				numLineFlag = true;
+			case 'e':
+				//add $ as well
+				//include -v
+			case 't': /* Display non-printing characters (see the -v option), and display
+             tab characters as `^I' */ // include -v
+			case 'v':
+				/* Display non-printing characters so they are visible.  Control
+             characters print as `^X' for control-X; the delete character
+             (octal 0177) prints as `^?'.  Non-ASCII characters (with the high
+             bit set) are printed as `M-' (for meta) followed by the character
+             for the low 7 bits. */
 				break;
 			case 's':
 				squeezeBlankFlag = true;
