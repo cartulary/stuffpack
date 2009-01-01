@@ -108,7 +108,7 @@ bool catFile(char *file)
 					{
 						if (allLineNumFlag)
 						{
-							printf("%d %s", lineNum, postline.c_str());
+							printf("%d %s\n", lineNum, postline.c_str());
 							++lineNum;
 						}
 					}
