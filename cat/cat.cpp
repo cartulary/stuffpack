@@ -1,3 +1,4 @@
+/* change in behavior with -bn */
 #include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
@@ -11,7 +12,7 @@
 bool catFile(char *file);
 inline const char *itos(int num);
 
-bool numLineFlag = false;
+bool numLineFlag = false, allLineNumFlag = false, squeezeBlankFlag = false;
 
 using namespace std;
 int main(int argc, char *argv[])
@@ -23,6 +24,11 @@ int main(int argc, char *argv[])
 		{
 			case 'b':
 				numLineFlag = true;
+			case 'n':
+				allLineNumFlag = true;
+				numLineFlag = true;
+			case 's':
+				squeezeBlankFlag = false;
 			case 'u':
 				setbuf (stdout, NULL);
 				break;
@@ -50,6 +56,7 @@ int main(int argc, char *argv[])
 
 bool catFile(char *file)
 {
+	bool lastLineFull = true;
 	string line;
 	ifstream toCat;
 	int lineNum = 1;
@@ -62,12 +69,25 @@ bool catFile(char *file)
 			getline(toCat, line);
 			if (numLineFlag)
 			{
-                  	printf("%d %s %s\n", line.size(), itos(lineNum), line.c_str());
-				++lineNum;
+				if (line.size() != 0  || allLineNumFlag)
+				{
+					lastLineFull = true;
+	                  	printf("%s %s\n", itos(lineNum), line.c_str());
+					++lineNum;
+				}
+				else
+				{
+					if (squeezeBlankFlag && lastLineFull)
+					{
+						printf("\n");
+					}
+					lastLineFull = false;
+				}
 			}
 			else
 			{
-				printf("%s\n", line.c_str());
+		/*TODO -s*/
+					printf("%s\n", line.c_str());
 			}
     		}
 		toCat.close();
