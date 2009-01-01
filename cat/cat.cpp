@@ -29,10 +29,11 @@ int main(int argc, char *argv[])
       	switch (c)
 		{
 			case 'n':
-				allLineNumFlag = true;
-				//no break
+				allLineNumFlag = numLineFlag = true;
+				break;
 			case 'b':
 				numLineFlag = true;
+				allLineNumFlag = false; //compat with bsdcat
 				break;
 			case 'e':
 				dispDollarFlag = dispNotPrintingFlag = true;
@@ -170,7 +171,7 @@ string strReplace(string str, string old, string newStr)
     	while ( (pos = str.find(old, pos)) != string::npos)
 	{
       	str.replace( pos, old.size(), newStr );
-        	pos++;
+        	++pos;
     	}
 	return str;
 }
