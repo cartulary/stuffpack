@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 		}
 
 	}
-      for (int i = optind; i < argc; i++)
+      for (int i = optind; i < argc; ++i)
 	{
 		if ( strcmp(argv[i] , "-") )
 		{
