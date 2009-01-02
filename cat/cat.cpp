@@ -95,7 +95,7 @@ bool catFile(char *file)
 				if (line.size() != 0)
 				{
 					lastLineFull = true;
-	                  	printf("%d %s%s\n", lineNum, vStyle(line).c_str(), postline.c_str());
+					cout << lineNum << " " << vStyle(line).c_str() << postline.c_str() << endl;
 					++lineNum;
 				}
 				else
@@ -104,7 +104,7 @@ bool catFile(char *file)
 					{
 						if (allLineNumFlag)
 						{
-							printf("%d %s\n", lineNum, postline.c_str());
+							cout << lineNum << " " << postline.c_str() << endl;
 							++lineNum;
 						}
 					}
@@ -116,7 +116,7 @@ bool catFile(char *file)
                         if (line.size() != 0)
                         {
                               lastLineFull = true;
-					printf("%s%s\n", vStyle(line).c_str(),postline.c_str());
+					cout << vStyle(line).c_str() << postline.c_str() << endl;
 				}
 				else
 				{
