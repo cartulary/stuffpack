@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 		{
 			if ( ! catFile(argv[i]) )
 			{
-      			fprintf (stderr,"cat: %s: No such file or directory\n", argv[i]);
+      			cerr << "cat: " << argv[i] << ": No such file or directory" << endl;
 				toReturn = 1;
 			}
 		}
@@ -155,7 +155,13 @@ string vStyle (string str)
 		{
 			good = strReplace(str,"\t","^I");
 		}
-		good = asciify(good.c_str(), good.size());
+//		good = asciify(good.c_str(), good.size());
+            good = strReplace(str,"\a","^G");
+            good = strReplace(str,"\b","^H");
+            good = strReplace(str,"\n","\\n");
+            good = strReplace(str,"\f","\\f");
+            good = strReplace(str,"\r","^M");
+            good = strReplace(str,"\e","^^");
 	}
 	return good;
 }
@@ -173,7 +179,9 @@ string strReplace(string str, string old, string newStr)
 
 string asciify(const char *str ,int size)
 {
+
 	/*FIXME */
+
 	for (int i = 0; i < size; ++i)
 	{
 		if (!isprint(str[i]))
@@ -181,6 +189,7 @@ string asciify(const char *str ,int size)
 			cout << "die!" << endl;
 		}
 	}
+
 	return  str;
 }
 
