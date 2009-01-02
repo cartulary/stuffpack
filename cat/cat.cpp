@@ -66,7 +66,8 @@ int main(int argc, char *argv[])
 		}
 		else
 		{
-			cerr << "can not deal with stdin" << endl;
+			catFile("/dev/stdin");
+//			cerr << "can not deal with stdin" << endl;
 		}
 	}
       return toReturn;
