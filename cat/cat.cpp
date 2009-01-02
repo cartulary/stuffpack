@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 		}
 		else
 		{
-			fprintf(stderr, "can not deal with stdin");
+			cerr << "can not deal with stdin" << endl;
 		}
 	}
       return toReturn;
@@ -122,7 +122,7 @@ bool catFile(char *file)
 				{
 	                        if ( ! squeezeBlankFlag || lastLineFull)
                               {
-						printf("%s\n", postline.c_str());
+						cout << postline.c_str() << endl;
                               }
                               lastLineFull = false;
 				}
@@ -161,7 +161,6 @@ string vStyle (string str)
             good = strReplace(str,"\n","\\n");
             good = strReplace(str,"\f","\\f");
             good = strReplace(str,"\r","^M");
-            good = strReplace(str,"\e","^^");
 	}
 	return good;
 }
