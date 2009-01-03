@@ -9,7 +9,7 @@
 
 using namespace std;
 
-bool catFile(char *file);
+bool catFile(const char *file);
 inline const char *itos(int num);
 string vStyle (string str);
 string strReplace (string str, string old, string newStr);
@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
       return toReturn;
 }
 
-bool catFile(char *file)
+bool catFile(const char *file)
 {
 	bool lastLineFull = true;
 	string line;
@@ -190,4 +190,3 @@ string asciify(const char *str ,int size)
 
 	return  str;
 }
-
