@@ -1,4 +1,6 @@
-#include <stdio>
+// instead of including stdio :) //
+int puts(const char *);
+
 int main (int argc, char *argv[])
 {
 	char *expletive = "y";
