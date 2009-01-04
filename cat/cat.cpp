@@ -10,10 +10,12 @@
 using namespace std;
 
 bool catFile(const char *file);
+bool doCatFile (ifstream &file);
 inline const char *itos(int num);
 string vStyle (string str);
 string strReplace (string str, string old, string newStr);
 string asciify(const char *str ,int size);
+
 
 bool numLineFlag = false, allLineNumFlag = false, squeezeBlankFlag = false;
 bool dispNotPrintingFlag = false, dispDollarFlag = false, dispTabFlag = false;
@@ -64,13 +66,13 @@ int main(int argc, char *argv[])
 		}
 		else
 		{
-			catFile((const char*)&cin);
+			doCatFile(cin);
 		}
 	}
       return toReturn;
 }
 
-bool catFile(const char *file)
+bool doCatFile (ifstream &toCat)
 {
 	bool lastLineFull = true;
 	string line;
@@ -79,10 +81,7 @@ bool catFile(const char *file)
 	{
 		postline = "$";
 	}
-	ifstream toCat;
 	int lineNum = 1;
-	toCat.open(file, ios::out);
-
 	if (toCat.is_open())
 	{
 		while (! toCat.eof() )
@@ -126,13 +125,24 @@ bool catFile(const char *file)
 				}
 			}
     		}
-		toCat.close();
 		return true;
 	}
 	else
 	{
 		return false;
 	}
+
+}
+
+
+bool catFile(const char *file)
+{
+	bool returnVal;
+      ifstream toCat;
+      toCat.open(file, ios::out);
+	returnVal = doCatFile(toCat);
+      toCat.close();
+	return returnVal;
 }
 
 inline const char *itos(int num)
