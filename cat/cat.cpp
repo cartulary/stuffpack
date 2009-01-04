@@ -10,7 +10,7 @@
 using namespace std;
 
 bool catFile(const char *file);
-bool doCatFile (ifstream &file);
+bool doCatFile (istream &toCat);
 inline const char *itos(int num);
 string vStyle (string str);
 string strReplace (string str, string old, string newStr);
@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
       return toReturn;
 }
 
-bool doCatFile (ifstream &toCat)
+bool doCatFile (istream &toCat)
 {
 	bool lastLineFull = true;
 	string line;
@@ -82,56 +82,48 @@ bool doCatFile (ifstream &toCat)
 		postline = "$";
 	}
 	int lineNum = 1;
-	if (toCat.is_open())
+	while (! toCat.eof() )
 	{
-		while (! toCat.eof() )
+		getline(toCat, line);
+		if (numLineFlag)
 		{
-			getline(toCat, line);
-			if (numLineFlag)
+			if (line.size() != 0)
 			{
-				if (line.size() != 0)
-				{
-					lastLineFull = true;
-					cout << lineNum << " " << vStyle(line).c_str() << postline.c_str() << endl;
-					++lineNum;
-				}
-				else
-				{
-					if ( ! squeezeBlankFlag || lastLineFull)
-					{
-						if (allLineNumFlag)
-						{
-							cout << lineNum << " " << postline.c_str() << endl;
-							++lineNum;
-						}
-					}
-					lastLineFull = false;
-				}
+				lastLineFull = true;
+				cout << lineNum << " " << vStyle(line).c_str() << postline.c_str() << endl;
+				++lineNum;
 			}
 			else
 			{
-                        if (line.size() != 0)
-                        {
-                              lastLineFull = true;
-					cout << vStyle(line).c_str() << postline.c_str() << endl;
-				}
-				else
+				if ( ! squeezeBlankFlag || lastLineFull)
 				{
-	                        if ( ! squeezeBlankFlag || lastLineFull)
-                              {
-						cout << postline.c_str() << endl;
-                              }
-                              lastLineFull = false;
+					if (allLineNumFlag)
+					{
+						cout << lineNum << " " << postline.c_str() << endl;
+						++lineNum;
+					}
 				}
+				lastLineFull = false;
 			}
-    		}
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-
+		}
+		else
+		{
+       		if (line.size() != 0)
+                  {
+                  	lastLineFull = true;
+				cout << vStyle(line).c_str() << postline.c_str() << endl;
+			}
+			else
+			{
+                  	if ( ! squeezeBlankFlag || lastLineFull)
+                        {
+					cout << postline.c_str() << endl;
+                        }
+                        lastLineFull = false;
+			}
+		}
+   	}
+	return true;
 }
 
 
@@ -140,8 +132,15 @@ bool catFile(const char *file)
 	bool returnVal;
       ifstream toCat;
       toCat.open(file, ios::out);
-	returnVal = doCatFile(toCat);
-      toCat.close();
+	if (toCat.is_open())
+      {
+		returnVal = doCatFile(toCat);
+	      toCat.close();
+	}
+	else
+	{
+		return false;
+	}
 	return returnVal;
 }
 
