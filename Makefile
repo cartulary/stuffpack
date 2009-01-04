@@ -19,6 +19,3 @@ CFLAGS += -fno-gnu-keywords -fabi-version=0
 CFLAGS += -ffor-scope -funroll-loops
 
 PREFIX = /usr/local
-
-
-### update to c99 standard eventually ??? ###
