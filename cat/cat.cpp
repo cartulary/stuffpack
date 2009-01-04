@@ -1,12 +1,11 @@
 /* change in behavior with -bn */
-#include <stdio.h>
-#include <stdlib.h>
+#include <fstream>
 #include <getopt.h>
 #include <iostream>
-#include <fstream>
-#include <string>
 #include <sstream>
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
 using namespace std;
 
 bool catFile(const char *file);
@@ -16,10 +15,8 @@ string vStyle (string str);
 string strReplace (string str, string old, string newStr);
 string asciify(const char *str ,int size);
 
-
 bool numLineFlag = false, allLineNumFlag = false, squeezeBlankFlag = false;
 bool dispNotPrintingFlag = false, dispDollarFlag = false, dispTabFlag = false;
-
 
 int main(int argc, char *argv[])
 {
@@ -54,20 +51,28 @@ int main(int argc, char *argv[])
 		}
 
 	}
-      for (int i = optind; i < argc; ++i)
+	/* If we have files on command line - display them; else just display cin once.*/
+	if (argc > 1)
 	{
-		if ( strcmp(argv[i] , "-") )
+	      for (int i = optind; i < argc; ++i)
 		{
-			if ( ! catFile(argv[i]) )
+		if ( strcmp(argv[i] , "-") != 0 )
 			{
-      			cerr << "cat: " << argv[i] << ": No such file or directory" << endl;
-				toReturn = 1;
+				if ( ! catFile(argv[i]) )
+				{
+	      			cerr << "cat: " << argv[i] << ": No such file or directory" << endl;
+					toReturn = 1;
+				}
+			}
+			else
+			{
+				doCatFile(cin);
 			}
 		}
-		else
-		{
-			doCatFile(cin);
-		}
+	}
+	else
+	{
+		doCatFile(cin);
 	}
       return toReturn;
 }
