@@ -9,7 +9,7 @@
 using namespace std;
 
 bool catFile(const char *file);
-bool doCatFile (istream &toCat);
+void doCatFile (istream &toCat);
 inline const char *itos(int num);
 string vStyle (string str);
 string strReplace (string str, string old, string newStr);
@@ -77,12 +77,8 @@ int main(int argc, char *argv[])
       return toReturn;
 }
 
-bool doCatFile (istream &toCat)
+void doCatFile (istream &toCat)
 {
-	if (! toCat)
-	{
-		return false;
-	}
 	bool lastLineFull = true;
 	string line;
 	string postline = "";
@@ -132,23 +128,19 @@ bool doCatFile (istream &toCat)
 			}
 		}
    	}
-	return true;
 }
 
 
 bool catFile(const char *file)
 {
-	bool returnVal;
+	bool returnVal = false;
       ifstream toCat;
       toCat.open(file, ios::out);
 	if (toCat.is_open())
       {
-		returnVal = doCatFile(toCat);
+		doCatFile(toCat);
 	      toCat.close();
-	}
-	else
-	{
-		return false;
+		returnVal = true;
 	}
 	return returnVal;
 }
