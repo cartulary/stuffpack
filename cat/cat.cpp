@@ -35,8 +35,10 @@ int main(int argc, char *argv[])
 				break;
 			case 'e':
 				dispDollarFlag = dispNotPrintingFlag = true;
+				break;
 			case 't':
 				dispTabFlag = dispNotPrintingFlag = true;
+				break;
 			case 'v':
 				dispNotPrintingFlag = true;
 				break;
