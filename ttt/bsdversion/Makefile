@@ -15,4 +15,4 @@ ttt.o: ttt.h
 
 clean: 	
 	rm -fv *.o
-	rm ./ttt
+	rm -fv ./ttt

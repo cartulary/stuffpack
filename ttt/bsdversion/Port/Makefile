@@ -6,7 +6,7 @@
 #
 
 PORTNAME=		ttt-text
-PORTVERSION=	0.4
+PORTVERSION=	0.8
 CATEGORIES=		games
 MASTER_SITES=	http://stuffpack.googlecode.com/files/
 
