@@ -10,7 +10,6 @@ CFLAGS += -lncurses
 build:	main
 
 main: ../hanoi.cpp functions.cpp main.cpp
-#	$(CC) $(CFLAGS) -o $(NAME).bin $@
 
 functions.o: functions.h
 
