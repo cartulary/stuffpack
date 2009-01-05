@@ -8,8 +8,8 @@ CFLAGS += -ffor-scope
 
 #compiling options
 .PHONY:	all clean
-all:		ttt.cpp
-	$(CC) $(CFLAGS) -o ttt-text ttt.cpp
+all:		ttt.o
+ttt.o:	ttt.cpp
 
 clean: 	
 	rm -fv *.o
