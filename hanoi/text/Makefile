@@ -6,11 +6,11 @@ LANG = c++
 #compiling options
 .PHONY:	build clean
 
-build:	main.cpp
+build:	main
 
-clean: 	
-	rm -fv *.o
-main.cpp: ../hanoi.o functions.o
-	$(CC) $(CFLAGS) -o $(NAME).bin $@
+main:	../hanoi.cpp functions.cpp main.cpp
 
 functions.o: functions.h
+
+clean:
+	rm -fv *.o main

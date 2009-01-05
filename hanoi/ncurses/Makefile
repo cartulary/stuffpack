@@ -9,9 +9,9 @@ CFLAGS += -lncurses
 
 build:	main
 
-main: ../hanoi.cpp functions.cpp main.cpp
+main:	../hanoi.cpp functions.cpp main.cpp
 
 functions.o: functions.h
 
-clean: 	
+clean:
 	rm -fv *.o main
