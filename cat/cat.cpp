@@ -133,16 +133,15 @@ void doCatFile (istream &toCat)
 
 bool catFile(const char *file)
 {
-	bool returnVal = false;
       ifstream toCat;
       toCat.open(file, ios::out);
-	if (toCat.is_open())
+	if ( ! toCat)
       {
-		doCatFile(toCat);
-	      toCat.close();
-		returnVal = true;
+		return false;
 	}
-	return returnVal;
+	doCatFile(toCat);
+      toCat.close();
+	return true;
 }
 
 inline const char *itos(int num)
