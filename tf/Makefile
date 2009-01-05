@@ -3,7 +3,7 @@ LANG = c
 .include	<../Makefile>
 
 #compiling options
-.PHONY:	build clean
+.PHONY:	all clean
 
 all:	true false
 

@@ -1,12 +1,15 @@
 NAME=yes
 LANG = c
-.include	<../Makefile>
+.include    <../Makefile>
 
 #compiling options
-.PHONY:	build clean
+.PHONY:     clean
 
-build:	yes.c
-	$(CC) $(CFLAGS) -o $(NAME).bin yes.c
+all:  yes
 
-clean: 	
+yes:
+
+clean:
 	rm -fv *.o
+	rm ./yes
+
