@@ -79,6 +79,10 @@ int main(int argc, char *argv[])
 
 bool doCatFile (istream &toCat)
 {
+	if (! toCat)
+	{
+		return false;
+	}
 	bool lastLineFull = true;
 	string line;
 	string postline = "";
