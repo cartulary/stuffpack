@@ -1,22 +1,23 @@
 #include <fstream>
+#include <iterator>
 #include <iostream>
 #include <sstream>
 #include <stdio.h>
 #include <string>
 
+
 using namespace std;
 
 int main(int argc, const char *argv[])
 {
-	if (argc > 1)
-	{
-		string buf;
-		ofstream file;
-		file.open(argv[1]);
-		cin >> buf;
-		cout << buf;
-		file.close();
-	}
+	ofstream file;
+	file.open(argv[1]);
+	std::istream_iterator<char> it(std::cin);
+  	std::istream_iterator<char> end;
+  	std::string results(it, end);
+	cout << results;
+	file.close();
+
 	return 0;
 }
 
