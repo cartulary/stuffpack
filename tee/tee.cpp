@@ -4,7 +4,7 @@
 #include <sstream>
 #include <stdio.h>
 #include <string>
-
+#include <vector>
 
 using namespace std;
 bool appendFlag = false, ignoreSignalFlag = false;
@@ -20,15 +20,19 @@ int main(int argc, char *argv[])
                         break;
                   case 'i':
                         ignoreSignalFlag = true;
+				break;
 			default:
 				cerr << "broken" << endl;
 		}
 	}
       if (argc > 1)
       {
-            for (int i = optind; i < argc; ++i)
-            {
-			cerr << "we don't handle files yet: " << argv[i] << endl;
+		std::vector<std::ofstream*> fileList;
+		fileList.resize (argc - 1);
+		for(int i = 1; i < argc; ++i)
+		{
+			//ios::app for appendMode
+    			fileList[i] = new std::ofstream(argv[i]);
 		}
       }
 	else
