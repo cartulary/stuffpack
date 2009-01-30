@@ -34,11 +34,11 @@ int main(int argc, char *argv[])
 			//I need to find a better way to do this?  Is there a way to keep a pointer to the "mode"?
 			if (appendFlag)
 			{
-    				fileList[i] = new std::ofstream(argv[i],ios::app);
+    				fileList[i] = new std::ofstream(argv[i],ios::app | ios::binary);
 			}
 			else
 			{
-                        fileList[i] = new std::ofstream(argv[i],ios::out);
+                        fileList[i] = new std::ofstream(argv[i],ios::out | ios::binary);
 			}
 		}
       }
@@ -46,13 +46,9 @@ int main(int argc, char *argv[])
 	while ( ! cin.eof() )
 	{
 		getline(cin, line);
-		if (argc > 1)
+		for (std::vector<std::ofstream*>::iterator it = fileList.begin(); it != fileList.end(); ++it)
 		{
-            	for(int i = 1; i < argc; ++i)
-			{
-				cout << "i " << i << " size " << fileList.size() << " msize " << fileList.max_size() << " cap " << fileList.capacity() << endl;
-				fileList.at(i)->write(line.c_str(),line.length());
-			}
+			(*it)->write(line.c_str(),line.length());
 		}
 		cout << line << endl;
 	}
