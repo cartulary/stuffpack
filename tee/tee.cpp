@@ -31,8 +31,15 @@ int main(int argc, char *argv[])
 		fileList.resize (argc - 1);
 		for(int i = 1; i < argc; ++i)
 		{
-			//ios::app for appendMode
-    			fileList[i] = new std::ofstream(argv[i]);
+			//I need to find a better way to do this?  Is there a way to keep a pointer to the "mode"?
+			if (appendFlag)
+			{
+    				fileList[i] = new std::ofstream(argv[i],ios::app);
+			}
+			else
+			{
+                        fileList[i] = new std::ofstream(argv[i],ios::out);
+			}
 		}
       }
 	string line;
@@ -43,6 +50,7 @@ int main(int argc, char *argv[])
 		{
             	for(int i = 1; i < argc; ++i)
 			{
+				cout << "i " << i << " size " << fileList.size() << " msize " << fileList.max_size() << " cap " << fileList.capacity() << endl;
 				fileList.at(i)->write(line.c_str(),line.length());
 			}
 		}
