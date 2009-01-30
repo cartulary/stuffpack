@@ -25,9 +25,9 @@ int main(int argc, char *argv[])
 				cerr << "broken" << endl;
 		}
 	}
+	std::vector<std::ofstream*> fileList;
       if (argc > 1)
       {
-		std::vector<std::ofstream*> fileList;
 		fileList.resize (argc - 1);
 		for(int i = 1; i < argc; ++i)
 		{
@@ -35,15 +35,18 @@ int main(int argc, char *argv[])
     			fileList[i] = new std::ofstream(argv[i]);
 		}
       }
-	else
+	string line;
+	while ( ! cin.eof() )
 	{
-		string line;
-		while ( ! cin.eof() )
+		getline(cin, line);
+		if (argc > 1)
 		{
-			getline(cin, line);
-			cout << line << endl;
+            	for(int i = 1; i < argc; ++i)
+			{
+				fileList.at(i)->write(line.c_str(),line.length());
+			}
 		}
+		cout << line << endl;
 	}
 	return 0;
 }
-
