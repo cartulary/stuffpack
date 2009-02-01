@@ -11,16 +11,19 @@ using namespace std;
 bool wcFile(const char *file);
 void doWcFile (istream &toWc);
 
-bool wordFlag = false, lineFlag = false, charFlag = false, byteFlag = false;
+bool wordFlag = false, lineFlag = false, charFlag = false, byteFlag = false, onlyLongestLine = false;
 
 int main(int argc, char *argv[])
 {
 	int c;
 	int toReturn = 0;
-      while ((c = getopt (argc, argv, "clmw")) != -1)
+      while ((c = getopt (argc, argv, "Lclmw")) != -1)
 	{
       	switch (c)
 		{
+			case 'L':
+				onlyLongestLine = true;
+				break;
 			case 'c':
 				charFlag = true;
 				break;
@@ -66,65 +69,30 @@ int main(int argc, char *argv[])
 
 void doWcFile (istream &toWc)
 {
-	int lineNums;
-	int charNums;
-	int byteNums;
+	long int lineNums = 0;
+	long int charNums = 0;
 
 	string line;
-	int lineNum = 1;
+
 	while (! toWc.eof() )
 	{
 		getline(toWc, line);
-		if (numLineFlag)
-		{
-			if (line.size() != 0)
-			{
-				lastLineFull = true;
-				cout << lineNum << " " << line << postline.c_str() << endl;
-				++lineNum;
-			}
-			else
-			{
-				if ( ! squeezeBlankFlag || lastLineFull)
-				{
-					if (allLineNumFlag)
-					{
-						cout << lineNum << " " << postline.c_str() << endl;
-						++lineNum;
-					}
-				}
-				lastLineFull = false;
-			}
-		}
-		else
-		{
-       		if (line.size() != 0)
-                  {
-                  	lastLineFull = true;
-				cout << vStyle(line).c_str() << postline.c_str() << endl;
-			}
-			else
-			{
-                  	if ( ! squeezeBlankFlag || lastLineFull)
-                        {
-					cout << postline.c_str() << endl;
-                        }
-                        lastLineFull = false;
-			}
-		}
-   	}
+		charNums += line.size();
+		++lineNums;
+	}
+	cout << "line nums:" << lineNums << " " << "char nums:" << charNums << endl;
 }
 
 
 bool wcFile(const char *file)
 {
       ifstream toWc;
-      toWc.open(file, ios::out);
+      toWc.open(file, ios::in);
 	if ( ! toWc)
       {
 		return false;
 	}
-	doCatFile(toWc);
+	doWcFile(toWc);
       toWc.close();
 	return true;
 }
