@@ -94,7 +94,7 @@ void doWcFile (istream &toWc)
 		{
 			/* use iswspace? */
 			/* we are not going to use .at() because we know we are in range */
-			curCharIsSpace = isspace(line[i]);
+			curCharIsSpace = iswspace(line[i]);
 			if (curCharIsSpace && !lastSpace)
 			{
 				++words;
