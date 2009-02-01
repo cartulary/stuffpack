@@ -70,6 +70,7 @@ int main(int argc, char *argv[])
 
 void doWcFile (istream &toWc)
 {
+	/* store some kind of const to generate total */
 	unsigned long int lineNums = 0;
 	unsigned long int charNums = 0;
 	unsigned long int words = 1; /* begin at one because we look for spaces; not words */
