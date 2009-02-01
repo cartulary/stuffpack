@@ -8,9 +8,9 @@ LANG = c++
 
 build:	col5 try2
 
-col5:	col5.cpp
+col5:
 
-try2: try2.cpp
+try2:
 
 clean:
 	rm -fv *.o main
