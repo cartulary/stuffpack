@@ -11,6 +11,7 @@ using namespace std;
 bool wcFile(const char *file);
 void doWcFile (istream &toWc);
 
+/* make these flags work */
 bool wordFlag = false, lineFlag = false, charFlag = false, byteFlag = false, longestLineFlag = false;
 
 int main(int argc, char *argv[])
