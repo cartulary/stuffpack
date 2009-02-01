@@ -11,7 +11,7 @@ using namespace std;
 bool wcFile(const char *file);
 void doWcFile (istream &toWc);
 
-bool wordFlag = false, lineFlag = false, charFlag = false, byteFlag = false, onlyLongestLine = false;
+bool wordFlag = false, lineFlag = false, charFlag = false, byteFlag = false, onlyLongestLineFlag = false;
 
 int main(int argc, char *argv[])
 {
@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
       	switch (c)
 		{
 			case 'L':
-				onlyLongestLine = true;
+				onlyLongestLineFlag = true;
 				break;
 			case 'c':
 				charFlag = true;
@@ -69,9 +69,10 @@ int main(int argc, char *argv[])
 
 void doWcFile (istream &toWc)
 {
-	long int lineNums = 0;
-	long int charNums = 0;
-	long int words = 0;
+	unsigned long int lineNums = 0;
+	unsigned long int charNums = 0;
+	unsigned long int words = 1; /* begin at one because we look for spaces; not words */
+	unsigned long int longestLine = 0;
 	bool lastSpace = false; /* use so double spaces are not counted as words */
 	bool curCharIsSpace = false;
 	string line;
@@ -79,9 +80,14 @@ void doWcFile (istream &toWc)
 	while (! toWc.eof() )
 	{
 		getline(toWc, line);
-		charNums += line.size();
+		unsigned int lineLen = line.size();
+		charNums += lineLen;
 		++lineNums;
-		for(unsigned int i = 0; i < line.length(); ++i)
+		if (lineLen > longestLine)
+		{
+			longestLine = lineLen;
+		}
+		for(unsigned int i = 0; i < lineLen; ++i)
 		{
 			/* use iswspace? */
 			/* we are not going to use .at() because we know we are in range */
@@ -99,7 +105,7 @@ void doWcFile (istream &toWc)
 			}
 		}
 	}
-	cout << "line nums:" << lineNums << " " << "char nums:" << charNums << "words: " << words << endl;
+	cout << lineNums << words << charNums << longestLine << endl;
 }
 
 
