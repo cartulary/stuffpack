@@ -97,6 +97,7 @@ void doWcFile (istream &toWc)
 					lastSpace = false;
 				}
 			}
+		}
 	}
 	cout << "line nums:" << lineNums << " " << "char nums:" << charNums << "words: " << words << endl;
 }
