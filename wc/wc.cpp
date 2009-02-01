@@ -54,6 +54,10 @@ int main(int argc, char *argv[])
 	      			cerr << "wc: " << argv[i] << ": open: No such file or directory" << endl;
 					toReturn = 1;
 				}
+				else
+				{
+					cout << argv[i] << endl;
+				}
 			}
 			else
 			{
@@ -108,23 +112,24 @@ void doWcFile (istream &toWc)
 			}
 		}
 	}
+	cout << "\t";
 	if (lineFlag)
 	{
-		cout << lineNums << " ";
+		cout << lineNums << "\t";
 	}
 	if (wordFlag)
 	{
-		cout << words << " ";
+		cout << words << "\t";
 	}
 	if (charFlag)
 	{
-		cout << charNums << " ";
+		cout << charNums << "\t";
 	}
 	if (longestLineFlag)
 	{
 		cout << longestLine;
 	}
-	cout << endl;
+	/*  filename printed by calling function */
 }
 
 
