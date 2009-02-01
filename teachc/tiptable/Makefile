@@ -11,4 +11,4 @@ build:	tiptable
 tiptable:	tiptable.c
 
 clean:
-	rm -fv *.o main
+	rm -fv *.o tiptable tiptable.core
