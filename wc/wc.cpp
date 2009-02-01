@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
 	{
 	      for (int i = optind; i < argc; ++i)
 		{
-		if ( strcmp(argv[i] , "-") != 0 )
+			if ( strcmp(argv[i] , "-") != 0 )
 			{
 				if ( ! wcFile(argv[i]) )
 				{
@@ -71,7 +71,9 @@ void doWcFile (istream &toWc)
 {
 	long int lineNums = 0;
 	long int charNums = 0;
-
+	long int words = 0;
+	bool lastSpace = false; /* use so double spaces are not counted as words */
+	bool curCharIsSpace = false;
 	string line;
 
 	while (! toWc.eof() )
@@ -79,8 +81,24 @@ void doWcFile (istream &toWc)
 		getline(toWc, line);
 		charNums += line.size();
 		++lineNums;
+		for(unsigned int i = 0; i < line.length(); ++i)
+		{
+			/* use iswspace? */
+			/* we are not going to use .at() because we know we are in range */
+			curCharIsSpace = isspace(line[i]);
+			if (curCharIsSpace && !lastSpace)
+			{
+				++words;
+			}
+			else
+			{
+				if (!curCharIsSpace)
+				{
+					lastSpace = false;
+				}
+			}
 	}
-	cout << "line nums:" << lineNums << " " << "char nums:" << charNums << endl;
+	cout << "line nums:" << lineNums << " " << "char nums:" << charNums << "words: " << words << endl;
 }
 
 
