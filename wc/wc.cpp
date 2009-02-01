@@ -71,7 +71,8 @@ int main(int argc, char *argv[])
 	}
       return toReturn;
 }
-
+/* perform the actual "wc" action on the file */
+/* keep some kind of pointer to an array of the const data that main() could use later? something else?*/
 void doWcFile (istream &toWc)
 {
 	/* store some kind of const to generate total */
@@ -79,6 +80,10 @@ void doWcFile (istream &toWc)
 	unsigned long int charNums = 0;
 	unsigned long int words = 1; /* begin at one because we look for spaces; not words */
 	unsigned long int longestLine = 0;
+	static unsigned long int sLineNums = 0;
+	static unsigned long int sCharNums = 0;
+	static unsigned long int sWords = 1;
+	static unsigned long int sLongestLine = 0;
 	bool lastSpace = false; /* use so double spaces are not counted as words */
 	bool curCharIsSpace = false;
 	string line;
@@ -112,6 +117,14 @@ void doWcFile (istream &toWc)
 			}
 		}
 	}
+	sLineNums += lineNums;
+	sCharNums += charNums;
+	sWords += words;
+	if (longestLine > sLongestLine)
+	{
+		sLongestLine = longestLine;
+	}
+
 	cout << "\t";
 	if (lineFlag)
 	{
