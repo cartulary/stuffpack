@@ -6,9 +6,11 @@ LANG = c++
 #compiling options
 .PHONY:	build clean
 
-build:	col5
+build:	col5 try2
 
 col5:	col5.cpp
+
+try2: try2.cpp
 
 clean:
 	rm -fv *.o main
