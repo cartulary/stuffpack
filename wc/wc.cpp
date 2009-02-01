@@ -11,7 +11,7 @@ using namespace std;
 bool wcFile(const char *file);
 void doWcFile (istream &toWc);
 
-bool wordFlag = false, lineFlag = false, charFlag = false, byteFlag = false, onlyLongestLineFlag = false;
+bool wordFlag = false, lineFlag = false, charFlag = false, byteFlag = false, longestLineFlag = false;
 
 int main(int argc, char *argv[])
 {
@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
       	switch (c)
 		{
 			case 'L':
-				onlyLongestLineFlag = true;
+				longestLineFlag = true;
 				break;
 			case 'c':
 				charFlag = true;
@@ -80,6 +80,7 @@ void doWcFile (istream &toWc)
 	while (! toWc.eof() )
 	{
 		getline(toWc, line);
+		/* does not deal with -c vs -m yet! */
 		unsigned int lineLen = line.size();
 		charNums += lineLen;
 		++lineNums;
@@ -105,7 +106,23 @@ void doWcFile (istream &toWc)
 			}
 		}
 	}
-	cout << lineNums << words << charNums << longestLine << endl;
+	if (lineFlag)
+	{
+		cout << lineNums << " ";
+	}
+	if (wordFlag)
+	{
+		cout << words << " ";
+	}
+	if (charFlag)
+	{
+		cout << charNums << " ";
+	}
+	if (longestLineFlag)
+	{
+		cout << longestLine;
+	}
+	cout << endl;
 }
 
 
