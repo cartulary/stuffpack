@@ -8,11 +8,17 @@
 #include <string>
 using namespace std;
 
+/* checks for the existance of the file and passes it to do */
 bool catFile(const char *file);
+/* cat the file */
 void doCatFile (istream &toCat);
+/* convert int to string */
 inline const char *itos(int num);
+/* convert unprintable characters; semi-broken */
 string vStyle (string str);
+/* replace a string... */
 string strReplace (string str, string old, string newStr);
+/* convert some more characters to ascii; 100% broken */
 string asciify(const char *str ,int size);
 
 bool numLineFlag = false, allLineNumFlag = false, squeezeBlankFlag = false;
@@ -102,6 +108,7 @@ void doCatFile (istream &toCat)
 			}
 			else
 			{
+				/* if we squeeze blanks together ignore the rest of the blanks; else treat them like normal */
 				if ( ! squeezeBlankFlag || lastLineFull)
 				{
 					if (allLineNumFlag)
