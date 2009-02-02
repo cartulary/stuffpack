@@ -71,8 +71,19 @@ int main(int argc, char *argv[])
 	}
       return toReturn;
 }
-/* perform the actual "wc" action on the file */
-/* keep some kind of pointer to an array of the const data that main() could use later? something else?*/
+/**********************************************
+ * Name:    doWcFile                          *
+ * Purpose: perform the "wc" action to file   *
+ * Returns: nothing	 		          *
+ * Mod: asmith                                *
+ * Parameters: istream - open isstream to file*
+ * Known bugs: many unworking features;       *
+ * compatibility: very limited                *
+ * notes: keep some kind of pointer to an     *
+ *	array of the const data that main()     *
+ *	could use later? something else?	    *
+ *********************************************/
+
 void doWcFile (istream &toWc)
 {
 	/* store some kind of const to generate total */
