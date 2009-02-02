@@ -1,3 +1,5 @@
+// This source code is release under the CMU License.
+
 #include <fstream>
 #include <iterator>
 #include <iostream>
