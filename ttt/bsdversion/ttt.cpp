@@ -1,6 +1,7 @@
-/* 
+/*
 Tik-Tak-Toe CTY Final Project
 Version 0.8
+This source code is release under the CMU License.
 */
 
 #include "ttt.h"

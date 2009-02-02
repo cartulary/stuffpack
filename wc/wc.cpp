@@ -1,3 +1,4 @@
+// This source code is release under the CMU License.
 /* change in behavior with -bn */
 #include <fstream>
 #include <getopt.h>
