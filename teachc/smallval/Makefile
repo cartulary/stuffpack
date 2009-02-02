@@ -11,4 +11,4 @@ build:	smallval
 smallval:
 
 clean:
-	rm -fv *.o main
+	rm -fv *.o smallval smallval.core
