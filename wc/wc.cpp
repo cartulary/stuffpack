@@ -43,6 +43,11 @@ int main(int argc, char *argv[])
 		}
 
 	}
+	/* if no flags are set; make the default flags true */
+	if (! (charFlag || lineFlag || byteFlag || wordFlag || longestLineFlag) )
+	{
+		charFlag = lineFlag = byteFlag = wordFlag = true;
+	}
 	/* If we have files on command line - display them; else just display cin once.*/
 	if (argc > 1)
 	{
