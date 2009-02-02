@@ -97,6 +97,7 @@ void doWcFile (istream &toWc)
 	unsigned long int charNums = 0;
 	unsigned long int words = 1; /* begin at one because we look for spaces; not words */
 	unsigned long int longestLine = 0;
+	/* the static content - used for 'total' */
 	static unsigned long int sLineNums = 0;
 	static unsigned long int sCharNums = 0;
 	static unsigned long int sWords = 1;
