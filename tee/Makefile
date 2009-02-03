@@ -11,4 +11,4 @@ tee:
 
 clean:
 	rm -fv *.o
-	rm ./yes
+	rm ./tee *.core
