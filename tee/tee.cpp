@@ -3,15 +3,22 @@
 #include <fstream>
 #include <iterator>
 #include <iostream>
+#include <signal.h>
 #include <sstream>
 #include <stdio.h>
 #include <string>
 #include <vector>
 
+void signal_handler(int signal);
+
+
 using namespace std;
 bool appendFlag = false, ignoreSignalFlag = false;
 int main(int argc, char *argv[])
 {
+	/* register the signal handler */
+	signal(SIGINT, signal_handler);
+
       int c;
       while ((c = getopt (argc, argv, "ai")) != -1)
      	{
@@ -55,4 +62,21 @@ int main(int argc, char *argv[])
 		cout << line << endl;
 	}
 	return 0;
+}
+
+/**********************************************
+ * Name:    singal_handler                    *
+ * Purpose: handle signals; ignore sigint     *
+ * Returns: nothing                           *
+ * Parameters: int - which signal did we get  *
+ * compatibility: tee -i	                *
+ *********************************************/
+
+void signal_handler(int signal)
+{
+	/* if we are  SIGINT and -i has been set ignore it else: */
+	if (! (signal == SIGINT && ignoreSignalFlag) )
+	{
+		exit(0);
+	}
 }
