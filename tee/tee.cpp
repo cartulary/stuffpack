@@ -11,9 +11,9 @@
 
 void signal_handler(int signal);
 
+bool appendFlag = false, ignoreSignalFlag = false;
 
 using namespace std;
-bool appendFlag = false, ignoreSignalFlag = false;
 int main(int argc, char *argv[])
 {
 	/* register the signal handler */
@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
                         ignoreSignalFlag = true;
 				break;
 			default:
-				cerr << "broken" << endl;
+				break;
 		}
 	}
 	std::vector<std::ofstream*> fileList;
