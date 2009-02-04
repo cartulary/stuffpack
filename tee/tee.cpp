@@ -61,17 +61,19 @@ int main(int argc, char *argv[])
 			int fileListBound = fileList.size();
 			cout << fileListBound << endl;
 
+			/*
 			for (int i = 0; i < fileListBound; ++i)
 			{
-				/* don't use .at() becauyse we know we are in bounds */
+				//  don't use .at() becauyse we know we are in bounds
 				fileList.at(i)->write(line.c_str(), line.length() + 1);
 			}
-			/*
+			*/
+
 			for (std::vector<std::ofstream*>::iterator it = fileList.begin(); it != fileList.end(); ++it)
 			{
 				(*it)->write(line.c_str(),line.length());
 			}
-			*/
+
 		}
 		cout << line << endl;
 	}
