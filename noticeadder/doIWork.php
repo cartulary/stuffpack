@@ -2,6 +2,10 @@
 <?php
 	// CMU licence 
 	/*
+		Add a copyright notice to every file in a directory.
+		Looks for "--NTC--" (aka $tag) and if it doesn't exist it adds the notice.
+	*/
+	/*
 		1.7.0 -f overrides -e now
 		1.6.1 removed need for using a reference in foreach
 		1.6.0,1 added debug text for -x
@@ -31,14 +35,14 @@
 	$cli = getopt($opts);
 	
 	/* defaults */
-	$dir = (empty($cli['d'])) ? '.' : $cli['d'];  //set the directory to the command line if it exists
-	$extensions = (empty($cli['e'])) ? array() : explode(' ',$cli['e']); //default to no extension
-	$clitext = (empty($cli['t'])) ? '' : $cli['t']; //no default copyright
-	$debug = $cli['v']; //set the debugging level
-	$use_file = (empty($cli['f'])) ? null : $cli['f'];
-	$quiet = (is_null($cli['q'])) ? false : true;
-	$force = (is_null($cli['x'])) ? false : true;
-	echo (!is_null($use_file)&&!empty($cli['d'])) ? "-f overrides -d" : '';
+	$dir = 		(empty($cli['d'])) 	? '.' 	: $cli['d'];  			//set the directory to the command line if it exists
+	$extensions = 	(empty($cli['e'])) 	? array() 	: explode(' ',$cli['e']); 	//default to no extension
+	$clitext = 		(empty($cli['t'])) 	? '' 	: $cli['t']; 				//no default copyright
+	$debug = 		$cli['v']; 										//set the debugging level
+	$use_file = 	(empty($cli['f'])) 	? null 	: $cli['f'];			// specific files instead of recusring directory
+	$quiet = 		(is_null($cli['q'])) 	? false 	: true;				// don't output any info
+	$force = 		(is_null($cli['x'])) 	? false 	: true;				// always output notice
+	echo 			(!is_null($use_file)&&!empty($cli['d'])) ? "-f overrides -d" : '';
 	if ($quiet&&$debug>0) { fwrite(STDERR,"can not be quiet and verbose\n"); die();} 
 	$tag = '--NTC--';
 	$text = "\n/*$tag\n$clitext*/\n";
