@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
       if (argc > 1)
       {
 		fileList.resize (argc - 1);
-		for(int i = 1; i < argc; ++i)
+		for(int i = 0; i < argc; ++i)
 		{
 			//I need to find a better way to do this?  Is there a way to keep a pointer to the "mode"?
 			if (appendFlag)
