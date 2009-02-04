@@ -33,7 +33,7 @@
 	
 	/* defaults */
 	$dir = (empty($cli['d'])) ? '.' : $cli['d'];  //set the directory to the command line if it exists
-	$extensions = (empty($cli['e'])) ? array('') : explode(' ',$cli['e']); //default to no extension
+	$extensions = (empty($cli['e'])) ? array() : explode(' ',$cli['e']); //default to no extension
 	$clitext = (empty($cli['t'])) ? '' : $cli['t']; //no default copyright
 	$debug = $cli['v']; //set the debugging level
 	$use_file = (empty($cli['f'])) ? null : $cli['f'];
