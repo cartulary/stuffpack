@@ -51,13 +51,26 @@ int main(int argc, char *argv[])
 			}
 		}
       }
+	/* start reading input */
 	string line;
 	while ( ! cin.eof() )
 	{
 		getline(cin, line);
-		for (std::vector<std::ofstream*>::iterator it = fileList.begin(); it != fileList.end(); ++it)
+		if (argc > 1)
 		{
-			(*it)->write(line.c_str(),line.length());
+			int fileListBound = fileList.size();
+
+			for (int i = 0; i <= fileListBound; ++i)
+			{
+				/* don't use .at() becauyse we know we are in bounds */
+				fileList[i]->write(line.c_str(), line.length() - 1);
+			}
+			/*
+			for (std::vector<std::ofstream*>::iterator it = fileList.begin(); it != fileList.end(); ++it)
+			{
+				(*it)->write(line.c_str(),line.length());
+			}
+			*/
 		}
 		cout << line << endl;
 	}
