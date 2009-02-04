@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
 	signal(SIGINT, signal_handler);
 
       int c;
+	/* start parsing options */
       while ((c = getopt (argc, argv, "ai")) != -1)
      	{
             switch (c)
@@ -34,6 +35,7 @@ int main(int argc, char *argv[])
 				break;
 		}
 	}
+	/* open the files and assign them to elements in a vector */
 	std::vector<std::ofstream*> fileList;
       if (argc > 1)
       {
@@ -61,13 +63,12 @@ int main(int argc, char *argv[])
 		if (argc > 1)
 		{
 			int fileListBound = fileList.size();
-			cout << fileListBound << endl;
-
 			
 			for (int i = 0; i < fileListBound; ++i)
 			{
 				//  don't use .at() becauyse we know we are in bounds
 				fileList[i]->write(line.c_str(), line.length() + 1);
+				cout << fileList[i]->good() << endl;
 			}
 			
 			/*
