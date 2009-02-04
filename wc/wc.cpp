@@ -81,7 +81,6 @@ int main(int argc, char *argv[])
  * Name:    doWcFile                          *
  * Purpose: perform the "wc" action to file   *
  * Returns: nothing	 		          *
- * Mod: asmith                                *
  * Parameters: istream - open isstream to file*
  * Known bugs: many unworking features;       *
  * compatibility: very limited                *
