@@ -43,10 +43,12 @@ int main(int argc, char *argv[])
 			//I need to find a better way to do this?  Is there a way to keep a pointer to the "mode"?
 			if (appendFlag)
 			{
+				//fileList.push_back(new std::ofstream(argv[i],ios::app | ios::binary));
     				fileList[i] = new std::ofstream(argv[i],ios::app | ios::binary);
 			}
 			else
 			{
+                        //fileList.push_back(new std::ofstream(argv[i],ios::out | ios::binary));
                         fileList[i] = new std::ofstream(argv[i],ios::out | ios::binary);
 			}
 		}
