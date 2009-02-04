@@ -59,11 +59,12 @@ int main(int argc, char *argv[])
 		if (argc > 1)
 		{
 			int fileListBound = fileList.size();
+			cout << fileListBound << endl;
 
-			for (int i = 0; i <= fileListBound; ++i)
+			for (int i = 0; i < fileListBound; ++i)
 			{
 				/* don't use .at() becauyse we know we are in bounds */
-				fileList[i]->write(line.c_str(), line.length() - 1);
+				fileList.at(i)->write(line.c_str(), line.length() + 1);
 			}
 			/*
 			for (std::vector<std::ofstream*>::iterator it = fileList.begin(); it != fileList.end(); ++it)
