@@ -2,8 +2,7 @@
 <?php
 	// CMU licence 
 	/*
-		features to add: make -f override -e;
-		
+		1.7.0 -f overrides -e now
 		1.6.1 removed need for using a reference in foreach
 		1.6.0,1 added debug text for -x
 		1.6.0 allow -x to force writing
@@ -55,7 +54,7 @@
 	foreach($files as $file)
 	{
 		$filename =file_name($file);
-		if ($filename[0] == '.' ||!in_array(file_ext($file),$extensions)||is_dir($file))
+		if ($filename[0] == '.' || (!in_array(file_ext($file),$extensions) && is_null($use_file)) || is_dir($file))
 		{
 			debugEcho ("removing $file\n",2);
 			//if file is hidden, ., .., or the file ext is not in the array remove it
