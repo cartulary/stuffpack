@@ -17,6 +17,7 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 	/* register the signal handler */
+	/* why won't SIG_IGN work?	*/
 	signal(SIGINT, signal_handler);
 
       int c;
@@ -39,8 +40,8 @@ int main(int argc, char *argv[])
 	std::vector<std::ofstream*> fileList;
       if (argc > 1)
       {
-		fileList.resize (argc - 1);
-		for(int i = 0; i < argc; ++i)
+		fileList.resize (argc);
+		for(int i = 1; i < argc; ++i)
 		{
 			//I need to find a better way to do this?  Is there a way to keep a pointer to the "mode"?
 			if (appendFlag)
@@ -55,6 +56,7 @@ int main(int argc, char *argv[])
 			}
 		}
       }
+
 	/* start reading input */
 	string line;
 	while ( ! cin.eof() )
@@ -62,15 +64,13 @@ int main(int argc, char *argv[])
 		getline(cin, line);
 		if (argc > 1)
 		{
-			int fileListBound = fileList.size();
-			
-			for (int i = 0; i < fileListBound; ++i)
+			for (int i = 1; i < argc; ++i)
 			{
 				//  don't use .at() becauyse we know we are in bounds
-				fileList[i]->write(line.c_str(), line.length() + 1);
-				cout << fileList[i]->good() << endl;
+				*fileList.at(i) << line << endl;
+				//fileList[i]->write(line.c_str(), line.length() + 1);
 			}
-			
+
 			/*
 			for (std::vector<std::ofstream*>::iterator it = fileList.begin(); it != fileList.end(); ++it)
 			{
