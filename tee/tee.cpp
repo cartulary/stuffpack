@@ -65,7 +65,8 @@ int main(int argc, char *argv[])
 	while ( ! cin.eof() )
 	{
 		getline(cin, line);
-		if (fileList.size() > 1)
+		/* only write to files if we have files....*/
+		if (fileCount > 0)
 		{
 			for (unsigned int i = 0; i < fileList.size(); ++i)
 			{
