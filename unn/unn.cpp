@@ -13,6 +13,7 @@ int main(int argc, char* argv[])
       vector<string> files; 
 	int i;
 	bool debug = FALSE;
+	/* push all the files on to the vector */
 	if (argc > 1)
 	{
 		for (i = 1 ; i <= argc - 1 ; i++)
@@ -29,8 +30,11 @@ int main(int argc, char* argv[])
 	}
 	else
 	{
+		/* we have no files; return without error */
 		return 0;
 	}
+
+	/* check to see if the files exist; if they don't print the correct info; if they do error out */
 	for (i = 0; i <= files.size() - 1 ; i++)
 	{
 		if (eaccess(files.at(i).c_str(),R_OK) == FILE_READ_OK)
