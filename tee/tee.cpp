@@ -1,4 +1,4 @@
-// This source code is release under the CMU License.
+/* This source code is release under the CMU License. */
 
 #include <fstream>
 #include <iterator>
@@ -48,15 +48,13 @@ int main(int argc, char *argv[])
 		//I need to find a better way to do this?  Is there a way to keep a pointer to the "mode"?
             if (appendFlag)
             {
-            	//fileList.push_back(new std::ofstream(argv[i],ios::app | ios::binary));
                   fileList.push_back (new std::ofstream(argv[i], ios::app | ios::binary));
             }
             else
             {
-            	//fileList.push_back(new std::ofstream(argv[i],ios::out | ios::binary));
                   fileList.push_back (new std::ofstream(argv[i], ios::out | ios::binary));
             }
-		printf ("argument %s with file count of %d with i of %d\n", argv[i], fileCount, i);
+		/* we use this later to determine how many files we have... */
 		++fileCount;
 	}
 	/* start reading input */
