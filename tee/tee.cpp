@@ -59,7 +59,6 @@ int main(int argc, char *argv[])
 		printf ("argument %s with file count of %d with i of %d\n", argv[i], fileCount, i);
 		++fileCount;
 	}
-	cout << fileList.size() << endl;
 	/* start reading input */
 	string line;
 	while ( ! cin.eof() )
@@ -70,8 +69,6 @@ int main(int argc, char *argv[])
 		{
 			for (unsigned int i = 0; i < fileList.size(); ++i)
 			{
-				cout << "trying to write to file" << i << endl;
-				cout << fileList.at(i) << endl;
 				//  don't use .at() becauyse we know we are in bounds
 				*fileList.at(i) << line << endl;
 				//fileList[i]->write(line.c_str(), line.length() + 1);
