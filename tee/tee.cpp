@@ -1,7 +1,6 @@
 /* This source code is release under the CMU License. */
 
 #include <fstream>
-#include <iterator>
 #include <iostream>
 #include <signal.h>
 #include <sstream>
@@ -57,6 +56,7 @@ int main(int argc, char *argv[])
 		/* we use this later to determine how many files we have... */
 		++fileCount;
 	}
+
 	/* start reading input */
 	string line;
 	while ( ! cin.eof() )
@@ -65,19 +65,11 @@ int main(int argc, char *argv[])
 		/* only write to files if we have files....*/
 		if (fileCount > 0)
 		{
-			for (unsigned int i = 0; i < fileList.size(); ++i)
+			for (std::vector<std::ofstream*>::size_type i = 0; i < fileList.size(); ++i)
 			{
 				//  don't use .at() becauyse we know we are in bounds
-				*fileList.at(i) << line << endl;
-				//fileList[i]->write(line.c_str(), line.length() + 1);
+				*fileList[i] << line << endl;
 			}
-
-			/*
-			for (std::vector<std::ofstream*>::iterator it = fileList.begin(); it != fileList.end(); ++it)
-			{
-				(*it)->write(line.c_str(),line.length() + 1);
-			}*/
-
 		}
 		cout << line << endl;
 	}
