@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
 	{
 	      for (int i = optind; i < argc; ++i)
 		{
+			/* if what we have is not stdin deal with it as a file */
 			if ( strcmp(argv[i] , "-") != 0 )
 			{
 				if ( ! wcFile(argv[i]) )
@@ -67,6 +68,7 @@ int main(int argc, char *argv[])
 			}
 			else
 			{
+				/* we have stdin so go directly to "wc" */
 				doWcFile(cin);
 			}
 		}
