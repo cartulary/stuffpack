@@ -1,6 +1,7 @@
 #!/usr/local/bin/ruby
 debug = false
 files = []
+/* loop through ARGV and add files to array;*/
 ARGV.each { 	
 	|arg|
 	if arg != "-debug"
@@ -9,7 +10,7 @@ ARGV.each {
 		debug = true;
 	end
 }
-
+/* loop through files and check for their existance */
 files.each {
 	|curfile|
 	begin 
