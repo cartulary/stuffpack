@@ -2,7 +2,9 @@
 <?php
 	$files = array();
 	$debug = false;
+	//eliminate calling command from list
 	array_shift($argv);
+	// loop through the arguments 
 	foreach ($argv as $arg)
 	{
 		if ($arg == '-debug')
@@ -14,7 +16,7 @@
 			$files[] = $arg;
 		}
 	}
-
+	// loop through the files
 	foreach ($files as $file)
 	{
 		if (file_exists($file))
