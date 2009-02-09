@@ -35,9 +35,9 @@ int main(int argc, char* argv[])
 	}
 
 	/* check to see if the files exist; if they don't print the correct info; if they do error out */
-	for (i = 0; i <= files.size() - 1 ; i++)
+	for (i = 0; i < files.size(); i++)
 	{
-		if (eaccess(files.at(i).c_str(),R_OK) == FILE_READ_OK)
+		if (eaccess(files.at(i).c_str(), R_OK) == FILE_READ_OK)
 		{
 			cerr << "fatal error: " << files.at(i) << " exists" << endl;
 		}
