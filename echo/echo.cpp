@@ -13,6 +13,7 @@ int main (int argc, char *argv[])
 		/* if we have -n and we have yet to pass other chars set flags; else print */
 		if (strcmp (argv[i], "-n") == 0 && !passedFirstN)
 		{
+			// don't print a newline at the end
 			noNewlineFlag = true;
 		}
 		else
