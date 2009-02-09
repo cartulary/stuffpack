@@ -5,11 +5,11 @@ LANG = c
 #compiling options
 .PHONY:     clean
 
-all:  yes
+all:  $(NAME)
 
-yes:
+$(NAME):
 
 clean:
 	rm -fv *.o
-	rm ./yes
+	rm -f ./$(NAME) ./$(NAME).core
 
