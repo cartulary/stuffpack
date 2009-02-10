@@ -1,5 +1,6 @@
 NAME=echo
 LANG = c++
+COMPILER=cparser
 .include    <../Makefile>
 
 #compiling options
