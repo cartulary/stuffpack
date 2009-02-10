@@ -1,5 +1,5 @@
 NAME=fact
-LANG = c
+LANG = c++
 .include    <../../Makefile>
 
 #compiling options
@@ -12,4 +12,3 @@ $(NAME):
 clean:
 	rm -fv *.o
 	rm -f ./$(NAME) ./$(NAME).core
-
