@@ -2,7 +2,7 @@ COMPILER ?= gcc
 CFLAGS := -g3 -pipe
 .ifdef $(LANG) == c++
 #we are using c++ add the flags that only work for c++
-CC := g++
+CC := llvm-g++
 CFLAGS += -ansi -Wabi
 CFLAGS += -Weffc++
 CFLAGS += -fno-gnu-keywords
@@ -20,7 +20,7 @@ CFLAGS += -Wmissing-declarations -Wmissing-noreturn -Wmissing-prototypes
 CFLAGS += -Wdiv-by-zero -Wmultichar -Wnested-externs -Wredundant-decls -Wunused                                 
 CFLAGS += -Werror-implicit-function-declaration -Wimplicit -Wlong-long
 .else
-CC := gcc
+CC := llvm-gcc
 CFLAGS += -g
 CFLAGS += -std=c99 
 CFLAGS += -Wimplicit-function-declaration -Wbad-function-cast -Wdeclaration-after-statement
