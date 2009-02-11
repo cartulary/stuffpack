@@ -18,7 +18,7 @@ int main (int argc, char *argv[])
 		}
 		else
 		{
-			cout << argv[i] << " ";
+			cout << argv[i] << ' ';
 			passedFirstN = true;
 		}
 	}
