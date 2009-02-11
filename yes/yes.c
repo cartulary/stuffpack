@@ -9,6 +9,7 @@ int main (int argc, char *argv[])
 
     	if (argc > 1)
     	{
+		// as per BSD yes ignore everything after argv[1]
 		expletive = argv[1];
 	}
     	while (1)
