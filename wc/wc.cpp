@@ -12,7 +12,7 @@ using namespace std;
 bool wcFile(const char *file);
 void doWcFile (istream &toWc);
 
-/* make these flags work */
+/* make these flags default to false */
 bool wordFlag = false, lineFlag = false, charFlag = false, byteFlag = false, longestLineFlag = false;
 
 int main(int argc, char *argv[])
@@ -58,11 +58,13 @@ int main(int argc, char *argv[])
 			{
 				if ( ! wcFile(argv[i]) )
 				{
+					/* exact message produced by BSD wc */
 	      			cerr << "wc: " << argv[i] << ": open: No such file or directory" << endl;
 					toReturn = 1;
 				}
 				else
 				{
+					/* we don't pass the filename so print it here */
 					cout << argv[i] << endl;
 				}
 			}
@@ -164,6 +166,12 @@ void doWcFile (istream &toWc)
 	/*  filename printed by calling function */
 }
 
+/**********************************************
+ * Name:    doWcFile                          *
+ * Purpose: perform the error checking        *
+ * Returns: nothing                           *
+ * Parameters: char* - string to file name    *
+ *********************************************/
 
 bool wcFile(const char *file)
 {
