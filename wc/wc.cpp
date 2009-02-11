@@ -167,7 +167,7 @@ void doWcFile (istream &toWc)
 }
 
 /**********************************************
- * Name:    doWcFile                          *
+ * Name:    wcFile                            *
  * Purpose: perform the error checking        *
  * Returns: nothing                           *
  * Parameters: char* - string to file name    *

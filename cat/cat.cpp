@@ -49,13 +49,15 @@ int main(int argc, char *argv[])
 				dispNotPrintingFlag = true;
 				break;
 			case 's':
+				/* don'r echo multiple blank lines at ones */
 				squeezeBlankFlag = true;
 				break;
 			case 'u':
+				/* not sure what this option is for */
 				setbuf (stdout, NULL);
 				break;
 			default:
-				cout << "options ignored" << endl;
+				break;
 		}
 
 	}
@@ -139,6 +141,12 @@ void doCatFile (istream &toCat)
    	}
 }
 
+/**********************************************
+ * Name:    catFile                           *
+ * Purpose: perform the error checking        *
+ * Returns: nothing                           *
+ * Parameters: char* - string to file name    *
+ *********************************************/
 
 bool catFile(const char *file)
 {
