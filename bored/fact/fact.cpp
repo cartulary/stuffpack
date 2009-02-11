@@ -25,24 +25,24 @@ int main (int argc, char* argv[])
 	for (long int i = num; i >= 2; --i)
 	{
 		factorial *= i;
-		std::cout << i << std::endl;
 	}
 	std::cout << factorial << std::endl;
 	return 0;
 }
 
+/* replace this with a better function ASAP */
 char* getcharcters(int max)
 {
       char* str = (char*)malloc(max*sizeof(int)+1);
       char ch;
       int i = 0;
-      
+
       while ((ch = getchar()) != '\n' && i < max)
       {
             str[i] = ch;
             i++;
       }
-      
+
       str[max] = NULL; //I hope this is the right way to terminate a char array.
       return str;
 }

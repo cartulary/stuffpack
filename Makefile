@@ -1,4 +1,4 @@
-COMPILER ?= gcc
+COMPILER ?= llvm
 CFLAGS := -g3 -pipe
 .ifdef $(LANG) == c++
 #we are using c++ add the flags that only work for c++
@@ -36,6 +36,7 @@ CFLAGS += -Wunused -Wunused-parameter
 CFLAGS += -Winit-self -Wmissing-include-dirs -Wfloat-equal
 CFLAGS += -Wfloat-equal -Wundef -Wshadow -Wcast-qual -Wcast-align
 CFLAGS += -fabi-version=0 -funroll-loops
+CFLAGS += -Wunreachable-code -Winline
 .endif
 
 PREFIX = /usr/local
