@@ -11,4 +11,4 @@ primeA:
 
 clean: 	
 	rm -fv *.o
-	rm ./true ./false
+	rm -f ./primeA ./primeA.core
