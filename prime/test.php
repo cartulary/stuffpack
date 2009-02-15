@@ -32,10 +32,15 @@
 			echo "\n test 2 is over\n";
 			break;
 		}
+		elseif ($line == "true\n")
+		{
+			// we already know this
+			continue;
+		}	
 		$list = explode(' ',$line);
 		foreach ($list as $i)
 		{
-			if (!empty($i) && ctype_digit($i))
+			if (!empty($i) && $i!="\n")
 			{
 				$test = exec("./primeA $i");
 				if ($test == $correct_output)
