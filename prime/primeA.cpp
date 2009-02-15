@@ -17,16 +17,25 @@ int main (int argc, char *argv[])
 
 	/* we only check until the square root */
 	int maxFactor = floor(sqrt(toCheck));
-	bool isPrime = true;
 
-	for (int i = 2; i <= maxFactor; ++i)
+	/* initialize to true until we test for even numbers*/
+	bool isPrime = false;
+
+	/* check for divide by 2 first */
+	if ( toCheck % 2 != 0)
 	{
-		/* check to see if we are prime */
-		if (toCheck % i == 0)
+		/* we assume we are prime until proven wrong*/
+		isPrime = true;
+		/* check for all odd numbers  */
+		for (int i = 3; i <= maxFactor; i += 2)
 		{
-			isPrime = false;
-			/* we are not prime; stop checking */
-			break;
+			/* check to see if we are prime */
+			if (toCheck % i == 0)
+			{
+				isPrime = false;
+				/* we are not prime; stop checking */
+				break;
+			}
 		}
 	}
 
