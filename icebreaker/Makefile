@@ -1,5 +1,5 @@
 NAME=icebreaker
-LANG = c
+LANG = c++
 .include    <../Makefile>
 
 #compiling options
