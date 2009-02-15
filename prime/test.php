@@ -29,7 +29,7 @@
 		}
 		elseif ($line == "end\n")
 		{
-			echo "\n test 2 is over\n";
+			echo "\n test 2 is over";
 			break;
 		}
 		elseif ($line == "true\n")
@@ -67,4 +67,18 @@
   	}
 
 	fclose($primelist);
+
+	//this returns to STDERR so ignore the test for now
+	/*
+	echo "Test 3 (testing empty input)...";
+	$test = exec("./primeA");
+	if ($test == "sorry")
+	{
+		echo "passed";
+	}
+	else
+	{
+		echo "failed";
+	}
+	*/
 ?>
