@@ -5,9 +5,11 @@ LANG = c++
 #compiling options
 .PHONY:     clean
 
-all:  $(NAME)
+all:  $(NAME) terrain.o
 
-$(NAME):
+$(NAME): terrain.cpp
+
+terrain.o: 
 
 clean:
 	rm -fv *.o
