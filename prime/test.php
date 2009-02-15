@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+	//TODO use file() instead of current file read?? 
 	// this file is licensed under the CMU licence.
 	/* this file checks the prime checker with a few tests 
 	* check 1 -> echoes results for -1 to 7 for manual inspection 
