@@ -1,3 +1,4 @@
+#/usr/bin/env php
 <?php
 	// this file is licensed under the CMU licence.
 	/* this file checks the prime checker with a few tests 
