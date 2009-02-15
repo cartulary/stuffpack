@@ -18,14 +18,12 @@ int main (int argc, char *argv[])
 	/* we only check until the square root */
 	int maxFactor = floor(sqrt(toCheck));
 
-	/* initialize to true until we test for even numbers*/
-	bool isPrime = false;
+	/* initialize to true unless proven false*/
+	bool isPrime = true;
 
-	/* check for divide by 2 first */
-	if ( toCheck % 2 != 0)
+	/* for == 2 and <1 use the "else" */
+	if (toCheck > 2 && toCheck %2 != 0)
 	{
-		/* we assume we are prime until proven wrong*/
-		isPrime = true;
 		/* check for all odd numbers  */
 		for (int i = 3; i <= maxFactor; i += 2)
 		{
@@ -36,6 +34,14 @@ int main (int argc, char *argv[])
 				/* we are not prime; stop checking */
 				break;
 			}
+		}
+	}
+	else
+	{
+		isPrime = false;
+		if (toCheck == 2)
+		{
+			isPrime = true;
 		}
 	}
 
