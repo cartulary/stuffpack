@@ -13,14 +13,151 @@ import java.net.URL;
  */
 
 public class SysCalculator extends JFrame {
-	/**
-	 * The widget that stores the problem and displays it and the results on screen.
-	 * @since 1.0
-	 */
-	JTextField display = new JTextField();
 	
 	/**
-	 * Sets up the GUI and almost all the functionality.
+	 * The widget that stores the problem and displays it and the results on screen.
+	 * @author yitz
+	 * @since 1.0
+	 */
+	private JTextField display = new JTextField();
+
+	/**
+	 * @author yitz
+	 * @since 1.1
+	 */
+	private ActionListener removeLast= new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			String displayText = display.getText();
+			if (!displayText.isEmpty()) {
+				display.setText(displayText.substring(0, displayText.length() - 1));
+			}
+		}
+	};
+
+	/**
+	 * @author yitz
+	 * @since 1.1
+	 */
+	private ActionListener removeAll = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			display.setText("");
+		}
+	};
+
+	/**
+	 * @author yitz
+	 * @since 1.0
+	 */
+	private ActionListener addChar = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			
+//			Cache the display text and action command:
+			
+			String displayText = display.getText();
+			String actionCommand = e.getActionCommand(); 
+			
+//			Check to make sure that you don't get a problem that starts with a symbol or ends with 2 symbols in a row: 
+			
+			if ((!displayText.isEmpty() && !SysCalculator.isOperator(displayText.charAt(displayText.length() - 1)) &&
+					!displayText.endsWith(".")) || !SysCalculator.isOperator(actionCommand.charAt(0))) {
+				
+//				If the conditions are satisfied, append the character that is printed on the label to the display:
+				
+				display.setText(displayText + actionCommand);
+			}
+		}
+	};
+
+	/**
+	 * @author yitz
+	 * @since 1.0
+	 */
+	private ActionListener performCalculation = new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			
+//			Cache the display text:
+			
+			String displayText = display.getText();
+			
+//			Make sure that the problem doesn't end with an operator befor performing the operation:
+			
+			if (!SysCalculator.isOperator(displayText.charAt(displayText.length() - 1))) {
+				
+//				Get an array of all the operands:
+				
+				String[] numbers = displayText.split("[\\+\\-\\*\\/\\%]");
+				
+//				Convert the array to an ArrayList, so that the remove() function can be used:
+				
+				ArrayList<String> operands = new ArrayList<String>();
+				
+				for (String s : numbers) {
+					operands.add(s);
+				}
+				
+//				Go over each character in the display, and if it's an operator then add to an ArrayList:
+				
+				ArrayList<String> operators = new ArrayList<String>();
+				
+				for (int i = 0; i < displayText.length(); i++) {
+					if (SysCalculator.isOperator(displayText.charAt(i))) {
+						operators.add(displayText.charAt(i) + "");
+					}
+				}
+				
+//				Compile the problem:
+				
+				ArrayList<String> problem = new ArrayList<String>();
+				
+				int operandIndex = 0, operatorIndex = 0;
+				
+				for (int i = 0; i < (operands.size() + operators.size()); i ++) {
+					if (i % 2 == 0) {
+						problem.add(operands.get(operandIndex));
+						operandIndex++;
+					}
+					else {
+						problem.add(operators.get(operatorIndex));
+						operatorIndex++;
+					}
+				}
+				
+////				Old buggy code (to be removed):
+//				
+////				Calculate the multiplications, divisions, and modulus:
+//				
+//				for (int i = 0; i < operators.size(); i++) {
+//					if (operators.get(i).charAt(0) == '*' || operators.get(i).charAt(0) =='/' || operators.get(i).charAt(0) =='%') {
+//						operands.set(i, SysCalculator.calculate(Double.valueOf(operands.get(i)), 
+//								Double.valueOf(operands.get(i + 1)), operators.get(i).charAt(0)) + "");
+//						operands.remove(i + 1);
+//						operators.remove(i);
+//					}
+//				}
+//				
+////				Calculate the additions and subtractions:
+//				
+//				for (int i = 0; i < operators.size(); i++) {
+//					if (operators.get(i).charAt(0) == '+' || operators.get(i).charAt(0) == '-') {
+//						operands.set(i, SysCalculator.calculate(Double.valueOf(operands.get(i)), 
+//								Double.valueOf(operands.get(i + 1)), operators.get(i).charAt(0)) + "");
+//						operands.remove(i + 1);
+//						operators.remove(i);
+//					}
+//				}
+//				
+////				End of old buggy code.
+				
+//				Display the solution of the problem:
+				
+				display.setText(solve(problem).get(0));
+			}
+		}
+	};
+
+	
+	/**
+	 * Sets up the GUI.
 	 * @author yitz
 	 * @since 1.0
 	 */
@@ -33,118 +170,6 @@ public class SysCalculator extends JFrame {
 		display.setMaximumSize(new Dimension(500, 20));
 		display.setEditable(false);
 		
-		/**
-		 * @since 1.1
-		 */
-		
-		ActionListener removeLast= new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String displayText = display.getText();
-				if (!displayText.isEmpty()) {
-					display.setText(displayText.substring(0, displayText.length() - 1));
-				}
-			}
-		};
-		
-		/**
-		 * @since 1.1
-		 */
-		
-		ActionListener removeAll = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				display.setText("");
-			}
-		};
-		
-		/**
-		 * @since 1.0
-		 */
-		
-		ActionListener addChar = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-//				Cache the display text and action command:
-				
-				String displayText = display.getText();
-				String actionCommand = e.getActionCommand(); 
-				
-//				Check to make sure that you don't get a problem that starts with a symbol or ends with 2 symbols in a row: 
-				
-				if ((!displayText.isEmpty() && !SysCalculator.isOperator(displayText.charAt(displayText.length() - 1)) &&
-						!displayText.endsWith(".")) || !SysCalculator.isOperator(actionCommand.charAt(0))) {
-					
-//					If the conditions are satisfied, append the character that is printed on the label to the display:
-					
-					display.setText(displayText + actionCommand);
-				}
-			}
-		};
-		
-		/**
-		 * @since 1.0
-		 */
-		
-		ActionListener performCalculation = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-//				Cache the display text:
-				
-				String displayText = display.getText();
-				
-//				Make sure that the problem doesn't end with an operator befor performing the operation:
-				
-				if (!SysCalculator.isOperator(displayText.charAt(displayText.length() - 1))) {
-					
-//					Get an array of all the operands:
-					
-					String[] numbers = displayText.split("[\\+\\-\\*\\/\\%]");
-					
-//					Convert the array to an ArrayList, so that the remove() function can be used:
-					
-					ArrayList<String> operands = new ArrayList<String>();
-					
-					for (String s : numbers) {
-						operands.add(s);
-					}
-					
-//					Go over each character in the display, and if it's an operator then add to an ArrayList:
-					
-					ArrayList<String> operators = new ArrayList<String>();
-					
-					for (int i = 0; i < displayText.length(); i++) {
-						if (SysCalculator.isOperator(displayText.charAt(i))) {
-							operators.add(displayText.charAt(i) + "");
-						}
-					}
-					
-//					Calculate the multiplications and divisions:
-					
-					for (int i = 0; i < operators.size(); i++) {
-						if (operators.get(i).charAt(0) == '*' || operators.get(i).charAt(0) =='/' || operators.get(i).charAt(0) =='%') {
-							operands.set(i, SysCalculator.calculate(Double.valueOf(operands.get(i)), 
-									Double.valueOf(operands.get(i + 1)), operators.get(i).charAt(0)) + "");
-							operands.remove(i + 1);
-							operators.remove(i);
-						}
-					}
-					
-//					Calculate the additions and subtractions:
-					
-					for (int i = 0; i < operators.size(); i++) {
-						if (operators.get(i).charAt(0) == '+' || operators.get(i).charAt(0) == '-') {
-							operands.set(i, SysCalculator.calculate(Double.valueOf(operands.get(i)), 
-									Double.valueOf(operands.get(i + 1)), operators.get(i).charAt(0)) + "");
-							operands.remove(i + 1);
-							operators.remove(i);
-						}
-					}
-					
-//					Display the solution of the problem:
-					
-					display.setText(operands.get(0));
-				}
-			}
-		};
 		
 //		Initialize the keyboard buttons:
 		
@@ -261,6 +286,40 @@ public class SysCalculator extends JFrame {
 		else {
 			return false;
 		}
+	}
+	double solveOne(ArrayList<String> problem) {
+		for (int i = 0; i < problem.size(); i++) {
+			if (i % 2 == 1 && (problem.get(i).charAt(0) == '*' || problem.get(i).charAt(0) =='/' || problem.get(i).charAt(0) =='%')) {
+				
+			}
+		}
+	}
+	public static ArrayList<String> solve(ArrayList<String> problem) {
+		for (int i = 0; i < problem.size(); i++) {
+			if (i % 2 == 1 && (problem.get(i).charAt(0) == '*' || problem.get(i).charAt(0) =='/' || problem.get(i).charAt(0) =='%')) {
+				double operandA = Double.parseDouble(problem.get(i - 1));
+				double operandB = Double.parseDouble(problem.get(i + 1));
+				char operator = problem.get(i).charAt(0);
+				String solution = SysCalculator.calculate(operandA, operandB, operator) + "";
+				problem.remove(i - 1);
+				problem.remove(i + 1);
+				problem.set(i, solution);
+				solve(problem);
+			}
+		}
+		for (int i = 0; i < problem.size(); i++) {
+			if (i % 2 == 1 && (problem.get(i).charAt(0) == '+' || problem.get(i).charAt(0) =='-')) {
+				double operandA = Double.parseDouble(problem.get(i - 1));
+				double operandB = Double.parseDouble(problem.get(i + 1));
+				char operator = problem.get(i).charAt(0);
+				String solution = SysCalculator.calculate(operandA, operandB, operator) + "";
+				problem.remove(i - 1);
+				problem.remove(i + 1);
+				problem.set(i, solution);
+				solve(problem);
+			}
+		}
+		return problem;
 	}
 	
 	/**
