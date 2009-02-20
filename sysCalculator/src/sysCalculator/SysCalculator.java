@@ -132,7 +132,6 @@ public class SysCalculator extends JFrame {
 		
 //		Display setup:
 		
-		display.setMaximumSize(new Dimension(500, 20));
 		display.setEditable(false);
 		
 		
@@ -186,9 +185,8 @@ public class SysCalculator extends JFrame {
 		
 //		Content pane setup:
 		
-		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
-		contentPane.add(display);
-		contentPane.add(keyboard);
+		contentPane.add(display, BorderLayout.NORTH);
+		contentPane.add(keyboard, BorderLayout.CENTER);
 		
 //		Keyboard setup:
 		
@@ -232,7 +230,6 @@ public class SysCalculator extends JFrame {
 		gnomeIcon.add(this.getImage("icons/gnome_32x32.png"));
 		
 		this.setIconImages(gnomeIcon);
-		this.setResizable(false);
 		this.setLocationRelativeTo(this);
 		this.setVisible(true);
 	}
@@ -289,18 +286,11 @@ public class SysCalculator extends JFrame {
 			UIManager.setLookAndFeel(
 			UIManager.getSystemLookAndFeelClassName());
 		}
-		catch (UnsupportedLookAndFeelException e) {
-//			handle exception
+		catch (Exception e) {
+//			Should I do somthing here? Somehow I think it unnecessary.
 		}
-		catch (ClassNotFoundException e) {
-//			handle exception
-		}
-		catch (InstantiationException e) {
-//			handle exception
-	    }
-		catch (IllegalAccessException e) {
-//			handle exception
-		}
+		
+//		Initialize the application:
 		
 		new SysCalculator();
 	}
