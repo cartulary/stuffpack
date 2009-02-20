@@ -122,35 +122,17 @@ public class SysCalculator extends JFrame {
 					}
 				}
 				
-////				Old buggy code (to be removed):
-//				
-////				Calculate the multiplications, divisions, and modulus:
-//				
-//				for (int i = 0; i < operators.size(); i++) {
-//					if (operators.get(i).charAt(0) == '*' || operators.get(i).charAt(0) =='/' || operators.get(i).charAt(0) =='%') {
-//						operands.set(i, SysCalculator.calculate(Double.valueOf(operands.get(i)), 
-//								Double.valueOf(operands.get(i + 1)), operators.get(i).charAt(0)) + "");
-//						operands.remove(i + 1);
-//						operators.remove(i);
-//					}
-//				}
-//				
-////				Calculate the additions and subtractions:
-//				
-//				for (int i = 0; i < operators.size(); i++) {
-//					if (operators.get(i).charAt(0) == '+' || operators.get(i).charAt(0) == '-') {
-//						operands.set(i, SysCalculator.calculate(Double.valueOf(operands.get(i)), 
-//								Double.valueOf(operands.get(i + 1)), operators.get(i).charAt(0)) + "");
-//						operands.remove(i + 1);
-//						operators.remove(i);
-//					}
-//				}
-//				
-////				End of old buggy code.
+//				Solve from left to right, in complete disregard of correct algebraic order:
+				
+				double currentResult = Double.parseDouble(operands.get(0));
+				operands.remove(0);
+				for (int i = 0; i < operands.size(); i++) {
+					currentResult = SysCalculator.calculate(currentResult, Double.parseDouble(operands.get(i)), operators.get(i).charAt(0));
+				}
 				
 //				Display the solution of the problem:
 				
-				display.setText(solve(problem).get(0));
+				display.setText(currentResult + "");
 			}
 		}
 	};
@@ -286,40 +268,6 @@ public class SysCalculator extends JFrame {
 		else {
 			return false;
 		}
-	}
-	double solveOne(ArrayList<String> problem) {
-		for (int i = 0; i < problem.size(); i++) {
-			if (i % 2 == 1 && (problem.get(i).charAt(0) == '*' || problem.get(i).charAt(0) =='/' || problem.get(i).charAt(0) =='%')) {
-				
-			}
-		}
-	}
-	public static ArrayList<String> solve(ArrayList<String> problem) {
-		for (int i = 0; i < problem.size(); i++) {
-			if (i % 2 == 1 && (problem.get(i).charAt(0) == '*' || problem.get(i).charAt(0) =='/' || problem.get(i).charAt(0) =='%')) {
-				double operandA = Double.parseDouble(problem.get(i - 1));
-				double operandB = Double.parseDouble(problem.get(i + 1));
-				char operator = problem.get(i).charAt(0);
-				String solution = SysCalculator.calculate(operandA, operandB, operator) + "";
-				problem.remove(i - 1);
-				problem.remove(i + 1);
-				problem.set(i, solution);
-				solve(problem);
-			}
-		}
-		for (int i = 0; i < problem.size(); i++) {
-			if (i % 2 == 1 && (problem.get(i).charAt(0) == '+' || problem.get(i).charAt(0) =='-')) {
-				double operandA = Double.parseDouble(problem.get(i - 1));
-				double operandB = Double.parseDouble(problem.get(i + 1));
-				char operator = problem.get(i).charAt(0);
-				String solution = SysCalculator.calculate(operandA, operandB, operator) + "";
-				problem.remove(i - 1);
-				problem.remove(i + 1);
-				problem.set(i, solution);
-				solve(problem);
-			}
-		}
-		return problem;
 	}
 	
 	/**
