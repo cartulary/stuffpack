@@ -105,23 +105,6 @@ public class SysCalculator extends JFrame {
 					}
 				}
 				
-//				Compile the problem:
-				
-				ArrayList<String> problem = new ArrayList<String>();
-				
-				int operandIndex = 0, operatorIndex = 0;
-				
-				for (int i = 0; i < (operands.size() + operators.size()); i ++) {
-					if (i % 2 == 0) {
-						problem.add(operands.get(operandIndex));
-						operandIndex++;
-					}
-					else {
-						problem.add(operators.get(operatorIndex));
-						operatorIndex++;
-					}
-				}
-				
 //				Solve from left to right, in complete disregard of correct algebraic order:
 				
 				double currentResult = Double.parseDouble(operands.get(0));
