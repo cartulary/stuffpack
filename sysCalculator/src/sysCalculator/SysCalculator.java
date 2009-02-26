@@ -7,6 +7,7 @@ import java.util.*;
 import java.net.URL;
 
 /**
+ * The calculator's GUI.
  * @author yitz
  * @version 1.3
  * @since 1.0
@@ -16,35 +17,30 @@ public class SysCalculator extends JFrame {
 	
 	/**
 	 * The widget that stores the problem and displays it and the results on screen.
-	 * @author yitz
 	 * @since 1.0
 	 */
 	private JTextField display = new JTextField();
 	
 	/**
 	 * SysCalculator's content pane.
-	 * @author yitz
 	 * @since 1.0
 	 */
 	private Container contentPane = this.getContentPane();
 	
 	/**
 	 * The panel that holds the basic calculator interface.
-	 * @author yitz
 	 * @since 1.0
 	 */
 	private JPanel keyboard = new JPanel();
 	
 	/**
 	 * The buttons that are part of the basic calculator interface.
-	 * @author yitz
 	 * @since 1.0
 	 */
 	private ArrayList<JButton> buttons = new ArrayList<JButton>();
 	
 	/**
 	 * The button's labels. These define the button's functionality, so be carefull when making changes!
-	 * @author yitz
 	 * @since 1.3
 	 */
 	public static final String[] LABELS = {
@@ -58,7 +54,6 @@ public class SysCalculator extends JFrame {
 	
 	/**
 	 * The action listener for all the buttons.
-	 * @author yitz
 	 * @since 1.3
 	 */
 	private ActionListener buttonPressed = new ActionListener() {
@@ -83,7 +78,6 @@ public class SysCalculator extends JFrame {
 	
 	/**
 	 * Checks whether or not the given string is used to represent the backspace command. 
-	 * @author yitz
 	 * @since 1.3
 	 */
 	public boolean isBackspace(String s) {
@@ -92,7 +86,6 @@ public class SysCalculator extends JFrame {
 	
 	/**
 	 * Checks whether or not the given string is used to represent the clear command.
-	 * @author yitz
 	 * @since 1.3
 	 */
 	public boolean isClear(String s) {
@@ -101,7 +94,6 @@ public class SysCalculator extends JFrame {
 	
 	/**
 	 * Checks whether or not the given string is used to represent the equals sign.
-	 * @author yitz
 	 * @since 1.3
 	 */
 	public boolean isEquals(String s) {
@@ -110,7 +102,6 @@ public class SysCalculator extends JFrame {
 
 	/**
 	 * Removes the last character from the display.
-	 * @author yitz
 	 * @since 1.1
 	 */
 	private void removeLast() {
@@ -122,7 +113,6 @@ public class SysCalculator extends JFrame {
 
 	/**
 	 * Clears the contents of the display.
-	 * @author yitz
 	 * @since 1.1
 	 */
 	private void clear() {
@@ -131,7 +121,6 @@ public class SysCalculator extends JFrame {
 
 	/**
 	 * Appends the given character to the display.
-	 * @author yitz
 	 * @since 1.0
 	 */
 	private void addCharacter(char c) {
@@ -153,7 +142,6 @@ public class SysCalculator extends JFrame {
 
 	/**
 	 * Solves the mathematical problem stored in the display and displays the result.
-	 * @author yitz
 	 * @since 1.0
 	 */
 	private void performCalculation() {
@@ -174,7 +162,6 @@ public class SysCalculator extends JFrame {
 	
 	/**
 	 * Sets up the GUI.
-	 * @author yitz
 	 * @since 1.0
 	 */
 	public SysCalculator() {
@@ -252,7 +239,6 @@ public class SysCalculator extends JFrame {
 	}
 	
 	/**
-	 * @author yitz
 	 * @since 1.0
 	 * @param args This parameter is unused.
 	 */
@@ -273,7 +259,6 @@ public class SysCalculator extends JFrame {
 	
 	/**
 	 * Retrieve image files as Image objects.
-	 * @author yitz
 	 * @since 1.0
 	 * @param path The path, relative or absolute, of the image to be loaded.
 	 * @return The image stored in path.
