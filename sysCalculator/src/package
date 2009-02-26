@@ -1,3 +1,3 @@
-cd '/home/yitz/Documents/Programming/Eclipse Projects/sysCalculator/src'
-jar cMf SysCalculator_src.jar sysCalculator/*.java sysCalculator/icons/*.png
+cd '/home/yitz/Documents/Programming/SVN checkout/stuffpack/sysCalculator/bin'
+jar cmf MANIFEST.MF SysCalculator.jar sysCalculator/*.class sysCalculator/icons/*.png
 
