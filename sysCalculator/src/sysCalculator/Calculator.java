@@ -75,7 +75,7 @@ public class Calculator {
 	public static double solve(String[] problem) {
 		
 //		Solve from left to right, in complete disregard of correct algebraic order:
-		
+//		TODO: Make it solve the problem in correct algebraic order.
 		double currentResult = Double.parseDouble(problem[0]);
 		
 		for (int i = 1; i < problem.length; i++) {

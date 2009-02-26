@@ -8,7 +8,7 @@ import java.net.URL;
 
 /**
  * @author yitz
- * @version 1.2
+ * @version 1.3
  * @since 1.0
  */
 
@@ -20,12 +20,33 @@ public class SysCalculator extends JFrame {
 	 * @since 1.0
 	 */
 	private JTextField display = new JTextField();
+	
+	/**
+	 * SysCalculator's content pane.
+	 * @author yitz
+	 * @since 1.0
+	 */
 	private Container contentPane = this.getContentPane();
+	
+	/**
+	 * The panel that holds the basic calculator interface.
+	 * @author yitz
+	 * @since 1.0
+	 */
 	private JPanel keyboard = new JPanel();
+	
+	/**
+	 * The buttons that are part of the basic calculator interface.
+	 * @author yitz
+	 * @since 1.0
+	 */
 	private ArrayList<JButton> buttons = new ArrayList<JButton>();
 	
-//		The button's labels. These define the button's functionality, so be carefull when making changes!
-	
+	/**
+	 * The button's labels. These define the button's functionality, so be carefull when making changes!
+	 * @author yitz
+	 * @since 1.3
+	 */
 	public static final String[] LABELS = {
 			"<--", "C", "+", 
 			"7", "8", "9", "-",
@@ -33,77 +54,123 @@ public class SysCalculator extends JFrame {
 			"1", "2", "3", "/",
 			"0", ".", "=", "%"
 	};
-
+	
+	
 	/**
+	 * The action listener for all the buttons.
 	 * @author yitz
-	 * @since 1.1
+	 * @since 1.3
 	 */
-	private ActionListener removeLast= new ActionListener() {
+	private ActionListener buttonPressed = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			String displayText = display.getText();
-			if (!displayText.isEmpty()) {
-				display.setText(displayText.substring(0, displayText.length() - 1));
+			String actionCommand = e.getActionCommand();
+			
+			if (isBackspace(actionCommand)) {
+				removeLast();
 			}
+			else if (isClear(actionCommand)) {
+				clear();
+			}
+			else if (isEquals(actionCommand)) {
+				performCalculation();
+			}
+			else {
+				addCharacter(actionCommand.charAt(0));
+			}
+			
 		}
 	};
+	
+	/**
+	 * Checks whether or not the given string is used to represent the backspace command. 
+	 * @author yitz
+	 * @since 1.3
+	 */
+	public boolean isBackspace(String s) {
+		return s == "<--" ? true : false;
+	}
+	
+	/**
+	 * Checks whether or not the given string is used to represent the clear command.
+	 * @author yitz
+	 * @since 1.3
+	 */
+	public boolean isClear(String s) {
+		return s == "C" ? true : false;
+	}
+	
+	/**
+	 * Checks whether or not the given string is used to represent the equals sign.
+	 * @author yitz
+	 * @since 1.3
+	 */
+	public boolean isEquals(String s) {
+		return s == "=" ? true : false;
+	}
 
 	/**
+	 * Removes the last character from the display.
 	 * @author yitz
 	 * @since 1.1
 	 */
-	private ActionListener removeAll = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
+	private void removeLast() {
+		String displayText = display.getText();
+		if (!displayText.isEmpty()) {
+			display.setText(displayText.substring(0, displayText.length() - 1));
+		}
+	}
+
+	/**
+	 * Clears the contents of the display.
+	 * @author yitz
+	 * @since 1.1
+	 */
+	private void clear() {
 			display.setText("");
-		}
-	};
+	}
 
 	/**
+	 * Appends the given character to the display.
 	 * @author yitz
 	 * @since 1.0
 	 */
-	private ActionListener addChar = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
+	private void addCharacter(char c) {
+		
+//		Cache the display text and action command:
+		
+		String displayText = display.getText();
+		
+//		Check to make sure that you don't get a problem that starts with a symbol or ends with 2 symbols in a row: 
+		
+		if ((!displayText.isEmpty() && !Calculator.isOperator(displayText.charAt(displayText.length() - 1)) &&
+				!displayText.endsWith(".")) || !Calculator.isOperator(c)) {
 			
-//			Cache the display text and action command:
+//			If the conditions are satisfied, append the character that is printed on the label to the display:
 			
-			String displayText = display.getText();
-			String actionCommand = e.getActionCommand(); 
-			
-//			Check to make sure that you don't get a problem that starts with a symbol or ends with 2 symbols in a row: 
-			
-			if ((!displayText.isEmpty() && !Calculator.isOperator(displayText.charAt(displayText.length() - 1)) &&
-					!displayText.endsWith(".")) || !Calculator.isOperator(actionCommand.charAt(0))) {
-				
-//				If the conditions are satisfied, append the character that is printed on the label to the display:
-				
-				display.setText(displayText + actionCommand);
-			}
+			display.setText(displayText + c);
 		}
-	};
+	}
 
 	/**
+	 * Solves the mathematical problem stored in the display and displays the result.
 	 * @author yitz
 	 * @since 1.0
 	 */
-	private ActionListener performCalculation = new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
+	private void performCalculation() {
+		
+//		Cache the display text:
+		
+		String displayText = display.getText();
+		
+//		Make sure that the problem doesn't end with an operator befor performing the operation:
+		
+		if (!Calculator.isOperator(displayText.charAt(displayText.length() - 1))) {
 			
-//			Cache the display text:
+//			Perform the calculation and display the solution:
 			
-			String displayText = display.getText();
-			
-//			Make sure that the problem doesn't end with an operator befor performing the operation:
-			
-			if (!Calculator.isOperator(displayText.charAt(displayText.length() - 1))) {
-				
-
-//				Display the solution of the problem:
-				
-				display.setText(Calculator.solve(Calculator.compile(displayText))+ "");
-			}
+			display.setText(Calculator.solve(Calculator.compile(displayText))+ "");
 		}
-	};
-
+	}
 	
 	/**
 	 * Sets up the GUI.
@@ -127,19 +194,7 @@ public class SysCalculator extends JFrame {
 		for (String label : SysCalculator.LABELS) {
 			JButton button = new JButton(label);
 			buttons.add(button);
-			
-			if (label == "<--") {
-				button.addActionListener(removeLast);
-			}
-			else if (label == "C") {
-				button.addActionListener(removeAll);
-			}
-			else if (label == "=") {
-				button.addActionListener(performCalculation);
-			}
-			else {
-				button.addActionListener(addChar);
-			}
+			button.addActionListener(buttonPressed);
 		}
 		
 //		Keyboard setup:
