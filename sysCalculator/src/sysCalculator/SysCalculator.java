@@ -241,10 +241,10 @@ public class SysCalculator extends JFrame {
 		this.setSize(new Dimension(230, 250));
 		
 		ArrayList<Image> gnomeIcon = new ArrayList<Image>();
-		gnomeIcon.add(this.getImage("icons/gnome_16x16.png"));
-		gnomeIcon.add(this.getImage("icons/gnome_22x22.png"));
-		gnomeIcon.add(this.getImage("icons/gnome_24x24.png"));
-		gnomeIcon.add(this.getImage("icons/gnome_32x32.png"));
+		gnomeIcon.add(SysCalculator.getImage("icons/gnome_16x16.png"));
+		gnomeIcon.add(SysCalculator.getImage("icons/gnome_22x22.png"));
+		gnomeIcon.add(SysCalculator.getImage("icons/gnome_24x24.png"));
+		gnomeIcon.add(SysCalculator.getImage("icons/gnome_32x32.png"));
 		
 		this.setIconImages(gnomeIcon);
 		this.setLocationRelativeTo(this);
@@ -278,7 +278,7 @@ public class SysCalculator extends JFrame {
 	 * @param path The path, relative or absolute, of the image to be loaded.
 	 * @return The image stored in path.
 	 */
-	private Image getImage(String path) {
+	private static Image getImage(String path) {
         URL imgURL = SysCalculator.class.getResource(path);
         if (imgURL != null) {
             return new ImageIcon(imgURL).getImage();
