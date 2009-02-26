@@ -105,52 +105,17 @@ public class SysCalculator extends JFrame {
 					}
 				}
 				
-//				Compile the problem:
+//				Solve from left to right, in complete disregard of correct algebraic order:
 				
-				ArrayList<String> problem = new ArrayList<String>();
-				
-				int operandIndex = 0, operatorIndex = 0;
-				
-				for (int i = 0; i < (operands.size() + operators.size()); i ++) {
-					if (i % 2 == 0) {
-						problem.add(operands.get(operandIndex));
-						operandIndex++;
-					}
-					else {
-						problem.add(operators.get(operatorIndex));
-						operatorIndex++;
-					}
+				double currentResult = Double.parseDouble(operands.get(0));
+				operands.remove(0);
+				for (int i = 0; i < operands.size(); i++) {
+					currentResult = SysCalculator.calculate(currentResult, Double.parseDouble(operands.get(i)), operators.get(i).charAt(0));
 				}
-				
-////				Old buggy code (to be removed):
-//				
-////				Calculate the multiplications, divisions, and modulus:
-//				
-//				for (int i = 0; i < operators.size(); i++) {
-//					if (operators.get(i).charAt(0) == '*' || operators.get(i).charAt(0) =='/' || operators.get(i).charAt(0) =='%') {
-//						operands.set(i, SysCalculator.calculate(Double.valueOf(operands.get(i)), 
-//								Double.valueOf(operands.get(i + 1)), operators.get(i).charAt(0)) + "");
-//						operands.remove(i + 1);
-//						operators.remove(i);
-//					}
-//				}
-//				
-////				Calculate the additions and subtractions:
-//				
-//				for (int i = 0; i < operators.size(); i++) {
-//					if (operators.get(i).charAt(0) == '+' || operators.get(i).charAt(0) == '-') {
-//						operands.set(i, SysCalculator.calculate(Double.valueOf(operands.get(i)), 
-//								Double.valueOf(operands.get(i + 1)), operators.get(i).charAt(0)) + "");
-//						operands.remove(i + 1);
-//						operators.remove(i);
-//					}
-//				}
-//				
-////				End of old buggy code.
 				
 //				Display the solution of the problem:
 				
-				display.setText(solve(problem).get(0));
+				display.setText(currentResult + "");
 			}
 		}
 	};
@@ -167,98 +132,98 @@ public class SysCalculator extends JFrame {
 		
 //		Display setup:
 		
-		display.setMaximumSize(new Dimension(500, 20));
 		display.setEditable(false);
-		
-		
-//		Initialize the keyboard buttons:
-		
-		JButton button0 = new JButton("0");
-		JButton button1 = new JButton("1");
-		JButton button2 = new JButton("2");
-		JButton button3 = new JButton("3");
-		JButton button4 = new JButton("4");
-		JButton button5 = new JButton("5");
-		JButton button6 = new JButton("6");
-		JButton button7 = new JButton("7");
-		JButton button8 = new JButton("8");
-		JButton button9 = new JButton("9");
-		JButton buttonEquals = new JButton("=");
-		JButton buttonAdd = new JButton("+");
-		JButton buttonSubtract = new JButton("-");
-		JButton buttonMultiply = new JButton("*");
-		JButton buttonDivide = new JButton("/");
-		JButton buttonPoint = new JButton(".");
-		JButton buttonBackspace = new JButton("<--");
-		JButton buttonClear = new JButton("C");
-		JButton buttonModulus = new JButton("%");
-		
-//		This button doesn't do enything. It's just there to keep the layout clean:
-		
-		JButton dfs = new JButton("dfs");
-		
-//		Register the keyboard button's event listeners:
-		
-		button0.addActionListener(addChar);
-		button1.addActionListener(addChar);
-		button2.addActionListener(addChar);
-		button3.addActionListener(addChar);
-		button4.addActionListener(addChar);
-		button5.addActionListener(addChar);
-		button6.addActionListener(addChar);
-		button7.addActionListener(addChar);
-		button8.addActionListener(addChar);
-		button9.addActionListener(addChar);
-		buttonAdd.addActionListener(addChar);
-		buttonSubtract.addActionListener(addChar);
-		buttonMultiply.addActionListener(addChar);
-		buttonDivide.addActionListener(addChar);
-		buttonModulus.addActionListener(addChar);
-		buttonPoint.addActionListener(addChar);
-		buttonEquals.addActionListener(performCalculation);
-		buttonBackspace.addActionListener(removeLast);
-		buttonClear.addActionListener(removeAll);
 		
 //		Content pane setup:
 		
-		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
-		contentPane.add(display);
-		contentPane.add(keyboard);
+		contentPane.add(keyboard, BorderLayout.CENTER);
 		
 //		Keyboard setup:
 		
-		keyboard.setLayout(new GridLayout(5, 4));
+		ArrayList<JButton> buttons = new ArrayList<JButton>();
+		ArrayList<String> labels = new ArrayList<String>();
+		labels.add("<--");
+		labels.add("C");
+		labels.add("+");
 		
-		keyboard.add(buttonBackspace);
-		keyboard.add(buttonClear);
-		keyboard.add(dfs);
-		keyboard.add(buttonAdd);
+		labels.add("7");
+		labels.add("8");
+		labels.add("9");
+		labels.add("-");
 		
-		keyboard.add(button7);
-		keyboard.add(button8);
-		keyboard.add(button9);
-		keyboard.add(buttonSubtract);
+		labels.add("4");
+		labels.add("5");
+		labels.add("6");
+		labels.add("*");
 		
-		keyboard.add(button4);
-		keyboard.add(button5);
-		keyboard.add(button6);
-		keyboard.add(buttonMultiply);
+		labels.add("1");
+		labels.add("2");
+		labels.add("3");
+		labels.add("/");
 		
-		keyboard.add(button1);
-		keyboard.add(button2);
-		keyboard.add(button3);
-		keyboard.add(buttonDivide);
+		labels.add("0");
+		labels.add(".");
+		labels.add("=");
+		labels.add("%");
 		
-		keyboard.add(button0);
-		keyboard.add(buttonPoint);
-		keyboard.add(buttonEquals);
-		keyboard.add(buttonModulus);
+		for (String label : labels) {
+			JButton button = new JButton(label);
+			buttons.add(button);
+			
+			if (label == "<--") {
+				button.addActionListener(removeLast);
+			}
+			else if (label == "C") {
+				button.addActionListener(removeAll);
+			}
+			else if (label == "=") {
+				button.addActionListener(performCalculation);
+			}
+			else {
+				button.addActionListener(addChar);
+			}
+		}
+		
+		keyboard.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		
+		Insets insets = new Insets(2, 2, 2, 2);
+		int y = 1, x = 0;
+		
+		c.gridx = 0;
+		c.gridy = 0;
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = insets;
+		c.weightx = 0.1;
+		c.weighty = 0.1;
+		c.gridwidth = 4;
+		
+		keyboard.add(display, c);
+		
+		for (JButton button : buttons) {
+			if (x == 1 && y == 1) {
+				x = 2;
+			}
+			
+			c.gridx = x;
+			c.gridy = y;
+			if (button.getText() == "<--") {
+				c.gridwidth = 2;
+			}
+			else {
+				c.gridwidth = 1;
+			}
+			
+			keyboard.add(button, c);
+			y = x == 3 ? y + 1 : y;
+			x = x == 3 ? 0 : x + 1;
+		}
 		
 //		Window setup:
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("SysCalculator");
-		this.setSize(new Dimension(200, 220));
+		this.setSize(new Dimension(230, 250));
 		
 		ArrayList<Image> gnomeIcon = new ArrayList<Image>();
 		gnomeIcon.add(this.getImage("icons/gnome_16x16.png"));
@@ -267,7 +232,6 @@ public class SysCalculator extends JFrame {
 		gnomeIcon.add(this.getImage("icons/gnome_32x32.png"));
 		
 		this.setIconImages(gnomeIcon);
-		this.setResizable(false);
 		this.setLocationRelativeTo(this);
 		this.setVisible(true);
 	}
@@ -286,40 +250,6 @@ public class SysCalculator extends JFrame {
 		else {
 			return false;
 		}
-	}
-	double solveOne(ArrayList<String> problem) {
-		for (int i = 0; i < problem.size(); i++) {
-			if (i % 2 == 1 && (problem.get(i).charAt(0) == '*' || problem.get(i).charAt(0) =='/' || problem.get(i).charAt(0) =='%')) {
-				
-			}
-		}
-	}
-	public static ArrayList<String> solve(ArrayList<String> problem) {
-		for (int i = 0; i < problem.size(); i++) {
-			if (i % 2 == 1 && (problem.get(i).charAt(0) == '*' || problem.get(i).charAt(0) =='/' || problem.get(i).charAt(0) =='%')) {
-				double operandA = Double.parseDouble(problem.get(i - 1));
-				double operandB = Double.parseDouble(problem.get(i + 1));
-				char operator = problem.get(i).charAt(0);
-				String solution = SysCalculator.calculate(operandA, operandB, operator) + "";
-				problem.remove(i - 1);
-				problem.remove(i + 1);
-				problem.set(i, solution);
-				solve(problem);
-			}
-		}
-		for (int i = 0; i < problem.size(); i++) {
-			if (i % 2 == 1 && (problem.get(i).charAt(0) == '+' || problem.get(i).charAt(0) =='-')) {
-				double operandA = Double.parseDouble(problem.get(i - 1));
-				double operandB = Double.parseDouble(problem.get(i + 1));
-				char operator = problem.get(i).charAt(0);
-				String solution = SysCalculator.calculate(operandA, operandB, operator) + "";
-				problem.remove(i - 1);
-				problem.remove(i + 1);
-				problem.set(i, solution);
-				solve(problem);
-			}
-		}
-		return problem;
 	}
 	
 	/**
@@ -358,18 +288,11 @@ public class SysCalculator extends JFrame {
 			UIManager.setLookAndFeel(
 			UIManager.getSystemLookAndFeelClassName());
 		}
-		catch (UnsupportedLookAndFeelException e) {
-//			handle exception
+		catch (Exception e) {
+//			Should I do somthing here? Somehow I think it unnecessary.
 		}
-		catch (ClassNotFoundException e) {
-//			handle exception
-		}
-		catch (InstantiationException e) {
-//			handle exception
-	    }
-		catch (IllegalAccessException e) {
-//			handle exception
-		}
+		
+//		Initialize the application:
 		
 		new SysCalculator();
 	}
