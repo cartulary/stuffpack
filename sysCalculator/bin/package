@@ -1,3 +1,0 @@
-cd '/home/yitz/Documents/Programming/Eclipse Projects/sysCalculator/bin'
-jar cmf MANIFEST.MF SysCalculator.jar sysCalculator/*.class sysCalculator/icons/*.png
-
