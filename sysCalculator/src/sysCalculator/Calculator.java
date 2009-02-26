@@ -2,14 +2,20 @@ package sysCalculator;
 
 import java.util.ArrayList;
 
+/**
+ * The calculator's backend.
+ * @author yitz
+ * @version 1.3
+ * @since 1.3
+ */
+
 public class Calculator {
 
 	/**
 	 * Check whether or not the given character is a supported operator.
-	 * @author yitz
 	 * @since 1.2
-	 * @param operator
-	 * @return
+	 * @param operator The character that is to be evaluated.
+	 * @return Whether or not the given character represents a supported character.
 	 */
 	public static boolean isOperator(char operator) {
 		String operators = "+-*/%";
@@ -23,7 +29,6 @@ public class Calculator {
 	
 	/**
 	 * Converts a String into an array that's ready to be processed by Calculator.solve(String[]).
-	 * @author yitz
 	 * @since 1.3
 	 * @param problemString A regular string that represents a mathematical problem.
 	 * @return A String array which alternates between numbers and operators. 
@@ -67,7 +72,6 @@ public class Calculator {
 	
 	/**
 	 * Solves the given mathematical problem.
-	 * @author yitz
 	 * @since 1.3
 	 * @param problem The problem to be solved.
 	 * @return The solution to the problem.
@@ -88,7 +92,6 @@ public class Calculator {
 
 	/**
 	 * Perform binary mathematical operations. Currently only addition, subtraction, multiplication, division, and modulus are supported.
-	 * @author yitz
 	 * @since 1.0
 	 * @param operandA One of the two operands of the binary operation. 
 	 * @param operandB One of the two operands of the binary operation.
@@ -113,7 +116,6 @@ public class Calculator {
 	
 	/**
 	 * Calculator is a utility class that offers no instance methods. As such, it has no reason to be instantiated.
-	 * @author yitz
 	 * @since 1.3
 	 */
 	private Calculator() {
