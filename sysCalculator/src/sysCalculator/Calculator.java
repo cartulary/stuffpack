@@ -22,11 +22,11 @@ public class Calculator {
 	}
 	
 	/**
-	 * 
+	 * Converts a String into an array that's ready to be processed by Calculator.solve(String[]).
 	 * @author yitz
 	 * @since 1.3
 	 * @param problemString A regular string that represents a mathematical problem.
-	 * @return An array that's ready to be processed by Calculator.solve(String[]).
+	 * @return A String array which alternates between numbers and operators. 
 	 */
 	public static String[] compile(String problemString) {
 		
@@ -110,5 +110,13 @@ public class Calculator {
 		}
 			
 	}
-
+	
+	/**
+	 * Calculator is a utility class that offers no instance methods. As such, it has no reason to be instantiated.
+	 * @author yitz
+	 * @since 1.3
+	 */
+	private Calculator() {
+//		Do nothing.
+	}
 }
