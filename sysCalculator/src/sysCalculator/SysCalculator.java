@@ -20,6 +20,19 @@ public class SysCalculator extends JFrame {
 	 * @since 1.0
 	 */
 	private JTextField display = new JTextField();
+	private Container contentPane = this.getContentPane();
+	private JPanel keyboard = new JPanel();
+	private ArrayList<JButton> buttons = new ArrayList<JButton>();
+	
+//		The button's labels. These define the button's functionality, so be carefull when making changes!
+	
+	public static final String[] LABELS = {
+			"<--", "C", "+", 
+			"7", "8", "9", "-",
+			"4", "5", "6", "*",
+			"1", "2", "3", "/",
+			"0", ".", "=", "%"
+	};
 
 	/**
 	 * @author yitz
@@ -58,8 +71,8 @@ public class SysCalculator extends JFrame {
 			
 //			Check to make sure that you don't get a problem that starts with a symbol or ends with 2 symbols in a row: 
 			
-			if ((!displayText.isEmpty() && !SysCalculator.isOperator(displayText.charAt(displayText.length() - 1)) &&
-					!displayText.endsWith(".")) || !SysCalculator.isOperator(actionCommand.charAt(0))) {
+			if ((!displayText.isEmpty() && !Calculator.isOperator(displayText.charAt(displayText.length() - 1)) &&
+					!displayText.endsWith(".")) || !Calculator.isOperator(actionCommand.charAt(0))) {
 				
 //				If the conditions are satisfied, append the character that is printed on the label to the display:
 				
@@ -81,41 +94,12 @@ public class SysCalculator extends JFrame {
 			
 //			Make sure that the problem doesn't end with an operator befor performing the operation:
 			
-			if (!SysCalculator.isOperator(displayText.charAt(displayText.length() - 1))) {
+			if (!Calculator.isOperator(displayText.charAt(displayText.length() - 1))) {
 				
-//				Get an array of all the operands:
-				
-				String[] numbers = displayText.split("[\\+\\-\\*\\/\\%]");
-				
-//				Convert the array to an ArrayList, so that the remove() function can be used:
-				
-				ArrayList<String> operands = new ArrayList<String>();
-				
-				for (String s : numbers) {
-					operands.add(s);
-				}
-				
-//				Go over each character in the display, and if it's an operator then add to an ArrayList:
-				
-				ArrayList<String> operators = new ArrayList<String>();
-				
-				for (int i = 0; i < displayText.length(); i++) {
-					if (SysCalculator.isOperator(displayText.charAt(i))) {
-						operators.add(displayText.charAt(i) + "");
-					}
-				}
-				
-//				Solve from left to right, in complete disregard of correct algebraic order:
-				
-				double currentResult = Double.parseDouble(operands.get(0));
-				operands.remove(0);
-				for (int i = 0; i < operands.size(); i++) {
-					currentResult = SysCalculator.calculate(currentResult, Double.parseDouble(operands.get(i)), operators.get(i).charAt(0));
-				}
-				
+
 //				Display the solution of the problem:
 				
-				display.setText(currentResult + "");
+				display.setText(Calculator.solve(Calculator.compile(displayText))+ "");
 			}
 		}
 	};
@@ -127,8 +111,6 @@ public class SysCalculator extends JFrame {
 	 * @since 1.0
 	 */
 	public SysCalculator() {
-		Container contentPane = this.getContentPane();
-		JPanel keyboard = new JPanel();
 		
 //		Display setup:
 		
@@ -138,35 +120,11 @@ public class SysCalculator extends JFrame {
 		
 		contentPane.add(keyboard, BorderLayout.CENTER);
 		
-//		Keyboard setup:
 		
-		ArrayList<JButton> buttons = new ArrayList<JButton>();
-		ArrayList<String> labels = new ArrayList<String>();
-		labels.add("<--");
-		labels.add("C");
-		labels.add("+");
+//		Creating the buttons and registering their action listeners:
 		
-		labels.add("7");
-		labels.add("8");
-		labels.add("9");
-		labels.add("-");
 		
-		labels.add("4");
-		labels.add("5");
-		labels.add("6");
-		labels.add("*");
-		
-		labels.add("1");
-		labels.add("2");
-		labels.add("3");
-		labels.add("/");
-		
-		labels.add("0");
-		labels.add(".");
-		labels.add("=");
-		labels.add("%");
-		
-		for (String label : labels) {
+		for (String label : SysCalculator.LABELS) {
 			JButton button = new JButton(label);
 			buttons.add(button);
 			
@@ -183,6 +141,8 @@ public class SysCalculator extends JFrame {
 				button.addActionListener(addChar);
 			}
 		}
+		
+//		Keyboard setup:
 		
 		keyboard.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -234,47 +194,6 @@ public class SysCalculator extends JFrame {
 		this.setIconImages(gnomeIcon);
 		this.setLocationRelativeTo(this);
 		this.setVisible(true);
-	}
-	
-	/**
-	 * @author yitz
-	 * @since 1.2
-	 * @param operator
-	 * @return
-	 */
-	public static boolean isOperator(char operator) {
-		String operators = "+-*/%";
-		if (operators.indexOf(operator) > -1) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	
-	/**
-	 * Perform binary mathematical operations. Currently only addition, subtraction, multiplication, division, and modulus are supported.
-	 * @author yitz
-	 * @since 1.0
-	 * @param operandA One of the two operands of the binary operation. 
-	 * @param operandB One of the two operands of the binary operation.
-	 * @param operator The character that sybolizes the binary operation that will be performed.
-	 * @return The result of the calculation.
-	 */
-	public static double calculate(double operandA, double operandB, char operator) {
-		switch (operator) {
-			case '+':
-				return operandA + operandB;
-			case '-':
-				return operandA - operandB;
-			case '*':
-				return operandA * operandB;
-			case '%':
-				return operandA % operandB;
-			default:
-				return operandA / operandB;
-		}
-			
 	}
 	
 	/**
