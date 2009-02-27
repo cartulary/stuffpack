@@ -18,7 +18,22 @@ public class Calculator {
 	 * @return Whether or not the given character represents a supported character.
 	 */
 	public static boolean isOperator(char operator) {
-		String operators = "+-*/%";
+		if (isAdder(operator) || isMultiplier(operator)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Check whether or not the given character is a plus or minus.
+	 * @since 1.3
+	 * @param operator The character that is to be evaluated.
+	 * @return Whether or not the given character a plus or minus sign.
+	 */
+	public static boolean isAdder(char operator) {
+		String operators = "+-";
 		if (operators.indexOf(operator) > -1) {
 			return true;
 		}
@@ -28,12 +43,29 @@ public class Calculator {
 	}
 	
 	/**
-	 * Converts a String into an array that's ready to be processed by Calculator.solve(String[]).
+	 * Check whether or not the given character is a times, divide, or modulus.
 	 * @since 1.3
-	 * @param problemString A regular string that represents a mathematical problem.
-	 * @return A String array which alternates between numbers and operators. 
+	 * @param operator The character that is to be evaluated.
+	 * @return Whether or not the given character is times, divide, or modulus sign.
 	 */
-	public static String[] compile(String problemString) {
+	public static boolean isMultiplier(char operator) {
+		String operators = "*/%";
+		if (operators.indexOf(operator) > -1) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	
+	/**
+	 * Converts a String into an array that's ready to be processed by Calculator.getElements(ArrayList<String>).
+	 * @since 1.4
+	 * @param problemString A regular string that represents a mathematical problem.
+	 * @return A String ArrayList which alternates between numbers and operators.  
+	 */
+	private static ArrayList<String> extract(String problemString) {
 		
 //		Get an array of all the operands:
 		
@@ -60,14 +92,17 @@ public class Calculator {
 		
 		problem.add(numbers[numbers.length - 1]);
 		
-//		Convert the problem ArrayList into a primitive array:
-		
-		String[] problemArray = new String[problem.size()];
-		
-		for (int i = 0; i < problem.size(); i++) {
-			problemArray[i] = problem.get(i);
-		}
-		return problemArray;
+		return problem;
+	}
+	
+	/**
+	 * Converts a String into an array that's ready to be processed by Calculator.solve(ArrayList<ArrayList<String>>).
+	 * @since 1.3
+	 * @param problemString A regular string that represents a mathematical problem.
+	 * @return A 2D String ArrayList in which every every element of the 1st level represents a mathematical element. the strings inside the 2nd level alternate between operators and numbers. 
+	 */
+	public static ArrayList<ArrayList<String>> compile(String problemString) {
+		return getElements(extract(problemString));
 	}
 	
 	/**
@@ -76,17 +111,29 @@ public class Calculator {
 	 * @param problem The problem to be solved.
 	 * @return The solution to the problem.
 	 */
-	public static double solve(String[] problem) {
+	public static double solve(ArrayList<ArrayList<String>> problem) {
+		ArrayList<String> firstStageSolution = new ArrayList<String>();
 		
-//		Solve from left to right, in complete disregard of correct algebraic order:
-//		TODO: Make it solve the problem in correct algebraic order.
-		double currentResult = Double.parseDouble(problem[0]);
+		for (ArrayList<String> element : problem) {
+			double currentResult = Double.parseDouble(element.get(1));
+			
+			for (int i = 2; i < element.size(); i++) {
+				if (i % 2 == 1) {
+					currentResult = Calculator.calculate(currentResult, Double.parseDouble(element.get(i + 1)), element.get(i).charAt(0));
+				}
+			}
+			firstStageSolution.add(element.get(0));
+			firstStageSolution.add(currentResult + "");
+		}
 		
-		for (int i = 1; i < problem.length; i++) {
-			if (i % 2 != 0) {
-				currentResult = Calculator.calculate(currentResult, Double.parseDouble(problem[i + 1]), problem[i].charAt(0));
+		double currentResult = Double.parseDouble(firstStageSolution.get(1));
+		
+		for (int i = 2; i < firstStageSolution.size(); i++) {
+			if (i % 2 == 0) {
+				currentResult = Calculator.calculate(currentResult, Double.parseDouble(firstStageSolution.get(i + 1)), firstStageSolution.get(i).charAt(0));
 			}
 		}
+		
 		return currentResult;
 	}
 
@@ -120,5 +167,48 @@ public class Calculator {
 	 */
 	private Calculator() {
 //		Do nothing.
+	}
+	
+	/**
+	 * @since 1.4
+	 * @param problem
+	 * @return
+	 */
+	private static ArrayList<ArrayList<String>> getElements(ArrayList<String> problem) {
+		ArrayList<ArrayList<String>> elements = new ArrayList<ArrayList<String>>();
+		
+		ArrayList<String> firstElement = new ArrayList<String>();
+		firstElement.add("+");
+		
+		for (int i = 0; i < problem.size(); i++) {
+			if (!isAdder(problem.get(i).charAt(0))) {
+				firstElement.add(problem.get(i));
+			}
+			else {
+				break;
+			}
+		}
+		
+		elements.add(firstElement);
+		
+//		TODO fix the infinite loop which is the result of the following code:
+		
+		for (int i = 0; i < problem.size(); i++) {
+			if (isAdder(problem.get(i).charAt(0))) {
+				ArrayList<String> element = new ArrayList<String>();
+				element.add(problem.get(i));
+				elements.add(element);
+				for (int h = i; h < problem.size(); h++) {
+					if (!isAdder(problem.get(h).charAt(0))) {
+						element.add(problem.get(h));
+					}
+					else {
+						i = h - 1;
+						break;
+					}
+				}
+			}
+		}
+		return elements;
 	}
 }
