@@ -12,13 +12,13 @@ import java.net.URL;
  * @version 1.3
  * @since 1.0
  */
-
 public class SysCalculator extends JFrame {
 	
 	/**
 	 * The widget that stores the problem and displays it and the results on screen.
 	 * @since 1.0
 	 */
+//	TODO: Enable direct editing of this text field, but apply a filter that will prevent invalid input.
 	private JTextField display = new JTextField();
 	
 	/**
