@@ -26,6 +26,13 @@ public class Calculator {
 		}
 	}
 	
+	/**
+	 * Solves any given mathematical problem.
+	 * @since 1.0
+	 * @param problem A string that represents a mathematical problem. Can contain numbers and any operator for which isOperator(char) returns true. No non-numerical characters or whitespace allowed. The string must begin with a number.
+	 * @return The solution to the problem.
+	 */
+	
 	public static double solve(String problem) {
 		return solve(compile(extract(problem)));
 	}
