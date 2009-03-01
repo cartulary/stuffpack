@@ -9,7 +9,7 @@ import java.net.URL;
 /**
  * The calculator's GUI.
  * @author yitz
- * @version 1.3
+ * @version 1.0
  * @since 1.0
  */
 public class SysCalculator extends JFrame {
@@ -41,7 +41,7 @@ public class SysCalculator extends JFrame {
 	
 	/**
 	 * The button's labels. These define the button's functionality, so be carefull when making changes!
-	 * @since 1.3
+	 * @since 1.0
 	 */
 	public static final String[] LABELS = {
 			"<--", "C", "+", 
@@ -54,7 +54,7 @@ public class SysCalculator extends JFrame {
 	
 	/**
 	 * The action listener for all the buttons.
-	 * @since 1.3
+	 * @since 1.0
 	 */
 	private ActionListener buttonPressed = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -78,7 +78,7 @@ public class SysCalculator extends JFrame {
 	
 	/**
 	 * Checks whether or not the given string is used to represent the backspace command. 
-	 * @since 1.3
+	 * @since 1.0
 	 */
 	public boolean isBackspace(String s) {
 		return s == "<--" ? true : false;
@@ -86,7 +86,7 @@ public class SysCalculator extends JFrame {
 	
 	/**
 	 * Checks whether or not the given string is used to represent the clear command.
-	 * @since 1.3
+	 * @since 1.0
 	 */
 	public boolean isClear(String s) {
 		return s == "C" ? true : false;
@@ -94,7 +94,7 @@ public class SysCalculator extends JFrame {
 	
 	/**
 	 * Checks whether or not the given string is used to represent the equals sign.
-	 * @since 1.3
+	 * @since 1.0
 	 */
 	public boolean isEquals(String s) {
 		return s == "=" ? true : false;
@@ -102,7 +102,7 @@ public class SysCalculator extends JFrame {
 
 	/**
 	 * Removes the last character from the display.
-	 * @since 1.1
+	 * @since 1.0
 	 */
 	private void removeLast() {
 		String displayText = display.getText();
@@ -113,7 +113,7 @@ public class SysCalculator extends JFrame {
 
 	/**
 	 * Clears the contents of the display.
-	 * @since 1.1
+	 * @since 1.0
 	 */
 	private void clear() {
 			display.setText("");
@@ -156,7 +156,7 @@ public class SysCalculator extends JFrame {
 			
 //			Perform the calculation and display the solution:
 			
-			display.setText(Calculator.solve(Calculator.compile(displayText))+ "");
+			display.setText(Calculator.solve(displayText) + "");
 		}
 	}
 	
@@ -197,10 +197,12 @@ public class SysCalculator extends JFrame {
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = insets;
 		c.weightx = 0.1;
-		c.weighty = 0.1;
+		c.weighty = 0;
 		c.gridwidth = 4;
 		
 		keyboard.add(display, c);
+		
+		c.weighty = 0.1;
 		
 		for (JButton button : buttons) {
 			if (x == 1 && y == 1) {
