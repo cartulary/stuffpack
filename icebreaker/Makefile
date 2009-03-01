@@ -3,13 +3,13 @@ LANG = c++
 .include    <../Makefile>
 
 #compiling options
-.PHONY:     clean
+.PHONY: all clean
 
 all:  $(NAME) terrain.o
 
-$(NAME): terrain.cpp
+$(NAME): icebreaker.cpp terrain.cpp
 
-terrain.o: 
+terrain: terrain.o
 
 clean:
 	rm -fv *.o

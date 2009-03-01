@@ -1,3 +1,5 @@
+#include <iostream>
+
 class terrain
 {
 		int status;
@@ -14,5 +16,6 @@ void terrain::stubFunction()
 }
 void terrain::stubFunction2()
 {
+	std::cout << "hi!" << std::endl;
 	return;
 }
