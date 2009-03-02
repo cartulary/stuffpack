@@ -16,6 +16,7 @@ const int INTERFACE_TEXT = 1;
 const int INTERFACE_GRAPHICS = 2;
 const int INTERFACE_CURSES = 3;
 
+void verbose(const char* text);
 void usage(char *call_as_name);
 char* getcharcters(int max);
 long int getInteger(int base);
@@ -64,6 +65,8 @@ int main(int argc, char* argv[])
 		case PLAYER_HUMAN_GUESS:
 			/* we add 1 to make the number human appropriate */
 			to_guess = arc4random() % (max +1) ;
+			verbose ("to guess is");
+			//verbose (to_guess);
 			break;
 		case PLAYER_COMP_GUESS:
 			break;
@@ -104,5 +107,15 @@ char* getcharcters(int max)
 /* call_as_name should be argv[0] */
 void usage(char* call_as_name)
 {
-	std::cout << call_as_name << " " << "hello!" << std::endl;
+	std::cout << call_as_name << " " << "--interface --playerMode [--verbose]" << std::endl;
+	std::cout << "Interfaces: text, graphics, curses" << std::endl;
+}
+
+/* echoes text if we are verbose */
+void verbose(const char *text)
+{
+	if (flag_verbose)
+	{
+		std::cout << text << std::endl;
+	}
 }
