@@ -21,7 +21,7 @@ void verbose(const char* text);
 void usage(char *call_as_name);
 char* getcharcters(int max);
 long int getInteger(int base, int input_mode);
-long int getIntInRange(int base, int input_mode, long int min, long int max);
+inline long int getIntInRange(int base, int input_mode, long int min, long int max);
 
 int flagPlayerMode = 0; //computer or human
 int flagGameMode = 0; // high-low or pure guess
@@ -57,8 +57,6 @@ int main(int argc, char* argv[])
 		}
 		switch (c)
 		{
-			case 0:
-				break;
 			default:
 				break;
 		}
@@ -107,18 +105,12 @@ int main(int argc, char* argv[])
 			to_guess = getIntInRange(NUMBER_BASE, flagInterfaceMode, 0, LONG_MAX);
 			/* let set the min and max to impossible numbers so that we could be sure they are invalid
 				for the do loop later */
-			int comp_guess_min = to_guess + 1;
-			int comp_guess_max = to_guess - 1;
+			int comp_guess_min ;
+			int comp_guess_max ;
 			std::cout << "What is the least number the computer could guess" << std::endl;
-			do
-			{
-				comp_guess_min = getInteger(NUMBER_BASE, flagInterfaceMode);
-			} while (comp_guess_min > to_guess);
+			comp_guess_min = getIntInRange(NUMBER_BASE, flagInterfaceMode, 0, to_guess - 1);
 			std::cout << "What is the highest number the computer could guess" << std::endl;
-			do
-			{
-				comp_guess_max = getInteger(NUMBER_BASE, flagInterfaceMode);
-			} while (comp_guess_max < to_guess);
+			comp_guess_max = getIntInRange(NUMBER_BASE, flagInterfaceMode, to_guess + 1, LONG_MAX);
 			break;
 		}
       	default:
@@ -130,7 +122,7 @@ int main(int argc, char* argv[])
 }
 
 /* continues to call getInteger until number is within range */
-long int getIntInRange(int base, int input_mode, long int min, long int max)
+inline long int getIntInRange(int base, int input_mode, long int min, long int max)
 {
 	long int to_return = min - 1 ;
 	do
