@@ -2,6 +2,7 @@
 #include <ctime>
 #include <getopt.h>
 #include <iostream>
+#include <limits.h>
 
 const int NUMBER_BASE = 10;
 
@@ -19,7 +20,8 @@ const int INTERFACE_CURSES = 3;
 void verbose(const char* text);
 void usage(char *call_as_name);
 char* getcharcters(int max);
-long int getInteger(int base);
+long int getInteger(int base, int input_mode);
+long int getIntInRange(int base, int input_mode, long int min, long int max);
 
 int flagPlayerMode = 0; //computer or human
 int flagGameMode = 0; // high-low or pure guess
@@ -30,37 +32,66 @@ int main(int argc, char* argv[])
 {
       int c;
       int option_index = 0;
-      static struct option long_options[] =
-      {
+	while ( true )
+	{
+      	static struct option long_options[] =
+      	{
 		/* These options set a flag. */
-            {"p2p",   	      no_argument,      &flagPlayerMode,    PLAYER_ALL_HUMAN},
-            {"p2c",       	no_argument,      &flagPlayerMode,    PLAYER_HUMAN_GUESS},
-            {"c2p",       	no_argument,      &flagPlayerMode, 	  PLAYER_COMP_GUESS},
-            {"highlow",       no_argument,      &flagGameMode, 	  MODE_HIGHLOW},
-            {"justguess",     no_argument,      &flagGameMode, 	  MODE_NO_HINTS},
-            {"text",    	no_argument,      &flagInterfaceMode, INTERFACE_TEXT},
-            {"graphics",      no_argument,      &flagInterfaceMode, INTERFACE_GRAPHICS},
-            {"curses",        no_argument,      &flagInterfaceMode, INTERFACE_CURSES},
-		{"verbose", 	no_argument,	&flag_verbose,	  true},
-            {0, 0, 0, 0}
-      };
-      /* getopt_long stores the option index here. */
-      c = getopt_long (argc, argv, "", long_options, &option_index);
+	            {"p2p",   	      no_argument,      &flagPlayerMode,    PLAYER_ALL_HUMAN},
+      	      {"p2c",       	no_argument,      &flagPlayerMode,    PLAYER_HUMAN_GUESS},
+            	{"c2p",       	no_argument,      &flagPlayerMode, 	  PLAYER_COMP_GUESS},
+	            {"highlow",       no_argument,      &flagGameMode, 	  MODE_HIGHLOW},
+      	      {"justguess",     no_argument,      &flagGameMode, 	  MODE_NO_HINTS},
+            	{"text",    	no_argument,      &flagInterfaceMode, INTERFACE_TEXT},
+	            {"graphics",      no_argument,      &flagInterfaceMode, INTERFACE_GRAPHICS},
+      	      {"curses",        no_argument,      &flagInterfaceMode, INTERFACE_CURSES},
+			{"verbose", 	no_argument,	&flag_verbose,	  true},
+	            {0, 0, 0, 0}
+	      };
+
+	      /* getopt_long stores the option index here. */
+      	c = getopt_long (argc, argv, "", long_options, &option_index);
+		if (c == -1)
+		{
+            	break;
+		}
+		switch (c)
+		{
+			case 0:
+				break;
+			default:
+				break;
+		}
+		if (flag_verbose == true)
+            {
+                  std::cout << "option %s" << long_options[option_index].name;
+                  if (optarg)
+                  {
+                        std::cout << " with arg " << optarg;
+                  }
+                  std::cout << std::endl;
+            }
+
+	}
+
+
 	/* initialize the number to -1 */
 	long int max = -1;
 	/* Ask for the maximum number to use and get it */
+	/*
 	std::cout << "What number would you like to use as the maximum" << std::endl;
 	do
 	{
 		max = getInteger(NUMBER_BASE);
 	} while (max < 1);
+	*/
 
 	long int to_guess; // this is the number that has to be guessed
 	switch (flagPlayerMode)
 	{
 		case PLAYER_ALL_HUMAN:
 			std::cout << "Player 1 - pick a number:";
-			to_guess = getInteger(10);
+			to_guess = getInteger(10,flagInterfaceMode);
 			break;
 		case PLAYER_HUMAN_GUESS:
 			/* we add 1 to make the number human appropriate */
@@ -69,8 +100,27 @@ int main(int argc, char* argv[])
 			//verbose (to_guess);
 			break;
 		case PLAYER_COMP_GUESS:
+		{
+			to_guess = -1;
 			std::cout << "lets play the computer guessing game" << std::endl;
+			std::cout << "Please enter the number you wish to use:" << std::endl;
+			to_guess = getIntInRange(NUMBER_BASE, flagInterfaceMode, 0, LONG_MAX);
+			/* let set the min and max to impossible numbers so that we could be sure they are invalid
+				for the do loop later */
+			int comp_guess_min = to_guess + 1;
+			int comp_guess_max = to_guess - 1;
+			std::cout << "What is the least number the computer could guess" << std::endl;
+			do
+			{
+				comp_guess_min = getInteger(NUMBER_BASE, flagInterfaceMode);
+			} while (comp_guess_min > to_guess);
+			std::cout << "What is the highest number the computer could guess" << std::endl;
+			do
+			{
+				comp_guess_max = getInteger(NUMBER_BASE, flagInterfaceMode);
+			} while (comp_guess_max < to_guess);
 			break;
+		}
       	default:
 			std::cout << flagPlayerMode << std::endl;
 			usage(argv[0]);
@@ -79,13 +129,34 @@ int main(int argc, char* argv[])
 
 }
 
-/* Retrieves a integer from the user. */
-long int getInteger(int base)
+/* continues to call getInteger until number is within range */
+long int getIntInRange(int base, int input_mode, long int min, long int max)
 {
-      int n = 0;
+	long int to_return = min - 1 ;
+	do
+	{
+		to_return = getInteger(base, input_mode);
+	} while (to_return >= min && to_return <= max);
+	return to_return;
+}
 
-      n = strtol(getcharcters(10),NULL,base);
-
+/*
+ Retrieves a integer from the user.
+1 == text
+2 == graphics
+3 == curses
+*/
+long int getInteger(int base, int input_mode)
+{
+      int n;
+	switch (input_mode)
+	{
+		case 1:
+			n = strtol(getcharcters(10),NULL,base);
+			break;
+		default:
+			break;
+	}
       return n;
 }
 
