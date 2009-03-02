@@ -46,7 +46,6 @@ int main(int argc, char* argv[])
       };
       /* getopt_long stores the option index here. */
       c = getopt_long (argc, argv, "", long_options, &option_index);
-
 	/* initialize the number to -1 */
 	long int max = -1;
 	/* Ask for the maximum number to use and get it */
@@ -55,6 +54,7 @@ int main(int argc, char* argv[])
 	{
 		max = getInteger(NUMBER_BASE);
 	} while (max < 1);
+
 	long int to_guess; // this is the number that has to be guessed
 	switch (flagPlayerMode)
 	{
@@ -69,13 +69,15 @@ int main(int argc, char* argv[])
 			//verbose (to_guess);
 			break;
 		case PLAYER_COMP_GUESS:
+			std::cout << "lets play the computer guessing game" << std::endl;
 			break;
       	default:
+			std::cout << flagPlayerMode << std::endl;
 			usage(argv[0]);
 			break;
 	}
-}
 
+}
 
 /* Retrieves a integer from the user. */
 long int getInteger(int base)
