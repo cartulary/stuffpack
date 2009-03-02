@@ -1,19 +1,28 @@
+/*
+ * Copyright © 2009 Gerald Isaac Schwarz
+ * LICENSE
+ * Permission to use, copy, modify and distribute this software and its documentation is hereby granted, provided that both the copyright notice and this permission notice appear in all copies of the software, derivative works or modified versions, and any portions thereof, and that both notices appear in supporting documentation.
+ * 
+ * DISCLAIMER
+ * This software is provided "as is" with no warranty, liability, or any implication thereof.
+ */
+
 package sysCalculator;
 
 import java.util.ArrayList;
 
 /**
  * The calculator's backend.
- * @author yitz
- * @version 1.0
- * @since 1.0
+ * @author Gerald Isaac Schwarz
+ * @version 0.1
+ * @since 0.1
  */
 
 public class Calculator {
 
 	/**
 	 * Check whether or not the given character is a supported operator.
-	 * @since 1.0
+	 * @since 0.1
 	 * @param operator The character that is to be evaluated.
 	 * @return Whether or not the given character represents a supported character.
 	 */
@@ -28,7 +37,7 @@ public class Calculator {
 	
 	/**
 	 * Solves any given mathematical problem.
-	 * @since 1.0
+	 * @since 0.1
 	 * @param problem A string that represents a mathematical problem. Can contain numbers and any operator for which isOperator(char) returns true. No non-numerical characters or whitespace allowed. The string must begin with a number.
 	 * @return The solution to the problem.
 	 */
@@ -39,7 +48,7 @@ public class Calculator {
 	
 	/**
 	 * Check whether or not the given character is a plus or minus.
-	 * @since 1.0
+	 * @since 0.1
 	 * @param operator The character that is to be evaluated.
 	 * @return Whether or not the given character a plus or minus sign.
 	 */
@@ -55,7 +64,7 @@ public class Calculator {
 	
 	/**
 	 * Check whether or not the given character is a times, divide, or modulus.
-	 * @since 1.0
+	 * @since 0.1
 	 * @param operator The character that is to be evaluated.
 	 * @return Whether or not the given character is times, divide, or modulus sign.
 	 */
@@ -72,7 +81,7 @@ public class Calculator {
 	
 	/**
 	 * Converts a String into an array that's ready to be processed by Calculator.getElements(ArrayList<String>).
-	 * @since 1.0
+	 * @since 0.1
 	 * @param problem A regular string that represents a mathematical problem.
 	 * @return A String ArrayList which alternates between numbers and operators.  
 	 */
@@ -108,7 +117,7 @@ public class Calculator {
 	
 	/**
 	 * Converts a String into an array that's ready to be processed by Calculator.solve(ArrayList<ArrayList<String>>).
-	 * @since 1.0
+	 * @since 0.1
 	 * @param problemString A regular string that represents a mathematical problem.
 	 * @return A 2D String ArrayList in which every every element of the 1st level represents a mathematical element. the strings inside the 2nd level alternate between operators and numbers. 
 	 */
@@ -156,7 +165,7 @@ public class Calculator {
 
 	/**
 	 * Solves the given mathematical problem.
-	 * @since 1.0
+	 * @since 0.1
 	 * @param problem The problem to be solved.
 	 * @return The solution to the problem.
 	 */
@@ -193,7 +202,7 @@ public class Calculator {
 
 	/**
 	 * Perform binary mathematical operations. Currently only addition, subtraction, multiplication, division, and modulus are supported.
-	 * @since 1.0
+	 * @since 0.1
 	 * @param operandA One of the two operands of the binary operation. 
 	 * @param operandB One of the two operands of the binary operation.
 	 * @param operator The character that sybolizes the binary operation that will be performed.
@@ -217,7 +226,7 @@ public class Calculator {
 	
 	/**
 	 * Calculator is a utility class that offers no instance methods. As such, it has no reason to be instantiated.
-	 * @since 1.0
+	 * @since 0.1
 	 */
 	private Calculator() {
 //		Do nothing.

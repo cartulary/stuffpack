@@ -1,3 +1,12 @@
+/*
+ * Copyright © 2009 Gerald Isaac Schwarz
+ * LICENSE
+ * Permission to use, copy, modify and distribute this software and its documentation is hereby granted, provided that both the copyright notice and this permission notice appear in all copies of the software, derivative works or modified versions, and any portions thereof, and that both notices appear in supporting documentation.
+ * 
+ * DISCLAIMER
+ * This software is provided "as is" with no warranty, liability, or any implication thereof.
+ */
+
 package sysCalculator;
 
 import java.awt.*;
@@ -8,40 +17,40 @@ import java.net.URL;
 
 /**
  * The calculator's GUI.
- * @author yitz
- * @version 1.0
- * @since 1.0
+ * @author Gerald Isaac Schwarz
+ * @version 0.1
+ * @since 0.1
  */
 public class SysCalculator extends JFrame {
 	
 	/**
 	 * The widget that stores the problem and displays it and the results on screen.
-	 * @since 1.0
+	 * @since 0.1
 	 */
 //	TODO: Enable direct editing of this text field, but apply a filter that will prevent invalid input.
 	private JTextField display = new JTextField();
 	
 	/**
 	 * SysCalculator's content pane.
-	 * @since 1.0
+	 * @since 0.1
 	 */
 	private Container contentPane = this.getContentPane();
 	
 	/**
 	 * The panel that holds the basic calculator interface.
-	 * @since 1.0
+	 * @since 0.1
 	 */
 	private JPanel keyboard = new JPanel();
 	
 	/**
 	 * The buttons that are part of the basic calculator interface.
-	 * @since 1.0
+	 * @since 0.1
 	 */
 	private ArrayList<JButton> buttons = new ArrayList<JButton>();
 	
 	/**
 	 * The button's labels. These define the button's functionality, so be carefull when making changes!
-	 * @since 1.0
+	 * @since 0.1
 	 */
 	public static final String[] LABELS = {
 			"<--", "C", "+", 
@@ -54,7 +63,7 @@ public class SysCalculator extends JFrame {
 	
 	/**
 	 * The action listener for all the buttons.
-	 * @since 1.0
+	 * @since 0.1
 	 */
 	private ActionListener buttonPressed = new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -78,7 +87,7 @@ public class SysCalculator extends JFrame {
 	
 	/**
 	 * Checks whether or not the given string is used to represent the backspace command. 
-	 * @since 1.0
+	 * @since 0.1
 	 */
 	public boolean isBackspace(String s) {
 		return s == "<--" ? true : false;
@@ -86,7 +95,7 @@ public class SysCalculator extends JFrame {
 	
 	/**
 	 * Checks whether or not the given string is used to represent the clear command.
-	 * @since 1.0
+	 * @since 0.1
 	 */
 	public boolean isClear(String s) {
 		return s == "C" ? true : false;
@@ -94,7 +103,7 @@ public class SysCalculator extends JFrame {
 	
 	/**
 	 * Checks whether or not the given string is used to represent the equals sign.
-	 * @since 1.0
+	 * @since 0.1
 	 */
 	public boolean isEquals(String s) {
 		return s == "=" ? true : false;
@@ -102,7 +111,7 @@ public class SysCalculator extends JFrame {
 
 	/**
 	 * Removes the last character from the display.
-	 * @since 1.0
+	 * @since 0.1
 	 */
 	private void removeLast() {
 		String displayText = display.getText();
@@ -113,7 +122,7 @@ public class SysCalculator extends JFrame {
 
 	/**
 	 * Clears the contents of the display.
-	 * @since 1.0
+	 * @since 0.1
 	 */
 	private void clear() {
 			display.setText("");
@@ -121,7 +130,7 @@ public class SysCalculator extends JFrame {
 
 	/**
 	 * Appends the given character to the display.
-	 * @since 1.0
+	 * @since 0.1
 	 */
 	private void addCharacter(char c) {
 		
@@ -142,7 +151,7 @@ public class SysCalculator extends JFrame {
 
 	/**
 	 * Solves the mathematical problem stored in the display and displays the result.
-	 * @since 1.0
+	 * @since 0.1
 	 */
 	private void performCalculation() {
 		
@@ -162,7 +171,7 @@ public class SysCalculator extends JFrame {
 	
 	/**
 	 * Sets up the GUI.
-	 * @since 1.0
+	 * @since 0.1
 	 */
 	public SysCalculator() {
 		
@@ -241,7 +250,7 @@ public class SysCalculator extends JFrame {
 	}
 	
 	/**
-	 * @since 1.0
+	 * @since 0.1
 	 * @param args This parameter is unused.
 	 */
 	public static void main(String[] args) {
@@ -261,7 +270,7 @@ public class SysCalculator extends JFrame {
 	
 	/**
 	 * Retrieve image files as Image objects.
-	 * @since 1.0
+	 * @since 0.1
 	 * @param path The path, relative or absolute, of the image to be loaded.
 	 * @return The image stored in path.
 	 */

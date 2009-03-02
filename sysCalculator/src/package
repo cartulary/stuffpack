@@ -1,3 +1,3 @@
 cd '/home/yitz/Documents/Programming/SVN checkout/stuffpack/sysCalculator/bin'
-jar cmf MANIFEST.MF SysCalculator.jar sysCalculator/*.class sysCalculator/icons/*.png
+jar cmf MANIFEST.MF SysCalculator.jar license.txt sysCalculator/*.class sysCalculator/icons/*.png
 
