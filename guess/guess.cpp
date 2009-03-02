@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
 	      };
 
 	      /* getopt_long stores the option index here. */
-      	c = getopt_long (argc, argv, "", long_options, &option_index);
+      	c = getopt_long_only (argc, argv, "", long_options, &option_index);
 		if (c == -1)
 		{
             	break;
@@ -136,7 +136,7 @@ long int getIntInRange(int base, int input_mode, long int min, long int max)
 	do
 	{
 		to_return = getInteger(base, input_mode);
-	} while (to_return >= min && to_return <= max);
+	} while (to_return <= min && to_return >= max);
 	return to_return;
 }
 
