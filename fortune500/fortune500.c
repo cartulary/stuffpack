@@ -41,16 +41,17 @@ main(int argc, char** argv)
 	
   gnet_init ();
 
-  if (argc != 2) {
+  if (argc != 2)
+  {
     usage(EXIT_FAILURE);
   }
-	
+
   path = g_new0(gchar, strlen(argv[argc - 1]));
   path = memcpy(path, argv[argc - 1], strlen(argv[argc - 1]));
 
   signal(SIGINT, cleanup_on_sig);
   signal(SIGTERM, cleanup_on_sig);
-		
+
   g_print("Async echo server running\n");
   async_echoserver(path);
   return 0;
@@ -72,11 +73,11 @@ cleanup_on_sig(int signum)
 
 typedef struct
 {
-  GUnixSocket *socket;
-  GIOChannel *iochannel;
-  guint out_watch;
-  gchar buffer[1024];
-  guint n;
+	GUnixSocket *socket;
+	GIOChannel *iochannel;
+	guint out_watch;
+  	gchar buffer[1024];
+  	guint n;
 } client_state;
 
 static void clientstate_delete(client_state *state);
