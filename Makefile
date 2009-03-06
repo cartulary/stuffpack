@@ -24,3 +24,6 @@ CFLAGS += -fabi-version=0 -funroll-loops
 CFLAGS += -Wunreachable-code -Winline
 
 PREFIX = /usr/local
+
+superclean: .NOTMAIN
+	rm -rfv ./$(NAME)
