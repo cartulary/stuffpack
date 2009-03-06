@@ -7,6 +7,8 @@ INCLUDE_PATHS = -I/usr/local/include/gnet -I/usr/local/lib/gnet/include/ -I/usr/
 CFLAGS += $(INCLUDE_PATHS)
 CFLAGS += -L/usr/local/lib -lgnet -lgthread-12 -lglib-12 
 
-fortune500:
+all: fortune500
+
+fortune500.o:
 	$(CC) $(CFLAGS) fortune500.c -o $(NAME)
 

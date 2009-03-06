@@ -27,8 +27,6 @@
 #define GNET_EXPERIMENTAL 1
 #include <gnet/gnet.h>
 
-typedef enum { ASYNC} ServerType;
-
 void cleanup_on_sig(int signum);
 
 static void usage(int status);
@@ -40,7 +38,6 @@ int
 main(int argc, char** argv)
 {
   gchar *path = NULL;
-  ServerType server_type = ASYNC;
 	
   gnet_init ();
 
@@ -54,14 +51,8 @@ main(int argc, char** argv)
   signal(SIGINT, cleanup_on_sig);
   signal(SIGTERM, cleanup_on_sig);
 		
-  switch (server_type) {
-  case ASYNC:
-    g_print("Async echo server running\n");
-    async_echoserver(path);
-    break;
-  default:
-    g_assert_not_reached();
-  }
+  g_print("Async echo server running\n");
+  async_echoserver(path);
   return 0;
 }
 
