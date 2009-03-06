@@ -34,8 +34,10 @@ main(int argc, char** argv)
 
   gnet_init ();
 
-  if (argc != 2 && argc != 3)
-    usage(EXIT_FAILURE);
+  	if (argc != 2 && argc != 3)
+	{
+    		usage(EXIT_FAILURE);
+	}
 
     g_print ("Normal echo client running\n");
     normal_echoclient(argv[argc - 1]);
@@ -70,18 +72,24 @@ normal_echoclient(gchar* path)
   iochannel = gnet_unix_socket_get_iochannel(socket);
   g_assert (iochannel != NULL);
 
-  while (fgets(buffer, sizeof(buffer), stdin) != 0) {
-    n = strlen(buffer);
-    e = gnet_io_channel_writen(iochannel, buffer, n, &n);
-    if (e != G_IO_ERROR_NONE)
-      break;
-    e = gnet_io_channel_readn(iochannel, buffer, n, &n);
-    if (e != G_IO_ERROR_NONE)
-      break;
-    fwrite(buffer, n, 1, stdout);
-  }
+  	while (fgets(buffer, sizeof(buffer), stdin) != 0)
+	{
+ 	   	n = strlen(buffer);
+    		e = gnet_io_channel_writen(iochannel, buffer, n, &n);
+    		if (e != G_IO_ERROR_NONE)
+		{
+	      	break;
+		}
+    		e = gnet_io_channel_readn(iochannel, buffer, n, &n);
+    		if (e != G_IO_ERROR_NONE)
+	      	break;
+		printf("server:");
+    		fwrite(buffer, n, 1, stdout);
+  	}
 
-  if (e != G_IO_ERROR_NONE) 
-    g_print ("IO error (%d)\n", e);
+  	if (e != G_IO_ERROR_NONE)
+	{
+    		g_print ("IO error (%d)\n", e);
+	}
   return;
 }
