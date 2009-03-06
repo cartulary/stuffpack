@@ -24,7 +24,7 @@ long int getInteger(int base, int input_mode);
 inline long int getIntInRange(int base, int input_mode, long int min, long int max);
 
 int flagPlayerMode = 0; //computer or human
-int flagGameMode = 0; // high-low or pure guess
+int flagGameMode = MODE_HIGHLOW; // high-low or pure guess
 int flagInterfaceMode = INTERFACE_TEXT;
 int flag_verbose = false;
 
@@ -90,6 +90,25 @@ int main(int argc, char* argv[])
 		case PLAYER_ALL_HUMAN:
 			std::cout << "Player 1 - pick a number:";
 			to_guess = getInteger(10,flagInterfaceMode);
+			int guessed;
+			do
+			{
+				std::cout << "Player 2 - Input a number" << std::endl;
+				guessed = getInteger(10,flagInterfaceMode);
+				/* we are going to check for high-low here and count guesses here; move to new function for eventual networking functionality */
+				if (flagGameMode == MODE_HIGHLOW)
+				{
+					if ( guessed > to_guess )
+					{
+						std::cout << "higher" << std::endl;
+					}
+					else if ( guessed < to_guess )
+					{
+						std::cout << "lower" << std::endl;
+					}
+				}
+			} while (guessed != to_guess);
+			std::cout << "Your done!" << std::cout;
 			break;
 		case PLAYER_HUMAN_GUESS:
 			/* we add 1 to make the number human appropriate */
