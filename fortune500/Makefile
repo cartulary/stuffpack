@@ -6,6 +6,7 @@ CFLAGS += -pthread
 INCLUDE_PATHS = -I/usr/local/include/gnet -I/usr/local/include/glib12
 CFLAGS += $(INCLUDE_PATHS)
 CFLAGS += -L/usr/local/lib -lgnet -lgthread-12 -lglib-12 
+LINT_FLAGS= -H -aa -bcehprsx $(INCLUDE_PATHS)
 
 all: fortune500 client
 
@@ -17,3 +18,6 @@ client.o:
 clean:
 	rm -rfv ./client ./fortune500
 
+lint:
+	lint $(LINT_FLAGS) client.c|grep client.c
+	lint $(LINT_FLAGS) fortune500.c|grep fortune500.c
