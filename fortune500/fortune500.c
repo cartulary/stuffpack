@@ -38,7 +38,7 @@ int
 main(int argc, char** argv)
 {
   gchar *path = NULL;
-	
+
   gnet_init ();
 
   if (argc != 2)
@@ -194,7 +194,9 @@ async_client_iofunc(GIOChannel *iochannel, GIOCondition c,
       /* Check if we read 0 bytes, which means the connection
 	 is closed */
       goto error;
-    } else {
+    }
+	else
+	{
       g_assert(bytes_read > 0);
       /* If there isn't an out_watch, add one */
       if (cs->out_watch == 0) {
