@@ -24,8 +24,9 @@ char* getcharcters(int max);
 long int getInteger(int base, int input_mode);
 inline long int getIntInRange(int base, int input_mode, long int min, long int max);
 /* make these functions because I want to add networking functionality eventually */
-//void setAnswer(int num);
-//int checkAnswer(int num); //returns -1 1 or 0 for lower, higher, correct
+void setAnswer(int num);
+int checkAnswer(int num); //returns -1 1 or 0 for lower, higher, correct
+long int to_guess;
 
 int flagPlayerMode = 0; //computer or human
 int flagGameMode = MODE_HIGHLOW; // high-low or pure guess
@@ -88,13 +89,12 @@ int main(int argc, char* argv[])
 	} while (max < 1);
 	*/
 
-	long int to_guess; // this is the number that has to be guessed
 	switch (flagPlayerMode)
 	{
 		case PLAYER_ALL_HUMAN:
 		{
 			std::cout << "Player 1 - pick a number:";
-			to_guess = getInteger ( 10, flagInterfaceMode );
+			setAnswer ( getInteger ( 10, flagInterfaceMode ) );
 			int guessed;
 			std::string instructions;
 			std::cout << "Player 1 - Do you wish to provide any instructions to the other player?  Press enter when your done" << std::endl;
@@ -149,6 +149,12 @@ int main(int argc, char* argv[])
 			break;
 	}
 
+}
+
+void setAnswer (int num)
+{
+	/* this function should perform sanity checking for networking mode */
+	to_guess = num;
 }
 
 /* continues to call getInteger until number is within range */
