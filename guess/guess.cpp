@@ -3,6 +3,7 @@
 #include <getopt.h>
 #include <iostream>
 #include <limits.h>
+#include <string.h>
 
 const int NUMBER_BASE = 10;
 
@@ -22,6 +23,9 @@ void usage(char *call_as_name);
 char* getcharcters(int max);
 long int getInteger(int base, int input_mode);
 inline long int getIntInRange(int base, int input_mode, long int min, long int max);
+/* make these functions because I want to add networking functionality eventually */
+//void setAnswer(int num);
+//int checkAnswer(int num); //returns -1 1 or 0 for lower, higher, correct
 
 int flagPlayerMode = 0; //computer or human
 int flagGameMode = MODE_HIGHLOW; // high-low or pure guess
@@ -62,7 +66,7 @@ int main(int argc, char* argv[])
 		}
 		if (flag_verbose == true)
             {
-                  std::cout << "option %s" << long_options[option_index].name;
+                  std::cout << "option" << long_options[option_index].name;
                   if (optarg)
                   {
                         std::cout << " with arg " << optarg;
@@ -88,9 +92,15 @@ int main(int argc, char* argv[])
 	switch (flagPlayerMode)
 	{
 		case PLAYER_ALL_HUMAN:
+		{
 			std::cout << "Player 1 - pick a number:";
-			to_guess = getInteger(10,flagInterfaceMode);
+			to_guess = getInteger ( 10, flagInterfaceMode );
 			int guessed;
+			std::string instructions;
+			std::cout << "Player 1 - Do you wish to provide any instructions to the other player?  Press enter when your done" << std::endl;
+			std::cin >> instructions;
+			std::cout << instructions;
+
 			do
 			{
 				std::cout << "Player 2 - Input a number" << std::endl;
@@ -108,8 +118,9 @@ int main(int argc, char* argv[])
 					}
 				}
 			} while (guessed != to_guess);
-			std::cout << "Your done!" << std::cout;
+			std::cout << "Your done!" << std::endl;
 			break;
+		}
 		case PLAYER_HUMAN_GUESS:
 			/* we add 1 to make the number human appropriate */
 			to_guess = arc4random() % (max +1) ;
