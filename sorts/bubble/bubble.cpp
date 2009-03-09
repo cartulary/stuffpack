@@ -3,20 +3,23 @@
 #include <vector>
 #include <stdlib.h>
 
+const int number_random_objects = 150;
+const int max_random_number = 1000;
+
 std::vector <int> bubbleSort(std::vector <int> toSort);
 
 int main (void)
 {
-	std::vector<int> toSort (150);
+	std::vector<int> toSort (number_random_objects);
 
-	int i = 149;
+	int i = number_random_objects - 1;
 	/* go until i is 0 and initialize */
 	do
 	{
-		toSort[i] = arc4random() % 1000;
+		toSort[i] = arc4random() % max_random_number;
 	} while (i--);
 
-	i = 149;
+	i = number_random_objects - 1;
 	/* go until i is 0 and initialize */
 	do
 	{
@@ -33,9 +36,10 @@ std::vector <int> bubbleSort(std::vector <int> toSort)
 	do
 	{
 		swapped = false;
-		for (int i = 0; i <= len - 2; ++i)
+		len = len - 1;
+		for (int i = 0; i <= len - 1; ++i)
 		{
-			if (toSort[i] > toSort  [ i + 1 ])
+			if (toSort[i] < toSort  [ i + 1 ])
 			{
 				std::swap ( toSort[i], toSort [ i + 1 ] );
 				swapped = true;
