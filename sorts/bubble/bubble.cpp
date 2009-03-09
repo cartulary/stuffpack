@@ -39,7 +39,7 @@ std::vector <int> bubbleSort(std::vector <int> toSort)
 		len = len - 1;
 		for (int i = 0; i <= len - 1; ++i)
 		{
-			if (toSort[i] < toSort  [ i + 1 ])
+			if (toSort[i] > toSort  [ i + 1 ])
 			{
 				std::swap ( toSort[i], toSort [ i + 1 ] );
 				swapped = true;
