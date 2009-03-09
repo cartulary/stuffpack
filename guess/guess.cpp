@@ -25,7 +25,7 @@ long int getInteger(int base, int input_mode);
 inline long int getIntInRange(int base, int input_mode, long int min, long int max);
 /* make these functions because I want to add networking functionality eventually */
 void setAnswer(int num);
-int checkAnswer(int num); //returns -1 1 or 0 for lower, higher, correct
+inline int checkAnswer(int num); //returns -1 1 or 0 for lower, higher, correct
 long int to_guess;
 
 int flagPlayerMode = 0; //computer or human
@@ -100,24 +100,28 @@ int main(int argc, char* argv[])
 			std::cout << "Player 1 - Do you wish to provide any instructions to the other player?  Press enter when your done" << std::endl;
 			std::cin >> instructions;
 			std::cout << instructions;
-
+			int is_correct;
 			do
 			{
 				std::cout << "Player 2 - Input a number" << std::endl;
 				guessed = getInteger(10,flagInterfaceMode);
+				is_correct = checkAnswer(guessed);
 				/* we are going to check for high-low here and count guesses here; move to new function for eventual networking functionality */
 				if (flagGameMode == MODE_HIGHLOW)
 				{
-					if ( guessed > to_guess )
+					std::string highlow_string;
+
+					if ( is_correct == 1)
 					{
-						std::cout << "higher" << std::endl;
+						highlow_string = "higher";
 					}
-					else if ( guessed < to_guess )
+					else if ( is_correct == -1 )
 					{
-						std::cout << "lower" << std::endl;
+						highlow_string = "lower";
 					}
+					std::cout << highlow_string << std::endl;
 				}
-			} while (guessed != to_guess);
+			} while (is_correct != 0);
 			std::cout << "Your done!" << std::endl;
 			break;
 		}
@@ -151,10 +155,29 @@ int main(int argc, char* argv[])
 
 }
 
+/* this function should perform sanity checking for networking mode */
 void setAnswer (int num)
 {
-	/* this function should perform sanity checking for networking mode */
 	to_guess = num;
+}
+
+/*
+	Return -1 for less; 1 for more and 0 for equals
+*/
+inline int checkAnswer (int num)
+{
+	if ( num < to_guess )
+	{
+		return -1;
+	}
+	else if ( num > to_guess )
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 /* continues to call getInteger until number is within range */
