@@ -45,7 +45,7 @@ std::vector <int> cocktailSort(std::vector <int> toSort)
 				swapped = true;
 			}
 		}
-    		if (swapped = false)
+    		if (swapped == false)
 		{
 			//nothing has changed; we are done
 			break;
