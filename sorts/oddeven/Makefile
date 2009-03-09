@@ -1,4 +1,4 @@
-NAME=oddeven
+NAME=combsort11
 LANG = c++
 .include    <../../Makefile>
 
