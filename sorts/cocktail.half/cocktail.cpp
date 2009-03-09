@@ -29,6 +29,10 @@ int main (void)
 	return 0;
 }
 
+/*
+	to do:
+	  we should remember where the last swap took place and not go post it
+*/
 std::vector <int> cocktailSort(std::vector <int> toSort)
 {
 	bool swapped;
