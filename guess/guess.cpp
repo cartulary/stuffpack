@@ -5,6 +5,8 @@
 #include <limits.h>
 #include <string.h>
 
+#define POSIX
+
 const int NUMBER_BASE = 10;
 
 const int PLAYER_ALL_HUMAN = 1;
@@ -97,6 +99,7 @@ int main(int argc, char* argv[])
 			setAnswer ( getInteger ( 10, flagInterfaceMode ) );
 			int guessed;
 			std::string instructions;
+			screen_clear();
 			std::cout << "Player 1 - Do you wish to provide any instructions to the other player?  Press enter when your done" << std::endl;
 			std::cin >> instructions;
 			std::cout << instructions;
@@ -126,25 +129,22 @@ int main(int argc, char* argv[])
 			break;
 		}
 		case PLAYER_HUMAN_GUESS:
+		{
 			/* we add 1 to make the number human appropriate */
 			to_guess = arc4random() % (max +1) ;
-			verbose ("to guess is");
-			//verbose (to_guess);
 			break;
+		}
 		case PLAYER_COMP_GUESS:
 		{
-			to_guess = -1;
 			std::cout << "lets play the computer guessing game" << std::endl;
 			std::cout << "Please enter the number you wish to use:" << std::endl;
-			to_guess = getIntInRange(NUMBER_BASE, flagInterfaceMode, 0, LONG_MAX);
+			setAnswer( getIntInRange(NUMBER_BASE, flagInterfaceMode, 0, LONG_MAX) );
 			/* let set the min and max to impossible numbers so that we could be sure they are invalid
 				for the do loop later */
-			int comp_guess_min ;
-			int comp_guess_max ;
 			std::cout << "What is the least number the computer could guess" << std::endl;
-			comp_guess_min = getIntInRange(NUMBER_BASE, flagInterfaceMode, 0, to_guess - 1);
+			int comp_guess_min = getIntInRange(NUMBER_BASE, flagInterfaceMode, 0, to_guess - 1);
 			std::cout << "What is the highest number the computer could guess" << std::endl;
-			comp_guess_max = getIntInRange(NUMBER_BASE, flagInterfaceMode, to_guess + 1, LONG_MAX);
+			int comp_guess_max = getIntInRange(NUMBER_BASE, flagInterfaceMode, to_guess + 1, LONG_MAX);
 			break;
 		}
       	default:
@@ -242,4 +242,19 @@ void verbose(const char *text)
 	{
 		std::cout << text << std::endl;
 	}
+}
+
+void screen_clear()
+{
+	//This should eventually deal with networking mode in some sane manner
+	#ifdef POSIX
+		std::system ( "clear" );
+	#else
+		#ifdef WINDOWS
+			std::system ( "CLS" );
+		#else
+			//This isn't portable - can we have more code?
+		#endif
+	#endif
+
 }
