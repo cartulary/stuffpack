@@ -63,4 +63,3 @@ std::vector <int> cocktailSort(std::vector <int> toSort)
 	} while (swapped);
 	return toSort;
 }
-
