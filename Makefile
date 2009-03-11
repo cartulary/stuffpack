@@ -1,4 +1,7 @@
-CFLAGS := -g3 -pipe
+NAME?=DOES_NOT_EXIST
+LANG?=none
+
+CFLAGS = -g3 -pipe
 
 .ifdef $(LANG) == c++
 #we are using c++ add the flags that only work for c++
@@ -14,6 +17,7 @@ CFLAGS += -g
 CFLAGS += -std=c99 
 CFLAGS += -Wimplicit-function-declaration -Wbad-function-cast -Wdeclaration-after-statement
 .endif
+
 # set the global flags
 CFLAGS += -Wall -Wextra -pedantic
 CFLAGS += -Wformat=2 -Wformat-y2k -Wformat-nonliteral -Wformat-security
