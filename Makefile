@@ -5,14 +5,14 @@ CFLAGS = -g3 -pipe
 
 .ifdef $(LANG) == c++
 #we are using c++ add the flags that only work for c++
-CC := llvm-g++
+CC = llvm-g++
 CFLAGS += -ansi -Wabi
 CFLAGS += -Weffc++
 CFLAGS += -fno-gnu-keywords
 CFLAGS += -Wstrict-null-sentinel -Wctor-dtor-privacy -Wnon-virtual-dtor -Woverloaded-virtual -Wsign-promo
 CFLAGS += -ffor-scope
 .elif $(LANG) == c
-CC := llvm-gcc
+CC = llvm-gcc
 CFLAGS += -g
 CFLAGS += -std=c99 
 CFLAGS += -Wimplicit-function-declaration -Wbad-function-cast -Wdeclaration-after-statement
