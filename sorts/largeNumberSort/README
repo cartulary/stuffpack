@@ -1,5 +1,0 @@
-This is a basic, inefficient, sorting algorithm that works as follows:
-Loop through the array and find the largest item. 
-Add the item to the sorted list
-Loop again and find the next largest value
-So on...
