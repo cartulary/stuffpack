@@ -31,5 +31,5 @@ PREFIX = /usr/local
 
 superclean: .NOTMAIN
 	rm -rfv ./$(NAME)
-check:
+check: .NOTMAIN
 	cppcheck -v -a -s --unused-functions .
