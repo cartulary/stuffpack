@@ -1,2 +1,2 @@
-NAME=combsort11
+NAME=oddeven
 .include    <../Makefile.Mk>
