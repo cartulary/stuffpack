@@ -20,6 +20,7 @@ using namespace std;
 
 int main (int argc, char* argv[])
 {
+	initBoard();
       int c;
      	int option_index = 0;
 	char moveFirst;
