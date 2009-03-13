@@ -6,7 +6,8 @@
 const int number_random_objects = 150;
 const int max_random_number = 1000;
 
-std::vector <int> shellSort(std::vector <int> toSort);
+template <typename sortReturnType>
+std::vector <sortReturnType> shellSort(std::vector <sortReturnType> toSort);
 inline int round (int num);
 
 int main (void)
@@ -30,7 +31,8 @@ int main (void)
 	return 0;
 }
 
-std::vector <int> shellSort(std::vector <int> toSort)
+template <typename sortReturnType>
+std::vector <sortReturnType> shellSort(std::vector <sortReturnType> toSort)
 {
 	int len = toSort.size();
 	int inc = round(len / 2);
