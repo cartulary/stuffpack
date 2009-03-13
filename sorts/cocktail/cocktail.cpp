@@ -6,7 +6,8 @@
 const int number_random_objects = 10;
 const int max_random_number = 1000;
 
-std::vector <int> cocktailSort(std::vector <int> toSort);
+template <typename sortReturnType>
+std::vector <sortReturnType> cocktailSort(std::vector <sortReturnType> toSort);
 
 int main (void)
 {
@@ -29,7 +30,8 @@ int main (void)
 	return 0;
 }
 
-std::vector <int> cocktailSort(std::vector <int> toSort)
+template <typename sortReturnType>
+std::vector <sortReturnType> cocktailSort(std::vector <sortReturnType> toSort)
 {
 	bool swapped;
 	int len = toSort.size();
@@ -37,7 +39,7 @@ std::vector <int> cocktailSort(std::vector <int> toSort)
 	{
 		swapped = false;
 		len = len - 1;
-		for (int i = 0; i <= len - 1; ++i)
+		for (int i = 0; i < len; ++i)
 		{
 			if (toSort[i] > toSort  [ i + 1 ])
 			{
