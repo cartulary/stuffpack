@@ -6,7 +6,8 @@
 const int number_random_objects = 150;
 const int max_random_number = 1000;
 
-std::vector <int> oddevenSort(std::vector <int> toSort);
+template <typename sortReturnType>
+std::vector <sortReturnType> oddevenSort(std::vector <sortReturnType> toSort);
 
 int main (void)
 {
@@ -29,14 +30,15 @@ int main (void)
 	return 0;
 }
 
-std::vector <int> oddevenSort(std::vector <int> toSort)
+template <typename sortReturnType>
+std::vector <sortReturnType> oddevenSort(std::vector <sortReturnType> toSort)
 {
 	bool sorted = false;
 	int len = toSort.size();
 	while (!sorted)
 	{
 		sorted = true;
-		for ( int i = 1; i < len -1; i += 2)
+		for ( int i = 1; i < len - 1; i += 2)
 		{
 			if ( toSort[i] > toSort [ i + 1 ] )
 			{
@@ -44,7 +46,7 @@ std::vector <int> oddevenSort(std::vector <int> toSort)
 				sorted = false;
 			}
 		}
-		for ( int i = 0; i < len -1; i += 2)
+		for ( int i = 0; i < len - 1; i += 2)
 		{
 			if ( toSort[i] > toSort [ i + 1 ] )
 			{
@@ -55,4 +57,3 @@ std::vector <int> oddevenSort(std::vector <int> toSort)
 	}
 	return toSort;
 }
-
