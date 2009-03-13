@@ -6,7 +6,8 @@
 const int number_random_objects = 150;
 const int max_random_number = 1000;
 
-std::vector <int> bubbleSort(std::vector <int> toSort);
+template <typename sortReturnType>
+sortReturnType bubbleSort(sortReturnType toSort);
 
 int main (void)
 {
@@ -29,7 +30,8 @@ int main (void)
 	return 0;
 }
 
-std::vector <int> bubbleSort(std::vector <int> toSort)
+template <typename sortReturnType>
+sortReturnType bubbleSort(sortReturnType toSort)
 {
 	bool swapped;
 	int len = toSort.size();
