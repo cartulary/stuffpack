@@ -39,7 +39,7 @@ sortReturnType bubbleSort(sortReturnType toSort)
 	{
 		swapped = false;
 		--len;
-		for (int i = 0; i <= len - 1; ++i)
+		for (int i = 0; i < len; ++i)
 		{
 			if (toSort[i] > toSort  [ i + 1 ])
 			{
