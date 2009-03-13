@@ -20,7 +20,6 @@ const int INTERFACE_TEXT = 1;
 const int INTERFACE_GRAPHICS = 2;
 const int INTERFACE_CURSES = 3;
 
-void verbose(const char* text);
 void usage(char *call_as_name);
 char* getcharcters(int max);
 long int getInteger(int base, int input_mode);
@@ -233,15 +232,6 @@ void usage(char* call_as_name)
 {
 	std::cout << call_as_name << " " << "--interface --playerMode [--verbose]" << std::endl;
 	std::cout << "Interfaces: text, graphics, curses" << std::endl;
-}
-
-/* echoes text if we are verbose */
-void verbose(const char *text)
-{
-	if (flag_verbose)
-	{
-		std::cout << text << std::endl;
-	}
 }
 
 void screen_clear()
