@@ -1,3 +1,12 @@
+/*
+ * Copyright © 2009 Gerald Isaac Schwarz
+ * LICENSE
+ * Permission to use, copy, modify and distribute this software and its documentation is hereby granted, provided that both the copyright notice and this permission notice appear in all copies of the software, derivative works or modified versions, and any portions thereof, and that both notices appear in supporting documentation.
+ * 
+ * DISCLAIMER
+ * This software is provided "as is" with no warranty, liability, or any implication thereof.
+ */
+
 package characterCounter;
 
 import java.awt.*;
@@ -49,7 +58,7 @@ public class MainWindow extends JFrame {
 		panel.add(open, panelConstraints);
 		
 		panelConstraints.gridx = 1;
-		fileName.setEditable(false);
+		fileName.setEnabled(false);
 		panel.add(fileName, panelConstraints);
 		
 		panelConstraints.gridy = 1;
