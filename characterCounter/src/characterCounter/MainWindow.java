@@ -11,7 +11,6 @@ package characterCounter;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.net.URL;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
@@ -39,14 +38,22 @@ public class MainWindow extends JFrame {
 	private JTable display = new JTable(data, columnNames);
 	
 	private JPanel statusBar = new JPanel();
-	private JLabel progress = new JLabel(" ");
+	private JLabel message = new JLabel(" ");
 	
 	private Container contentPane = this.getContentPane();
 	
 	public MainWindow(String path) {
 		this();
-		file = new File(path);
-		fileName.setText(file.getAbsolutePath());
+		this.file = new File(path);
+		this.fileName.setText(file.getAbsolutePath());
+		scan();
+	}
+	
+	public MainWindow(String path, String characters) {
+		this();
+		this.file = new File(path);
+		this.fileName.setText(file.getAbsolutePath());
+		this.characters.setText(characters);
 		scan();
 	}
 	
@@ -126,7 +133,7 @@ public class MainWindow extends JFrame {
 //		Status-bar setup:
 		
 		statusBar.setLayout(new FlowLayout(FlowLayout.LEADING));
-		statusBar.add(progress);
+		statusBar.add(message);
 		
 //		Content pane setup:
 		
@@ -159,8 +166,11 @@ public class MainWindow extends JFrame {
 			
 		}
 		
-		if (args.length > 0) {
+		if (args.length == 1) {
 			new MainWindow(args[0]);
+		}
+		else if (args.length > 1) {
+			new MainWindow(args[0], args[1]);
 		}
 		else {
 			new MainWindow();
@@ -228,14 +238,14 @@ public class MainWindow extends JFrame {
 				}
 				
 				display.setModel(tm);
-				this.progress.setText("Scan complete");
+				this.message.setText("Scan complete");
 			}
 			catch (FileNotFoundException e) {
-				this.progress.setText("IO error: file not found");
+				this.message.setText("IO error: file not found");
 			}
 		}
 		else {
-			this.progress.setText("Please select a file");
+			this.message.setText("Please select a file");
 		}
 	}
 }
