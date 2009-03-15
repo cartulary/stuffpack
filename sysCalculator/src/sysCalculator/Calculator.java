@@ -80,7 +80,7 @@ public class Calculator {
 	
 	
 	/**
-	 * Converts a String into an array that's ready to be processed by Calculator.getElements(ArrayList<String>).
+	 * Converts a String into an array that's ready to be processed by Calculator.compile(ArrayList<String>).
 	 * @since 0.1
 	 * @param problem A regular string that represents a mathematical problem.
 	 * @return A String ArrayList which alternates between numbers and operators.  
@@ -118,7 +118,7 @@ public class Calculator {
 	/**
 	 * Converts a String into an array that's ready to be processed by Calculator.solve(ArrayList<ArrayList<String>>).
 	 * @since 0.1
-	 * @param problemString A regular string that represents a mathematical problem.
+	 * @param problem An ArrayList that alternates between numbers and operators.
 	 * @return A 2D String ArrayList in which every every element of the 1st level represents a mathematical element. the strings inside the 2nd level alternate between operators and numbers. 
 	 */
 	private static ArrayList<ArrayList<String>> compile(ArrayList<String> problem) {
