@@ -1,0 +1,3 @@
+cd '/home/yitz/Documents/Programming/SVN checkout/stuffpack/characterCounter/bin'
+jar cmf MANIFEST.MF CharacterCounter.jar license.txt characterCounter/*.class
+
