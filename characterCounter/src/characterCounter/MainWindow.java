@@ -167,15 +167,11 @@ public class MainWindow extends JFrame {
 		}
 	}
 	
-	private static Image getImage(String path) {
-        URL imgURL = MainWindow.class.getResource(path);
-        if (imgURL != null) {
-            return new ImageIcon(imgURL).getImage();
-        } else {
-            return null;
-        }
-    }
-	
+	/**
+	 * Counts the number of occurances of the characters in the file.
+	 * @return An array which stores the results per character.
+	 * @throws FileNotFoundException
+	 */
 	public int[] getCount() throws FileNotFoundException {
 		String chars = characters.getText();
 		boolean caseSensitive = this.caseSensitive.isSelected();
@@ -208,6 +204,10 @@ public class MainWindow extends JFrame {
 		return count;
 	}
 	
+	/**
+	 * Counts the characters in file and displays the results.
+	 *
+	 */
 	public void scan() {
 		if (file != null) {
 			String chars = characters.getText();
