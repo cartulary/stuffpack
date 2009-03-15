@@ -255,12 +255,16 @@ public class SysCalculator extends JFrame {
 	 */
 	public static void main(String[] args) {
 		try {
+			
 //			Set Java to use native Look & Feel:
+			
 			UIManager.setLookAndFeel(
 			UIManager.getSystemLookAndFeelClassName());
 		}
 		catch (Exception e) {
+			
 //			Should I do somthing here? Somehow I think it unnecessary.
+			
 		}
 		
 //		Initialize the application:
