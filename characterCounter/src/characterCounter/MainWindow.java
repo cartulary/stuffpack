@@ -17,12 +17,16 @@ import javax.swing.*;
 import javax.swing.table.*;
 import java.io.*;
 
+/**
+ * This is a program that counts the number of occurances of the specified characters in the specified text document.
+ * @author yitz
+ *
+ */
 public class MainWindow extends JFrame {
 	private JFileChooser fc = new JFileChooser();
 	private File file;
 	
 	private JPanel panel = new JPanel();
-	private JPanel[] toolbars = new JPanel[2];
 	private JButton open = new JButton("Open");
 	private JTextField fileName = new JTextField();
 	private JButton scan = new JButton("Scan");
@@ -39,9 +43,16 @@ public class MainWindow extends JFrame {
 	
 	private Container contentPane = this.getContentPane();
 	
+	public MainWindow(String path) {
+		this();
+		file = new File(path);
+		fileName.setText(file.getAbsolutePath());
+		scan();
+	}
+	
 	public MainWindow() {
 		
-//		Main panel setup:
+//		Laying out the widgets on the screen:
 		
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints panelConstraints = new GridBagConstraints();
@@ -54,7 +65,6 @@ public class MainWindow extends JFrame {
 		panelConstraints.weighty = 0;
 		panelConstraints.anchor = GridBagConstraints.LINE_START;
 		panelConstraints.fill = GridBagConstraints.BOTH;
-		open.setMnemonic(KeyEvent.VK_O);
 		panel.add(open, panelConstraints);
 		
 		panelConstraints.gridx = 1;
@@ -64,7 +74,6 @@ public class MainWindow extends JFrame {
 		panelConstraints.gridy = 1;
 		panelConstraints.gridx = 0;
 		charLabel.setLabelFor(characters);
-		charLabel.setDisplayedMnemonic(KeyEvent.VK_C);
 		panel.add(charLabel, panelConstraints);
 		
 		panelConstraints.gridx = 1;
@@ -74,13 +83,11 @@ public class MainWindow extends JFrame {
 		panelConstraints.gridy = 2;
 		panelConstraints.gridx = 0;
 		panelConstraints.weightx = 0;
-		caseSensitive.setMnemonic(KeyEvent.VK_A);
 		panel.add(caseSensitive, panelConstraints);
 		
 		panelConstraints.gridx = 1;
 		panelConstraints.anchor = GridBagConstraints.LINE_END;
 		panelConstraints.fill = GridBagConstraints.NONE;
-		scan.setMnemonic(KeyEvent.VK_S);
 		panel.add(scan, panelConstraints);
 		
 		panelConstraints.gridwidth = 2;
@@ -91,6 +98,8 @@ public class MainWindow extends JFrame {
 		panelConstraints.weighty = 1;
 		display.setEnabled(false);
 		panel.add(new JScrollPane(display), panelConstraints);
+		
+//		Setting action listeners:
 		
 		open.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -106,6 +115,13 @@ public class MainWindow extends JFrame {
 				scan();
 			}
 		});
+		
+//		Setting keyboard shortcuts:
+		
+		open.setMnemonic(KeyEvent.VK_O);
+		charLabel.setDisplayedMnemonic(KeyEvent.VK_C);
+		caseSensitive.setMnemonic(KeyEvent.VK_A);
+		scan.setMnemonic(KeyEvent.VK_S);
 		
 //		Status-bar setup:
 		
@@ -131,15 +147,24 @@ public class MainWindow extends JFrame {
 	 */
 	public static void main(String[] args) {
 		try {
+			
 //			Set Java to use native Look & Feel:
+			
 			UIManager.setLookAndFeel(
 			UIManager.getSystemLookAndFeelClassName());
 		}
 		catch (Exception e) {
+			
 //			Should I do somthing here? Somehow I think it unnecessary.
+			
 		}
 		
-		new MainWindow();
+		if (args.length > 0) {
+			new MainWindow(args[0]);
+		}
+		else {
+			new MainWindow();
+		}
 	}
 	
 	private static Image getImage(String path) {
