@@ -6,7 +6,8 @@
 const int number_random_objects = 20;
 const int max_random_number = 1000;
 
-std::vector <int> insertSort(std::vector <int> toSort);
+template <typename sortReturnType>
+std::vector <sortReturnType> insertSort(std::vector <sortReturnType> toSort);
 
 int main (void)
 {
@@ -29,7 +30,8 @@ int main (void)
 	return 0;
 }
 
-std::vector <int> insertSort(std::vector <int> toSort)
+template <typename sortReturnType>
+std::vector <sortReturnType> insertSort(std::vector <sortReturnType> toSort)
 {
 	int len = toSort.size();
 	int val;
