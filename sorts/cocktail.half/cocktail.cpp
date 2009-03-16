@@ -6,7 +6,8 @@
 const int number_random_objects = 150;
 const int max_random_number = 1000;
 
-std::vector <int> cocktailSort(std::vector <int> toSort);
+template <typename sortReturnType>
+std::vector <sortReturnType> cocktailSort(std::vector <sortReturnType> toSort);
 
 int main (void)
 {
@@ -33,7 +34,8 @@ int main (void)
 	to do:
 	  we should remember where the last swap took place and not go post it
 */
-std::vector <int> cocktailSort(std::vector <int> toSort)
+template <typename sortReturnType>
+std::vector <sortReturnType> cocktailSort(std::vector <sortReturnType> toSort)
 {
 	bool swapped;
 	int len = toSort.size();
