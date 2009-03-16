@@ -22,26 +22,82 @@ import java.io.*;
  *
  */
 public class MainWindow extends JFrame {
+	/**
+	 * The file chooser dialogue.
+	 */
 	private JFileChooser fc = new JFileChooser();
+	
+	/**
+	 * Stores the file that is currently being scanned.
+	 */
 	private File file;
 	
+	/**
+	 * Holds the entire GUI, with the exception of the status bar.
+	 */
 	private JPanel panel = new JPanel();
+	
+	/**
+	 * Opens a file for scanning.
+	 */
 	private JButton open = new JButton("Open");
+	
+	/**
+	 * Opens a report file and displays it's contents. (CSV format).
+	 */
 	private JButton load = new JButton("Load");
+	
+	/**
+	 * Saves the report as a CSV file.
+	 */
 	private JButton save = new JButton("Save");
+	
+	/**
+	 * Performs the scan.
+	 */
 	private JButton scan = new JButton("Scan");
+	
+	/**
+	 * Specifies the characters that will be counted.
+	 */
 	private JTextField characters = new JTextField("abcdefghijklmnopqrstuvwxyz");
+	
+	/**
+	 * Specified whether or not the count is case sensitive.
+	 */
 	private JCheckBox caseSensitive = new JCheckBox("Case sensitive", false);
 	
+	/**
+	 * The names of the columns in the display table.
+	 */
 	private String[] columnNames = {"Character", "Count", "Percentage"};
+	
+	/**
+	 * The default data that appears in the display table.
+	 */
 	Object[][] data = {{"", "", ""}};
+	
+	/**
+	 * The table in which the results of the scan are displayed.
+	 */
 	private JTable display = new JTable(data, columnNames);
 	
 	private JPanel statusBar = new JPanel();
+	
+	/**
+	 * Displays messages.
+	 */
 	private JLabel message = new JLabel(" ");
 	
+	/**
+	 * A Cached reference to the MainWindow's conntent pane.
+	 */
 	private Container contentPane = this.getContentPane();
 	
+	/**
+	 * Construct a new instance of window, and scan the specified file with the default characters.
+	 * @param path The file that will be scanned.
+	 */
 	public MainWindow(String path) {
 		this();
 		this.file = new File(path);
@@ -49,6 +105,11 @@ public class MainWindow extends JFrame {
 		scan();
 	}
 	
+	/**
+	 * Construct a new instance of window, and scan the specified file with the specified characters.
+	 * @param path The file that will be scanned.
+	 * @param characters The characters that will be counted.
+	 */
 	public MainWindow(String path, String characters) {
 		this();
 		this.file = new File(path);
@@ -57,9 +118,13 @@ public class MainWindow extends JFrame {
 		scan();
 	}
 	
+	/**
+	 * Sets up the application's GUI.
+	 *
+	 */
 	public MainWindow() {
 		
-//		Laying out the widgets on the screen:
+//		Laying out the widgets in the panel:
 		
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints panelConstraints = new GridBagConstraints();
@@ -171,7 +236,12 @@ public class MainWindow extends JFrame {
 		
 //		Setting tooltips:
 		
-		characters.setToolTipText("Counted characters");
+		characters.setToolTipText("The characters that will be counted in this scan");
+		open.setToolTipText("Open a file for scanning");
+		load.setToolTipText("Display the results of a previus scan");
+		save.setToolTipText("Save the results of this scan");
+		scan.setToolTipText("Perform the scan and display the results on screen");
+		caseSensitive.setToolTipText("Make the scan case-sensitive");
 		
 //		Setting keyboard shortcuts:
 		
@@ -181,12 +251,12 @@ public class MainWindow extends JFrame {
 		save.setMnemonic(KeyEvent.VK_V);
 		scan.setMnemonic(KeyEvent.VK_S);
 		
-//		Status-bar setup:
+//		Laying out the widgets in the status bar:
 		
 		statusBar.setLayout(new FlowLayout(FlowLayout.LEADING));
 		statusBar.add(message);
 		
-//		Content pane setup:
+//		Laying out the widgets in the content pane:
 		
 		contentPane.add(panel, BorderLayout.CENTER);
 		contentPane.add(statusBar, BorderLayout.SOUTH);
@@ -201,7 +271,7 @@ public class MainWindow extends JFrame {
 	}
 	
 	/**
-	 * @param args The first argument is the path of a file the user wishes to analyze.
+	 * @param args The first argument is the path of a file the user wishes to analyze. The second argument is the list of characters the user wishes to count.
 	 */
 	public static void main(String[] args) {
 		try {
@@ -266,7 +336,7 @@ public class MainWindow extends JFrame {
 	}
 	
 	/**
-	 * Counts the characters in file and displays the results.
+	 * Counts the number of occurances of the specified characters in the specified file and displays the results.
 	 *
 	 */
 	public void scan() {
