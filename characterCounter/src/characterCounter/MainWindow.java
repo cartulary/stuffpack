@@ -302,32 +302,25 @@ public class MainWindow extends JFrame {
 	 * Counts the number of occurances of the characters in the file.
 	 * @return An array which stores the results per character.
 	 * @throws FileNotFoundException
+	 * @throws IOException
 	 */
-	public int[] getCount() throws FileNotFoundException {
+	public int[] getCount() throws FileNotFoundException, IOException {
 		String chars = characters.getText();
 		boolean caseSensitive = this.caseSensitive.isSelected();
+		FileReader fr = new FileReader(file);
 		int[]  count = new int[chars.length()];
-		Scanner sc = new Scanner(file);
 		
-		while (sc.hasNextLine()) {
-			String text = sc.nextLine();
+		while (fr.ready()) {
+			String ch = (char) fr.read() + "";
 			
-			for (int i = 0; i < text.length(); i++) {
-				String currentChar = text.charAt(i) + "";
-				
-				for (int h = 0; h < chars.length(); h++) {
-					if (caseSensitive == true) {
-						if (currentChar.equals(chars.charAt(h) + "")) {
-							count[h]++;
-							break;
-						}
-					}
-					else {
-						if (currentChar.equalsIgnoreCase(chars.charAt(h) + "")) {
-							count[h]++;
-							break;
-						}
-					}
+			for (int i = 0; i < chars.length(); i++) {
+				if (caseSensitive == true && ch.equals(chars.charAt(i) + "")) {
+					count[i]++;
+					break;
+				}
+				else if (caseSensitive == false && ch.equalsIgnoreCase(chars.charAt(i) + "")) {
+					count[i]++;
+					break;
 				}
 			}
 		}
@@ -363,6 +356,9 @@ public class MainWindow extends JFrame {
 			}
 			catch (FileNotFoundException e) {
 				this.message.setText("Scan failed: the specified file was not found");
+			}
+			catch (IOException e) {
+				this.message.setText("Scan failed: Error while reading file");
 			}
 		}
 		else {
