@@ -27,9 +27,9 @@ public class MainWindow extends JFrame {
 	
 	private JPanel panel = new JPanel();
 	private JButton open = new JButton("Open");
-	private JTextField fileName = new JTextField();
+	private JButton load = new JButton("Load");
+	private JButton save = new JButton("Save");
 	private JButton scan = new JButton("Scan");
-	private JLabel charLabel = new JLabel("Counted characters:");
 	private JTextField characters = new JTextField("abcdefghijklmnopqrstuvwxyz");
 	private JCheckBox caseSensitive = new JCheckBox("Case sensitive", false);
 	
@@ -45,14 +45,14 @@ public class MainWindow extends JFrame {
 	public MainWindow(String path) {
 		this();
 		this.file = new File(path);
-		this.fileName.setText(file.getAbsolutePath());
+		this.message.setText("Opened " + file.getAbsolutePath());
 		scan();
 	}
 	
 	public MainWindow(String path, String characters) {
 		this();
 		this.file = new File(path);
-		this.fileName.setText(file.getAbsolutePath());
+		this.message.setText("Opened " + file.getAbsolutePath());
 		this.characters.setText(characters);
 		scan();
 	}
@@ -71,33 +71,29 @@ public class MainWindow extends JFrame {
 		panelConstraints.weightx = 0;
 		panelConstraints.weighty = 0;
 		panelConstraints.anchor = GridBagConstraints.LINE_START;
-		panelConstraints.fill = GridBagConstraints.BOTH;
+		panelConstraints.fill = GridBagConstraints.NONE;
 		panel.add(open, panelConstraints);
 		
 		panelConstraints.gridx = 1;
-		fileName.setEnabled(false);
-		panel.add(fileName, panelConstraints);
+		panel.add(load, panelConstraints);
 		
-		panelConstraints.gridy = 1;
-		panelConstraints.gridx = 0;
-		charLabel.setLabelFor(characters);
-		panel.add(charLabel, panelConstraints);
+		panelConstraints.gridx = 2;
+		panel.add(save, panelConstraints);
 		
-		panelConstraints.gridx = 1;
-		panelConstraints.weightx = 1;
-		panel.add(characters, panelConstraints);
-		
-		panelConstraints.gridy = 2;
-		panelConstraints.gridx = 0;
-		panelConstraints.weightx = 0;
-		panel.add(caseSensitive, panelConstraints);
-		
-		panelConstraints.gridx = 1;
-		panelConstraints.anchor = GridBagConstraints.LINE_END;
-		panelConstraints.fill = GridBagConstraints.NONE;
+		panelConstraints.gridx = 3;
 		panel.add(scan, panelConstraints);
 		
-		panelConstraints.gridwidth = 2;
+		panelConstraints.gridx = 4;
+		panelConstraints.weightx = 1;
+		panelConstraints.fill = GridBagConstraints.BOTH;
+		panel.add(characters, panelConstraints);
+		
+		panelConstraints.gridx = 5;
+		panelConstraints.weightx = 0;
+		panelConstraints.fill = GridBagConstraints.NONE;
+		panel.add(caseSensitive, panelConstraints);
+		
+		panelConstraints.gridwidth = 6;
 		panelConstraints.gridx = 0;
 		panelConstraints.gridy = GridBagConstraints.RELATIVE;
 		panelConstraints.fill = GridBagConstraints.BOTH;
@@ -112,7 +108,57 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (fc.showOpenDialog(contentPane) == JFileChooser.APPROVE_OPTION) {
 					file = fc.getSelectedFile();
-					fileName.setText(file.getAbsolutePath());
+					message.setText("Opened " + file.getAbsolutePath());
+				}
+			}
+		});
+		
+		load.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (fc.showSaveDialog(contentPane) == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
+					
+					try {
+						DefaultTableModel tm = new DefaultTableModel();
+						tm.setColumnIdentifiers(columnNames);
+						Scanner in = new Scanner(file);
+						
+						while (in.hasNextLine()) {
+							String values = in.nextLine();
+							tm.addRow(values.split(","));
+						}
+						
+						display.setModel(tm);
+						message.setText("Loaded report: " + file.getAbsolutePath());
+					}
+					catch (FileNotFoundException fnfe) {
+						message.setText("Load failed: the specified file was not found");
+					}
+				}
+			}
+		});
+		
+		save.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (fc.showSaveDialog(contentPane) == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
+					int rows = display.getModel().getRowCount();
+					
+					try {
+						PrintWriter out = new PrintWriter(file);
+						
+						for (int r = 0; r < rows; r++) {
+							out.print(display.getModel().getValueAt(r, 0) + ",");
+							out.print(display.getModel().getValueAt(r, 1) + ",");
+							out.println(display.getModel().getValueAt(r, 2));
+						}
+						
+						out.flush();
+						message.setText("Saved report: " + file.getAbsolutePath());
+					}
+					catch (FileNotFoundException fnfe) {
+						message.setText("Save failed: the specified file was not found");
+					}
 				}
 			}
 		});
@@ -123,11 +169,16 @@ public class MainWindow extends JFrame {
 			}
 		});
 		
+//		Setting tooltips:
+		
+		characters.setToolTipText("Counted characters");
+		
 //		Setting keyboard shortcuts:
 		
 		open.setMnemonic(KeyEvent.VK_O);
-		charLabel.setDisplayedMnemonic(KeyEvent.VK_C);
 		caseSensitive.setMnemonic(KeyEvent.VK_A);
+		load.setMnemonic(KeyEvent.VK_L);
+		save.setMnemonic(KeyEvent.VK_V);
 		scan.setMnemonic(KeyEvent.VK_S);
 		
 //		Status-bar setup:
@@ -144,7 +195,7 @@ public class MainWindow extends JFrame {
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Character Counter");
-		this.setSize(new Dimension(400, 500));
+		this.setSize(new Dimension(600, 500));
 		this.setLocationRelativeTo(this);
 		this.setVisible(true);
 	}
@@ -238,10 +289,10 @@ public class MainWindow extends JFrame {
 				}
 				
 				display.setModel(tm);
-				this.message.setText("Scan complete");
+				this.message.setText("Finished scanning " + file.getAbsolutePath());
 			}
 			catch (FileNotFoundException e) {
-				this.message.setText("IO error: file not found");
+				this.message.setText("Scan failed: the specified file was not found");
 			}
 		}
 		else {
