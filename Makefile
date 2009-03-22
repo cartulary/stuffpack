@@ -1,35 +1,16 @@
-NAME?=DOES_NOT_EXIST
-LANG?=none
+NAME=hello
+LANG = c++
+.include    <../Makefile>
+CFLAGS = -I/usr/local/include -I/usr/local/include/freetype2 -I/usr/local/include -O2 -fno-strict-aliasing -pipe -I/usr/local/include -Wno-non-virtual-dtor -L/usr/local/lib -lfltk2 -R/usr/local/lib -pthread -lX11 -lXi -lXft -lpthread -lm -lXext -lsupc++
 
-CFLAGS = -g3 -pipe
+#compiling options
+.PHONY:     clean
 
-.ifdef $(LANG) == c++
-#we are using c++ add the flags that only work for c++
-CC = llvm-g++
-CFLAGS += -ansi -Wabi
-CFLAGS += -Weffc++
-CFLAGS += -fno-gnu-keywords
-CFLAGS += -Wstrict-null-sentinel -Wctor-dtor-privacy -Wnon-virtual-dtor -Woverloaded-virtual -Wsign-promo
-CFLAGS += -ffor-scope
-.elif $(LANG) == c
-CC = llvm-gcc
-CFLAGS += -g
-CFLAGS += -std=c99 
-CFLAGS += -Wimplicit-function-declaration -Wbad-function-cast -Wdeclaration-after-statement
-.endif
+all:  $(NAME)
 
-# set the global flags
-CFLAGS += -Wall -Wextra -pedantic
-CFLAGS += -Wformat=2 -Wformat-y2k -Wformat-nonliteral -Wformat-security
-CFLAGS += -Wunused -Wunused-parameter
-CFLAGS += -Winit-self -Wmissing-include-dirs -Wfloat-equal
-CFLAGS += -Wfloat-equal -Wundef -Wshadow -Wcast-qual -Wcast-align
-CFLAGS += -fabi-version=0 -funroll-loops
-CFLAGS += -Wunreachable-code -Winline
+$(NAME):
+	$(CC) $(NAME).cpp -o $(NAME) $(CFLAGS)
 
-PREFIX = /usr/local
-
-superclean: .NOTMAIN
-	rm -rfv ./$(NAME)
-check: .NOTMAIN
-	cppcheck -v -a -s --unused-functions .
+clean:
+	rm -fv *.o
+	rm ./$(NAME)

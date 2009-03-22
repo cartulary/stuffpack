@@ -40,7 +40,7 @@ sortReturnType biexSort(sortReturnType toSort)
 	int last = len - 1;
 	int min_position;
 	int max_position;
-	for (int first = 0; first != (len 1) / 2; ++first)
+	for (int first = 0; first <= (len - 1) / 2; ++first)
 	{
 		std::cout << first << " " << last << std::endl;
 		/* this could be any arbitrary element on the list within the first-last range*/
@@ -62,6 +62,15 @@ sortReturnType biexSort(sortReturnType toSort)
 		std::swap(toSort[first], toSort[min_position]);
 		std::swap(toSort[last], toSort[max_position]);
 		--last;
+
+		int y = number_random_objects - 1;
+		/* go until i is 0 and initialize */
+		do
+		{
+			std::cout << toSort[y] << " ";
+		} while (y--);
+		std::cout << std::endl;
+
 	}
 	return toSort;
 }
