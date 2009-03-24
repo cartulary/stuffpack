@@ -181,20 +181,30 @@ public class MainWindow extends JFrame {
 		load.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (fc.showSaveDialog(contentPane) == JFileChooser.APPROVE_OPTION) {
-					File file = fc.getSelectedFile();
+					File loadedFile = fc.getSelectedFile();
 					
 					try {
 						DefaultTableModel tm = new DefaultTableModel();
 						tm.setColumnIdentifiers(columnNames);
-						Scanner in = new Scanner(file);
+						Scanner in = new Scanner(loadedFile);
+						
+						if (in.hasNextLine()) {
+							String values = in.nextLine();
+							String[] settings = values.split(",");
+							
+							file = new File(settings[0]);
+							characters.setText(settings[1]);
+							caseSensitive.setSelected(Boolean.parseBoolean(settings[2]));
+						}
 						
 						while (in.hasNextLine()) {
 							String values = in.nextLine();
 							tm.addRow(values.split(","));
 						}
 						
+						in.close();
 						display.setModel(tm);
-						message.setText("Loaded report: " + file.getAbsolutePath());
+						message.setText("Loaded report: " + loadedFile.getAbsolutePath());
 					}
 					catch (FileNotFoundException fnfe) {
 						message.setText("Load failed: the specified file was not found");
@@ -211,6 +221,9 @@ public class MainWindow extends JFrame {
 					
 					try {
 						PrintWriter out = new PrintWriter(file);
+						out.print(file.getAbsolutePath() + ",");
+						out.print(characters.getText() + ",");
+						out.println(caseSensitive.isSelected());
 						
 						for (int r = 0; r < rows; r++) {
 							out.print(display.getModel().getValueAt(r, 0) + ",");
@@ -219,6 +232,7 @@ public class MainWindow extends JFrame {
 						}
 						
 						out.flush();
+						out.close();
 						message.setText("Saved report: " + file.getAbsolutePath());
 					}
 					catch (FileNotFoundException fnfe) {
@@ -325,6 +339,7 @@ public class MainWindow extends JFrame {
 			}
 		}
 		
+		fr.close();
 		return count;
 	}
 	
