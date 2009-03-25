@@ -8,7 +8,7 @@ CFLAGS = -I/usr/local/include -I/usr/local/include/freetype2 -I/usr/local/includ
 
 all:  $(NAME)
 
-$(NAME): $(NAME).cpp
+$(NAME): $(NAME).cpp inputWindow.cpp ../hanoi.cpp
 	$(CC) $(NAME).cpp -o $(NAME) $(CFLAGS)
 
 clean:

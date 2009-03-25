@@ -5,6 +5,7 @@
 #include <fltk/Slider.h>
 #include <fltk/Button.h>
 #include <fltk/IntInput.h>
+#include <fltk/ask.h>
 #include <iostream>
 #include <stdlib.h>
 using namespace fltk;
@@ -16,14 +17,22 @@ class SliderWindow : public Window
 	Slider slider;
 	Button down_button;
 	Button up_button;
-	Button exit_button;
+	Button done_button;
 
 	static const int min_rings = 1;
 	static const int max_rings = 10;
 
 	inline void copy_callback_i()
 	{
-		slider.value(intinput.ivalue());
+		int new_val = intinput.ivalue();
+		if (new_val >= min_rings && new_val <= max_rings)
+		{
+			slider.value(intinput.ivalue());
+		}
+		else
+		{
+			alert("Please choose a number between %d and %d", min_rings, max_rings);
+		}
 	}
 
 	static void copy_callback(Widget*, void* v)
@@ -82,17 +91,14 @@ class SliderWindow : public Window
 		((SliderWindow*)v)->slider_callback_i((Slider*)w);
   	}
 
-	inline void exit_callback_i(Widget* widget)
+	inline void done_callback_i(Widget* widget)
 	{
-	//	std::cout << slider.value();
             Hanoi(slider.value(),'a','b','c');
 		std::cout << "-*-*-*-*-*-*-*-*-*-*-*-*-" << std::endl;
-		//((Window*)widget)->hide();
-		//exit(0);
 	}
-	static void exit_callback(Widget* w, void* v)
+	static void done_callback(Widget* w, void* v)
 	{
-            ((SliderWindow*)v)->exit_callback_i(w);
+            ((SliderWindow*)v)->done_callback_i(w);
 	}
 
 
@@ -103,9 +109,9 @@ class SliderWindow : public Window
 	intinput(10,10,100,20),
 	copy_button(110,10,100,20,"copy to slider"),
 	slider(10,35,300,20),
-	down_button(50,60,50,20,"@->"),
+	down_button(50,60,50,20,"@270->"),
 	up_button(150,60,50,20,"@90->"),
-	exit_button(250,60,50,20,"done")
+	done_button(250,60,50,20,"@>")
 	{
 		copy_button.callback(copy_callback,this);
 		down_button.callback(down_callback,this);
@@ -117,7 +123,7 @@ class SliderWindow : public Window
 		slider.step(1);
 		slider.value(3);
 		intinput.value(3);
-		exit_button.callback(exit_callback,this);
+		done_button.callback(done_callback,this);
 		end();
 	}
 
