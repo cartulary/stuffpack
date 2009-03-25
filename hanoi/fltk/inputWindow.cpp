@@ -27,6 +27,14 @@ class SliderWindow : public Window
 		int new_val = intinput.ivalue();
 		if (new_val >= min_rings && new_val <= max_rings)
 		{
+                  if (new_val > min_rings)
+                  {
+                        down_button.show();
+                  }
+                  if (new_val < max_rings)
+                  {
+                        up_button.show();
+                  }
 			slider.value(intinput.ivalue());
 		}
 		else
