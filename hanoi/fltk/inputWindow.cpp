@@ -1,5 +1,3 @@
-// classes.cxx (example 3a)
-
 #include <fltk/run.h>
 #include <fltk/Window.h>
 #include <fltk/Slider.h>
