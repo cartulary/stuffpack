@@ -99,7 +99,7 @@ class SliderWindow : public Window
 		int new_val = slider->value();
             if (new_val == min_rings)
             {
-  	          down_button.hide();
+			down_button.hide();
             }
             else
             {
@@ -113,7 +113,14 @@ class SliderWindow : public Window
             {
 			up_button.show();
             }
-		intinput.value(slider->value());
+		if (new_val >= min_rings && new_val <= max_rings)
+		{
+			intinput.value(slider->value());
+		}
+		else
+		{
+			alert("Please choose a number between %d and %d", min_rings, max_rings);
+		}
 	}
 
 	static void slider_callback(Widget* w, void* v)
