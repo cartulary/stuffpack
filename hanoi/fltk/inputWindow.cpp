@@ -114,7 +114,6 @@ class SliderWindow : public Window
 			up_button.show();
             }
 		intinput.value(slider->value());
-		std::cout << slider->value();
 	}
 
 	static void slider_callback(Widget* w, void* v)
