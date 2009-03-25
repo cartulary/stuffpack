@@ -96,6 +96,23 @@ class SliderWindow : public Window
 
 	inline void slider_callback_i(Slider* slider)
 	{
+		int new_val = slider->value();
+            if (new_val == min_rings)
+            {
+  	          down_button.hide();
+            }
+            else
+            {
+			down_button.show();
+            }
+            if (new_val == max_rings)
+            {
+            	up_button.hide();
+            }
+            else
+            {
+			up_button.show();
+            }
 		intinput.value(slider->value());
 		std::cout << slider->value();
 	}
