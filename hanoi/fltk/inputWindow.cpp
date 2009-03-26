@@ -130,6 +130,7 @@ class SliderWindow : public Window
 
 	inline void done_callback_i(Widget* widget)
 	{
+		intinput.value(slider.value());
             Hanoi(slider.value(),'a','b','c');
 		std::cout << "-*-*-*-*-*-*-*-*-*-*-*-*-" << std::endl;
 	}
@@ -148,7 +149,7 @@ class SliderWindow : public Window
 	slider(10,35,300,20),
 	down_button(50,60,50,20,"@270->"),
 	up_button(150,60,50,20,"@90->"),
-	done_button(250,60,50,20,"@>")
+	done_button(250,60,50,20,"@Cgreen@>")
 	{
 		copy_button.callback(copy_callback,this);
 		down_button.callback(down_callback,this);
