@@ -20,6 +20,8 @@ class SliderWindow : public Window
 	static const int min_rings = 1;
 	static const int max_rings = 10;
 
+	int hanoiVal;
+
 	inline void copy_callback_i()
 	{
 		int new_val = intinput.ivalue();
@@ -131,40 +133,49 @@ class SliderWindow : public Window
 	inline void done_callback_i(Widget* widget)
 	{
 		intinput.value(slider.value());
-            Hanoi(slider.value(),'a','b','c');
-		std::cout << "-*-*-*-*-*-*-*-*-*-*-*-*-" << std::endl;
+		hanoiVal = slider.value();
 	}
 	static void done_callback(Widget* w, void* v)
 	{
             ((SliderWindow*)v)->done_callback_i(w);
 	}
 
-
 	public:
 
-	SliderWindow(const char* label=0) :
-	Window(USEDEFAULT,USEDEFAULT,320,90,label,true),
-	intinput(10,10,100,20),
-	copy_button(110,10,100,20,"copy to slider"),
-	slider(10,35,300,20),
-	down_button(50,60,50,20,"@270->"),
-	up_button(150,60,50,20,"@90->"),
-	done_button(250,60,50,20,"@Cgreen@>")
-	{
-		copy_button.callback(copy_callback,this);
-		down_button.callback(down_callback,this);
-		up_button.callback(up_callback,this);
-		slider.callback(slider_callback,this);
-		slider.set_horizontal(); slider.type(Slider::TICK_ABOVE);
-		//create the slider with correct range and defaults
-		slider.range(min_rings,max_rings);
-		slider.step(1);
-		slider.value(3);
-		intinput.value(3);
-		done_button.callback(done_callback,this);
-		end();
-	}
+		void resetHanoi()
+		{
+			hanoiVal = 0;
+		}
 
-	~SliderWindow() {}
+		int getHanoi()
+		{
+			return hanoiVal;
+		}
+
+		SliderWindow(const char* label=0) :
+		Window(USEDEFAULT,USEDEFAULT,320,90,label,true),
+		intinput(10,10,100,20),
+		copy_button(110,10,100,20,"copy to slider"),
+		slider(10,35,300,20),
+		down_button(50,60,50,20,"@270->"),
+		up_button(150,60,50,20,"@90->"),
+		done_button(250,60,50,20,"@Cgreen@>")
+
+		{
+			copy_button.callback(copy_callback,this);
+			down_button.callback(down_callback,this);
+			up_button.callback(up_callback,this);
+			slider.callback(slider_callback,this);
+			slider.set_horizontal(); slider.type(Slider::TICK_ABOVE);
+			//create the slider with correct range and defaults
+			slider.range(min_rings,max_rings);
+			slider.step(1);
+			slider.value(3);
+			intinput.value(3);
+			done_button.callback(done_callback,this);
+			end();
+		}
+
+		~SliderWindow() {}
 
 };
