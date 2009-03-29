@@ -7,11 +7,10 @@ LINKCFLAGS += -L/usr/local/lib -lfltk2 -R/usr/local/lib -pthread -lX11 -lXi -lXf
 #compiling options
 .PHONY:     clean
 
-all:  $(NAME)
+all:  main
 
-$(NAME): $(NAME).cpp inputWindow.cpp ../hanoi.cpp
-
-	$(CC) $(NAME).cpp -o $(NAME) $(CFLAGS) $(LINKCFLAGS)
+main: main.cpp inputWindow.cpp ../hanoi.cpp
+	$(CC) main.cpp -o $(NAME) $(CFLAGS) $(LINKCFLAGS)
 
 inputWindow.o:
 

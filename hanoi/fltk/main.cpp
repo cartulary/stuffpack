@@ -16,11 +16,16 @@ int main(int argc, char* argv[])
 		hanoiVal = pickNumberWindow.getHanoi();
 		if (hanoiVal > 0)
 		{
-			Hanoi(hanoiVal,'a','b','c');
-	            std::cout << "-*-*-*-*-*-*-*-*-*-*-*-*-" << std::endl;
-			pickNumberWindow.resetHanoi();
-
+			/*
+				Since we are moving toward making this one unified system
+				lets tru and get this to be like the other versions.
+				Only ask once.  Once we have answer get out of the loop.
+			*/
+			break;
 		}
 	}
+	Hanoi(hanoiVal,'a','b','c');
+	pickNumberWindow.resetHanoi();
+
 	return 0;
 }
