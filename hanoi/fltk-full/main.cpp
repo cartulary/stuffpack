@@ -1,39 +1,24 @@
 // classes.cxx (example 3a)
 
+#include <fltk/run.h>
+#include <fltk/Window.h>
+#include <fltk/Slider.h>
+#include <fltk/Button.h>
+#include <fltk/IntInput.h>
+#include <fltk/ask.h>
+#include <fltk/TextDisplay.h>
+
 #include <iostream>
 #include <stdlib.h>
-#include "../hanoi.cpp"
-#include "inputWindow.cpp"
 
-int getNumberOfBlocks(int argc, char* argv[]);
+using namespace fltk;
 
 int main(int argc, char* argv[])
 {
-	Hanoi(getNumberOfBlocks(argc, argv),'a','b','c');
+	TextDisplay* text = new TextDisplay(10,10,10,10,"hi");
+	text->begin();
+	text->show();
+  	return fltk::run();
+
 	return 0;
 }
-
-int getNumberOfBlocks(int argc, char* argv[])
-{
-	SliderWindow pickNumberWindow("Pick a number");
-	pickNumberWindow.resetHanoi();
-	pickNumberWindow.show(argc,argv);
-	int hanoiVal = 0;
-	while (Window::first())
-	{
-		wait();
-            hanoiVal = pickNumberWindow.getHanoi();
-            if (hanoiVal > 0)
-            {
-                  /*
-                        Since we are moving toward making this one unified system
-                        lets tru and get this to be like the other versions.
-                        Only ask once.  Once we have answer get out of the loop.
-                  */
-			return hanoiVal;
-            }
-      }
-	//not really needed because we return before its called but I'll leave it
-      pickNumberWindow.resetHanoi();
-}
-
