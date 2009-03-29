@@ -6,6 +6,7 @@ CCFLAGS += -lncurses
 
 #compiling options
 .PHONY:	build clean forceclean
+
 build:	hanoi.c functions.c
 	CC $(CCFLAGS) -o $(NAME).bin hanoi.c
 clean: 	

@@ -7,8 +7,6 @@ CFLAGS += -lncurses
 #compiling options
 .PHONY:	build clean
 
-build:	main
-
 main:	../hanoi.cpp functions.cpp main.cpp
 
 functions.o: functions.h
