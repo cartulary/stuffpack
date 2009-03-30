@@ -11,14 +11,10 @@
 #include <iostream>
 #include <stdlib.h>
 
-using namespace fltk;
-
 int main(int argc, char* argv[])
 {
-	TextDisplay* text = new TextDisplay(10,10,10,10,"hi");
+	fltk::TextDisplay* text = new fltk::TextDisplay(10,10,10,10,"hi");
 	text->begin();
 	text->show();
   	return fltk::run();
-
-	return 0;
 }
