@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
 				wordFlag = true;
 				break;
 			default:
+				break;
 		}
 
 	}
@@ -125,6 +126,8 @@ void doWcFile (istream &toWc)
 		{
 			longestLine = lineLen;
 		}
+		//longestLine = max(lineLen, longestLine);
+
 		for(unsigned int i = 0; i < lineLen; ++i)
 		{
 			/* use iswspace? */
@@ -146,10 +149,7 @@ void doWcFile (istream &toWc)
 	sLineNums += lineNums;
 	sCharNums += charNums;
 	sWords += words;
-	if (longestLine > sLongestLine)
-	{
-		sLongestLine = longestLine;
-	}
+	sLongestLine = max (longestLine, sLongestLine);
 
 	cout << "\t";
 	if (lineFlag)
@@ -166,7 +166,7 @@ void doWcFile (istream &toWc)
 	}
 	if (longestLineFlag)
 	{
-		cout << longestLine;
+		cout << longestLine << " ";
 	}
 	/*  filename printed by calling function */
 }
