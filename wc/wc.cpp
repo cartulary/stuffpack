@@ -22,6 +22,9 @@ int main(int argc, char *argv[])
 {
 	int c;
 	int toReturn = 0;
+	/*
+		Lets see which command line options we have.
+	*/
       while ((c = getopt (argc, argv, "Lclmw")) != -1)
 	{
       	switch (c)
@@ -42,7 +45,6 @@ int main(int argc, char *argv[])
 				wordFlag = true;
 				break;
 			default:
-				charFlag = lineFlag = byteFlag = wordFlag = true;
 		}
 
 	}
