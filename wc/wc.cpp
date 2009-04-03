@@ -1,6 +1,3 @@
-/*
-	wc -- word, line, character, and byte count
-*/
 // This source code is release under the CMU License.
 /* change in behavior with -bn */
 #include <fstream>
@@ -22,9 +19,6 @@ int main(int argc, char *argv[])
 {
 	int c;
 	int toReturn = 0;
-	/*
-		Lets see which command line options we have.
-	*/
       while ((c = getopt (argc, argv, "Lclmw")) != -1)
 	{
       	switch (c)
@@ -45,7 +39,7 @@ int main(int argc, char *argv[])
 				wordFlag = true;
 				break;
 			default:
-				break;
+				charFlag = lineFlag = byteFlag = wordFlag = true;
 		}
 
 	}
@@ -54,11 +48,10 @@ int main(int argc, char *argv[])
 	{
 		charFlag = lineFlag = byteFlag = wordFlag = true;
 	}
-
 	/* If we have files on command line - display them; else just display cin once.*/
 	if (argc > 1)
 	{
-	      for (int i = optind; i < argc; ++i)
+		for (int i = optind; i < argc; ++i)
 		{
 			/* if what we have is not stdin deal with it as a file */
 			if ( strcmp(argv[i] , "-") != 0 )
@@ -107,41 +100,36 @@ void doWcFile (istream &toWc)
 	unsigned long int charNums = 0;
 	unsigned long int words = 1; /* begin at one because we look for spaces; not words */
 	unsigned long int longestLine = 0;
-
-	/* the static content - used for 'total' */
-	static unsigned long int sLineNums = 0;
-	static unsigned long int sCharNums = 0;
-	static unsigned long int sWords = 1;
-	static unsigned long int sLongestLine = 0;
-
+	unsigned int lineLen;
 	bool lastSpace = false; /* use so double spaces are not counted as words */
-	bool curCharIsSpace = false;
+	//bool curCharIsSpace = false;
 	string line;
 
 	while (! toWc.eof() )
 	{
-//		lastSpace = false;
+		//lastSpace = false;
 		getline(toWc, line);
 		/* does not deal with -c vs -m yet! */
-		unsigned int lineLen = line.size();
-		charNums += lineLen;
+		lineLen = line.size();
+		charNums += lineLen + 1;
 		++lineNums;
+//		std::cout << lineNums << "\t"<< line <<std::endl;
+
 		if (lineLen > longestLine)
 		{
 			longestLine = lineLen;
 		}
-		//longestLine = max(lineLen, longestLine);
 
-		for(unsigned int i = 0; i < lineLen; ++i)
+		for(unsigned int i = 1; i < lineLen; ++i)
 		{
 			/* we are not going to use .at() because we know we are in range */
 			if (iswspace(line[i]))
 			{
-				lastSpace = true;
 				if (!lastSpace)
 				{
 					++words;
 				}
+				lastSpace = true;
 			}
 			else
 			{
@@ -149,11 +137,12 @@ void doWcFile (istream &toWc)
 			}
 		}
 	}
-	sLineNums += lineNums;
-	sCharNums += charNums;
-	sWords += words;
-	sLongestLine = max (longestLine, sLongestLine);
 
+	/* we count one extra character and line - remove it*/
+	--charNums;
+	--lineNums;
+
+	/* display the result; what I'd really like to do is return this in some sort of array form...*/
 	cout << "\t";
 	if (lineFlag)
 	{
