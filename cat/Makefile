@@ -5,8 +5,9 @@ LANG = c++
 #compiling options
 .PHONY:	build clean
 
-build:	cat.cpp
-	$(CC) $(CFLAGS) -o $(NAME).bin cat.cpp
+build:	$(NAME)
+
+$(NAME): 
 
 clean: 	
-	rm -fv *.o
+	rm -fv *.o $(NAME)

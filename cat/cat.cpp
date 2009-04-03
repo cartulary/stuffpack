@@ -1,4 +1,5 @@
 /* change in behavior with -bn */
+#include <ctype.h>
 #include <fstream>
 #include <getopt.h>
 #include <iostream>
@@ -171,22 +172,45 @@ inline const char *itos(int num)
 
 string vStyle (string str)
 {
-	string good;
-	good = str;
+	unsigned int i;
+	string good = str;
+
+	//good = str;
 	if (dispNotPrintingFlag)
 	{
-		if (dispTabFlag)
+		char ch;
+		bool plainChar;
+
+		for (i = 0; i < str.size(); ++i)
 		{
-			good = strReplace(str,"\t","^I");
+			ch = str[i];
+			plainChar = true;
+
+			if (!iswascii(ch) && !iswprint(ch))
+			{
+				plainChar = false;
+				good += "M-" + toascii(ch);
+				break;
+			}
+			if (iswcntrl(ch))
+			{
+				plainChar = false;
+				good += "^" + (ch == '\177') ? '?' : (ch | 0100);
+				continue;
+			}
+			if (plainChar)
+			{
+				good += ch;
+			}
 		}
-//		good = asciify(good.c_str(), good.size());
-            good = strReplace(str,"\a","^G");
-            good = strReplace(str,"\b","^H");
-            good = strReplace(str,"\n","\\n");
-            good = strReplace(str,"\f","\\f");
-            good = strReplace(str,"\r","^M");
+	}
+
+	if (dispTabFlag)
+	{
+		good = strReplace(good,"\t","^I");
 	}
 	return good;
+
 }
 
 string strReplace(string str, string old, string newStr)
