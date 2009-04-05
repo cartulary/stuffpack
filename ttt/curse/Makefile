@@ -12,7 +12,7 @@ LDFLAGS += -lncurses
 
 all:	ttt
 
-ttt.o: ttt.h
+ttt.o:
 
 clean: 	
 	rm -fv *.o
