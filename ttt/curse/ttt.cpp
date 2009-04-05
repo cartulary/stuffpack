@@ -8,11 +8,17 @@ const char *strPlayers[] = {"X","O","-"};
 static void finish(int sig);
 static void initCurses();
 
+const int BOARD_SIZE = 3;
+
 WINDOW *create_newwin(int height, int width, int starty, int startx);
 void destroy_window(WINDOW *local_window);
 
+inline int getRowFromID(int id);
+inline int getColFromID(int id);
+
 int main(int argc, char *argv[])
 {
+	int spot;
 	player board[3][3] = 
 		{
 			{none,none,none},
@@ -44,14 +50,27 @@ int main(int argc, char *argv[])
 	game_window = create_newwin(game_window_height, COLS, game_window_y_start, 0);
 	help_window = create_newwin(help_window_height, COLS, help_window_y_start, 0);
 	turn_window = create_newwin(title_window_height, 2, title_window_y_start, COLS - 2);
-
+	int i,j;
 	while (true)
 	{
 	   	int c = getch();/* refresh, accept single keystroke of input */
 		switch (c)
 		{
-			case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9:
+			case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
+				mvwaddch(turn_window,1,1,c);
+				board[getColFromID(c) - 1][getRowFromID(3) - 1] = turn;
 				// do something with the selection here.
+				break;
+			case 'b':
+				werase(game_window);
+				for(i = 0; i < 3; ++i)
+				{
+					for(j = 0; j < 3; ++j)
+					{
+						waddstr(game_window, strPlayers[board[j][i]]);
+					}
+					waddstr(game_window, "\n");
+				}
 				break;
 			case 't':
 				turn = (turn == 0) ? O : X;
@@ -138,4 +157,18 @@ WINDOW *create_newwin(int height, int width, int starty, int startx)
 void destroy_window(WINDOW *local_window)
 {
 	delwin(local_window);
+}
+
+inline int getRowFromID(int id)
+{
+      //from a number between 1 and 9, return the row
+      int tmp =((id/BOARD_SIZE)+1);
+	tmp = (id % BOARD_SIZE == 0) ? tmp - 1 : tmp;
+      return tmp; //int math - no remainder
+}
+
+inline int getColFromID(int id)
+{
+	//from a number between 1 and 9, return the col
+      return (id % BOARD_SIZE ==0) ? BOARD_SIZE : id % BOARD_SIZE;
 }
