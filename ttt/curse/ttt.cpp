@@ -19,7 +19,7 @@ inline int getColFromID(int id);
 int main(int argc, char *argv[])
 {
 	int spot;
-	player board[3][3] = 
+	player board[3][3] =
 		{
 			{none,none,none},
 			{none,none,none},
@@ -57,9 +57,10 @@ int main(int argc, char *argv[])
 		switch (c)
 		{
 			case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
-				mvwaddch(turn_window,1,1,c);
-				board[getColFromID(c) - 1][getRowFromID(3) - 1] = turn;
-				// do something with the selection here.
+				mvwaddch(turn_window,0,1,c);
+				mvwaddch(turn_window,1,0,(char)(getColFromID(c) +47));
+				mvwaddch(turn_window,1,1,(char)(getRowFromID(c) +47 ));
+				board[getRowFromID(c) - 1 ][getColFromID(c) -1 ] = turn;
 				break;
 			case 'b':
 				werase(game_window);
@@ -102,7 +103,7 @@ int main(int argc, char *argv[])
 			wrefresh(title_window);
 			wrefresh(game_window);
 			wrefresh(help_window);
-			mvwaddstr(turn_window,0,1,strPlayers[turn]);
+			mvwaddstr(turn_window,0,0,strPlayers[turn]);
 			wrefresh(turn_window);
 		}
 	}
@@ -161,10 +162,16 @@ void destroy_window(WINDOW *local_window)
 
 inline int getRowFromID(int id)
 {
-      //from a number between 1 and 9, return the row
-      int tmp =((id/BOARD_SIZE)+1);
-	tmp = (id % BOARD_SIZE == 0) ? tmp - 1 : tmp;
-      return tmp; //int math - no remainder
+	switch (id)
+	{
+		case 1: case 2: case 3:
+			return 1;
+		case 4: case 5: case 8:
+			return 2;
+		case 7: case 6: case 9:
+			return 3;
+		default: return -1;
+	}
 }
 
 inline int getColFromID(int id)
