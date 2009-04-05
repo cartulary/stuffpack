@@ -13,6 +13,12 @@ void destroy_window(WINDOW *local_window);
 
 int main(int argc, char *argv[])
 {
+	player board[3][3] = 
+		{
+			{none,none,none},
+			{none,none,none},
+			{none,none,none},
+		};
 	const int title_window_height = 2;
 	const int game_window_height = 10;
 	const int help_window_height = 2;

@@ -6,7 +6,12 @@ This source code is release under the CMU License.
 
 #include "ttt.h"
 
-player board[BOARD_SIZE+1][BOARD_SIZE+1]; //a 3x3 board except that the array starts at 0 so it is size+1
+player board[BOARD_SIZE+1][BOARD_SIZE+1] =
+	{
+		{none,none,none},
+		{none,none,none},
+		{none,none,none},
+	}; //a 3x3 board except that the array starts at 0 so it is size+1
 player turn=none; //current turn
 
 /* verbose will be 0 (off) or 1 (on)*/
@@ -20,7 +25,6 @@ using namespace std;
 
 int main (int argc, char* argv[])
 {
-	initBoard();
       int c;
      	int option_index = 0;
 	char moveFirst;
@@ -146,7 +150,7 @@ void displayBoard(void)
 	cout << endl;
 	for (int row=1;row<=3;row++)
 	{
-		for (int col=1;col<=3;col++)
+		for (int col=1;col<=3;++col)
 		{
 			count++;
 			current = board[row][col];
@@ -164,16 +168,6 @@ void displayBoard(void)
 		printf("\n--------|---------------|---------------|\n");
 	}
 	cout << endl;
-}
-void initBoard(void)
-{
-	for (int row=0;row<=BOARD_SIZE;row++)
-	{
-		for (int col=0;col<=BOARD_SIZE;col++)
-		{
-			board[row][col]=none;
-		}
-	}
 }
 
 int getMove(void)

@@ -17,12 +17,14 @@ typedef enum
 #define MODE_HARD 2
 
 #include <ctype.h>
+#include <curses.h>
 #include <getopt.h>
 #include <iostream>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
+#include <signal.h>
 #include <sysexits.h>
 #include <unistd.h>
 
@@ -30,7 +32,6 @@ typedef enum
 int getMove(void); //gets a number for the move the player wants to make and ensures accuracy with the current board
 void displayBoard(void); //shows the current board
 bool checkWin(void); //if someone won then returns true
-void initBoard(void); //starts board as all 'none's
 player switchTurn(player toSwitch); //changes from X to O or vice-versa
 char playerToString(player toConvert);  //changes a player type to a string type
 player stringToPlayer(char toConvert);  // changes a string to a player
