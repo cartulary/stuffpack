@@ -16,6 +16,8 @@ void destroy_window(WINDOW *local_window);
 inline int getRowFromID(int id);
 inline int getColFromID(int id);
 
+inline void switchTurn(player &turn);
+
 int main(int argc, char *argv[])
 {
 	int spot;
@@ -32,6 +34,8 @@ int main(int argc, char *argv[])
 	const int title_window_y_start = 0;
 	const int game_window_y_start = title_window_y_start + title_window_height;
 	const int help_window_y_start = game_window_y_start + game_window_height;
+
+	int row, col;
 
 	player turn = X;
 
@@ -58,10 +62,17 @@ int main(int argc, char *argv[])
 		{
 			case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
 				mvwaddch(turn_window,0,1,c);
-				mvwaddch(turn_window,1,0,(char)(getColFromID(c) +47));
-				mvwaddch(turn_window,1,1,(char)(getRowFromID(c) +47 ));
-				board[getRowFromID(c) - 1 ][getColFromID(c) -1 ] = turn;
-				break;
+				row = getRowFromID(c) - 1;
+				col = getColFromID(c) - 1;
+				if (board[row][col]==(player)(none))
+				{
+					board[row][col] = turn;
+					switchTurn(turn);
+				}
+				else
+				{
+					waddstr(help_window,"Invalid move");
+				}
 			case 'b':
 				werase(game_window);
 				for(i = 0; i < 3; ++i)
@@ -74,7 +85,7 @@ int main(int argc, char *argv[])
 				}
 				break;
 			case 't':
-				turn = (turn == 0) ? O : X;
+				switchTurn(turn);
 				break;
 			case 'q':
 				finish(0);
@@ -164,11 +175,11 @@ inline int getRowFromID(int id)
 {
 	switch (id)
 	{
-		case 1: case 2: case 3:
+		case '1': case '2': case '3':
 			return 1;
-		case 4: case 5: case 8:
+		case '4': case '5': case '6':
 			return 2;
-		case 7: case 6: case 9:
+		case '7': case '8': case '9':
 			return 3;
 		default: return -1;
 	}
@@ -177,5 +188,10 @@ inline int getRowFromID(int id)
 inline int getColFromID(int id)
 {
 	//from a number between 1 and 9, return the col
-      return (id % BOARD_SIZE ==0) ? BOARD_SIZE : id % BOARD_SIZE;
+      return (id % BOARD_SIZE == 0) ? BOARD_SIZE : id % BOARD_SIZE;
+}
+
+inline void switchTurn(player &turn)
+{
+	turn = (turn == (player)(X)) ? O : X;
 }
