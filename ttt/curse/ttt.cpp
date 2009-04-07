@@ -1,3 +1,4 @@
+#include "tttboard.cpp"
 #include <iostream>
 #include <ncurses.h>
 #include <signal.h>
@@ -21,6 +22,7 @@ inline void switchTurn(player &turn);
 int main(int argc, char *argv[])
 {
 	int spot;
+	tttBoard *gameBoard = new tttBoard();
 	player board[3][3] =
 		{
 			{none,none,none},
@@ -73,7 +75,6 @@ int main(int argc, char *argv[])
 				{
 					waddstr(help_window,"Invalid move");
 				}
-			case 'b':
 				werase(game_window);
 				for(i = 0; i < 3; ++i)
 				{
@@ -83,9 +84,6 @@ int main(int argc, char *argv[])
 					}
 					waddstr(game_window, "\n");
 				}
-				break;
-			case 't':
-				switchTurn(turn);
 				break;
 			case 'q':
 				finish(0);
