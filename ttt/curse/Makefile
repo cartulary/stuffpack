@@ -10,9 +10,11 @@ LDFLAGS += -lncurses
 #compiling options
 .PHONY:	all clean
 
-all:	ttt
+all:	ttt tttboard.o
 
 ttt.o:
+
+tttboard.o: tttboard.cpp
 
 clean: 	
 	rm -fv *.o
