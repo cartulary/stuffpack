@@ -39,7 +39,7 @@ int main (int argc, char* argv[])
 			{"easy", 		no_argument,	&flag_difficulty,	MODE_EASY},
 			{"hard",		no_argument,	&flag_difficulty, MODE_HARD},
                	{"nohuman", 	no_argument,      &flag_num_players,0}, //active
-               	{"onehuman",	no_argument,      &flag_num_players,0}, //active
+               	{"onehuman",	no_argument,      &flag_num_players,1}, //active
 			{"allhuman",	no_argument,	&flag_num_players,2},
               	{0, 0, 0, 0}
             };
