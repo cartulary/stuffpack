@@ -33,3 +33,5 @@ superclean: .NOTMAIN
 	rm -rfv ./$(NAME)
 check: .NOTMAIN
 	cppcheck -v -a -s --unused-functions .
+	#rats -rw3 *
+	#splint -strict-lib -showcolumn -showfunc -strict *.c
