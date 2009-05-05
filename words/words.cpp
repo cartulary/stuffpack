@@ -11,7 +11,9 @@ int main (void)
 	std::string cmdIn;
  	cmdListMapType cmdIntMap;
 	int counter = 1;
-	cmdIntMap.insert(std::make_pair("list",counter));
+	cmdIntMap.insert(std::make_pair("list", counter));
+	counter++;
+	cmdIntMap.insert(std::make_pair("word", counter));
 	counter++;
 
 	std::cout << "Please enter the main word: ";
@@ -44,11 +46,13 @@ int main (void)
 				switch (val)
 				{
 					case 1:
-						std::cout << "we made it " << std::endl;
 						for (std::vector<std::string>::iterator it = wordList.begin(); it != wordList.end(); ++it)
 						{
 							std::cout << *it << std::endl;
 						}
+						break;
+					case 2:
+						std::cout << mainWord << std::endl;
 						break;
 					default:
 						break;
