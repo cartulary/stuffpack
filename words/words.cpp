@@ -4,12 +4,19 @@
 #include <vector>
 #include <utility>
 
+typedef std::vector<int> bucketType;
+
+bucketType generateBucket(std::string str);
+bool testBucket(bucketType master, bucketType candidate);
+
 int main (void)
 {
 	typedef std::map<const std::string, const int> cmdListMapType;
 	std::string mainWord;
 	std::string cmdIn;
  	cmdListMapType cmdIntMap;
+	std::vector<std::string> wordList;
+
 	int counter = 1;
 	cmdIntMap.insert(std::make_pair("list", counter));
 	counter++;
@@ -20,14 +27,16 @@ int main (void)
 	cmdIntMap.insert(std::make_pair("bucket", counter));
 	counter++;
 
-
 	std::cout << "Please enter the main word: ";
 	std::cin >> mainWord;
+	bucketType mainBucket(26);
+	mainBucket = generateBucket(mainWord);
+	bucketType  tmpBucket(26);
 
-	int i;
+
+	unsigned int i;
 	cmdListMapType::iterator cmdListIter;
 
-	std::vector<std::string> wordList;
 	while (true)
 	{
 		std::cout << "Enter a command: ";
@@ -48,6 +57,7 @@ int main (void)
 				std::cout << "we have what we need";
 				int val = cmdListIter->second;
 				std::cout << val << std::endl;
+
 				switch (val)
 				{
 					case 1:
@@ -63,48 +73,71 @@ int main (void)
 						std::cout << "help text here" << std::endl;
 						break;
 					case 4:
-						int bucket[26];
 						for (int j = 0; j <26; ++j)
 						{
-							bucket[j] = 0;
+							std::cout << mainBucket[j] << " ";
 						}
-						for(i = 0; i < mainWord.length(); ++i)
-						{
-							char c = mainWord[i];
-							if (isalpha(c))
-							{
-								c = tolower(c);
-								int cVal = (int)(c - 'a');
-								bucket[cVal]++;
-								std::cout << c << cVal << std::endl;
-								for (int j = 0; j <26; ++j)
-								{
-									std::cout << bucket[j] << " ";
-								}
-							}
-							std::cout << std::endl;
-						}
+						std::cout << std::endl;
 						break;
-						default:
-							std::cout << "No such command" << std::endl;
-							break;
+					default:
+						std::cout << "No such command" << std::endl;
+						break;
 				}
 			}
 		}
 		else
 		{
-			std::cout << "added!";
-			wordList.push_back(cmdIn);
+			tmpBucket = generateBucket(cmdIn);
+			if (testBucket(mainBucket, tmpBucket))
+			{
+				std::cout << "added!";
+				wordList.push_back(cmdIn);
+			}
+			else
+			{
+				std::cout << "bucket test failed" << std::endl;
+			}
 		}
 	}
 	return 0;
 }
 
-void generateBucket(std::string str, char *bucket[26])
+bucketType generateBucket(std::string str)
 {
-	/* clear the bucket and add new values; no real return value - perhaps I should work with a vector and return it instead? */
+	bucketType bucket(26);
+	/* clear the bucket and add new values; no rea */
 	for (int j = 0; j <26; ++j)
 	{
 		bucket[j] = 0;
 	}
+	unsigned int i;
+	for(i = 0; i < str.length(); ++i)
+	{
+		char c = str[i];
+		if (isalpha(c))
+		{
+			c = tolower(c);
+			int cVal = (int)(c - 'a');
+			bucket[cVal]++;
+		}
+	}
+	return bucket;
+}
+
+/* lets make sure candidate is a subset of master */
+bool testBucket(bucketType master, bucketType candidate)
+{
+	unsigned int i;
+	for (i = 0; i < 26; ++i)
+	{
+		if (candidate[i] > 0)
+		{
+			if (master[i] < candidate[i])
+			{
+				/* if master has less than the candidate - we fail; no need to subtract item letter by letter */
+				return false;
+			}
+		}
+	}
+	return true;
 }
