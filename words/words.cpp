@@ -99,3 +99,12 @@ int main (void)
 	}
 	return 0;
 }
+
+void generateBucket(std::string str, char *bucket[26])
+{
+	/* clear the bucket and add new values; no real return value - perhaps I should work with a vector and return it instead? */
+	for (int j = 0; j <26; ++j)
+	{
+		bucket[j] = 0;
+	}
+}
