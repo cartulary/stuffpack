@@ -63,19 +63,31 @@ int main (void)
 						std::cout << "help text here" << std::endl;
 						break;
 					case 4:
+						int bucket[26];
+						for (int j = 0; j <26; ++j)
+						{
+							bucket[j] = 0;
+						}
 						for(i = 0; i < mainWord.length(); ++i)
 						{
-							char c;
-							c = tolower(mainWord[i]);
-							if (!iswspace(c))
+							char c = mainWord[i];
+							if (isalpha(c))
 							{
-								std::cout << c << (int)(c - 'a')<< std::endl;
+								c = tolower(c);
+								int cVal = (int)(c - 'a');
+								bucket[cVal]++;
+								std::cout << c << cVal << std::endl;
+								for (int j = 0; j <26; ++j)
+								{
+									std::cout << bucket[j] << " ";
+								}
 							}
+							std::cout << std::endl;
 						}
 						break;
-					default:
-						std::cout << "No such command" << std::endl;
-						break;
+						default:
+							std::cout << "No such command" << std::endl;
+							break;
 				}
 			}
 		}
