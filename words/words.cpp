@@ -15,6 +15,11 @@ int main (void)
 	counter++;
 	cmdIntMap.insert(std::make_pair("word", counter));
 	counter++;
+	cmdIntMap.insert(std::make_pair("help", counter));
+	counter++;
+	cmdIntMap.insert(std::make_pair("bucket", counter));
+	counter++;
+
 
 	std::cout << "Please enter the main word: ";
 	std::cin >> mainWord;
@@ -29,7 +34,7 @@ int main (void)
 		std::cin >> cmdIn;
 		if (cmdIn[0]=='?')
 		{
-			for(i = 1; i <= cmdIn.size(); ++i)
+			for(i = 1; i < cmdIn.size(); ++i)
 			{
 				cmdIn[i - 1] = cmdIn [ i ];
 			}
@@ -54,7 +59,22 @@ int main (void)
 					case 2:
 						std::cout << mainWord << std::endl;
 						break;
+					case 3:
+						std::cout << "help text here" << std::endl;
+						break;
+					case 4:
+						for(i = 0; i < mainWord.length(); ++i)
+						{
+							char c;
+							c = tolower(mainWord[i]);
+							if (!iswspace(c))
+							{
+								std::cout << c << (int)(c - 'a')<< std::endl;
+							}
+						}
+						break;
 					default:
+						std::cout << "No such command" << std::endl;
 						break;
 				}
 			}
