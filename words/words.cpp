@@ -90,8 +90,8 @@ int main (void)
 			tmpBucket = generateBucket(cmdIn);
 			if (testBucket(mainBucket, tmpBucket))
 			{
-				std::cout << "added!";
 				wordList.push_back(cmdIn);
+				std::cout << "added!" << std::endl;
 			}
 			else
 			{
