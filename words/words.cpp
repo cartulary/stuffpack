@@ -17,15 +17,12 @@ int main (void)
  	cmdListMapType cmdIntMap;
 	std::vector<std::string> wordList;
 
-	int counter = 1;
-	cmdIntMap.insert(std::make_pair("list", counter));
-	counter++;
-	cmdIntMap.insert(std::make_pair("word", counter));
-	counter++;
-	cmdIntMap.insert(std::make_pair("help", counter));
-	counter++;
-	cmdIntMap.insert(std::make_pair("bucket", counter));
-	counter++;
+	cmdIntMap.insert(std::make_pair("list", 1));
+	cmdIntMap.insert(std::make_pair("word", 2));
+	cmdIntMap.insert(std::make_pair("help", 3));
+	cmdIntMap.insert(std::make_pair("bucket", 4));
+	cmdIntMap.insert(std::make_pair("sort", 5));
+	cmdIntMap.insert(std::make_pair("unq", 6));
 
 	std::cout << "Please enter the main word: ";
 	std::cin >> mainWord;
@@ -60,24 +57,30 @@ int main (void)
 
 				switch (val)
 				{
-					case 1:
+					case 1: // list
 						for (std::vector<std::string>::iterator it = wordList.begin(); it != wordList.end(); ++it)
 						{
 							std::cout << *it << std::endl;
 						}
 						break;
-					case 2:
+					case 2: //word
 						std::cout << mainWord << std::endl;
 						break;
-					case 3:
+					case 3: //help
 						std::cout << "help text here" << std::endl;
 						break;
-					case 4:
+					case 4: //bucket
 						for (int j = 0; j <26; ++j)
 						{
 							std::cout << mainBucket[j] << " ";
 						}
 						std::cout << std::endl;
+						break;
+					case 5: //sort
+						std::sort(wordList.begin(), wordList.end());
+						break;
+					case 6: //nodup
+						wordList.erase(std::unique(wordList.begin(), wordList.end()), wordList.end());
 						break;
 					default:
 						std::cout << "No such command" << std::endl;
