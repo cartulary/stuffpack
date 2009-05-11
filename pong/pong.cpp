@@ -15,14 +15,8 @@ int ball_tempY = 240;
 int p1_x = 20;
 int p1_y = 210;
 
-int p1_tempX = 20;
-int p1_tempY = 210;
-
 int p2_x = 620;
 int p2_y = 210;
-
-int p2_tempX = 620;
-int p2_tempY = 210;
 
 int dir;     //This will keep track of the circles direction
             //1= up and left, 2 = down and left, 3 = up and right, 4 = down and right
@@ -122,7 +116,8 @@ void move(int player)
 	}
 	else
 	{
-		p2_tempY = p2_y;
+		temp_y = p2_y;
+		temp_x = p2_x;
 		if( key[KEY_UP] && p2_y > 0)
 		{
 	        	--p2_y;
@@ -132,7 +127,7 @@ void move(int player)
      			 ++p2_y;
     		}
 		acquire_screen();
-		drawPaddle(p2_tempX, p2_tempY, 0);
+		drawPaddle(temp_x, temp_y, 0);
       	drawPaddle(p2_x, p2_y, 255);
     		release_screen();
 	}
