@@ -173,9 +173,9 @@ void checkWin(){
 void setupGame(){
  
     acquire_screen();
-    rectfill( buffer, p1_x, p1_y, p1_x + 10, p1_y + 60, makecol ( 0, 0, 255));
-    rectfill( buffer, p2_x, p2_y, p2_x + 10, p2_y + 60, makecol ( 0, 0, 255));  
-    circlefill ( buffer, ball_x, ball_y, 5, makecol( 128, 255, 0));
+	drawPaddle(p1_x, p1_y, 255);
+	drawPaddle(p2_x, p2_y, 255);
+	drawBall(ball_x, ball_y, true);
     draw_sprite( screen, buffer, 0, 0);
     release_screen();
     
