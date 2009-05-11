@@ -100,28 +100,18 @@ void move(int player, int old_x, int old_y)
 	int temp_x;
 	int playerDirUp = false;
 	int playerDirDown = false;
-	if (player == 1)
+	int keyUp = (player == 1) ? KEY_W : KEY_UP;
+	int keyDown = (player == 1) ? KEY_S : KEY_DOWN;
+
+	if (key[keyUp])
 	{
-		if (key[KEY_W])
-		{
-			playerDirUp = true; //up
-		}
-		else if (key[KEY_S]) //down
-		{
-			playerDirDown = true;
-		}
+		playerDirUp = true; //up
 	}
-	else
+	else if (key[keyDown]) //down
 	{
-		if (key[KEY_UP])
-		{
-			playerDirUp = true; //up
-		}
-		else if (key[KEY_DOWN]) //down
-		{
-			playerDirDown = true;
-		}
+		playerDirDown = true;
 	}
+
 	int new_x, new_y;
 	temp_y = old_y;
 	temp_x = old_x;
