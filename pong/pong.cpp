@@ -1,7 +1,9 @@
+/* This is NOT my code - it comes from a tutorial online and I'm trying to make the code somewhat sane */
 #include <allegro.h>
 #include <cstdlib>
 #include <time.h>
 
+void drawPaddle(int x, int y, int col);
 
 int ball_x = 320;
 int ball_y = 240;
@@ -99,10 +101,10 @@ void p1Move(){
     }     
     
     acquire_screen();
-    rectfill( buffer, p1_tempX, p1_tempY, p1_tempX + 10, p1_tempY + 60, makecol ( 0, 0, 0));
-    rectfill( buffer, p1_x, p1_y, p1_x + 10, p1_y + 60, makecol ( 0, 0, 255));
+    drawPaddle(p1_tempX, p1_tempY, 0);
+    drawPaddle(p1_x, p1_y, 255);
     release_screen();
-          
+ 
 }  
 
 void p2Move(){
@@ -120,8 +122,10 @@ void p2Move(){
     }     
     
     acquire_screen();
-    rectfill( buffer, p2_tempX, p2_tempY, p2_tempX + 10, p2_tempY + 60, makecol ( 0, 0, 0));
-    rectfill( buffer, p2_x, p2_y, p2_x + 10, p2_y + 60, makecol ( 0, 0, 255));
+
+	drawPaddle(p2_tempX, p2_tempY, 0);
+	drawPaddle(p2_x, p2_y, 255);
+
     release_screen();
           
 }    
@@ -191,3 +195,8 @@ int main(){
 
 }
 END_OF_MAIN();
+
+void drawPaddle(int x, int y, int col)
+{
+	rectfill( buffer, x, y, x + 10, y + 60, makecol ( 0, 0, col));
+}
