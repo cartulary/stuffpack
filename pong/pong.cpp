@@ -10,11 +10,9 @@ void move(int player, int old_x, int old_y);
 int ball_x = 320;
 int ball_y = 240;
 
-int p1_x = 20;
-int p1_y = 210;
+int player_x[3];
+int player_y[3];
 
-int p2_x = 620;
-int p2_y = 210;
 
 int dir;     //This will keep track of the circles direction
             //1= up and left, 2 = down and left, 3 = up and right, 4 = down and right
@@ -30,7 +28,7 @@ void moveBall()
 
 	if (dir == 1 && ball_x > 5 && ball_y > 5)
 	{
-		if( ball_x == p1_x + 15 && ball_y >= p1_y && ball_y <= p1_y + 60)
+		if( ball_x == player_x[1] + 15 && ball_y >= player_y[1] && ball_y <= player_y[1] + 60)
 		{
             	dir = arc4random()% 2 + 3;
          	}
@@ -42,7 +40,7 @@ void moveBall()
 	}
 	else if (dir == 2 && ball_x > 5 && ball_y < 475)
 	{
-		if( ball_x == p1_x + 15 && ball_y >= p1_y && ball_y <= p1_y + 60)
+		if( ball_x == player_x[1] + 15 && ball_y >= player_y[1] && ball_y <= player_y[1] + 60)
 		{
             	dir = arc4random()% 2 + 3;
          	}
@@ -54,7 +52,7 @@ void moveBall()
 	}
 	else if (dir == 3 && ball_x < 635 && ball_y > 5)
 	{
-		if( ball_x + 5 == p2_x && ball_y >= p2_y && ball_y <= p2_y + 60)
+		if( ball_x + 5 == player_x[2] && ball_y >= player_y[2] && ball_y <= player_y[2] + 60)
 		{
                   dir = arc4random()% 2 + 1;
          	}
@@ -66,7 +64,7 @@ void moveBall()
 	}
 	else if (dir == 4 && ball_x < 635 && ball_y < 475)
 	{
-      	if( ball_x + 5 == p2_x && ball_y >= p2_y && ball_y <= p2_y + 60)
+      	if( ball_x + 5 == player_x[2] && ball_y >= player_y[2] && ball_y <= player_y[2] + 60)
 		{
             	dir = arc4random()% 2 + 1;
 		}
@@ -124,26 +122,26 @@ void move(int player, int old_x, int old_y)
 	{
 		if ( playerDirUp && old_y > 0)
 		{
-			--p1_y;
+			--player_y[1];
 		}
 		else if( playerDirDown && old_y < 420)
 		{
-			++p1_y;
+			++player_y[1];
 		}
 	}
 	else
 	{
 		if( playerDirUp && old_y > 0)
 		{
-	        	--p2_y;
+	        	--player_y[2];
       	}
 		else if ( playerDirDown && old_y < 420)
 		{
-     			 ++p2_y;
+     			 ++player_y[2];
     		}
 	}
-	new_x = (player == 1) ? p1_x : p2_x;
-	new_y = (player == 1) ? p1_y : p2_y;
+	new_x = (player == 1) ? player_x[1] : player_x[2];
+	new_y = (player == 1) ? player_y[1] : player_y[2];
 
 	acquire_screen();
 	drawPaddle(temp_x, temp_y, 0);
@@ -160,21 +158,21 @@ void startNew()
 	ball_x = 320;
 	ball_y = 240;
 
-	p1_x = 20;
-	p1_y = 210;
+	player_x[1] = 20;
+	player_y[1] = 210;
 
-	p2_x = 620;
-	p2_y = 210;
+	player_x[2] = 620;
+	player_y[2] = 210;
 }
 
 void checkWin()
 {
-	if ( ball_x < p1_x)
+	if ( ball_x < player_x[1])
 	{
 		textout_ex( screen, font, "Player 2 Wins!", 320, 240, makecol( 255, 0, 0), makecol( 0, 0, 0));
 		startNew();
 	}
-	else if ( ball_x > p2_x)
+	else if ( ball_x > player_x[2])
 	{
 		textout_ex( screen, font, "Player 1 Wins!", 320, 240, makecol( 255, 0, 0), makecol( 0, 0, 0)); 
 		startNew();
@@ -185,8 +183,8 @@ void checkWin()
 void setupGame()
 {
 	acquire_screen();
-	drawPaddle(p1_x, p1_y, 255);
-	drawPaddle(p2_x, p2_y, 255);
+	drawPaddle(player_x[1], player_y[1], 255);
+	drawPaddle(player_x[2], player_y[2], 255);
 	drawBall(ball_x, ball_y, true);
 	draw_sprite( screen, buffer, 0, 0);
 	release_screen();
@@ -196,24 +194,25 @@ void setupGame()
 
 int main()
 {
+	player_x[1] = 20;
+	player_x[2] = 620;
+	player_y[1] = 210;
+	player_y[2] = 210;
+	allegro_init();
+	install_keyboard();
+	set_color_depth(16);
+	set_gfx_mode( GFX_AUTODETECT, 640, 480, 0, 0);
+	buffer = create_bitmap( 640, 480);
 
-    allegro_init();
-    install_keyboard();
-    set_color_depth(16);
-    set_gfx_mode( GFX_AUTODETECT, 640, 480, 0, 0);
-    buffer = create_bitmap( 640, 480); 
-
-    setupGame();
+	setupGame();
 
 	while( !key[KEY_ESC])
 	{
-
-        move(1, p1_x, p1_y);
-        move(2, p2_x, p2_y);
-        moveBall();
-        checkWin();
+		move(1, player_x[1], player_y[1]);
+		move(2, player_x[2], player_y[2]);
+		moveBall();
+		checkWin();
 	}
-
 	return 0;
 }
 END_OF_MAIN();
