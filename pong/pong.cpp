@@ -10,9 +10,6 @@ void move(int player, int old_x, int old_y);
 int ball_x = 320;
 int ball_y = 240;
 
-int ball_tempX = 320;
-int ball_tempY = 240;
-
 int p1_x = 20;
 int p1_y = 210;
 
@@ -26,9 +23,10 @@ BITMAP *buffer; //This will be our temporary bitmap for double buffering
 
 void moveBall()
 {
-
-    ball_tempX = ball_x;
-    ball_tempY = ball_y;
+	int ball_tempX;
+	int ball_tempY;
+	ball_tempX = ball_x;
+	ball_tempY = ball_y;
 
 	if (dir == 1 && ball_x > 5 && ball_y > 5)
 	{
@@ -151,23 +149,21 @@ void move(int player, int old_x, int old_y)
 
 void startNew()
 {
+	clear_keybuf();
+	readkey();
+	clear_to_color( buffer, makecol( 0, 0, 0));
+	ball_x = 320;
+	ball_y = 240;
 
-    clear_keybuf();
-    readkey();
-    clear_to_color( buffer, makecol( 0, 0, 0));
-    ball_x = 320;
-    ball_y = 240;
+	p1_x = 20;
+	p1_y = 210;
 
-    p1_x = 20;
-    p1_y = 210;
+	p2_x = 620;
+	p2_y = 210;
+}
 
-    p2_x = 620;
-    p2_y = 210;
-
-}    
-
-void checkWin(){
-
+void checkWin()
+{
 	if ( ball_x < p1_x)
 	{
 		textout_ex( screen, font, "Player 2 Wins!", 320, 240, makecol( 255, 0, 0), makecol( 0, 0, 0));
@@ -177,7 +173,8 @@ void checkWin(){
 	{
 		textout_ex( screen, font, "Player 1 Wins!", 320, 240, makecol( 255, 0, 0), makecol( 0, 0, 0)); 
 		startNew();
-    }
+	}
+
 }
 
 void setupGame()
