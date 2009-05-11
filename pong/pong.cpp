@@ -4,6 +4,7 @@
 #include <time.h>
 
 void drawPaddle(int x, int y, int col);
+void drawBall(int x, int y, bool visible);
 
 int ball_x = 320;
 int ball_y = 240;
@@ -28,21 +29,26 @@ int dir;     //This will keep track of the circles direction
 
 BITMAP *buffer; //This will be our temporary bitmap for double buffering
 
-void moveBall(){
+void moveBall()
+{
 
     ball_tempX = ball_x;
     ball_tempY = ball_y;
 
-    if (dir == 1 && ball_x > 5 && ball_y > 5){
-     
-         if( ball_x == p1_x + 15 && ball_y >= p1_y && ball_y <= p1_y + 60){
-                  dir = arc4random()% 2 + 3;
-         }else{    
-                 --ball_x;
-                 --ball_y;
-         }    
-              
-    } else if (dir == 2 && ball_x > 5 && ball_y < 475){
+	if (dir == 1 && ball_x > 5 && ball_y > 5)
+	{
+		if( ball_x == p1_x + 15 && ball_y >= p1_y && ball_y <= p1_y + 60)
+		{
+            	dir = arc4random()% 2 + 3;
+         	}
+		else
+		{
+			--ball_x;
+			--ball_y;
+         }
+	}
+	else if (dir == 2 && ball_x > 5 && ball_y < 475)
+	{
 
          if( ball_x == p1_x + 15 && ball_y >= p1_y && ball_y <= p1_y + 60){
                   dir = arc4random()% 2 + 3;
@@ -71,14 +77,20 @@ void moveBall(){
 
     } else { 
 
-        if (dir == 1 || dir == 3)    ++dir;
-        else if (dir == 2 || dir == 4)    --dir;
+	if (dir == 1 || dir == 3)
+	{
+		++dir;
+	}
+	else
+	{
+		--dir;
+	}
 
-    }    
+    }
     
     acquire_screen();
-    circlefill ( buffer, ball_tempX, ball_tempY, 5, makecol( 0, 0, 0));
-    circlefill ( buffer, ball_x, ball_y, 5, makecol( 128, 255, 0));
+	drawBall(ball_tempX,ball_tempY, false);
+	drawBall(ball_x,ball_y, true);
     draw_sprite( screen, buffer, 0, 0);
     release_screen();
     
@@ -199,4 +211,16 @@ END_OF_MAIN();
 void drawPaddle(int x, int y, int col)
 {
 	rectfill( buffer, x, y, x + 10, y + 60, makecol ( 0, 0, col));
+}
+
+void drawBall(int x, int y, bool visible)
+{
+	if (visible)
+	{
+		circlefill ( buffer, x, y, 5, makecol( 128, 255, 0));
+	}
+	else
+	{
+		circlefill ( buffer, x, y, 5, makecol( 0, 0, 0));
+	}
 }
