@@ -124,8 +124,6 @@ void move(int player, int old_x, int old_y)
 		{
 			++p1_y;
 		}
-		new_x = p1_x;
-		new_y = p1_y;
 	}
 	else
 	{
@@ -137,9 +135,10 @@ void move(int player, int old_x, int old_y)
 		{
      			 ++p2_y;
     		}
-		new_x = p2_x;
-		new_y = p2_y;
 	}
+	new_x = (player == 1) ? p1_x : p2_x;
+	new_y = (player == 1) ? p1_y : p2_y;
+
 	acquire_screen();
 	drawPaddle(temp_x, temp_y, 0);
       drawPaddle(new_x, new_y, 255);
