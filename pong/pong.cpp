@@ -178,9 +178,30 @@ void setupGame()
 
 }
 
+void drawPaddle(int x, int y, int col)
+{
+	rectfill( buffer, x, y, x + 10, y + 60, makecol ( 0, 0, col));
+}
+
+void drawBall(int x, int y, bool visible)
+{
+	if (visible)
+	{
+		circlefill ( buffer, x, y, 5, makecol( 128, 255, 0));
+	}
+	else
+	{
+		circlefill ( buffer, x, y, 5, makecol( 0, 0, 0));
+	}
+}
+
 int main()
 {
-	allegro_init();
+	if (allegro_init() != 0)
+	{
+		return 1;
+	}
+
 	install_keyboard();
 	set_color_depth(16);
 	set_gfx_mode( GFX_AUTODETECT, 640, 480, 0, 0);
@@ -199,20 +220,3 @@ int main()
 	return 0;
 }
 END_OF_MAIN();
-
-void drawPaddle(int x, int y, int col)
-{
-	rectfill( buffer, x, y, x + 10, y + 60, makecol ( 0, 0, col));
-}
-
-void drawBall(int x, int y, bool visible)
-{
-	if (visible)
-	{
-		circlefill ( buffer, x, y, 5, makecol( 128, 255, 0));
-	}
-	else
-	{
-		circlefill ( buffer, x, y, 5, makecol( 0, 0, 0));
-	}
-}
