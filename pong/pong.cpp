@@ -68,81 +68,79 @@ void moveBall()
 
     } else if (dir == 4 && ball_x < 635 && ball_y < 475){
 
-         if( ball_x + 5 == p2_x && ball_y >= p2_y && ball_y <= p2_y + 60){
-                  dir = arc4random()% 2 + 1;
-         }else{    
-                 ++ball_x;
-                 ++ball_y;
-         }
-
-    } else { 
-
-	if (dir == 1 || dir == 3)
-	{
-		++dir;
+      	if( ball_x + 5 == p2_x && ball_y >= p2_y && ball_y <= p2_y + 60){
+            	dir = arc4random()% 2 + 1;
 	}
 	else
 	{
-		--dir;
+			++ball_x;
+			++ball_y;
 	}
-
+	}
+	else
+	{
+		if (dir == 1 || dir == 3)
+		{
+			++dir;
+		}
+		else
+		{
+			--dir;
+		}
     }
     
-    acquire_screen();
+	acquire_screen();
 	drawBall(ball_tempX,ball_tempY, false);
 	drawBall(ball_x,ball_y, true);
-    draw_sprite( screen, buffer, 0, 0);
-    release_screen();
+	draw_sprite( screen, buffer, 0, 0);
+	release_screen();
     
-    rest(5);
+    rest(15);
 
 }    
 
-void p1Move(){
- 
-    p1_tempY = p1_y;
- 
-    if( key[KEY_W] && p1_y > 0){
-     
-        --p1_y;
-              
-    } else if( key[KEY_S] && p1_y < 420){
-     
-        ++p1_y;
-              
-    }     
-    
-    acquire_screen();
-    drawPaddle(p1_tempX, p1_tempY, 0);
-    drawPaddle(p1_x, p1_y, 255);
-    release_screen();
- 
-}  
+void move(int player)
+{
+	int temp_y;
+	int temp_x;
+	if (player == 1)
+	{
+		temp_y = p1_y;
+		temp_x = p1_x;
+		if ( key[KEY_W] && p1_y > 0)
+		{
+			--p1_y;
+		}
+		else if( key[KEY_S] && p1_y < 420)
+		{
+			++p1_y;
+		}
+		acquire_screen();
+    		drawPaddle(temp_x, temp_y, 0);
+    		drawPaddle(p1_x, p1_y, 255);
+    		release_screen();
+	}
+	else
+	{
+		p2_tempY = p2_y;
+		if( key[KEY_UP] && p2_y > 0)
+		{
+	        	--p2_y;
+      	}
+		else if ( key[KEY_DOWN] && p2_y < 420)
+		{
+     			 ++p2_y;
+    		}
+		acquire_screen();
+		drawPaddle(p2_tempX, p2_tempY, 0);
+      	drawPaddle(p2_x, p2_y, 255);
+    		release_screen();
+	}
+}
 
-void p2Move(){
- 
-    p2_tempY = p2_y;
- 
-    if( key[KEY_UP] && p2_y > 0){
-     
-        --p2_y;
-              
-    } else if( key[KEY_DOWN] && p2_y < 420){
-     
-        ++p2_y;
-              
-    }     
-    
-    acquire_screen();
 
-	drawPaddle(p2_tempX, p2_tempY, 0);
-	drawPaddle(p2_x, p2_y, 255);
-
-    release_screen();
-          
-}    
-
-void startNew(){
+void startNew()
+{
 
     clear_keybuf();
     readkey();
@@ -160,51 +158,51 @@ void startNew(){
 
 void checkWin(){
 
-    if ( ball_x < p1_x){
-        textout_ex( screen, font, "Player 2 Wins!", 320, 240, makecol( 255, 0, 0), makecol( 0, 0, 0)); 
-        startNew();
-    } else if ( ball_x > p2_x){
-        textout_ex( screen, font, "Player 1 Wins!", 320, 240, makecol( 255, 0, 0), makecol( 0, 0, 0)); 
-        startNew();
-    }    
-   
-}    
+	if ( ball_x < p1_x)
+	{
+		textout_ex( screen, font, "Player 2 Wins!", 320, 240, makecol( 255, 0, 0), makecol( 0, 0, 0));
+		startNew();
+	}
+	else if ( ball_x > p2_x)
+	{
+		textout_ex( screen, font, "Player 1 Wins!", 320, 240, makecol( 255, 0, 0), makecol( 0, 0, 0)); 
+		startNew();
+    }
+}
 
-void setupGame(){
- 
-    acquire_screen();
+void setupGame()
+{
+	acquire_screen();
 	drawPaddle(p1_x, p1_y, 255);
 	drawPaddle(p2_x, p2_y, 255);
 	drawBall(ball_x, ball_y, true);
-    draw_sprite( screen, buffer, 0, 0);
-    release_screen();
-    
-    dir = arc4random() % 4 + 1;
-            
-}    
+	draw_sprite( screen, buffer, 0, 0);
+	release_screen();
+	dir = arc4random() % 4 + 1;
 
-int main(){
+}
+
+int main()
+{
 
     allegro_init();
     install_keyboard();
     set_color_depth(16);
     set_gfx_mode( GFX_AUTODETECT, 640, 480, 0, 0);
-    
     buffer = create_bitmap( 640, 480); 
-    
-    setupGame();
-    
-    while( !key[KEY_ESC]){
 
-        p1Move();
-        p2Move();
+    setupGame();
+
+	while( !key[KEY_ESC])
+	{
+
+        move(1);
+        move(2);
         moveBall();
         checkWin();
-   
-    }    
-    
-    return 0;
+	}
 
+	return 0;
 }
 END_OF_MAIN();
 
