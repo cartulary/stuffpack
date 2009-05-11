@@ -38,37 +38,43 @@ void moveBall()
 		{
 			--ball_x;
 			--ball_y;
-         }
+		}
 	}
 	else if (dir == 2 && ball_x > 5 && ball_y < 475)
 	{
-
-         if( ball_x == p1_x + 15 && ball_y >= p1_y && ball_y <= p1_y + 60){
-                  dir = arc4random()% 2 + 3;
-         }else{    
-                 --ball_x;
-                 ++ball_y;
-         }
-
-    } else if (dir == 3 && ball_x < 635 && ball_y > 5){
-
-         if( ball_x + 5 == p2_x && ball_y >= p2_y && ball_y <= p2_y + 60){
+		if( ball_x == p1_x + 15 && ball_y >= p1_y && ball_y <= p1_y + 60)
+		{
+            	dir = arc4random()% 2 + 3;
+         	}
+		else
+		{    
+            	--ball_x;
+			++ball_y;
+         	}
+	}
+	else if (dir == 3 && ball_x < 635 && ball_y > 5)
+	{
+		if( ball_x + 5 == p2_x && ball_y >= p2_y && ball_y <= p2_y + 60)
+		{
                   dir = arc4random()% 2 + 1;
-         }else{    
+         	}
+		else
+		{
                  ++ball_x;
                  --ball_y;
-         }
-
-    } else if (dir == 4 && ball_x < 635 && ball_y < 475){
-
-      	if( ball_x + 5 == p2_x && ball_y >= p2_y && ball_y <= p2_y + 60){
-            	dir = arc4random()% 2 + 1;
+         	}
 	}
-	else
+	else if (dir == 4 && ball_x < 635 && ball_y < 475)
 	{
+      	if( ball_x + 5 == p2_x && ball_y >= p2_y && ball_y <= p2_y + 60)
+		{
+            	dir = arc4random()% 2 + 1;
+		}
+		else
+		{
 			++ball_x;
 			++ball_y;
-	}
+		}
 	}
 	else
 	{
@@ -81,7 +87,7 @@ void moveBall()
 			--dir;
 		}
     }
-    
+
 	acquire_screen();
 	drawBall(ball_tempX,ball_tempY, false);
 	drawBall(ball_x,ball_y, true);
