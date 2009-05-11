@@ -1,7 +1,6 @@
 /* This is NOT my code - it comes from a tutorial online and I'm trying to make the code somewhat sane */
 #include <allegro.h>
 #include <cstdlib>
-#include <time.h>
 
 void drawPaddle(int x, int y, int col);
 void drawBall(int x, int y, bool visible);
@@ -12,6 +11,9 @@ int ball_y = 240;
 
 int player_x[3];
 int player_y[3];
+
+const int BALL_RADIUS = 5;
+const int BALL_Y_MIN = 25;
 
 
 int dir;     //This will keep track of the circles direction
@@ -26,7 +28,7 @@ void moveBall()
 	ball_tempX = ball_x;
 	ball_tempY = ball_y;
 
-	if (dir == 1 && ball_x > 5 && ball_y > 5)
+	if (dir == 1 && ball_x > BALL_RADIUS && ball_y > BALL_Y_MIN + BALL_RADIUS)
 	{
 		if( ball_x == player_x[1] + 15 && ball_y >= player_y[1] && ball_y <= player_y[1] + 60)
 		{
@@ -38,7 +40,7 @@ void moveBall()
 			--ball_y;
 		}
 	}
-	else if (dir == 2 && ball_x > 5 && ball_y < 475)
+	else if (dir == 2 && ball_x > BALL_RADIUS && ball_y < SCREEN_H - BALL_RADIUS)
 	{
 		if( ball_x == player_x[1] + 15 && ball_y >= player_y[1] && ball_y <= player_y[1] + 60)
 		{
@@ -50,9 +52,9 @@ void moveBall()
 			++ball_y;
          	}
 	}
-	else if (dir == 3 && ball_x < 635 && ball_y > 5)
+	else if (dir == 3 && ball_x < SCREEN_W - BALL_RADIUS && ball_y > BALL_Y_MIN + BALL_RADIUS)
 	{
-		if( ball_x + 5 == player_x[2] && ball_y >= player_y[2] && ball_y <= player_y[2] + 60)
+		if( ball_x + BALL_RADIUS == player_x[2] && ball_y >= player_y[2] && ball_y <= player_y[2] + 60)
 		{
                   dir = arc4random()% 2 + 1;
          	}
@@ -62,9 +64,9 @@ void moveBall()
                  --ball_y;
          	}
 	}
-	else if (dir == 4 && ball_x < 635 && ball_y < 475)
+	else if (dir == 4 && ball_x < SCREEN_W - BALL_RADIUS && ball_y < SCREEN_H - BALL_RADIUS)
 	{
-      	if( ball_x + 5 == player_x[2] && ball_y >= player_y[2] && ball_y <= player_y[2] + 60)
+      	if( ball_x + BALL_RADIUS == player_x[2] && ball_y >= player_y[2] && ball_y <= player_y[2] + 60)
 		{
             	dir = arc4random()% 2 + 1;
 		}
@@ -91,10 +93,9 @@ void moveBall()
 	drawBall(ball_x,ball_y, true);
 	draw_sprite( screen, buffer, 0, 0);
 	release_screen();
-    
-	rest(15);
 
-}    
+
+}
 
 void move(int player, int old_x, int old_y)
 {
@@ -118,7 +119,7 @@ void move(int player, int old_x, int old_y)
 	temp_y = old_y;
 	temp_x = old_x;
 
-	if ( playerDirUp && old_y > 0)
+	if ( playerDirUp && old_y > BALL_Y_MIN)
 	{
 		--player_y[player];
 	}
@@ -197,6 +198,9 @@ void drawBall(int x, int y, bool visible)
 
 int main()
 {
+	int rest_speed = 15;
+	int ball_effect = 0;
+
 	if (allegro_init() != 0)
 	{
 		return 1;
@@ -216,6 +220,21 @@ int main()
 		move(2, player_x[2], player_y[2]);
 		moveBall();
 		checkWin();
+		textprintf_centre_ex(buffer, font, SCREEN_W/2, 1,
+			makecol(0,0,255),makecol(255,0,0),
+			 "X=%d, Y=%d, rest speed = %d, ball effect = %d",
+			ball_x, ball_y, rest_speed, ball_effect
+			);
+		fastline(buffer, 0, BALL_Y_MIN, SCREEN_W, BALL_Y_MIN, makecol(0,255,0));
+		if (key[KEY_PGUP])
+		{
+			++rest_speed;
+		}
+		if (key[KEY_PGDN])
+		{
+			--rest_speed;
+		}
+		rest(rest_speed);
 	}
 	return 0;
 }
