@@ -45,7 +45,7 @@ void moveBall()
             	dir = arc4random()% 2 + 3;
          	}
 		else
-		{    
+		{
             	--ball_x;
 			++ball_y;
          	}
@@ -92,7 +92,7 @@ void moveBall()
 	draw_sprite( screen, buffer, 0, 0);
 	release_screen();
     
-    rest(15);
+	rest(15);
 
 }    
 
@@ -180,15 +180,12 @@ void setupGame()
 
 int main()
 {
-	player_x[1] = 20;
-	player_x[2] = 620;
-	player_y[1] = 210;
-	player_y[2] = 210;
 	allegro_init();
 	install_keyboard();
 	set_color_depth(16);
 	set_gfx_mode( GFX_AUTODETECT, 640, 480, 0, 0);
 	buffer = create_bitmap( 640, 480);
+	startNew();
 
 	setupGame();
 
