@@ -5,6 +5,7 @@
 
 void drawPaddle(int x, int y, int col);
 void drawBall(int x, int y, bool visible);
+void move(int player, int old_x, int old_y);
 
 int ball_x = 320;
 int ball_y = 240;
@@ -93,44 +94,68 @@ void moveBall()
 
 }    
 
-void move(int player)
+void move(int player, int old_x, int old_y)
 {
 	int temp_y;
 	int temp_x;
+	int playerDirUp = false;
+	int playerDirDown = false;
 	if (player == 1)
 	{
-		temp_y = p1_y;
-		temp_x = p1_x;
-		if ( key[KEY_W] && p1_y > 0)
+		if (key[KEY_W])
 		{
-			--p1_y;
+			playerDirUp = true; //up
 		}
-		else if( key[KEY_S] && p1_y < 420)
+		else if (key[KEY_S]) //down
 		{
-			++p1_y;
+			playerDirDown = true;
 		}
-		acquire_screen();
-    		drawPaddle(temp_x, temp_y, 0);
-    		drawPaddle(p1_x, p1_y, 255);
-    		release_screen();
 	}
 	else
 	{
-		temp_y = p2_y;
-		temp_x = p2_x;
-		if( key[KEY_UP] && p2_y > 0)
+		if (key[KEY_UP])
+		{
+			playerDirUp = true; //up
+		}
+		else if (key[KEY_DOWN]) //down
+		{
+			playerDirDown = true;
+		}
+	}
+	int new_x, new_y;
+	temp_y = old_y;
+	temp_x = old_x;
+
+	if (player == 1)
+	{
+		if ( playerDirUp && old_y > 0)
+		{
+			--p1_y;
+		}
+		else if( playerDirDown && old_y < 420)
+		{
+			++p1_y;
+		}
+		new_x = p1_x;
+		new_y = p1_y;
+	}
+	else
+	{
+		if( playerDirUp && old_y > 0)
 		{
 	        	--p2_y;
       	}
-		else if ( key[KEY_DOWN] && p2_y < 420)
+		else if ( playerDirDown && old_y < 420)
 		{
      			 ++p2_y;
     		}
-		acquire_screen();
-		drawPaddle(temp_x, temp_y, 0);
-      	drawPaddle(p2_x, p2_y, 255);
-    		release_screen();
+		new_x = p2_x;
+		new_y = p2_y;
 	}
+	acquire_screen();
+	drawPaddle(temp_x, temp_y, 0);
+      drawPaddle(new_x, new_y, 255);
+    	release_screen();
 }
 
 
@@ -191,8 +216,8 @@ int main()
 	while( !key[KEY_ESC])
 	{
 
-        move(1);
-        move(2);
+        move(1, p1_x, p1_y);
+        move(2, p2_x, p2_y);
         moveBall();
         checkWin();
 	}
