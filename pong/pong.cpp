@@ -118,30 +118,16 @@ void move(int player, int old_x, int old_y)
 	temp_y = old_y;
 	temp_x = old_x;
 
-	if (player == 1)
+	if ( playerDirUp && old_y > 0)
 	{
-		if ( playerDirUp && old_y > 0)
-		{
-			--player_y[1];
-		}
-		else if( playerDirDown && old_y < 420)
-		{
-			++player_y[1];
-		}
+		--player_y[player];
 	}
-	else
+	else if( playerDirDown && old_y < 420)
 	{
-		if( playerDirUp && old_y > 0)
-		{
-	        	--player_y[2];
-      	}
-		else if ( playerDirDown && old_y < 420)
-		{
-     			 ++player_y[2];
-    		}
+		++player_y[player];
 	}
-	new_x = (player == 1) ? player_x[1] : player_x[2];
-	new_y = (player == 1) ? player_y[1] : player_y[2];
+	new_x = player_x[player];
+	new_y = player_y[player];
 
 	acquire_screen();
 	drawPaddle(temp_x, temp_y, 0);
