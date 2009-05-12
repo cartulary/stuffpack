@@ -16,9 +16,9 @@ int player_y[3];
 const int BALL_RADIUS = 5;
 const int BALL_Y_MIN = 25;
 
-int paddle_size_h = 60;
+int paddle_size_h;
 
-bool invert_keys = false;
+bool invert_keys;
 
 int dir;     //This will keep track of the circles direction
             //1= up and left, 2 = down and left, 3 = up and right, 4 = down and right
@@ -158,6 +158,9 @@ void startNew()
 
 	player_x[2] = 620;
 	player_y[2] = 210;
+
+	paddle_size_h = 60;
+	invert_keys = false;
 }
 
 void checkWin()
@@ -273,7 +276,7 @@ int main()
 			ball_y = (arc4random() % (SCREEN_H - 40)) + 20;
 			drawBall(ball_x, ball_y, true, ball_effect);
 		}
-		if (arc4random() % 200 == 1)
+		if (arc4random() % 500 == 1)
 		{
 			ball_effect = arc4random() % 10;
 		}
@@ -318,6 +321,7 @@ int main()
 				ball_effect = 1;
 				break;
 			default:
+				ball_effect = 1;
 				break;
 		}
 		rest(rest_speed);
