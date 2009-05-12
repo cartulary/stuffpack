@@ -6,6 +6,7 @@
 void drawPaddle(int x, int y, int col);
 void drawBall(int x, int y, bool visible, int ball_effect);
 void move(int player, int old_x, int old_y);
+int checkWin();
 
 int ball_x = 320;
 int ball_y = 240;
@@ -163,19 +164,20 @@ void startNew()
 	invert_keys = false;
 }
 
-void checkWin()
+int checkWin()
 {
 	if ( ball_x < player_x[1])
 	{
 		textout_ex( screen, font, "Player 2 Wins!", 320, 240, makecol( 255, 0, 0), makecol( 0, 0, 0));
-		startNew();
+		return 2;
 	}
 	else if ( ball_x > player_x[2])
 	{
 		textout_ex( screen, font, "Player 1 Wins!", 320, 240, makecol( 255, 0, 0), makecol( 0, 0, 0)); 
-		startNew();
+		return 1;
 	}
-
+	// no one wins
+	return 0;
 }
 
 void setupGame()
@@ -209,6 +211,7 @@ void drawBall(int x, int y, bool visible, int ball_effect)
 
 int main()
 {
+	int score[2] = {0,0};
 	int rest_speed = 15;
 	int ball_effect = 1;
 
@@ -233,7 +236,12 @@ int main()
 		moveBall(ball_effect);
 		if (no_win_counter == 0)
 		{
-			checkWin();
+			int whowon = checkWin();
+			if (whowon != 0)
+			{
+				score[whowon - 1]++;
+				startNew();
+			}
 		}
 		else
 		{
@@ -241,8 +249,8 @@ int main()
 		}
 		textprintf_centre_ex(buffer, font, SCREEN_W/2, 1,
 			makecol(0,0,255),makecol(255,0,0),
-			 "X=%d, Y=%d, rest speed = %d, ball effect = %d, no_win_counter = %d",
-			ball_x, ball_y, rest_speed, ball_effect, no_win_counter
+			 "X=%d, Y=%d, speed = %d, ball effect = %d, no_win_counter = %d, s1/s2= %d/%d",
+			ball_x, ball_y, rest_speed, ball_effect, no_win_counter, score[0], score[1]
 			);
 		if (invert_keys)
 		{
