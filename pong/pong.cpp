@@ -212,7 +212,7 @@ void drawBall(int x, int y, bool visible, int ball_effect)
 int main()
 {
 	int score[2] = {0,0};
-	int rest_speed = 15;
+	int rest_speed = 30;
 	int ball_effect = 1;
 
 	if (allegro_init() != 0)
