@@ -277,6 +277,11 @@ int main()
 		{
 			--rest_speed;
 		}
+		if (key[KEY_P])
+		{
+			textout_ex( screen, font, "paused", 320, 240, makecol( 255, 0, 0), makecol( 0, 0, 0)); 
+			readkey();
+		}
 		if (key[KEY_SPACE])
 		{
 			drawBall(ball_x, ball_y, false, ball_effect);
