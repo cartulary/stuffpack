@@ -18,11 +18,20 @@ const int BALL_RADIUS = 5;
 const int BALL_Y_MIN = 25;
 
 int paddle_size_h;
+int paddle_size_w = 2;
 
 bool invert_keys;
 
 int dir;     //This will keep track of the circles direction
             //1= up and left, 2 = down and left, 3 = up and right, 4 = down and right
+
+enum direction
+{
+	UP_L = 1,
+	DN_L = 2,
+	UP_R = 3,
+	DN_R = 4
+};
 
 BITMAP *buffer; //This will be our temporary bitmap for double buffering
 
@@ -194,7 +203,7 @@ void setupGame()
 
 void drawPaddle(int x, int y, int col)
 {
-	rectfill( buffer, x, y, x + 10, y + paddle_size_h, makecol ( 0, 0, col));
+	rectfill( buffer, x, y, x + paddle_size_w, y + paddle_size_h, makecol ( 0, 0, col));
 }
 
 void drawBall(int x, int y, bool visible, int ball_effect)
