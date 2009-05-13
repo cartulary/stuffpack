@@ -1,7 +1,7 @@
 /* This is NOT my code - it comes from a tutorial online and I'm trying to make the code somewhat sane */
 #include <allegro.h>
 #include <algorithm>
-#include "contrib/ConfigFile.cpp";
+#include "contrib/ConfigFile.cpp"
 //#include <cstdlib>
 
 void drawPaddle(int x, int y, int col);
