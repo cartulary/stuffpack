@@ -8,7 +8,7 @@ ConfigFile::ConfigFile( string filename, string delimiter,
                         string comment, string sentry )
 	: myDelimiter(delimiter), myComment(comment), mySentry(sentry)
 {
-	// Construct a ConfigFile, getting keys and values from given file
+	// Construct a ConfigFile, getting config_keys and values from given file
 	
 	std::ifstream in( filename.c_str() );
 	
@@ -25,18 +25,18 @@ ConfigFile::ConfigFile()
 }
 
 
-void ConfigFile::remove( const string& key )
+void ConfigFile::remove( const string& config_key )
 {
-	// Remove key and its value
-	myContents.erase( myContents.find( key ) );
+	// Remove config_key and its value
+	myContents.erase( myContents.find( config_key ) );
 	return;
 }
 
 
-bool ConfigFile::keyExists( const string& key ) const
+bool ConfigFile::config_keyExists( const string& config_key ) const
 {
-	// Indicate whether key is found
-	mapci p = myContents.find( key );
+	// Indicate whether config_key is found
+	mapci p = myContents.find( config_key );
 	return ( p != myContents.end() );
 }
 
@@ -68,7 +68,7 @@ std::ostream& operator<<( std::ostream& os, const ConfigFile& cf )
 std::istream& operator>>( std::istream& is, ConfigFile& cf )
 {
 	// Load a ConfigFile from is
-	// Read in keys and values, keeping internal whitespace
+	// Read in config_keys and values, keeping internal whitespace
 	typedef string::size_type pos;
 	const string& delim  = cf.myDelimiter;  // separator
 	const string& comm   = cf.myComment;    // comment
@@ -101,12 +101,12 @@ std::istream& operator>>( std::istream& is, ConfigFile& cf )
 		pos delimPos = line.find( delim );
 		if( delimPos < string::npos )
 		{
-			// Extract the key
-			string key = line.substr( 0, delimPos );
+			// Extract the config_key
+			string config_key = line.substr( 0, delimPos );
 			line.replace( 0, delimPos+skip, "" );
 			
 			// See if value continues on the next line
-			// Stop at blank line, next line with a key, end of stream,
+			// Stop at blank line, next line with a config_key, end of stream,
 			// or end of file sentry
 			bool terminate = false;
 			while( !terminate && is )
@@ -131,10 +131,10 @@ std::istream& operator>>( std::istream& is, ConfigFile& cf )
 				terminate = false;
 			}
 			
-			// Store key and value
-			ConfigFile::trim(key);
+			// Store config_key and value
+			ConfigFile::trim(config_key);
 			ConfigFile::trim(line);
-			cf.myContents[key] = line;  // overwrites if key is repeated
+			cf.myContents[config_key] = line;  // overwrites if config_key is repeated
 		}
 	}
 	
