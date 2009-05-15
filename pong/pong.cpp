@@ -1,8 +1,10 @@
 /* This is NOT my code - it comes from a tutorial online and I'm trying to make the code somewhat sane */
 #include <allegro.h>
 #include <algorithm>
-#include "contrib/ConfigFile.cpp"
+//#include "contribConfigFile.cpp"
 //#include <cstdlib>
+#include <iostream>
+#include <SDL/SDL_mixer.h>
 
 void drawPaddle(int x, int y, int col);
 void drawBall(int x, int y, bool visible, int ball_effect);
@@ -231,9 +233,19 @@ int main()
 	}
 
 	install_keyboard();
+
+      MIDI *music;
+      music = load_midi("./beethoven_six-variations-turkish-march_76_(c)tadokoro.mid");
+      if (!music)
+	{
+		std::cerr << "no music!" << std::endl;
+	}
+
+	play_midi(music, true);
 	set_color_depth(16);
 	set_gfx_mode( GFX_AUTODETECT, 640, 480, 0, 0);
 	buffer = create_bitmap( 640, 480);
+
 	startNew();
 
 	setupGame();

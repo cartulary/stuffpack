@@ -7,7 +7,11 @@ CFLAGS += -Wformat=2 -Wformat-y2k -Wformat-nonliteral -Wformat-security
 CFLAGS += -Wunused -Wunused-parameter -Winit-self -Wmissing-include-dirs -Wfloat-equal
 CFLAGS += -Wfloat-equal -Wundef -Wshadow -Wcast-qual -Wcast-align -fabi-version=0 -funroll-loops
 CFLAGS += -Wunreachable-code -Winline
-CFLAGS += -I/usr/local/include -L/usr/local/lib -L/usr/local/lib -Wl,--export-dynamic -pthread -lalleg -lalleg_unsharable
+#CFLAGS += -pthread -isystem /usr/local/include/boost/ -isystem /usr/local/include
+#LDFLAGS += -L/usr/local/lib -lboost_filesystem
+SDL_FLAGS != sdl-config --cflags
+ALLEGRO_FLAGS != allegro-config --cppflags --libs
+CFLAGS += $(ALLEGRO_FLAGS) $(SDL_FLAGS)
 
 
 
