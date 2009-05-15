@@ -9,7 +9,8 @@ CFLAGS += -Wfloat-equal -Wundef -Wshadow -Wcast-qual -Wcast-align -fabi-version=
 CFLAGS += -Wunreachable-code -Winline
 #CFLAGS += -pthread -isystem /usr/local/include/boost/ -isystem /usr/local/include
 #LDFLAGS += -L/usr/local/lib -lboost_filesystem
-SDL_FLAGS != sdl-config --cflags
+SDL_FLAGS != sdl-config --cflags --libs
+SDL_FLAGS +=  -lSDL_mixer
 ALLEGRO_FLAGS != allegro-config --cppflags --libs
 CFLAGS += $(ALLEGRO_FLAGS) $(SDL_FLAGS)
 
