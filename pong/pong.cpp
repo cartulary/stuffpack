@@ -1,9 +1,9 @@
-/* This is NOT my code - it comes from a tutorial online and I'm trying to make the code somewhat sane */
 #include <allegro.h>
 #include <algorithm>
 //#include "contribConfigFile.cpp"
 //#include <cstdlib>
 #include <iostream>
+#include <SDL/SDL.h>
 #include <SDL/SDL_mixer.h>
 
 void drawPaddle(int x, int y, int col);
@@ -226,7 +226,33 @@ int main()
 	int score[2] = {0,0};
 	int rest_speed = 30;
 	int ball_effect = 1;
+	// start SDL with audio support
+	if(SDL_Init(SDL_INIT_AUDIO)==-1)
+	{
+    		printf("SDL_Init: %s\n", SDL_GetError());
+		exit(1);
+	}
+	// open 44.1KHz, signed 16bit, system byte order,
+	//      stereo audio, using 1024 byte chunks
+	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024)==-1)
+	{
+		printf("Mix_OpenAudio: %s\n", Mix_GetError());
+		exit(2);
+	}
+	Mix_Music *music;
+	music = Mix_LoadMUS("happy_bd.wav");
+	if(!music)
+	{
+		printf("Mix_LoadMUS(\"\"): %s\n", Mix_GetError());
+		exit(1);
+	}
+	if(Mix_PlayMusic(music, -1)==-1)
+	{
+		printf("Mix_PlayMusic: %s\n", Mix_GetError());
+		// well, there's no music, but most games don't break without music...
+	}
 
+    // this might be a critical error...
 	if (allegro_init() != 0)
 	{
 		return 1;
@@ -234,6 +260,7 @@ int main()
 
 	install_keyboard();
 
+	/*
       MIDI *music;
       music = load_midi("./beethoven_six-variations-turkish-march_76_(c)tadokoro.mid");
       if (!music)
@@ -242,6 +269,7 @@ int main()
 	}
 
 	play_midi(music, true);
+	*/
 	set_color_depth(16);
 	set_gfx_mode( GFX_AUTODETECT, 640, 480, 0, 0);
 	buffer = create_bitmap( 640, 480);
