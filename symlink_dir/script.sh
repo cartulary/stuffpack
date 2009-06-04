@@ -16,9 +16,9 @@ do
 				fi;
 				if [ ! -e $item_cat/$port ];
 				then
-					ln -s $portdir/$port  $item_cat/$port
-				else
-					echo "symlink already exists - working on this failure case";
+					#this won't create the main ports because we check to see if the main port one exits BUT
+					#we add the main cat to the filename in case of name conflicts
+					ln -s $portdir/$main_cat/$port  $item_cat/$port-$main_cat
 				fi;
 			done;
 			echo
