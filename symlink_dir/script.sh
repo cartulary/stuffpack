@@ -14,6 +14,12 @@ do
 				then
 					mkdir $item_cat;
 				fi;
+				if [ ! -e $item_cat/$port ];
+				then
+					ln -s $portdir/$port  $item_cat/$port
+				else
+					echo "symlink already exists - working on this failure case";
+				fi;
 			done;
 			echo
 		done;
