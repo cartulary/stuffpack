@@ -2,10 +2,12 @@
 portdir="/usr/ports"
 whereto="."
 dryrun=""
-while getopts dnp:w: option
+index=""
+while getopts di:np:w: option
 do    case "$option" in
       'd')  set -x;;
 	'n')	dryrun="yes";;
+	'i')	index=$OPTARG;;
       'p')  portdir=$OPTARG;;
 	'w')	whereto=$OPTARG;;
       '?')  echo "Usage: $0 [-d] [-pPortdir] -wWhereTo" >&2;
@@ -24,6 +26,9 @@ else
 		exit 1;
 	fi;
 fi;
+
+if [ -z "$index" ];
+then
 
 for main_cat in $(make -V SUBDIR -C $portdir);
 do
@@ -59,6 +64,36 @@ do
 		echo $main_cat
 	fi;
 done;
+
+else
+	cat $portdir/$index | while read LINE;
+	do
+		portpath=$(echo "$LINE" | awk -F\| '{print $2}')
+		portcats=$(echo "$LINE" | awk -F\| '{print $7}')
+		portname=$(basename $portpath)
+		portcat=$(basename $(dirname $portpath))
+		echo "$portname: $portcats"
+		for cat in $portcats;
+		do
+			item_cat=$cat
+			if [ ! -d $whereto/$item_cat ];
+			then
+				[ -n "$verbose" ] && echo "  " mkdir $whereto/$cat;
+				[ -z "$dryrun" ] && mkdir $whereto/$cat;
+   			fi;
+			if [ ! -e $whereto/$cat/$portname ];
+ 			then
+				[ -n "$verbose" ] && echo "  " ln -s \
+					"$portpath" "$whereto/$cat/$portname-$portcat";
+				[ -z "$dryrun" ] && ln -s \
+					"$portpath" "$whereto/$cat/$portname-$portcat";
+			fi;
+		done
+	done
+fi;
+
+
+
 return 0;
 
 #Copyright 2009  Eitan Adler <EitanAdlerList@gmail.com>
