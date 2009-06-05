@@ -35,18 +35,20 @@ do_make_cat_dir()
 
 transverse_sub_tree()
 {
-	for port in $(make -V SUBDIR -C $1/$2);
+	portcat=$2;
+	for portname in $(make -V SUBDIR -C $1/$2);
 	do
-		if [ -d $1/$2/$port ];
+		portpath="$1/$2/$portname";
+		if [ -d $1/$2/$portname ];
 		then
-			echo -n "$2/$port:";
-			for item_cat in $(make -V CATEGORIES -C $1/$2/$port);
+			echo -n "$2/$portname:";
+			for item_cat in $(make -V CATEGORIES -C $1/$2/$portname);
 			do
 				echo "$item_cat "
 				do_make_cat_dir $item_cat;
-				if [ ! -e $whereto/$item_cat/$port -a ! -e $whereto/$item_cat/$port-$2 ];
+				if [ ! -e $whereto/$item_cat/$portname -a ! -e $whereto/$item_cat/$portname-$2 ];
 				then
-					do_link_port "$1/$2/$port" "$whereto/$item_cat/$port-$2";
+					do_link_port "$portpath" "$whereto/$item_cat/$portname-$portcat";
 				fi;
 			done;
 			echo
