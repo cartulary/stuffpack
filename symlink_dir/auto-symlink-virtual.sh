@@ -4,16 +4,37 @@ whereto="."
 dryrun=""
 index=""
 verbose=""
-while getopts di:np:vw: option
+
+usage()
+{
+	base= basename $0;
+	echo "$base: create symlinks for virtual ports"
+	echo ""
+	echo "Usage: $base [-hnv] [-i indexfile] [-p portsdir] [-w destdir]"
+	echo ""
+	echo " -h                show this usage"
+	echo " -i indexfile      use this index file instead of traversing"
+	echo "                   the ports tree"
+	echo " -n                run through ports, but do not modify anything"
+	echo " -p portsdir       use portsdir as the root of the ports tree"
+	echo "                   the default is /usr/ports/"
+	echo " -v                be verbose and list all actions"
+	echo " -w destdir        use destdir as the base for resulting"
+	echo "                   symlinks (default is current dir)"
+}
+
+while getopts dhi:np:vw: option
 do    case "$option" in
-      'd')  set -x;;
+	'd')  set -x;;
+	'h')	usage;
+		exit 0;;
 	'n')	dryrun="yes";;
 	'i')	index=$OPTARG;;
-      'p')  portdir=$OPTARG;;
+	'p')  portdir=$OPTARG;;
 	'v')	verbose="yes";;
 	'w')	whereto=$OPTARG;;
-      '?')  echo "Usage: $0 [-d] [-pPortdir] -wWhereTo" >&2;
-            exit 1;;
+	'?')  echo "Usage: $0 [-d] [-pPortdir] -wWhereTo" >&2;
+		exit 1;;
       esac
 done
 
@@ -150,5 +171,4 @@ return 0;
 
 
 #TODO
-# try and merge index and non-index functionality.
 # add failure and sanity testing
