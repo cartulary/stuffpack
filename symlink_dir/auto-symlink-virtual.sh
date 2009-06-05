@@ -3,17 +3,26 @@ portdir="/usr/ports"
 whereto="."
 dryrun=""
 index=""
-while getopts di:np:w: option
+verbose=""
+while getopts di:np:vw: option
 do    case "$option" in
       'd')  set -x;;
 	'n')	dryrun="yes";;
 	'i')	index=$OPTARG;;
       'p')  portdir=$OPTARG;;
+	'v')	verbose="yes";;
 	'w')	whereto=$OPTARG;;
-      '?')  echo "Usage: $0 [-d] [ -iindexFile ] [-n] [-pPortdir] -wWhereTo" >&2;
+      '?')  echo "Usage: $0 [-d] [-pPortdir] -wWhereTo" >&2;
             exit 1;;
       esac
 done
+
+do_link_port()
+{
+	[ -n "$verbose" ] && echo "  " ln -s "$1" "$2";
+	[ -z "$dryrun" ] && ln -s $1 $2;
+
+}
 
 if [ ! -d $portdir ];
 then
@@ -48,14 +57,7 @@ do
 					fi;
 					if [ -z "$dryrun" -o ! -e $whereto/$item_cat/$port ];
 					then
-						if [ -z "$dryrun" ];
-						then
-							echo "ln -s $portdir/$main_cat/$port  $whereto/$item_cat/$port-$main_cat"
-						else
-							#this won't create the main ports because we check to see if the main port one exits BUT
-							#we add the main cat to the filename in case of name conflicts
-							ln -s $portdir/$main_cat/$port  $whereto/$item_cat/$port-$main_cat
-						fi;
+						do_link_port "$portdir/$main_cat/$port" "$whereto/$item_cat/$port-$main_cat";
 					fi;
 				done;
 				echo
@@ -73,26 +75,20 @@ else
 		portname=$(basename $portpath)
 		portcat=$(basename $(dirname $portpath))
 		echo "$portname: $portcats"
-		for cat in $portcats;
+		for item_cat in $portcats;
 		do
-			item_cat=$cat
 			if [ ! -d $whereto/$item_cat ];
 			then
-				[ -n "$verbose" ] && echo "  " mkdir $whereto/$cat;
-				[ -z "$dryrun" ] && mkdir $whereto/$cat;
+				[ -n "$verbose" ] && echo "  " mkdir $whereto/$item_cat;
+				[ -z "$dryrun" ] && mkdir $whereto/$item_cat;
    			fi;
-			if [ ! -e $whereto/$cat/$portname ];
+			if [  -z "$dryrun" -o ! -e $whereto/$item_cat/$portname ];
  			then
-				[ -n "$verbose" ] && echo "  " ln -s \
-					"$portpath" "$whereto/$cat/$portname-$portcat";
-				[ -z "$dryrun" ] && ln -s \
-					"$portpath" "$whereto/$cat/$portname-$portcat";
+				do_link_port "$portpath" "$whereto/$item_cat/$portname-$portcat";
 			fi;
 		done
 	done
 fi;
-
-
 
 return 0;
 
