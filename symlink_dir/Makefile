@@ -16,8 +16,7 @@ MAINTAINER=	EitanAdlerList@gmail.com
 COMMENT=	Automatically generate symlinks for virtual categories
 
 NO_BUILD=	yes
-NO_EXTRACT=	yes
-EXTRACT_CMD=	true
+EXTRACT_ONLY=	# nada
 
 PLIST_FILES=	bin/${PORTNAME}
 
