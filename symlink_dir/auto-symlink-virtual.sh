@@ -89,11 +89,7 @@ transverse_index()
 		echo "$portname: $portcats"
 		for item_cat in $portcats;
 		do
-			do_make_cat_dir $item_cat;
-			if [ ! -e $whereto/$item_cat/$portname -a ! -e $whereto/$item_cat/$portname-$portcat ];
- 			then
-				do_link_port "$portpath" "$whereto/$item_cat/$portname-$portcat";
-			fi;
+			op_port $portpath $item_cat $portname $portcat;
 		done
 	done
 }
