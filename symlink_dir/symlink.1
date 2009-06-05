@@ -5,8 +5,7 @@ symports - generates symlinks for virtual ports
 
 .SH SYNOPSIS
 .B symports
-.I [-d] [-pPortdir] -wWhereT
-.br
+.I [-d] [ -iindexFile ] [ -n ][-pPortdir] -wWhereT
 
 .SH DESCRIPTION
 \fB symports \fP reads through your ports tree and generates
@@ -18,9 +17,15 @@ ones.
 .B \-p \fI Ports directory \fP
 The location of the ports directory you want to work with.
 .TP
+.B \-i \fI Index file location \fP
+Uses the index file instead of each port\'s Makefile
+.TP
 .B \-w \fI Archive directory \fP 
 Where should the symlinks be generated.
 Defaults to current working directory.
+.TP
+.B \-n
+Display the commands that would have been executed, but do not actually execute them.
 .TP
 .B \-?
 Displays help.
