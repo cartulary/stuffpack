@@ -33,6 +33,19 @@ do_make_cat_dir()
 	fi;
 }
 
+op_port()
+{
+	portpath=$1;
+	item_cat=$2;
+	portname=$3;
+	portcat=$4;	
+	do_make_cat_dir $item_cat;
+	if [ ! -e $whereto/$item_cat/$portname -a ! -e $whereto/$item_cat/$portname-$portcat ];
+	then
+		do_link_port "$portpath" "$whereto/$item_cat/$portname-$portcat";
+	fi;
+}
+
 transverse_sub_tree()
 {
 	portcat=$2;
@@ -44,12 +57,8 @@ transverse_sub_tree()
 			echo -n "$2/$portname:";
 			for item_cat in $(make -V CATEGORIES -C $1/$2/$portname);
 			do
-				echo "$item_cat "
-				do_make_cat_dir $item_cat;
-				if [ ! -e $whereto/$item_cat/$portname -a ! -e $whereto/$item_cat/$portname-$2 ];
-				then
-					do_link_port "$portpath" "$whereto/$item_cat/$portname-$portcat";
-				fi;
+				[ -n "$verbose" ] && echo "Transversing $2/$item_cat";
+				op_port $portpath $item_cat $portname $portcat;
 			done;
 			echo
 		fi;
