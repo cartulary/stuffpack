@@ -45,36 +45,37 @@ else
 	fi;
 fi;
 
-if [ -z "$index" ];
-then
+transverse_tree()
+{
+	for main_cat in $(make -V SUBDIR -C $portdir);
+	do
+		if [ -d $portdir/$main_cat ];
+		then
+			for port in $(make -V SUBDIR -C $portdir/$main_cat);
+			do
+				if [ -d $portdir/$main_cat/$port ];
+				then
+					echo -n "$main_cat/$port:";
+					for item_cat in $(make -V CATEGORIES -C $portdir/$main_cat/$port);
+					do
+						echo "$item_cat "
+						do_make_cat_dir $item_cat;
+						if [ ! -e $whereto/$item_cat/$port -a ! -e $whereto/$item_cat/$port-$main_cat ];
+						then
+							do_link_port "$portdir/$main_cat/$port" "$whereto/$item_cat/$port-$main_cat";
+						fi;
+					done;
+					echo
+				fi;
+			done;
+			echo $main_cat
+		fi;
+	done;
+}
 
-for main_cat in $(make -V SUBDIR -C $portdir);
-do
-	if [ -d $portdir/$main_cat ];
-	then
-		for port in $(make -V SUBDIR -C $portdir/$main_cat);
-		do
-			if [ -d $portdir/$main_cat/$port ];
-			then
-				echo -n "$main_cat/$port:";
-				for item_cat in $(make -V CATEGORIES -C $portdir/$main_cat/$port);
-				do
-					echo "$item_cat "
-					do_make_cat_dir $item_cat;
-					if [ ! -e $whereto/$item_cat/$port -a ! -e $whereto/$item_cat/$port-$main_cat ];
-					then
-						do_link_port "$portdir/$main_cat/$port" "$whereto/$item_cat/$port-$main_cat";
-					fi;
-				done;
-				echo
-			fi;
-		done;
-		echo $main_cat
-	fi;
-done;
-
-else
-	cat $portdir/$index | while read LINE;
+transverse_index()
+{
+	cat $portdir/$1 | while read LINE;
 	do
 		portpath=$(echo "$LINE" | awk -F\| '{print $2}')
 		portcats=$(echo "$LINE" | awk -F\| '{print $7}')
@@ -90,6 +91,13 @@ else
 			fi;
 		done
 	done
+}
+
+if [ -z "$index" ];
+then
+	transverse_tree $portdir;
+else
+	transverse_index $index;
 fi;
 
 return 0;
