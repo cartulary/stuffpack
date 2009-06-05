@@ -14,8 +14,6 @@ SDL_FLAGS +=  -lSDL_mixer
 ALLEGRO_FLAGS != allegro-config --cppflags --libs
 CFLAGS += $(ALLEGRO_FLAGS) $(SDL_FLAGS)
 
-
-
 #compiling options
 .PHONY:     clean
 

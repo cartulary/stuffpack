@@ -330,7 +330,9 @@ int main()
 		if (key[KEY_P])
 		{
 			textout_ex( screen, font, "paused", 320, 240, makecol( 255, 0, 0), makecol( 0, 0, 0)); 
+			Mix_PauseMusic();
 			readkey();
+			Mix_ResumeMusic();
 		}
 		if (key[KEY_SPACE])
 		{
