@@ -1,9 +1,11 @@
 #!/usr/bin/env sh
 portdir="/usr/ports"
 whereto="."
-while getopts dp:w: option
+dryrun=""
+while getopts dnp:w: option
 do    case "$option" in
       'd')  set -x;;
+	'n')	dryrun="yes";;
       'p')  portdir=$OPTARG;;
 	'w')	whereto=$OPTARG;;
       '?')  echo "Usage: $0 [-d] [-pPortdir] -wWhereTo" >&2;
@@ -35,15 +37,20 @@ do
 				for item_cat in $(make -V CATEGORIES -C $portdir/$main_cat/$port);
 				do
 					echo -n "$item_cat "
-					if [ ! -d $whereto/$item_cat ];
+					if [ -z "$dryrun" -a ! -d $whereto/$item_cat ];
 					then
 						mkdir $whereto/$item_cat;
 					fi;
-					if [ ! -e $whereto/$item_cat/$port ];
+					if [ -z "$dryrun" -o ! -e $whereto/$item_cat/$port ];
 					then
-						#this won't create the main ports because we check to see if the main port one exits BUT
-						#we add the main cat to the filename in case of name conflicts
-						ln -s $portdir/$main_cat/$port  $whereto/$item_cat/$port-$main_cat
+						if [ -z "$dryrun" ];
+						then
+							echo "ln -s $portdir/$main_cat/$port  $whereto/$item_cat/$port-$main_cat"
+						else
+							#this won't create the main ports because we check to see if the main port one exits BUT
+							#we add the main cat to the filename in case of name conflicts
+							ln -s $portdir/$main_cat/$port  $whereto/$item_cat/$port-$main_cat
+						fi;
 					fi;
 				done;
 				echo
