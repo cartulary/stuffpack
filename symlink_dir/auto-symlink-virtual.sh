@@ -7,7 +7,7 @@ verbose=""
 
 usage()
 {
-	base= basename $0;
+	base=$(basename "$0");
 	echo "$base: create symlinks for virtual ports"
 	echo ""
 	echo "Usage: $base [-hnv] [-i indexfile] [-p portsdir] [-w destdir]"
@@ -33,7 +33,7 @@ do    case "$option" in
 	'p')  portdir=$OPTARG;;
 	'v')	verbose="yes";;
 	'w')	whereto=$OPTARG;;
-	'?')  echo "Usage: $0 [-d] [-pPortdir] -wWhereTo" >&2;
+	'?')  usage;
 		exit 1;;
       esac
 done
@@ -49,8 +49,8 @@ do_make_cat_dir()
 {
 	if [ ! -d $whereto/$1 ];
 	then
-		[ -n "$verbose" ] && echo "  " mkdir $whereto/$1;
-		[ -z "$dryrun" ] && mkdir $whereto/$1;
+		[ -n "$verbose" ] && echo "  " mkdir -p $whereto/$1;
+		[ -z "$dryrun" ] && mkdir -p $whereto/$1;
 	fi;
 }
 
