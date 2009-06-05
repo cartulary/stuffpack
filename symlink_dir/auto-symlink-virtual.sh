@@ -33,49 +33,43 @@ do_make_cat_dir()
 	fi;
 }
 
-if [ ! -d $portdir ];
-then
-	echo "Complete failure";
-	exit 1;
-else
-	if [ ! -e $portdir/Makefile ];
-	then
-		echo "No Makefile";
-		exit 1;
-	fi;
-fi;
+transverse_sub_tree()
+{
+	for port in $(make -V SUBDIR -C $1/$2);
+	do
+		if [ -d $1/$2/$port ];
+		then
+			echo -n "$2/$port:";
+			for item_cat in $(make -V CATEGORIES -C $1/$2/$port);
+			do
+				echo "$item_cat "
+				do_make_cat_dir $item_cat;
+				if [ ! -e $whereto/$item_cat/$port -a ! -e $whereto/$item_cat/$port-$2 ];
+				then
+					do_link_port "$1/$2/$port" "$whereto/$item_cat/$port-$2";
+				fi;
+			done;
+			echo
+		fi;
+	done;
+}
+
 
 transverse_tree()
 {
-	for main_cat in $(make -V SUBDIR -C $portdir);
+	for main_cat in $(make -V SUBDIR -C $1);
 	do
-		if [ -d $portdir/$main_cat ];
+		if [ -d $1/$main_cat ];
 		then
-			for port in $(make -V SUBDIR -C $portdir/$main_cat);
-			do
-				if [ -d $portdir/$main_cat/$port ];
-				then
-					echo -n "$main_cat/$port:";
-					for item_cat in $(make -V CATEGORIES -C $portdir/$main_cat/$port);
-					do
-						echo "$item_cat "
-						do_make_cat_dir $item_cat;
-						if [ ! -e $whereto/$item_cat/$port -a ! -e $whereto/$item_cat/$port-$main_cat ];
-						then
-							do_link_port "$portdir/$main_cat/$port" "$whereto/$item_cat/$port-$main_cat";
-						fi;
-					done;
-					echo
-				fi;
-			done;
-			echo $main_cat
+			[ -n "$verbose" ] && echo "Transversing $main_cat";
+			transverse_sub_tree $1 $main_cat
 		fi;
 	done;
 }
 
 transverse_index()
 {
-	cat $portdir/$1 | while read LINE;
+	cat $1/$index | while read LINE;
 	do
 		portpath=$(echo "$LINE" | awk -F\| '{print $2}')
 		portcats=$(echo "$LINE" | awk -F\| '{print $7}')
@@ -93,11 +87,27 @@ transverse_index()
 	done
 }
 
+if [ ! -d $portdir ];
+then
+	echo "Complete failure";
+	exit 1;
+fi;
+
 if [ -z "$index" ];
 then
+	if [ ! -e $portdir/Makefile ];
+	then
+		echo "No Makefile";
+		exit 1;
+	fi;
 	transverse_tree $portdir;
 else
-	transverse_index $index;
+	if [ ! -e $portdir/$index ];
+	then
+		echo "No Index";
+		exit 1;
+	fi;
+	transverse_index $portdir;
 fi;
 
 return 0;
@@ -124,3 +134,9 @@ return 0;
 #THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 #(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 #THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+
+#TODO
+# try and merge index and non-index functionality.
+# add failure and sanity testing
