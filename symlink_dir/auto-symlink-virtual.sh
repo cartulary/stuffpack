@@ -40,9 +40,14 @@ op_port()
 	portname=$3;
 	portcat=$4;	
 	do_make_cat_dir $item_cat;
-	if [ ! -e $whereto/$item_cat/$portname -a ! -e $whereto/$item_cat/$portname-$portcat ];
+	if [ "$item_cat" = "$portcat" ]
+	then dest="$whereto/$item_cat/$portname";
+	else dest="$whereto/$item_cat/$portname-$portcat";
+	fi;
+
+	if [ ! -e $whereto/$item_cat/$portname -a ! -e $dest ];
 	then
-		do_link_port "$portpath" "$whereto/$item_cat/$portname-$portcat";
+		do_link_port "$portpath" "$dest";
 	fi;
 }
 
