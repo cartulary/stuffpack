@@ -59,9 +59,9 @@ do
 				echo -n "$main_cat/$port:";
 				for item_cat in $(make -V CATEGORIES -C $portdir/$main_cat/$port);
 				do
-					echo -n "$item_cat "
-					do_make_cat_dir $item_cat
-					if [ -z "$dryrun" -o ! -e $whereto/$item_cat/$port ];
+					echo "$item_cat "
+					do_make_cat_dir $item_cat;
+					if [ ! -e $whereto/$item_cat/$port -a ! -e $whereto/$item_cat/$port-$main_cat ];
 					then
 						do_link_port "$portdir/$main_cat/$port" "$whereto/$item_cat/$port-$main_cat";
 					fi;
@@ -83,12 +83,8 @@ else
 		echo "$portname: $portcats"
 		for item_cat in $portcats;
 		do
-			if [ ! -d $whereto/$item_cat ];
-			then
-				[ -n "$verbose" ] && echo "  " mkdir $whereto/$item_cat;
-				[ -z "$dryrun" ] && mkdir $whereto/$item_cat;
-   			fi;
-			if [  -z "$dryrun" -o ! -e $whereto/$item_cat/$portname ];
+			do_make_cat_dir $item_cat;
+			if [ ! -e $whereto/$item_cat/$portname -a ! -e $whereto/$item_cat/$portname-$portcat ];
  			then
 				do_link_port "$portpath" "$whereto/$item_cat/$portname-$portcat";
 			fi;
