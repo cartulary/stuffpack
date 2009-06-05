@@ -24,6 +24,15 @@ do_link_port()
 
 }
 
+do_make_cat_dir() 
+{
+	if [ ! -d $whereto/$1 ];
+	then
+		[ -n "$verbose" ] && echo "  " mkdir $whereto/$1;
+		[ -z "$dryrun" ] && mkdir $whereto/$1;
+	fi;
+}
+
 if [ ! -d $portdir ];
 then
 	echo "Complete failure";
@@ -51,10 +60,7 @@ do
 				for item_cat in $(make -V CATEGORIES -C $portdir/$main_cat/$port);
 				do
 					echo -n "$item_cat "
-					if [ -z "$dryrun" -a ! -d $whereto/$item_cat ];
-					then
-						mkdir $whereto/$item_cat;
-					fi;
+					do_make_cat_dir $item_cat
 					if [ -z "$dryrun" -o ! -e $whereto/$item_cat/$port ];
 					then
 						do_link_port "$portdir/$main_cat/$port" "$whereto/$item_cat/$port-$main_cat";
