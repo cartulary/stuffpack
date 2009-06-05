@@ -9,6 +9,17 @@ do    case "$option" in
       esac
 done
 
+if [ ! -d $portdir ];
+then
+	echo "Complete failure";
+	exit 1;
+else
+	if [ ! -e $portdir/Makefile ];
+	then
+		echo "No Makefile";
+	fi;
+	exit 1;
+fi;
 
 for main_cat in $(make -V SUBDIR -C $portdir);
 do
@@ -39,6 +50,7 @@ do
 		echo $main_cat
 	fi;
 done;
+return 0;
 
 #Copyright 2009  Eitan Adler <EitanAdlerList@gmail.com>
 
