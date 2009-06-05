@@ -7,20 +7,21 @@
 
 PORTNAME=	symlink
 PORTVERSION=	2
-CATEGORIES= ports-mgmt
+CATEGORIES=	ports-mgmt
 MASTER_SITES=	http://isis.poly.edu/~eitan/files/
-DISTFILES=auto-symlink-virtual-$(PORTVERSION).sh
+DISTNAME=	auto-symlink-virtual-${PORTVERSION}.sh
+EXTRACT_SUFX=
 
 MAINTAINER=	EitanAdlerList@gmail.com
-COMMENT=	Automatically generate symlinks for virtual categories.
+COMMENT=	Automatically generate symlinks for virtual categories
 
 NO_BUILD=	yes
 NO_EXTRACT=	yes
-EXTRACT_CMD=true
+EXTRACT_CMD=	true
 
-PLIST_FILES=bin/${PORTNAME}
+PLIST_FILES=	bin/${PORTNAME}
 
 do-install:
-	${INSTALL_SCRIPT} ${DISTDIR}/${DISTFILES} ${PREFIX}/bin/${PORTNAME}
+	${INSTALL_SCRIPT} ${DISTDIR}/${DISTNAME} ${PREFIX}/bin/${PORTNAME}
 
 .include <bsd.port.mk>
