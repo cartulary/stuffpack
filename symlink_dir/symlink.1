@@ -1,5 +1,5 @@
 .\" Man page for the symports
-.TH symports 1 Version 1.1 $Date$ symlink(1)
+.TH symports 1 Version 1.1 "$Date$" symlink(1)
 .SH NAME
 symports - generates symlinks for virtual ports
 
@@ -7,3 +7,37 @@ symports - generates symlinks for virtual ports
 .B symports
 .I [-d] [-pPortdir] -wWhereT
 .br
+
+.SH DESCRIPTION
+\fB symports \fP reads through your ports tree and generates
+a tree using symlinks for all categories - not just the "real"
+ones.
+
+.SH OPTIONS
+.TP
+.B \-p \fI Ports directory \fP
+The location of the ports directory you want to work with.
+.TP
+.B \-w \fI Archive directory \fP 
+Where should the symlinks be generated.
+Defaults to current working directory.
+.TP
+.B \-?
+Displays help.
+.TP
+.B \-d
+Displays debugging info.
+
+.SH NOTES
+\fB symports \fP has been tested on a system with imcomplete ports,
+but has not been tested under all known conditions.
+
+.SH BUGS
+Please send any bug reports to EitanAdlerList@gmail.com
+
+.SH SEE ALSO
+ports(7)
+
+.SH AUTHOR
+Eitan Adler <EitanAdlerList@gmail.com> wrote \fB symports \fP as 
+well as its accompanying man page. Contributions always welcome.
