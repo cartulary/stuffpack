@@ -10,7 +10,7 @@ do    case "$option" in
 	'i')	index=$OPTARG;;
       'p')  portdir=$OPTARG;;
 	'w')	whereto=$OPTARG;;
-      '?')  echo "Usage: $0 [-d] [-pPortdir] -wWhereTo" >&2;
+      '?')  echo "Usage: $0 [-d] [ -iindexFile ] [-n] [-pPortdir] -wWhereTo" >&2;
             exit 1;;
       esac
 done
