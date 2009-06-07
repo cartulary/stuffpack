@@ -12,18 +12,19 @@ usage()
 	echo ""
 	echo "Usage: $base [-hnv] [-i indexfile] [-p portsdir] [-w destdir]"
 	echo ""
-	echo " -h                show this usage"
-	echo " -i indexfile      use this index file instead of traversing"
-	echo "                   the ports tree"
-	echo " -n                run through ports, but do not modify anything"
-	echo " -p portsdir       use portsdir as the root of the ports tree"
-	echo "                   the default is /usr/ports/"
-	echo " -v                be verbose and list all actions"
-	echo " -w destdir        use destdir as the base for resulting"
-	echo "                   symlinks (default is current dir)"
+	echo " -h               show this usage"
+	echo " -i indexfile     use this index file instead of traversing"
+	echo "                  the ports tree"
+	echo " -n               run through ports, but do not modify anything"
+	echo " -p portsdir      use portsdir as the root of the ports tree"
+	echo "			the default is /usr/ports/"
+	echo " -v			be verbose and list all actions"
+	echo " -V			display the current version."
+	echo " -w destdir       use destdir as the base for resulting"
+	echo "                  symlinks (default is current dir)"
 }
 
-while getopts dhi:np:vw: option
+while getopts dhi:np:Vvw: option
 do    case "$option" in
 	'd')  set -x;;
 	'h')	usage;
@@ -33,6 +34,8 @@ do    case "$option" in
 	'p')  portdir=$OPTARG;;
 	'v')	verbose="yes";;
 	'w')	whereto=$OPTARG;;
+	'V')	echo "Version 0.4.";
+		exit 0;;
 	'?')  usage;
 		exit 1;;
       esac
