@@ -6,7 +6,7 @@
 #
 
 PORTNAME=	symlink
-PORTVERSION=	3
+PORTVERSION=	4
 CATEGORIES=	ports-mgmt
 MASTER_SITES=	http://isis.poly.edu/~eitan/files/
 DISTNAME=	auto-symlink-virtual-${PORTVERSION}.sh
