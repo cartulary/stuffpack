@@ -5,7 +5,7 @@ symports - generates symlinks for virtual ports
 
 .SH SYNOPSIS
 .B symports
-.I [-d] [ -iindexFile ] [ -n ][-pPortdir] -wWhereT
+.I [-dnv] [ -iindexFile ] [-pPortdir] -wWhereT
 
 .SH DESCRIPTION
 \fB symports \fP reads through your ports tree and generates
@@ -26,6 +26,9 @@ Defaults to current working directory.
 .TP
 .B \-n
 Display the commands that would have been executed, but do not actually execute them.
+.TP
+.B \-v
+Be verbose.
 .TP
 .B \-?
 Displays help.
