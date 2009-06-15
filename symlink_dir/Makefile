@@ -1,11 +1,11 @@
-# New ports collection makefile for:   symlink
+# New ports collection makefile for:   symports
 # Date created:        Fri Jun 05 2009
 # Whom:                Eitan Adler <EitanAdlerList@gmail.com>
 #
 # $FreeBSD$
 #
 
-PORTNAME=	symlink
+PORTNAME=	symports
 PORTVERSION=	4
 CATEGORIES=	ports-mgmt
 MASTER_SITES=	http://isis.poly.edu/~eitan/files/
