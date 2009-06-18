@@ -1,18 +1,26 @@
-.\" Man page for the symports
-.TH symports 1 Version 1.1 "$Date$" symlink(1)
-.SH NAME
-symports - generates symlinks for virtual ports
-
-.SH SYNOPSIS
-.B symports
-.I [-dnv] [ -iindexFile ] [-pPortdir] -wWhereT
-
-.SH DESCRIPTION
-\fB symports \fP reads through your ports tree and generates
+.\" Man page for symports
+.\"
+.\" Copyright (c) 2009, Eitan Adler EitanAdlerList@gmail.com
+.\" Supplementary style provided by Thomas Abthorpe, tabthorpe@FreeBSD.org
+.\"
+.Dd June 7, 2009
+.Dt SYMPORTS 1
+.Os
+.Sh NAME
+.Nm symports
+.Nd generates symlinks for virtual ports
+.Sh SYNOPSIS
+.Nm
+.Op -dnv
+.Op  -iindexFile 
+.Op -pPortdir
+.Op -wWhereT
+.Sh DESCRIPTION
+.Nm
+reads through your ports tree and generates
 a tree using symlinks for all categories - not just the "real"
 ones.
-
-.SH OPTIONS
+.Sh OPTIONS
 .TP
 .B \-p \fI Ports directory \fP
 The location of the ports directory you want to work with.
@@ -35,17 +43,15 @@ Displays help.
 .TP
 .B \-d
 Displays debugging info.
-
-.SH NOTES
-\fB symports \fP has been tested on a system with imcomplete ports,
+.Sh NOTES
+.Nm
+has been tested on a system with imcomplete ports,
 but has not been tested under all known conditions.
-
-.SH BUGS
+.Sh BUGS
 Please send any bug reports to EitanAdlerList@gmail.com
-
-.SH SEE ALSO
-ports(7)
-
-.SH AUTHOR
-Eitan Adler <EitanAdlerList@gmail.com> wrote \fB symports \fP as 
-well as its accompanying man page. Contributions always welcome.
+.Sh SEE ALSO
+.Xr ports 7
+.Sh AUTHOR
+Eitan Adler <EitanAdlerList@gmail.com> wrote
+.Nm
+as well as its accompanying man page. Contributions always welcome.
