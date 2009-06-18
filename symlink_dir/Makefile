@@ -18,7 +18,7 @@ USE_BZIP2=	yes
 NO_BUILD=	yes
 
 MAN1=	symports.1
-MANCOMPRESSED= no
+MANCOMPRESSED=	no
 
 PLIST_FILES=	bin/${PORTNAME}
 
