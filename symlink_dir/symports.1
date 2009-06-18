@@ -12,40 +12,35 @@
 .Sh SYNOPSIS
 .Nm
 .Op -dnv
-.Op  -iindexFile 
-.Op -pPortdir
-.Op -wWhereT
+.Op -i indexFile 
+.Op -p Portsdir
+.Op -w WhereT
 .Sh DESCRIPTION
 .Nm
 reads through your ports tree and generates
 a tree using symlinks for all categories - not just the "real"
 ones.
 .Sh OPTIONS
-.TP
-.B \-p \fI Ports directory \fP
+.Bl -tag -width "Fl p"
+.It Fl p Ar directory
 The location of the ports directory you want to work with.
-.TP
-.B \-i \fI Index file location \fP
+.It Fl i Ar INDEX file location
 Uses the index file instead of each port\'s Makefile
-.TP
-.B \-w \fI Archive directory \fP 
-Where should the symlinks be generated.
+.It Fl w Ar Archive directory
+Where the symlinks should be generated.
 Defaults to current working directory.
-.TP
-.B \-n
+.It Fl n
 Display the commands that would have been executed, but do not actually execute them.
-.TP
-.B \-v
+.It Fl v
 Be verbose.
-.TP
-.B \-?
+.It Fl ?
 Displays help.
-.TP
-.B \-d
+.It Fl d
 Displays debugging info.
+.El
 .Sh NOTES
 .Nm
-has been tested on a system with imcomplete ports,
+has been tested on a system with incomplete ports,
 but has not been tested under all known conditions.
 .Sh BUGS
 Please send any bug reports to EitanAdlerList@gmail.com
