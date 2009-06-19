@@ -15,15 +15,30 @@ usage()
 	echo "-d remove remove port";
 }
 
+add_raw_record()
+{
+}
+
+del_raw_record()
+{
+}
+
+del_port()
+{
+	#think of a better random number thing
+	#dd if=/dev/random of=/dev/stdout count=1 bs=1 conv=ascii
+	echo $(grep -c "^$1|" $db);
+	grep -v "^$1|" $db> "/tmp/$(basename $0)";
+	mv "/tmp/$(basename $0)" $db;
+}
+
 while getopts a:A:D:d:f:xV option
 do
 	case "$option" in
 		'a') echo "We don't proccess non-raw strings yet";;
-		'd') echo "removing port $OPTARG";
-			#think of a better random number thing
-			#dd if=/dev/random of=/dev/stdout count=1 bs=1 conv=ascii
-			grep -v "^$OPTARG|" $db> "/tmp/$(basename $0)";
-			mv "/tmp/$(basename $0)" $db;
+		'd') 	echo "removing port $1";
+			how_many=$(del_port "$OPTARG");
+			echo "(removed $how_many records)";
 			exit 0;;
 		'A') echo "Adding $OPTARG to $db";
 			echo "$OPTARG" >> $db;
