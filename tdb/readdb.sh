@@ -23,23 +23,38 @@ do
 done
 
 # record = one name-pair value; line = one entry in the DB
+#bug with \| -> work on this later; bug with \= -> work on this later.
+record_get_item()
+{
+	echo $1 | awk -F= '{print $1}';
+}
+
+record_get_value()
+{
+	echo $1 | awk -F= '{print $2}';
+}
 
 op_db_record()
 {
-	item=$(echo $1 | awk -F= '{print $1}');
-	value=$(echo $1 | awk -F= '{print $2}');
-	echo -n " $item is $value";
+	echo -n " "$(record_get_item $1);
+	echo -n " is "
+	echo -n $(record_get_value $1)" ";
 }
 
 op_db_line()
 {
-	echo -n "$LINE" "-->" ;
+	#echo -n "$LINE" "-->" ;
 	c=1;
 	max_col=$(echo $LINE|sed "s/[^|]//g"|wc -c);
 	while [ $c -le $max_col ];
 	do
 		result=$(echo "$LINE" | awk -F\| "{print \$$c}");
-		op_db_record $result;
+		if [ $c = 1 ];
+		then
+			echo -n "Port $result";
+		else
+			op_db_record $result;
+		fi;
 		c=$(($c+1));
 	done;
 	echo;
