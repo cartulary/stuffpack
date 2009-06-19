@@ -15,7 +15,7 @@ do
 			linenum=$(echo $linenum|awk -F: '{print $1}');
 			echo $linenum;
 			cmd=$linenum"s/\$/ i18n/"
-			echo $(cat $portpath/Makefile|sed "$cmd"|awk "NR==$linenumm{print \$1;}");
+			echo $(cat $portpath/Makefile|sed "$cmd"|awk "NR==$linenum{print \$0;}");
 		fi;
 	fi;
 done
