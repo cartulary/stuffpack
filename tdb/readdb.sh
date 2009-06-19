@@ -8,7 +8,9 @@ usage()
 	echo "$base: metadata index for ports";
 	echo;
 	echo "Usage: $base [-fxV]";
-	echo
+	echo "-a adds a record";
+	echo "-A adds a raw record";
+	echo "-f changes the db filename";
 }
 
 while getopts f:xV option
@@ -26,26 +28,26 @@ done
 #bug with \| -> work on this later; bug with \= -> work on this later.
 record_get_item()
 {
-	echo $1 | awk -F= '{print $1}';
+	echo "$1" | awk -F= '{print $1}';
 }
 
 record_get_value()
 {
-	echo $1 | awk -F= '{print $2}';
+	echo "$1" | awk -F= '{print $2}';
 }
 
 op_db_record()
 {
-	echo -n " "$(record_get_item $1);
+	echo -n " "$(record_get_item "$1");
 	echo -n " is "
-	echo -n $(record_get_value $1)" ";
+	echo -n $(record_get_value "$1")" ";
 }
 
 op_db_line()
 {
 	#echo -n "$LINE" "-->" ;
 	c=1;
-	max_col=$(echo $LINE|sed "s/[^|]//g"|wc -c);
+	max_col=$(echo "$LINE"|sed "s/[^|]//g"|wc -c);
 	while [ $c -le $max_col ];
 	do
 		result=$(echo "$LINE" | awk -F\| "{print \$$c}");
@@ -53,7 +55,8 @@ op_db_line()
 		then
 			echo -n "Port $result";
 		else
-			op_db_record $result;
+			op_db_record "$result";
+			echo -n ";"
 		fi;
 		c=$(($c+1));
 	done;
