@@ -104,4 +104,10 @@ do
 	esac
 done
 
-loop_through_db $db;
+if [ -f $db ];
+then
+	loop_through_db $db;
+else
+	echo "Are you insane!?";
+fi;
+
