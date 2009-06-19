@@ -4,6 +4,7 @@ cat "INDEX-7" | while read LINE;
 do
 	portpath=$(echo "$LINE" | awk -F\| '{print $2}');
 	portname=$(basename "$portpath");
+	portcat=$(basename $(dirname "$portpath"))
 	it=$(echo "$portname [$portpath]"|grep -E "(i18n)|(l10n)");
 	if [ -n "$it" ];
 	then
@@ -16,6 +17,7 @@ do
 			echo $linenum;
 			cmd=$linenum"s/\$/ i18n/"
 			echo $(cat $portpath/Makefile|sed "$cmd"|awk "NR==$linenum{print \$0;}");
+			$(sed -ibak "$cmd" ./$portcat/$portname/Makefile);
 		fi;
 	fi;
 done
