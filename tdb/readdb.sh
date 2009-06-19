@@ -7,16 +7,24 @@ usage()
 	base=$(basename $0);
 	echo "$base: metadata index for ports";
 	echo;
-	echo "Usage: $base [-fxV]";
+	echo "Usage: $base [-aAdDfxV]";
 	echo "-a adds a record";
 	echo "-A adds a raw record";
 	echo "-f changes the db filename";
+	echo "-D remove raw string";
+	echo "-d remove remove port";
 }
 
-while getopts a:A:f:xV option
+while getopts a:A:D:d:f:xV option
 do
 	case "$option" in
 		'a') echo "We don't proccess non-raw strings yet";;
+		'd') echo "removing port $OPTARG";
+			#think of a better random number thing
+			#dd if=/dev/random of=/dev/stdout count=1 bs=1 conv=ascii
+			grep -v "^$OPTARG|" $db> "/tmp/$(basename $0)";
+			mv "/tmp/$(basename $0)" $db;
+			exit 0;;
 		'A') echo "Adding $OPTARG to $db";
 			echo "$OPTARG" >> $db;
 			exit 0;;
