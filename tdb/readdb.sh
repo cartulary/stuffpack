@@ -22,9 +22,27 @@ do
 	esac
 done
 
+# record = one name-pair value; line = one entry in the DB
+
 op_db_record()
 {
-	
+	item=$(echo $1 | awk -F= '{print $1}');
+	value=$(echo $1 | awk -F= '{print $2}');
+	echo -n " $item is $value";
+}
+
+op_db_line()
+{
+	echo -n "$LINE" "-->" ;
+	c=1;
+	max_col=$(echo $LINE|sed "s/[^|]//g"|wc -c);
+	while [ $c -le $max_col ];
+	do
+		result=$(echo "$LINE" | awk -F\| "{print \$$c}");
+		op_db_record $result;
+		c=$(($c+1));
+	done;
+	echo;
 }
 
 loop_through_db()
@@ -33,18 +51,7 @@ loop_through_db()
 	do
 		if [ -n "$LINE" ];
 		then
-			echo -n "$LINE" "-->" ;
-			c=1;
-			max_col=$(echo $LINE|sed "s/[^|]//g"|wc -c);
-			while [ $c -le $max_col ];
-			do
-				result=$(echo "$LINE" | awk -F\| "{print \$$c}");
-				item=$(echo $result | awk -F= "{print $1}");
-				value=$(echo $result | awk -F= "{print $2}");
-				echo -n " $item is $value";
-				c=$(($c+1));
-			done;
-	echo;
+			op_db_line $LINE;
 		fi;
 	done;
 }
