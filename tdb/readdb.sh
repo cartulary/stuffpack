@@ -28,11 +28,19 @@ add_new_record()
 	echo "(eventually this will be a wizard to allow you to add specific meta-data";
 	item="--"
 	val="--";
-	while [ -n $item ];
+	rawstring="$1"
+	while [ -n "$item" ];
 	do
-		read -p "New item value?" item;
+		read -p "New item?" item;
 		echo "$item";
+		read -p "New value?" val;
+		rawstring="$rawstring|$item=$val";
 	done;
+	read -p "Add $rawstring to db? [y/n]" reply;
+	if [ "$reply" = "y" -o "$reply" = "Y" ];
+	then
+		add_raw_record $rawstring;
+	fi
 }
 
 del_port()
