@@ -13,9 +13,13 @@ usage()
 	echo "-f changes the db filename";
 }
 
-while getopts f:xV option
+while getopts a:A:f:xV option
 do
 	case "$option" in
+		'a') echo "We don't proccess non-raw strings yet";;
+		'A') echo "Adding $OPTARG to $db";
+			echo "$OPTARG" >> $db;
+			exit 0;;
 		'f') db=$OPTARG;;
 		'x') set -x;;
 		'V') echo "Version pre-alpha";
