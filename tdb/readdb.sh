@@ -19,10 +19,20 @@ usage()
 
 add_raw_record()
 {
+	echo "$1" >> $db;
 }
 
-del_raw_record()
+add_new_record()
 {
+	echo "Lets talk about $1";
+	echo "(eventually this will be a wizard to allow you to add specific meta-data";
+	item="--"
+	val="--";
+	while [ -n $item ];
+	do
+		read -p "New item value?" item;
+		echo "$item";
+	done;
 }
 
 del_port()
@@ -87,13 +97,14 @@ loop_through_db()
 while getopts a:A:D:d:f:s:xV option
 do
 	case "$option" in
-		'a') echo "We don't proccess non-raw strings yet";;
+		'a') add_new_record "$OPTARG";
+			exit 0;;
 		'd') 	echo "removing port $1";
 			how_many=$(del_port "$OPTARG");
 			echo "(removed $how_many records)";
 			exit 0;;
 		'A') echo "Adding $OPTARG to $db";
-			echo "$OPTARG" >> $db;
+			add_raw_record "$OPTARG";
 			exit 0;;
 		'f') db="$OPTARG";;
 		's') search="$OPTARG";;
