@@ -22,8 +22,9 @@ do
 	esac
 done
 
-op_db_line()
+op_db_record()
 {
+	
 }
 
 loop_through_db()
@@ -39,7 +40,7 @@ loop_through_db()
 			do
 				result=$(echo "$LINE" | awk -F\| "{print \$$c}");
 				item=$(echo $result | awk -F= "{print $1}");
-				value=$(echo $result | awk -F= "{print $1}");
+				value=$(echo $result | awk -F= "{print $2}");
 				echo -n " $item is $value";
 				c=$(($c+1));
 			done;
