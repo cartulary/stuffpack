@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 db=db
+search=""
 
 usage()
 {
@@ -13,6 +14,7 @@ usage()
 	echo "-f changes the db filename";
 	echo "-D remove raw string";
 	echo "-d remove remove port";
+	echo "-s search for port";
 }
 
 add_raw_record()
@@ -72,7 +74,7 @@ op_db_line()
 
 loop_through_db()
 {
-	cat $db | while read LINE;
+	grep "^$search" $1| while read LINE;
 	do
 		if [ -n "$LINE" ];
 		then
@@ -82,7 +84,7 @@ loop_through_db()
 }
 
 
-while getopts a:A:D:d:f:xV option
+while getopts a:A:D:d:f:s:xV option
 do
 	case "$option" in
 		'a') echo "We don't proccess non-raw strings yet";;
@@ -93,7 +95,8 @@ do
 		'A') echo "Adding $OPTARG to $db";
 			echo "$OPTARG" >> $db;
 			exit 0;;
-		'f') db=$OPTARG;;
+		'f') db="$OPTARG";;
+		's') search="$OPTARG";;
 		'x') set -x;;
 		'V') echo "Version pre-alpha";
 			exit 0;;
@@ -101,4 +104,4 @@ do
 	esac
 done
 
-loop_through_db;
+loop_through_db $db;
