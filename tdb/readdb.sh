@@ -31,26 +31,6 @@ del_port()
 	grep -v "^$1|" $db> "/tmp/$(basename $0)";
 	mv "/tmp/$(basename $0)" $db;
 }
-
-while getopts a:A:D:d:f:xV option
-do
-	case "$option" in
-		'a') echo "We don't proccess non-raw strings yet";;
-		'd') 	echo "removing port $1";
-			how_many=$(del_port "$OPTARG");
-			echo "(removed $how_many records)";
-			exit 0;;
-		'A') echo "Adding $OPTARG to $db";
-			echo "$OPTARG" >> $db;
-			exit 0;;
-		'f') db=$OPTARG;;
-		'x') set -x;;
-		'V') echo "Version pre-alpha";
-			exit 0;;
-		'?') usage; exit 1;
-	esac
-done
-
 # record = one name-pair value; line = one entry in the DB
 #bug with \| -> work on this later; bug with \= -> work on this later.
 record_get_item()
@@ -100,5 +80,25 @@ loop_through_db()
 		fi;
 	done;
 }
+
+
+while getopts a:A:D:d:f:xV option
+do
+	case "$option" in
+		'a') echo "We don't proccess non-raw strings yet";;
+		'd') 	echo "removing port $1";
+			how_many=$(del_port "$OPTARG");
+			echo "(removed $how_many records)";
+			exit 0;;
+		'A') echo "Adding $OPTARG to $db";
+			echo "$OPTARG" >> $db;
+			exit 0;;
+		'f') db=$OPTARG;;
+		'x') set -x;;
+		'V') echo "Version pre-alpha";
+			exit 0;;
+		'?') usage; exit 1;
+	esac
+done
 
 loop_through_db;
