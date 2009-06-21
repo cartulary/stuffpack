@@ -29,13 +29,12 @@ add_new_record()
 	item="--"
 	val="--";
 	rawstring="$1"
-	while [ -n "$item" ];
+	items_to_ask="ml-usr ml-dev l";
+	for item in $items_to_ask
 	do
-		read -p "New item?" item;
-		echo "$item";
-		read -p "New value?" val;
+		read -p "$item - New value?" val;
 		rawstring="$rawstring|$item=$val";
-	done;
+	done 
 	read -p "Add $rawstring to db? [y/n]" reply;
 	if [ "$reply" = "y" -o "$reply" = "Y" ];
 	then
