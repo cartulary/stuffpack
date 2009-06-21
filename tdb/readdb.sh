@@ -22,6 +22,17 @@ add_raw_record()
 	echo "$1" >> $db;
 }
 
+shortname_to_long()
+{
+	case "$1" in
+		'ml-usr') echo -n "User Mailing List";;
+		'ml-dev') echo -n "Development Mailing List";;
+		'l') echo -n "License";;
+		'ws') echo -n "Website ";;
+		'forum') echo -n "Forums";;
+	esac;
+}
+
 add_new_record()
 {
 	echo "Lets talk about $1";
@@ -29,10 +40,10 @@ add_new_record()
 	item="--"
 	val="--";
 	rawstring="$1"
-	items_to_ask="ml-usr ml-dev l";
+	items_to_ask="ml-usr ml-dev l ws forum";
 	for item in $items_to_ask
 	do
-		read -p "$item - New value?" val;
+		read -p "$(shortname_to_long $item) ($item) - New value?" val;
 		rawstring="$rawstring|$item=$val";
 	done 
 	read -p "Add $rawstring to db? [y/n]" reply;
@@ -64,7 +75,8 @@ record_get_value()
 
 op_db_record()
 {
-	echo -n " "$(record_get_item "$1");
+	recordname=$(record_get_item "$1");
+	echo -n " "$(shortname_to_long "$recordname");
 	echo -n " is "
 	echo -n $(record_get_value "$1")" ";
 }
