@@ -15,6 +15,7 @@ usage()
 	echo "-D remove raw string";
 	echo "-d remove remove port";
 	echo "-s search for port";
+	echo "-e remove all existing versions of a record and re-add it; instead of 'edit'";
 }
 
 add_raw_record()
@@ -36,7 +37,6 @@ shortname_to_long()
 add_new_record()
 {
 	echo "Lets talk about $1";
-	echo "(eventually this will be a wizard to allow you to add specific meta-data";
 	item="--"
 	val="--";
 	rawstring="$1"
@@ -112,8 +112,15 @@ loop_through_db()
 	done;
 }
 
+edit_record()
+{
+	how_many=$(del_port "$1");
+	echo "(removed $how_many records)";
+	add_new_record "$1";
+}
 
-while getopts a:A:D:d:f:s:xV option
+
+while getopts a:A:D:d:e:f:s:xV option
 do
 	case "$option" in
 		'a') add_new_record "$OPTARG";
@@ -125,6 +132,7 @@ do
 		'A') echo "Adding $OPTARG to $db";
 			add_raw_record "$OPTARG";
 			exit 0;;
+		'e') edit_record $OPTARG;;
 		'f') db="$OPTARG";;
 		's') search="$OPTARG";;
 		'x') set -x;;
