@@ -14,8 +14,10 @@ usage()
 	echo "-f changes the db filename";
 	echo "-D remove raw string";
 	echo "-d remove remove port";
-	echo "-s search for port";
 	echo "-e remove all existing versions of a record and re-add it; instead of 'edit'";
+	echo "-i for a specific item";
+	echo "-s search for port";
+	echo "-m machine readable";
 }
 
 add_raw_record()
@@ -31,6 +33,7 @@ shortname_to_long()
 		'l') echo -n "License";;
 		'ws') echo -n "Website ";;
 		'forum') echo -n "Forums";;
+		*) echo -n "[$1]";;
 	esac;
 }
 
@@ -73,12 +76,33 @@ record_get_value()
 	echo "$1" | awk -F= '{print $2}';
 }
 
+disp_record()
+{
+	if [ -n "$machine" ];
+	then
+		echo -n "$1=";
+	else
+		echo -n " "$(shortname_to_long "$1");
+		echo -n " is "
+	fi;
+	echo -n $(record_get_value "$2")" ";
+}
+
 op_db_record()
 {
 	recordname=$(record_get_item "$1");
-	echo -n " "$(shortname_to_long "$recordname");
-	echo -n " is "
-	echo -n $(record_get_value "$1")" ";
+	if [ -n "$look_for" ];
+	then
+		for item in "$look_for";
+		do
+			if [ "$item" = "$recordname" ];
+			then
+				disp_record "$recordname" "$1";
+			fi
+		done
+	else
+		disp_record "$recordname" "$1";
+	fi;
 }
 
 op_db_line()
@@ -91,7 +115,7 @@ op_db_line()
 		result=$(echo "$LINE" | awk -F\| "{print \$$c}");
 		if [ $c = 1 ];
 		then
-			echo -n "Port $result";
+			echo -n "Port $result:";
 		else
 			op_db_record "$result";
 			echo -n ";"
@@ -119,8 +143,9 @@ edit_record()
 	add_new_record "$1";
 }
 
+look_for="";
 
-while getopts a:A:D:d:e:f:s:xV option
+while getopts a:A:D:d:e:i:f:ms:xV option
 do
 	case "$option" in
 		'a') add_new_record "$OPTARG";
@@ -134,7 +159,9 @@ do
 			exit 0;;
 		'e') edit_record $OPTARG;;
 		'f') db="$OPTARG";;
+		'i') look_for="$OPTARG";;
 		's') search="$OPTARG";;
+		'm') machine="Yes";;
 		'x') set -x;;
 		'V') echo "Version pre-alpha";
 			exit 0;;
