@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 
-db=db
-search=""
+db="db";
+search="";
+look_for="";
 
 usage()
 {
@@ -142,8 +143,6 @@ edit_record()
 	echo "(removed $how_many records)";
 	add_new_record "$1";
 }
-
-look_for="";
 
 while getopts a:A:D:d:e:i:f:ms:xV option
 do
