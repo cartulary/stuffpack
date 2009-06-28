@@ -10,8 +10,7 @@ switch_first_char()
 {
 	case "$1" in
 		'+') echo "$2"|sed '1s/+/-/';;
-		'-') echo $2|sed '1s/-/+/';;
-		*) echo $2;;
+		'-') echo "$2"|sed '1s/-/+/';;
 	esac;
 }
 
@@ -24,7 +23,10 @@ do
 	firstthree="$(echo "$line"|cut -c -3)";
 	if [ ! "$firstthree" = "+++" -a ! "$firstthree" = "---" ];
 	then
-		line=$(switch_first_char "$firstchar" "$line");
+		if [ "$firstchar" = "+" -o "$firstchar" = "-" ]
+		then
+			line=$(switch_first_char "$firstchar" "$line");
+		fi;
 		if [ "$firstchar" = "@" ]
 		then
 			part1=$(echo "$line"|cut -d' ' -f'2');
@@ -50,7 +52,5 @@ do
 	lastline="$line";
 done < "$file"
 
-#bugs: when no newline unable to deal with the \
-#bugs: svn diff equal line filename seperator won't work
 #bugs: never tested with subdirectory; creating new files; or anything like that
 #todo: make the diff -q >> many patches script as well
