@@ -17,17 +17,18 @@ switch_first_char()
 
 switchLastLine="";
 lastline="";
-while read line
+IFS="\n";
+while read -r line
 do
 	firstchar=$(echo "$line"|cut -c -1);
 	firstthree=$(echo "$line"|cut -c -3);
 	if [ ! "$firstthree" = "+++" -a ! "$firstthree" = "---" ];
 	then
 		line=$(switch_first_char "$firstchar" "$line");
-		if [ ! "$firstchar" = "+" -a ! "$firstchar" = "-" -a ! "$firstchar" = "@" ]
-		then
-			echo -n " ";
-		fi
+#		if [ ! "$firstchar" = "+" -a ! "$firstchar" = "-" -a ! "$firstchar" = "@" ]
+#		then
+#			echo -n " ";
+#		fi
 		if [ "$firstchar" = "@" ]
 		then
 			part1=$(echo $line|cut -d' ' -f'2');
@@ -52,8 +53,6 @@ do
 	lastline="$line";
 done < $file
 
-#bugs: the @@ bug;
-#bugs: when the first char is +/-/@ then we don't indent when we should - I need to change the way I read the file to fix really...
 #bugs: when no newline unable to deal with the \
 #bugs: svn diff equal line filename seperator won't work
 #bugs: never tested with subdirectory; creating new files; or anything like that
