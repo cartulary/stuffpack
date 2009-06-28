@@ -20,23 +20,20 @@ lastline="";
 IFS="\n";
 while read -r line
 do
-	firstchar=$(echo "$line"|cut -c -1);
-	firstthree=$(echo "$line"|cut -c -3);
+	firstchar="$(echo "$line"|cut -c -1)";
+	firstthree="$(echo "$line"|cut -c -3)";
 	if [ ! "$firstthree" = "+++" -a ! "$firstthree" = "---" ];
 	then
 		line=$(switch_first_char "$firstchar" "$line");
-#		if [ ! "$firstchar" = "+" -a ! "$firstchar" = "-" -a ! "$firstchar" = "@" ]
-#		then
-#			echo -n " ";
-#		fi
 		if [ "$firstchar" = "@" ]
 		then
-			part1=$(echo $line|cut -d' ' -f'2');
-			part1A=$(echo $part1|cut -d',' -f'1');
+			part1=$(echo "$line"|cut -d' ' -f'2');
+			part1A=$(echo "$part1"|cut -d',' -f'1');
 			part1B=$(echo $part1|cut -d',' -f'2');
-			part2=$(echo $line|cut -d' ' -f'3');
+			part2=$(echo "$line"|cut -d' ' -f'3');
 			part2A=$(echo $part2|cut -d',' -f'1');
 			part2B=$(echo $part2|cut -d',' -f'2');
+			# Lets move some stuff around - I hope this works - I don't understand patch well enouph to know that this will work every time.
 			line="@@ $part1A,$part2B $part2A,$part1B @@";
 		fi;
 		echo "$line";
@@ -51,8 +48,9 @@ do
 		fi
 	fi;
 	lastline="$line";
-done < $file
+done < "$file"
 
 #bugs: when no newline unable to deal with the \
 #bugs: svn diff equal line filename seperator won't work
 #bugs: never tested with subdirectory; creating new files; or anything like that
+#todo: make the diff -q >> many patches script as well
