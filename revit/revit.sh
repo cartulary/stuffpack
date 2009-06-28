@@ -1,9 +1,7 @@
 #!/usr/bin/env sh
 file="$1"
-if [ -n $file ];
+if [ ! -n $file ];
 then
-	echo "Reving $file";
-else
 	echo "Can't rev null" >&2;
 	exit 1;
 fi;
@@ -25,11 +23,13 @@ do
 		if [ -n "$lastLineFile" ]
 		then
 			lastLineFile="";
-		else
-			lastLineFile="true";
 			echo $line;
 			echo $lastline;
+		else
+			lastLineFile="true";
+			#echo $line;
+			#echo $lastline;
 		fi
 	fi;
-	lastline=$line;
+	lastline="$line";
 done < $file
