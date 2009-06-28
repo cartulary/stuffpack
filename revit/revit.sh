@@ -52,5 +52,4 @@ do
 	lastline="$line";
 done < "$file"
 
-#bugs: never tested with subdirectory; creating new files; or anything like that
 #todo: make the diff -q >> many patches script as well
