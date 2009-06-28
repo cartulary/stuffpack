@@ -28,6 +28,16 @@ do
 		then
 			echo -n " ";
 		fi
+		if [ "$firstchar" = "@" ]
+		then
+			part1=$(echo $line|cut -d' ' -f'2');
+			part1A=$(echo $part1|cut -d',' -f'1');
+			part1B=$(echo $part1|cut -d',' -f'2');
+			part2=$(echo $line|cut -d' ' -f'3');
+			part2A=$(echo $part2|cut -d',' -f'1');
+			part2B=$(echo $part2|cut -d',' -f'2');
+			line="@@ $part1A,$part2B $part2A,$part1B @@";
+		fi;
 		echo "$line";
 	else
 		if [ -n "$switchLastLine" ]
@@ -42,5 +52,8 @@ do
 	lastline="$line";
 done < $file
 
-#bugs: the @@ bug; when the first char is +/-/@ then we don't indent when we should - I need to change the way I read the file to fix really...
+#bugs: the @@ bug;
+#bugs: when the first char is +/-/@ then we don't indent when we should - I need to change the way I read the file to fix really...
 #bugs: when no newline unable to deal with the \
+#bugs: svn diff equal line filename seperator won't work
+#bugs: never tested with subdirectory; creating new files; or anything like that
