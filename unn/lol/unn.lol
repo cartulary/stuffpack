@@ -1,0 +1,9 @@
+HAI
+CAM I HAS STDIO?
+PLZ OPEN FILE "test.unn"?
+	AWSUM THX
+		VISIBLE "woot"
+	O NOES
+		INVISIBLE "aww!"
+KTHX
+KTHXBYE
