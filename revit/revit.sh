@@ -24,7 +24,7 @@ do
 	if [ ! "$firstthree" = "+++" -a ! "$firstthree" = "---" ];
 	then
 		line=$(switch_first_char "$firstchar" "$line");
-		if [ ! "$firstchar" = "+" -a ! "$firstchar" = "-" ]
+		if [ ! "$firstchar" = "+" -a ! "$firstchar" = "-" -a ! "$firstchar" = "@" ]
 		then
 			echo -n " ";
 		fi
@@ -41,3 +41,6 @@ do
 	fi;
 	lastline="$line";
 done < $file
+
+#bugs: the @@ bug; when the first char is +/-/@ then we don't indent when we should - I need to change the way I read the file to fix really...
+#bugs: when no newline unable to deal with the \
