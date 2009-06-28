@@ -6,6 +6,15 @@ then
 	exit 1;
 fi;
 
+switch_first_char()
+{
+	case "$1" in
+		'+') echo "$2"|sed '1s/+/-/';;
+		'-') echo $2|sed '1s/-/+/';;
+		*) echo $2;;
+	esac;
+}
+
 switchLastLine="";
 lastline="";
 while read line
@@ -14,25 +23,18 @@ do
 	firstthree=$(echo "$line"|cut -c -3);
 	if [ ! "$firstthree" = "+++" -a ! "$firstthree" = "---" ];
 	then
-		if [ "$firstchar" = "+" -o "$firstchar" = "-" ]
+		line=$(switch_first_char "$firstchar" "$line");
+		if [ ! "$firstchar" = "+" -a ! "$firstchar" = "-" ]
 		then
-			if [ -n "$switchLastLine" ]
-			then
-				switchLastLine="";
-				echo $line;
-				echo $lastline;
-			else
-				switchLastLine="true";
-			fi
-		else
-			echo $line;
+			echo -n " ";
 		fi
+		echo "$line";
 	else
 		if [ -n "$switchLastLine" ]
 		then
 			switchLastLine="";
-			echo $line;
-			echo $lastline;
+			echo "$line";
+			echo "$lastline";
 		else
 			switchLastLine="true";
 		fi
