@@ -6,29 +6,45 @@ then
 	exit 1;
 fi;
 
-lastLineFile="";
+switch_first_char()
+{
+	case "$1" in
+		'+') echo "$2"|sed '1s/+/-/';;
+		'-') echo $2|sed '1s/-/+/';;
+		*) echo $2;;
+	esac;
+}
+
+switchLastLine="";
 lastline="";
 while read line
 do
-	firstchar=$(echo $line|cut -c -1);
-	firstthree=$(echo $line|cut -c -3);
+	firstchar=$(echo "$line"|cut -c -1);
+	firstthree=$(echo "$line"|cut -c -3);
 	if [ ! "$firstthree" = "+++" -a ! "$firstthree" = "---" ];
 	then
-		case "$firstchar" in
-			'+') echo $line|sed '1s/+/-/';;
-			'-') echo $line|sed '1s/-/+/';;
-			*) echo $line;;
-		esac;
-	else
-		if [ -n "$lastLineFile" ]
+		line=$(switch_first_char "$firstchar" "$line");
+		if [ "$firstchar" = "+" -o "$firstchar" = "-" ]
 		then
-			lastLineFile="";
+			if [ -n "$switchLastLine" ]
+			then
+				switchLastLine="";
+				echo $line;
+				echo $lastline;
+			else
+				switchLastLine="true";
+			fi
+		else
+			echo $line;
+		fi
+	else
+		if [ -n "$switchLastLine" ]
+		then
+			switchLastLine="";
 			echo $line;
 			echo $lastline;
 		else
-			lastLineFile="true";
-			#echo $line;
-			#echo $lastline;
+			switchLastLine="true";
 		fi
 	fi;
 	lastline="$line";
