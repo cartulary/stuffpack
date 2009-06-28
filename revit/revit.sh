@@ -29,8 +29,8 @@ do
 			if [ -n "$switchLastLine" ]
 			then
 				switchLastLine="";
-				echo $line;
 				echo $lastline;
+				echo $line;
 			else
 				switchLastLine="true";
 			fi
