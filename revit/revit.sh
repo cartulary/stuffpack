@@ -1,10 +1,5 @@
 #!/usr/bin/env sh
-file="$1"
-if [ ! -n $file ];
-then
-	echo "Can't rev null" >&2;
-	exit 1;
-fi;
+file="$1";
 
 switch_first_char()
 {
