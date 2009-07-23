@@ -1,3 +1,4 @@
+// I am aware this is broken ->  I wrote this for someone else to fix..
 #include <iostream>
 int main (void)
 {
@@ -6,14 +7,15 @@ int main (void)
 	double tmp;
 	double sum = 0;
 	int i;
-	for (i = 1; i <= 75; ++i)
+	for (i = 1; i <= 998; ++i)
 	{
 		tmp = first_num;
 		first_num = next_num;
 		next_num = first_num + tmp;
-		sum += first_num;
-		std::cout << std::fixed << first_num << "(" << i << ")" <<std::endl;
+		//sum += first_num;
 	}
-	std::cout << std::fixed << sum << std::endl;
+	std::cout.precision(0);
+	std::cout << std::fixed << first_num << std::endl;
+
 	return 0;
 }
