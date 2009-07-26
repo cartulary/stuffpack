@@ -4,7 +4,5 @@ define f(x) {
 	}
 	return (1);
 }
-for (z=1; z<=100; z++) {
-	f(z);
-}
+f(100);
 quit;
