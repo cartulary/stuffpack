@@ -1,0 +1,10 @@
+define f(x) {
+	if (x > 1) {
+		return (x * f(x-1));
+	}
+	return (1);
+}
+for (z=1; z<=100; z++) {
+	f(z);
+}
+quit;
