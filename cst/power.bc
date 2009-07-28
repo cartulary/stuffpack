@@ -1,0 +1,8 @@
+define f(x,y) {
+	return (x^y + y^x);
+}
+for (z=1; z<=15; z++) {
+	s += f(z,z+1);
+}
+s;
+quit;
