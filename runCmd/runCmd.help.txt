@@ -1,0 +1,1 @@
+You can set various values in ~/.runrc to modify how this program works
