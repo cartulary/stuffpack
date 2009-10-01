@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+#options get set in ~/.runrc
+#defaults get set here
+# For bools empty == no; all else == yes
+make_cmd_bg="YES";      #BOOL - run process in background mode or not
+default_cmd="";        	#TEXT - prefill textbox with this command
+dialog_cmd="dialog";	#TEXT - which program to use for dialog (dialog, xdialog, echo for debugging)
+
+if [ -x ~/.runrc ]
+then
+	source ~/.runrc
+fi
+
+base=$(basename $0);
+helpfile=$(dirname $0)/$base.help.txt
+
+TMPFILE=`mktemp -t ${base}` || exit 1
+
+$dialog_cmd --title "Run" --hline "Press F1 for help" --hfile $helpfile \
+	--inputbox "What command do you want to run?" 9 40 "$default_cmd" 2>$TMPFILE;
+
+program=$(cat $TMPFILE);
+rm $TMPFILE;
+
+if [ -z "$make_cmd_bg" ]
+then
+	$program;
+else	
+	$program &
+fi;
+
+exit 0;
