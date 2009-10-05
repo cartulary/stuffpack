@@ -6,11 +6,18 @@
 make_cmd_bg="YES";      #BOOL - run process in background mode or not
 default_cmd="";        	#TEXT - prefill textbox with this command
 dialog_cmd="dialog";	#TEXT - which program to use for dialog (dialog, xdialog, echo for debugging)
-extra_opts="YES"		#BOOL - enable XDialog options; only works dialog_cmd is set to XDialog or extra_opts is set to "override" 
+extra_opts="YES";		#BOOL - enable XDialog options; only works dialog_cmd is set to XDialog or extra_opts is set to "override" 
+force_real_cmd="YES";	#BOOL - fail if program does not exist or is not executible
+cmd_path="$PATH";		#TEXT - path to use for executing command;
+### next option not active ###
+no_run_list="";		#TEXT - if program is in this list don't run it
+
 ### Only use these options when running under a graphical dialog system ###
-x_screen_placement="screen-center"	#SET (screen-center,under-mouse,auto-placement) - Where does the dialog go
-x_button_style="default" 		#SET (default,icon,text) - What type of buttons to display
+x_screen_placement="screen-center";	#SET (screen-center,under-mouse,auto-placement) - Where does the dialog go
+x_button_style="default"; 		#SET (default,icon,text) - What type of buttons to display
 x_force_program="";			#BOOL - force the program to be non-empty
+
+### add command to check for existance of program...
 
 #don't read user prefs if env var tells us not to (for scripts...)
 if [ -z $RUNCMD_NO_PREFS ]
@@ -20,6 +27,7 @@ then
 		source ~/.runrc
 	fi
 fi
+
 
 # Lets make sure we only use extra_opts when we really want to
 if [ "$dialog_cmd" != "Xdialog" -a "$extra_opts" != "OVERRIDE" ]
@@ -60,12 +68,28 @@ rm $TMPFILE;
 
 if [ ! -z $program ]
 then
-	if [ -z "$make_cmd_bg" ]
-	then
-		$program;
+	# set the path as late as possible because otherwise key programs won't be found
+	old_path="$PATH";
+	PATH="$cmd_path";
+	if [ ! -z $force_real_cmd -a ! -x $program ]
+	then	
+		#we need to return to the original path to continue normal operations
+		PATH="$old_path";
+		$dialog_cmd --title "Program not executible" --msgbox "The file requested does not exist or can not be executed" 5 62
+		if [ ! -z $x_force_program ]
+		then
+			source $0;
+		fi
 	else	
-		$program &
-	fi;
+		if [ -z "$make_cmd_bg" ]
+		then
+			$program;
+		else	
+			$program &
+		fi;
+	fi
+	#we need to return to the original path to continue normal operations
+	PATH="$old_path";
 else
 	if [ ! -z $x_force_program ]
 	then
