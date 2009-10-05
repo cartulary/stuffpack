@@ -1,32 +1,78 @@
 #!/usr/bin/env bash
 #options get set in ~/.runrc
 #defaults get set here
+
 # For bools empty == no; all else == yes
 make_cmd_bg="YES";      #BOOL - run process in background mode or not
 default_cmd="";        	#TEXT - prefill textbox with this command
 dialog_cmd="dialog";	#TEXT - which program to use for dialog (dialog, xdialog, echo for debugging)
+extra_opts="YES"		#BOOL - enable XDialog options; only works dialog_cmd is set to XDialog or extra_opts is set to "override" 
+### Only use these options when running under a graphical dialog system ###
+x_screen_placement="screen-center"	#SET (screen-center,under-mouse,auto-placement) - Where does the dialog go
+x_button_style="default" 		#SET (default,icon,text) - What type of buttons to display
+x_force_program="";			#BOOL - force the program to be non-empty
 
-if [ -x ~/.runrc ]
+#don't read user prefs if env var tells us not to (for scripts...)
+if [ -z $RUNCMD_NO_PREFS ]
 then
-	source ~/.runrc
+	if [ -x ~/.runrc ]
+	then
+		source ~/.runrc
+	fi
+fi
+
+# Lets make sure we only use extra_opts when we really want to
+if [ "$dialog_cmd" != "Xdialog" -a "$extra_opts" != "OVERRIDE" ]
+then
+	extra_opts="";
 fi
 
 base=$(basename $0);
 helpfile=$(dirname $0)/$base.help.txt
+	
+dialog_params="--title Run --hfile $helpfile";
+# --backtitle text shows text above "What command..."
 
-TMPFILE=`mktemp -t ${base}` || exit 1
+# Are we in a script where we have to run a program (this can be easily subvered by running something like false but lets provide the option anyway)
+if [ -z $x_force_program ]
+then
+	dialog_close_params="--allow-close";
+else
+	dialog_close_params="--no-close --no-cancel";
+fi
+dialog_extra_params="$dialog_close_params --$x_screen_placement \
+	--no-wrap --stderr --button-style $x_button_style \
+	--ok-label Run
+	";
+# If we use the extra params then lets add them to the variable
+if [ ! -z "$extra_opts" ]
+then
+	dialog_params="$dialog_params $dialog_extra_params";
+fi
 
-$dialog_cmd --title "Run" --hline "Press F1 for help" --hfile $helpfile \
-	--inputbox "What command do you want to run?" 9 40 "$default_cmd" 2>$TMPFILE;
+# Lets get a temporary file here to store the program in (I wish we could do this with a named pipe or something like that
+TMPFILE=$(mktemp -t $base) || exit 1
 
-program=$(cat $TMPFILE);
+$dialog_cmd $dialog_params --hline "Press F1 for help" \
+       --inputbox "What command do you want to run?" 9 40 "$default_cmd" 2>$TMPFILE;
+program="$(cat $TMPFILE)";
 rm $TMPFILE;
 
-if [ -z "$make_cmd_bg" ]
+if [ ! -z $program ]
 then
-	$program;
-else	
-	$program &
-fi;
+	if [ -z "$make_cmd_bg" ]
+	then
+		$program;
+	else	
+		$program &
+	fi;
+else
+	if [ ! -z $x_force_program ]
+	then
+		source $0;
+	fi
+	echo "No program" > /dev/stderr
+	exit 1;
+fi
 
 exit 0;
