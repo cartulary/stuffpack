@@ -14,13 +14,15 @@ no_run_list="";		#TEXT - if program is in this list don't run it
 
 ### Only use these options when running under a graphical dialog system ###
 x_screen_placement="screen-center";	#SET (screen-center,under-mouse,auto-placement) - Where does the dialog go
-x_button_style="default"; 		#SET (default,icon,text) - What type of buttons to display
+x_buttons_style="default"; 		#SET (default,icon,text) - What type of buttons to display
 x_force_program="";			#BOOL - force the program to be non-empty
+
+help_mode="line"				#SET (line,cat) - changes how to display help to the user (line==normal; cat==Xdialog)
 
 ### add command to check for existance of program...
 
 #don't read user prefs if env var tells us not to (for scripts...)
-if [ -z $RUNCMD_NO_PREFS ]
+if [ -z "$RUNCMD_NO_PREFS" ]
 then
 	if [ -x ~/.runrc ]
 	then
@@ -28,17 +30,16 @@ then
 	fi
 fi
 
-
 # Lets make sure we only use extra_opts when we really want to
 if [ "$dialog_cmd" != "Xdialog" -a "$extra_opts" != "OVERRIDE" ]
 then
 	extra_opts="";
 fi
-
-base=$(basename $0);
-helpfile=$(dirname $0)/$base.help.txt
+base="$(basename $0)";
+helpfile="$(dirname $0)/$base.help.txt";
 	
-dialog_params="--title Run --hfile $helpfile";
+#dialog_params="--title Run;
+dialog_params="--title Run";
 # --backtitle text shows text above "What command..."
 
 # Are we in a script where we have to run a program (this can be easily subvered by running something like false but lets provide the option anyway)
@@ -49,11 +50,11 @@ else
 	dialog_close_params="--no-close --no-cancel";
 fi
 dialog_extra_params="$dialog_close_params --$x_screen_placement \
-	--no-wrap --stderr --button-style $x_button_style \
+	--no-wrap --stderr --buttons-style $x_buttons_style \
 	--ok-label Run
 	";
 # If we use the extra params then lets add them to the variable
-if [ ! -z "$extra_opts" ]
+if [ -n "$extra_opts" ]
 then
 	dialog_params="$dialog_params $dialog_extra_params";
 fi
@@ -61,22 +62,30 @@ fi
 # Lets get a temporary file here to store the program in (I wish we could do this with a named pipe or something like that
 TMPFILE=$(mktemp -t $base) || exit 1
 
-$dialog_cmd $dialog_params --hline "Press F1 for help" \
+if [ "$help_mode" = "line" ]
+then
+	$dialog_cmd $dialog_params --hline "Press F1 for help" --hfile "$helpfile" \
        --inputbox "What command do you want to run?" 9 40 "$default_cmd" 2>$TMPFILE;
+fi
+if [ "$help_mode" = "cat" ]
+then
+	$dialog_cmd $dialog_params --help "$(cat $helpfile)" \
+       --inputbox "What command do you want to run?" 0 0 "$default_cmd" 2>$TMPFILE;
+fi
 program="$(cat $TMPFILE)";
 rm $TMPFILE;
 
-if [ ! -z $program ]
+if [ -n "$program" ]
 then
 	# set the path as late as possible because otherwise key programs won't be found
 	old_path="$PATH";
 	PATH="$cmd_path";
-	if [ ! -z $force_real_cmd -a ! -x $program ]
+	if [ -n "$force_real_cmd" -a ! -x "$program" ]
 	then	
 		#we need to return to the original path to continue normal operations
 		PATH="$old_path";
 		$dialog_cmd --title "Program not executible" --msgbox "The file requested does not exist or can not be executed" 5 62
-		if [ ! -z $x_force_program ]
+		if [ -n $x_force_program ]
 		then
 			source $0;
 		fi
@@ -91,7 +100,7 @@ then
 	#we need to return to the original path to continue normal operations
 	PATH="$old_path";
 else
-	if [ ! -z $x_force_program ]
+	if [ -n $x_force_program ]
 	then
 		source $0;
 	fi
