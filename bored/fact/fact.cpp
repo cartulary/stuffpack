@@ -21,6 +21,10 @@ int main (int argc, char* argv[])
       	}
 		truearg = 0; //arguments failed us so try for manual entry
 	} while (num <= 0);
+	if ( num > 33 )
+	{
+		std::cout << "Numbers over 33 may have overloading problems" << std::endl;
+	}
 	// we don't need to multiply by one
 	for (long int i = num; i >= 2; --i)
 	{
