@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+for file in "$@"
+do	
+	fullfile=$(realpath "$file");
+	vlc.do -c "enqueue $fullfile";
+done
