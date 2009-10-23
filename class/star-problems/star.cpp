@@ -21,7 +21,8 @@ int main (int argc, char* argv[])
 	int row, col;
 	int amt_to_add = 2;
 	int amount = 1;
-	for (row = 0; row < rows; ++row)
+	// Odd values with <= will print extra line; lets see if we could fix this.
+	for (row = 0; row <= rows ; ++row)
 	{
 
 		int space_amt = (rows/2) - (amount /2);
@@ -35,10 +36,10 @@ int main (int argc, char* argv[])
 		}
 		std::cout << std::endl;
 		amount += amt_to_add;
-		if (row + 1 > (rows /2) -1)
-		{
-			amt_to_add = -2;
-		}
+            if (row +1 > (rows /2) -1)
+            {
+                  amt_to_add = -2;
+            }
 	}
 	return 0;
 }
