@@ -1,0 +1,14 @@
+/**********************************************
+ * Name:                                      *
+ * Purpose: 					    *
+ * Returns: 	                            *
+ * Parameters: 					    *
+ * Known bugs:					    *
+ * compatibility:					    *
+ * notes:						    *
+ *********************************************/
+
+int main (int argc, char* argv[])
+{
+	return 0;
+}

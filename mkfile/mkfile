@@ -1,0 +1,33 @@
+#!/usr/bin/env sh
+
+templatedir=~/.templates;
+while getopts f:t: option
+do
+	case "$option" in
+		'f') file="$OPTARG";;
+		't') template="$OPTARG";;
+	esac
+done
+
+if [ -z "$file" -o -z "$template" ]
+then
+	echo "Missing file or template" >/dev/stderr;
+fi
+file=$(realpath "$file");
+echo "Template: $templatedir/$template";
+echo "File: $file";
+if [ ! -e $templatedir/$template ]
+then
+	echo "Invalid template" >/dev/stderr;
+	exit 1;
+fi
+
+if [ -e "$file" ]
+then
+	echo "File exists" >/dev/stderr
+	exit 1;
+fi
+
+touch "$file";
+cat "$templatedir/$template" > "$file";
+exit 0;
