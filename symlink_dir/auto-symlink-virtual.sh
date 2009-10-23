@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+#TODO -> release new version of port
 portdir="/usr/ports"
 whereto="."
 dryrun=""
@@ -50,11 +51,12 @@ do_link_port()
 
 do_make_cat_dir() 
 {
-	if [ ! -d "$whereto/$1" ];
+	catname="$1"
+	if [ ! -d "$whereto/$catname" ];
 	then
-		[ -n "$verbose" ] && echo "  " mkdir -p "$whereto/$1";
-		[ -z "$dryrun" ] && mkdir -p "$whereto/$1";
-		fi;
+		[ -n "$verbose" ] && echo "  " mkdir -p "$whereto/$catname";
+		[ -z "$dryrun" ] && mkdir -p "$whereto/$catname";
+	fi;
 }
 
 op_port()
@@ -77,16 +79,16 @@ op_port()
 
 transverse_sub_tree()
 {
-	portcat=$2;
-	for portname in $(make -V SUBDIR -C $1/$2);
+	portcat="$2";
+	for portname in $(make -V SUBDIR -C $1/$portcat);
 	do
-		portpath="$1/$2/$portname";
-		if [ -d "$1/$2/$portname" ];
+		portpath="$1/$portcat/$portname";
+		if [ -d "$1/$portcat/$portname" ];
 		then
-			echo -n "$2/$portname:";
-			for item_cat in $(make -V CATEGORIES -C $1/$2/$portname);
+			echo -n "$portcat/$portname:";
+			for item_cat in $(make -V CATEGORIES -C $1/$portcat/$portname);
 			do
-				[ -n "$verbose" ] && echo "Transversing $2/$item_cat";
+				[ -n "$verbose" ] && echo "-> Transversing $portcat/$item_cat";
 				op_port $portpath $item_cat $portname $portcat;
 			done;
 			echo
@@ -94,7 +96,8 @@ transverse_sub_tree()
 	done;
 }
 
-
+# this function transverses the main (/usr/ports/______) tree. It then calls
+# another function to transverse the sub_tree
 transverse_tree()
 {
 	for main_cat in $(make -V SUBDIR -C $1);
@@ -138,9 +141,10 @@ then
 	fi;
 	transverse_tree "$portdir";
 else
-	if [ ! -e "$portdir/$index" ];
+	# test that index exists and that the size is greater than 0.
+	if [ ! -s "$portdir/$index" ];
 	then
-		echo "No Index";
+		echo "Invalid Index";
 		exit 1;
 	fi;
 	transverse_index "$portdir";
@@ -174,4 +178,7 @@ return 0;
 
 
 #TODO
-# add failure and sanity testing
+# add even more failure and sanity testing
+# add comments explaining what is going on
+# add "mapping" option to allow you add your own categories?
+# add the ability to change the mask used to name the ports w/i each virtual category.
