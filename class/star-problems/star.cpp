@@ -4,6 +4,7 @@
  * Returns: 0 when argument exists; else 1    *
  * Parameters: N as first command line option *
  * Known bugs: extra line printed with odd n  *
+ * algo for spacing ignores # of chars in -c  *
  * compatibility:	N/A				    *
  * notes: this could be done better...	    *
  *********************************************/
@@ -12,12 +13,13 @@
 #include <iostream>
 
 void repeat_char(const char* to_print, int times);
+void usage(char* prog);
 
 extern char* optarg;
 
 int main (int argc, char* argv[])
 {
-	long rows = 2;
+	long rows = 0;
 	int c;
 	const char* diamond_char= "*";
 	while (( c = getopt (argc, argv, "c:n:")) != -1)
@@ -31,8 +33,15 @@ int main (int argc, char* argv[])
 				rows = strtol(optarg, NULL, 10);
 				break;
 			default:
+				usage(argv[0]);
+				return 1;
 				break;
 		}
+	}
+	if (rows == 0)
+	{
+		usage(argv[0]);
+		return 1;
 	}
 	// We want the first command line option; argv[0] == name thaat program is executed with
 	int cols =1;
@@ -65,4 +74,12 @@ void repeat_char(const char* to_print, int times)
 	{
 		std::cout << to_print;
 	}
+}
+
+void usage(char* prog)
+{
+	std::cout << "usage: "  << prog << " -n rows [-c string ]" << std::endl;
+	std::cout << std::endl;
+	std::cout << "\t -n \t number of rows to print in the diamond" << std::endl;
+	std::cout << "\t -c \t what character/string to print diamond with " << std::endl;
 }
