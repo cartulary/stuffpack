@@ -38,10 +38,17 @@ int main (int argc, char* argv[])
 				break;
 		}
 	}
+	/* if we don't have a -n argument */
 	if (rows == 0)
 	{
 		usage(argv[0]);
 		return 1;
+	}
+	if ( rows % 2 == 0)
+	{
+		// if we repeat the middle line it looks weird; if we don't then it also looks weird
+		// I'm tempted to not even allow even sized diamonds
+		std::cout << "An even sized diamond is ambiguous..." << std::endl;
 	}
 	// We want the first command line option; argv[0] == name thaat program is executed with
 	int cols =1;
@@ -53,7 +60,7 @@ int main (int argc, char* argv[])
 	int amt_to_add = 2;
 
 	// Odd values with <= will print extra line; lets see if we could fix this.
-	for (row = 0; row <= rows ; ++row)
+	for (row = 0; row < rows ; ++row)
 	{
 		int space_cols = (rows/2) - (cols /2);
 		repeat_char(" ", space_cols);
