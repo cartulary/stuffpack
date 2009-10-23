@@ -1,25 +1,29 @@
 /**********************************************
  * Name: Star problem 10                      *
  * Purpose: Print a diamond using stars	    *
- * Returns: always 0                          *
+ * Returns: 0 when argument exists; else 1    *
  * Parameters: Single input @ start		    *
  * Known bugs: none 				    *
- * compatibility:					    *
- * notes:						    *
+ * compatibility:	N/A				    *
+ * notes: this could be done better...	    *
  *********************************************/
 
 #include <iostream>
 
 int main (int argc, char* argv[])
 {
-	int rows;
-	rows = atoi(argv[1]);
-	int row = 0;
-	int amount = 1;
-	int amt_to_add = 2;
-	for (; row < rows; ++row)
+	if (argc < 2)
 	{
-		int col;
+		std::cout << "Please choose a value..." << std::endl;
+		return 1;
+	}
+	long rows = strtol(argv[1], NULL, 10);
+	int row, col;
+	int amt_to_add = 2;
+	int amount = 1;
+	for (row = 0; row < rows; ++row)
+	{
+
 		int space_amt = (rows/2) - (amount /2);
 		for (col = 1; col <= space_amt; ++col)
 		{
