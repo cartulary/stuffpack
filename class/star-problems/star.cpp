@@ -10,27 +10,22 @@
 
 #include <iostream>
 
-void repeat_char(char to_print, int times)
-{
-	for (int counter = 1; counter <= times; ++counter)
-	{
-		std::cout << to_print;
-	}
-}
+void repeat_char(const char* to_print, int times);
 
 int main (int argc, char* argv[])
 {
 	if (argc < 2)
 	{
-		std::cout << "Please choose a value..." << std::endl;
+		std::cout << "Usage: Please choose a value..." << std::endl;
 		return 1;
 	}
 
 	// We want the first command line option; argv[0] == name thaat program is executed with
 	long rows = strtol(argv[1], NULL, 10);
-	int cols = 1;
+	int cols;
 
-	int row, col;
+	/* because we use repeat_char we don't need a col counter */
+	int row;
 
 	// each time out add how many stars?
 	int amt_to_add = 2;
@@ -40,14 +35,8 @@ int main (int argc, char* argv[])
 	{
 
 		int space_cols = (rows/2) - (cols /2);
-		for (col = 1; col <= space_cols; ++col)
-		{
-			std::cout << " ";
-		}
-		for (col = 1; col <= cols; ++col)
-		{
-			std::cout << "*";
-		}
+		repeat_char(" ", space_cols);
+		repeat_char("*", cols);
 		std::cout << std::endl;
 		cols += amt_to_add;
             if (row +1 > (rows /2) -1)
@@ -56,4 +45,12 @@ int main (int argc, char* argv[])
             }
 	}
 	return 0;
+}
+
+void repeat_char(const char* to_print, int times)
+{
+	for (int counter = 1; counter <= times; ++counter)
+	{
+		std::cout << to_print;
+	}
 }
