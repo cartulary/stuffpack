@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+length=$(vlc.do -c get_length);
+time=$(vlc.do -c get_time);
+title=$(vlc.do -c get_title);
+oldtitle=$title;
+
+optdir="/home/eitan/.vlc_extra";
+current_sock="$(cat $optdir/socket_name)";
+
+while [ -e $current_sock ]
+do
+	title=$(vlc.do -c get_title);
+	oldtitle=$title;
+	length=$(vlc.do -c get_length);
+	(
+		while [ $time -lt $length ]
+		do
+			title=$(vlc.do -c get_title);
+			if [ "$oldtitle" != "$title" ]
+			then
+				break 2;
+			fi
+			time=$(vlc.do -c get_time);
+			echo $time;
+		done
+	) | Xdialog --auto-placement --title "VLC - current status" --icon ~/.icewm/icons/media-cdrom.xpm --progress "$title" 0 0 $length;
+done
