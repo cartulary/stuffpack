@@ -1,10 +1,14 @@
 #include <iostream>
+#include <gmp.h>
+#include <gmpxx.h>
+
 char* getcharcters(int);
 
 int main (int argc, char* argv[])
 {
 	long int num = 0;
-	unsigned long int factorial = 1;
+	mpz_class factorial;
+	factorial = 1;
 	int truearg = argc; //use instead of argc because we modifu it
 
 	do
@@ -21,15 +25,13 @@ int main (int argc, char* argv[])
       	}
 		truearg = 0; //arguments failed us so try for manual entry
 	} while (num <= 0);
-	if ( num > 33 )
-	{
-		std::cout << "Numbers over 33 may have overloading problems" << std::endl;
-	}
+
 	// we don't need to multiply by one
 	for (long int i = num; i >= 2; --i)
 	{
 		factorial *= i;
 	}
+//	mpz_out_str(std::cout, 10, factorial);
 	std::cout << factorial << std::endl;
 	return 0;
 }
