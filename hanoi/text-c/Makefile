@@ -1,7 +1,6 @@
 DIST = text
 DISTPATH = text-c
 LANG = c
-COMPILER=llvm
 .include <../Makefile.inc>
 
 #compiling options
