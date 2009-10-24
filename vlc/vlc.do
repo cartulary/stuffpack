@@ -13,7 +13,7 @@ done
 
 if [ -z "$cmd_to_tell" ]
 then
-	if [ -n $x_mode ]
+	if [ -n "$x_mode" ]
 	then
       	Xdialog --icon ~/bin/icons/warning.xpm --infobox "Missing a cmd!" 0 0 2000;
 	else
@@ -27,12 +27,12 @@ fi
 if [ -e "$socket" ]
 then
 	echo "$cmd_to_tell"|nc -U $socket
-	if [ -n $x_mode ]
+	if [ -n "$x_mode" ]
 	then
 		Xdialog --title "VLC Remote control" --backtitle "I told vlc to " --no-buttons --icon ~/bin/icons/media-cdrom.xpm --infobox "$cmd_to_tell" 0 0 3000
 	fi
 else
-	if [ -n $x_mode ]
+	if [ -n "$x_mode" ]
 	then
       	Xdialog --icon ~/bin/icons/warning.xpm --infobox "VLC not running!" 0 0 2000;
 	fi
