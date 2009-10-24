@@ -27,11 +27,18 @@ CFLAGS += -Wfloat-equal -Wundef -Wshadow -Wcast-qual -Wcast-align
 CFLAGS += -fabi-version=0 -funroll-loops
 CFLAGS += -Wunreachable-code -Winline
 
+CFLAGS += -I/usr/local/include
+LDFLAGS = -L/usr/local/lib
 PREFIX = /usr/local
 
 superclean: .NOTMAIN
 	rm -rfv ./$(NAME)
+
 check: .NOTMAIN
+	## only run this on C++ code
 	cppcheck -v -a -s --unused-functions .
+	## run on all code...
 	#rats -rw3 *
+	## only run these on C code....
 	#splint -strict-lib -showcolumn -showfunc -strict *.c
+	#lint -aabcehprsxH -I /usr/local/include/ *
