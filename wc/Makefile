@@ -5,11 +5,6 @@ LANG = c++
 #compiling options
 .PHONY:     clean
 
-all:  $(NAME)
-
 $(NAME):
 
-clean:
-	rm -fv *.o
-	rm ./$(NAME)
-
+clean: nameclean coreclean objclean 

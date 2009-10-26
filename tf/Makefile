@@ -7,10 +7,5 @@ LANG = c
 
 all:	true false
 
-true:
-
-false:
-
-clean: 	
-	rm -fv *.o
+clean: objclean
 	rm ./true ./false

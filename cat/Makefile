@@ -9,5 +9,5 @@ build:	$(NAME)
 
 $(NAME): 
 
-clean: 	
-	rm -fv *.o $(NAME)
+clean: nameclean
+	rm -fv *.o
