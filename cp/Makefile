@@ -1,16 +1,12 @@
 NAME=cp
 LANG = c++
 .include	<../Makefile>
-LDFLAGS += -L/usr/local/lib -lboost_filesystem
-CFLAGS += -pthread -isystem /usr/local/include/boost/ -isystem /usr/local/include
-
+LDFLAGS += -lboost_filesystem
+CFLAGS += -pthread -isystem /usr/local/include/boost/
 
 #compiling options
-.PHONY:	build clean
-
-build:	$(NAME)
+.PHONY:	clean
 
 $(NAME): 
 
-clean: 	
-	rm -fv *.o $(NAME)
+clean: nameclean coreclean objclean

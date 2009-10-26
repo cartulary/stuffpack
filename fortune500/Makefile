@@ -5,7 +5,7 @@ CFLAGS += -pthread
 #replace with a for loop to autoexpand a path?
 INCLUDE_PATHS = -I/usr/local/include/gnet -I/usr/local/include/glib12
 CFLAGS += $(INCLUDE_PATHS)
-CFLAGS += -L/usr/local/lib -lgnet -lgthread-12 -lglib-12 
+LDFLAGS += -lgnet -lgthread-12 -lglib-12 
 LINT_FLAGS= -H -aa -bcehprsx $(INCLUDE_PATHS)
 
 all: fortune500 client

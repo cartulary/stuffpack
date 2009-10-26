@@ -1,14 +1,10 @@
-NAME=tf
+NAME=primeA
 LANG = c++
 .include	<../Makefile>
 
 #compiling options
-.PHONY:	all clean
-
-all:	primeA
+.PHONY:	clean
 
 primeA:
 
-clean: 	
-	rm -fv *.o
-	rm -f ./primeA ./primeA.core
+clean: nameclean objclean coreclean

@@ -5,10 +5,6 @@ LANG = c++
 #compiling options
 .PHONY:     clean
 
-all:  tee
-
 tee:
 
-clean:
-	rm -fv *.o
-	rm -fv ./tee *.core
+clean: nameclean coreclean objclean
