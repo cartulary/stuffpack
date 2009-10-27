@@ -8,6 +8,6 @@ all:  $(NAME)
 
 $(NAME):
 
-clean:
+clean: nameclean
 	rm -fv *.o
-	rm -fv ./${NAME} *.core
+	rm -fv *.core
