@@ -28,6 +28,7 @@ inline long int getIntInRange(int base, int input_mode, long int min, long int m
 void setAnswer(int num);
 inline int checkAnswer(int num); //returns -1 1 or 0 for lower, higher, correct
 long int to_guess;
+void screen_clear();
 
 int flagPlayerMode = 0; //computer or human
 int flagGameMode = MODE_HIGHLOW; // high-low or pure guess
@@ -199,6 +200,8 @@ inline long int getIntInRange(int base, int input_mode, long int min, long int m
 long int getInteger(int base, int input_mode)
 {
       int n;
+	// Lets leave this as 1 until we figure out how to deal with the rest
+	input_mode=1;
 	switch (input_mode)
 	{
 		case 1:
