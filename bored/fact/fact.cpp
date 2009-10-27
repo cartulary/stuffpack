@@ -9,29 +9,25 @@ int main (int argc, char* argv[])
 	long int num = 0;
 	mpz_class factorial;
 	factorial = 1;
-	int truearg = argc; //use instead of argc because we modifu it
 
-	do
+	// if the user gave us a value - do something with it
+	if (argc > 1)
 	{
-		// if the user gave us a value - do something with it
-		if (truearg > 1)
-		{
- 			num = strtol(argv[1],NULL,10);
-		}
-		else
-		{
-		      std::cout << "Please enter a positive integer:" << std::endl;
-     			num = strtol(getcharcters(10),NULL,10);
-      	}
-		truearg = 0; //arguments failed us so try for manual entry
-	} while (num <= 0);
+		num = strtol(argv[1],NULL,10);
+	}
+
+	while (num <= 0)
+	{
+	      std::cout << "Please enter a positive integer:" << std::endl;
+		num = strtol(getcharcters(10),NULL,10);
+	}
 
 	// we don't need to multiply by one
 	for (long int i = num; i >= 2; --i)
 	{
 		factorial *= i;
 	}
-//	mpz_out_str(std::cout, 10, factorial);
+
 	std::cout << factorial << std::endl;
 	return 0;
 }

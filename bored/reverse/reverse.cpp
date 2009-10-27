@@ -1,4 +1,4 @@
-/* lincesed unded CMU licence */
+/* lincesed under CMU licence */
 #include <iostream>
 #include <string>
 
