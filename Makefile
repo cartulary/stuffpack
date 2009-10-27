@@ -1,7 +1,13 @@
+# To protect us from stupid errors (like running make nameclean in the root directory)
 NAME?=DOES_NOT_EXIST
 LANG?=none
+DEBUG?=off
 
 CFLAGS = -g3 -pipe
+.ifdef $(DEBUG) == on
+.else
+CFLAGS += -O3
+.endif
 
 .ifdef $(LANG) == c++
 #we are using c++ add the flags that only work for c++
@@ -9,30 +15,37 @@ CC = llvm-g++
 CFLAGS += -ansi -Wabi
 CFLAGS += -Weffc++
 CFLAGS += -fno-gnu-keywords
-CFLAGS += -Wstrict-null-sentinel -Wctor-dtor-privacy -Wnon-virtual-dtor -Woverloaded-virtual -Wsign-promo
+CFLAGS += -Wstrict-null-sentinel -Wctor-dtor-privacy -Wnon-virtual-dtor -Woverloaded-virtual -Wsign-promo -Wold-style-cast	
 CFLAGS += -ffor-scope
 .elif $(LANG) == c
 CC = llvm-gcc
 CFLAGS += -g
 CFLAGS += -std=c99 
 CFLAGS += -Wimplicit-function-declaration -Wbad-function-cast -Wdeclaration-after-statement
+CFLAGS += -Wstrict-prototypes -Wold-style-definition -Wmissing-prototypes -Wmissing-declarations
 .endif
 
 # set the global flags
 CFLAGS += -Wall -Wextra -pedantic
 CFLAGS += -Wformat=2 -Wformat-y2k -Wformat-nonliteral -Wformat-security
-CFLAGS += -Wunused -Wunused-parameter
-CFLAGS += -Winit-self -Wmissing-include-dirs -Wfloat-equal
-CFLAGS += -Wfloat-equal -Wundef -Wshadow -Wcast-qual -Wcast-align
-CFLAGS += -fabi-version=0 -funroll-loops
-CFLAGS += -Wunreachable-code -Winline
+CFLAGS += -Wunused -Wunused-parameter -Wswitch-default -Wswitch-enum 
+CFLAGS += -Winit-self -Wmissing-include-dirs -Wpointer-arith -Wconversion
+CFLAGS += -Wfloat-equal -Wundef -Wshadow -Wcast-qual -Wcast-align -Wwrite-strings
+CFLAGS += -fabi-version=0 -funroll-loops -Waggregate-return
+CFLAGS += -Wunreachable-code -Winline -Wmissing-noreturn -Wpacked -Wpadded -Wredundant-decls
 
+# Default includes...
 CFLAGS += -I/usr/local/include
 LDFLAGS = -L/usr/local/lib
+
 PREFIX = /usr/local
 
-superclean: .NOTMAIN
-	rm -rfv ./$(NAME)
+nameclean: .NOTMAIN
+	rm -f ./$(NAME)
+coreclean: .NOTMAIN
+	rm -f ./$(NAME).core
+objclean: .NOTMAIN
+	rm -fv ./*.o
 
 check: .NOTMAIN
 	## only run this on C++ code
@@ -40,5 +53,5 @@ check: .NOTMAIN
 	## run on all code...
 	#rats -rw3 *
 	## only run these on C code....
-	#splint -strict-lib -showcolumn -showfunc -strict *.c
-	#lint -aabcehprsxH -I /usr/local/include/ *
+	#splint -strict-lib -showcolumn -showfunc -strict *.c *.h
+	#lint -aabcehprsxH -I /usr/local/include/ *.c *.h
