@@ -1,7 +1,7 @@
 /*
  * continue echoing the same word (argv[1]) or "y" forever
 */
-#include <stdio>
+#include <stdio.h>
 
 int main (int argc, char *argv[])
 {
