@@ -5,9 +5,8 @@
 
 #include </usr/local/include/xcurses.h>
 
-
 #define ERROR -1
 
 long int getinteger(int);
 
-using namespace std;
+//using namespace std;

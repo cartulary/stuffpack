@@ -2,10 +2,8 @@
 #include <curses.h>
 #include <stdlib.h>
 #include <limits.h>
-#include <iostream>
+#include <string.h>
 
 #define ERROR -1
 
 long int getinteger(int);
-
-using namespace std;

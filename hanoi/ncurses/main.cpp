@@ -18,7 +18,7 @@ int main (int argc, char *argv[])
 		/* If n has an incorrect value, ask the user to input a correct one: */
 		if (n <= 0)
 		{
-			cerr << "Please enter a valid integer" << endl;
+			std::cerr << "Please enter a valid integer" << std::endl;
 			n = getinteger(10);
 		}
 	}

@@ -4,14 +4,7 @@ LANG = c++
 .include	<../Makefile.inc>
 #CFLAGS += -lpdcurses 
 
-#compiling options
-.PHONY:	build clean
-
-build:	main.cpp
-
-clean: 	
-	rm -fv *.o
-main.cpp: ../hanoi.o functions.o
+main: ../hanoi.o functions.o main.cpp
 	$(CC) $(CFLAGS) -o $(NAME).bin $@
 
 functions.o: functions.h

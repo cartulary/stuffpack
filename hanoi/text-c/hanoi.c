@@ -1,16 +1,14 @@
 //Includes
 #include <stdio.h>
-#include <string>
 #include "functions.c"
 #include <ctype.h>
 #include <stdlib.h>
 #include <limits.h>
-#include <iostream>
 
 //prototypes of function
-void Hanoi(unsigned int n, char source,char dest,char help);
+void Hanoi(unsigned int n, const char source, const char dest, const char help);
 
-int main (int argc, char *argv[])
+int main (int argc, const char *argv[])
 {
 	long n;
 	/* If the amount was passed through a command line argument use it */
@@ -40,11 +38,11 @@ int main (int argc, char *argv[])
  * Purpose: run the hanoi algorithm           *
  * Returns: nothing                           *
  * Parameters: number of times to interate;   *
- *  char to use for source/dest/help 	    *
+ *  const char to use for source/dest/help 	    *
  * Output: steps to complete tower of hanoi   *
  *********************************************/
 
-void Hanoi(unsigned int n, char source,char dest,char help)
+void Hanoi(unsigned int n, const char source, const char dest, const char help)
 {
 	if (n==1)
 	{

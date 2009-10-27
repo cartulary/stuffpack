@@ -2,15 +2,9 @@ DIST = ncurses
 DISTPATH = ncurses-c
 LANG = c
 .include <../Makefile.inc>
-CCFLAGS += -lncurses
+CFLAGS += -lncurses
 
-#compiling options
-.PHONY:	build clean forceclean
+hanoi:	functions.o hanoi.c
+####		CC $(CCFLAGS) $(NAME).c -o $(NAME)
 
-build:	hanoi.c functions.c
-	CC $(CCFLAGS) -o $(NAME).bin hanoi.c
-clean: 	
-	@echo "cleaning...use make forceclean for unattended clean"
-	-rm -irv *.bin
-forceclean:
-	-rm -rfv *.bin
+functions.o: functions.h functions.c
