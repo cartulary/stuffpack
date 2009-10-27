@@ -2,5 +2,10 @@
 for file in "$@"
 do	
 	fullfile=$(realpath "$file");
-	vlc.do -c "enqueue $fullfile";
+	if [ -f "$fullfile" ]
+	then
+		vlc.do -c "enqueue $fullfile";
+	else
+		echo "I'm not recursing through directories..." >&2
+	fi
 done
