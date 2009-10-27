@@ -2,14 +2,8 @@ DIST = ncurses
 DISTPATH = ncurses
 LANG = c++
 .include	<../Makefile.inc>
-CFLAGS += -lncurses 
+LDFLAGS += -lncurses 
 
-#compiling options
-.PHONY:	build clean
-
-main:	../hanoi.cpp functions.cpp main.cpp
+main:	../hanoi.cpp functions.o main.cpp
 
 functions.o: functions.h
-
-clean:
-	rm -fv *.o main

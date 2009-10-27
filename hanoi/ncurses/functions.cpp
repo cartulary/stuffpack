@@ -12,9 +12,9 @@ long getinteger(int base)
 		initscr();				/* start the curses mode */
 		getmaxyx(stdscr,row,col);		/* get the number of rows and columns */
 		mvprintw(row/2,(col-strlen(mesg))/2,"%s",mesg);     /* print the message at the center of the screen */
-		getstr(str);
-		endwin();
-		finalVal = strtol(str,NULL,base);
+		getstr(str);				/* request the input...*/
+		endwin();					/* close the ncurses window */
+		finalVal = strtol(str,NULL,base); /* convert the requested value from a string to a long... */
 	}
 	return finalVal;
 }

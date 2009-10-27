@@ -7,5 +7,3 @@
 #define ERROR -1
 
 long int getinteger(int);
-
-using namespace std;

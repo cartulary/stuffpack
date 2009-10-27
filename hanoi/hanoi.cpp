@@ -1,16 +1,14 @@
 //Includes
 #include <stdio.h>
-#include <string>
 #include <stdlib.h>
 
+void Hanoi(unsigned int n, const char source, const char dest, const char help);
 
-void Hanoi(unsigned int n, char source,char dest,char help);
-
-void Hanoi(unsigned int n, char source,char dest,char help)
+void Hanoi(unsigned int n, const char source, const char dest, const char help)
 {
 	if (n==1)
 	{
-		printf("Move disk from %c to %c\n",source,dest);
+		printf("Move disk from %c to %c\n", source, dest);
 	}
 
 	else //if n>1
