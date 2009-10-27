@@ -81,7 +81,6 @@ int main(int argc, char *argv[])
 						else
 						{
 							std::cout << dir_itr->leaf();
-						
 							std::cout << std::endl;
 						}
 					}
