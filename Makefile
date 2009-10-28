@@ -35,7 +35,7 @@ CFLAGS += -fabi-version=0 -funroll-loops -Waggregate-return
 CFLAGS += -Wunreachable-code -Winline -Wmissing-noreturn -Wpacked -Wpadded -Wredundant-decls
 
 # Default includes...
-CFLAGS += -I/usr/local/include
+CFLAGS += -isystem /usr/local/include
 LDFLAGS = -L/usr/local/lib
 
 PREFIX = /usr/local

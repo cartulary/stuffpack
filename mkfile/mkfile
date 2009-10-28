@@ -1,10 +1,24 @@
 #!/usr/bin/env sh
 
+get_sed()
+{
+	while read LINE
+	do
+		argit=$(echo "$LINE"|cut -d " " -f 1);
+		chgit=$(echo "$LINE"|cut -d " " -f 2);
+		echo -n "sed -E 's/%%$argit(.*)?%%/$chgit/g' |";
+	done < $1
+	echo "cat -";
+}
+
 templatedir=~/.templates;
-while getopts f:t: option
+rpcfile="";
+file="";
+while getopts f:r:t: option
 do
 	case "$option" in
 		'f') file="$OPTARG";;
+		'r') rpcfile="$OPTARG";;
 		't') template="$OPTARG";;
 	esac
 done
@@ -12,10 +26,12 @@ done
 if [ -z "$file" -o -z "$template" ]
 then
 	echo "Missing file or template" >/dev/stderr;
+	return 0;
 fi
 file=$(realpath "$file");
 echo "Template: $templatedir/$template";
 echo "File: $file";
+
 if [ ! -e $templatedir/$template ]
 then
 	echo "Invalid template" >/dev/stderr;
@@ -26,6 +42,13 @@ if [ -e "$file" ]
 then
 	echo "File exists" >/dev/stderr
 	exit 1;
+fi
+
+if [ -n "$rpcfile" ]
+then
+	cmd=$(get_sed "$rpcfile");
+	echo "$cmd";
+	cat "$templatedir/$template"|$cmd;
 fi
 
 touch "$file";
