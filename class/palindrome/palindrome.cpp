@@ -9,19 +9,19 @@
 int main (int argc, char* argv[])
 {
       std::string line;
-	std::string reversed;
       /* get the input */
       std::cin >> line;
-	reversed.resize(line.size());
-      /* go in reverse; don't use .at() because we know we are in range*/
-      for (int c = line.length(); c >= 0; --c)
+      /* check the last half of the line against the first;
+		use [] instead of .at() b/c we know we are in range*/
+      for (int c = (line.length())/ 2;  c >= 0; --c)
       {
-            reversed[line.length() - c - 1] = line[c];
+		if ( line[c] != line[ line.length() - c -1 ])
+		{
+			// lets get out of here if we are not a palindrome */
+			return 0;
+		}
       }
-	std::cout << "In reverse: " <<reversed << std::endl;
-	if (reversed == line)
-	{
-		std::cout << "Yeah!" << std::endl;
-	}
+	// YES WE ARE!
+	std::cout << "Yeah!" << std::endl;
 	return 0;
 }
