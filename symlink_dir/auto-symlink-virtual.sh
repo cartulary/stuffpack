@@ -1,12 +1,13 @@
 #!/usr/bin/env sh
 #TODO -> release new version of port
-#Allow maps to work in physical (move/cp) mode...
+##### Permission bug -> is the command not getting run?" ####
 portdir="/usr/ports";
 whereto=".";
 dryrun="";
 index="";
 verbose="";
 mapfile="";
+mapfile_mode="ln -s";
 
 usage()
 {
@@ -19,6 +20,7 @@ usage()
 	echo " -i indexfile     use this index file instead of traversing"
 	echo "                  the ports tree"
 	echo " -m mapfile		use mapfile to create new symlinks"
+	echo " -M mapfile mode	what command to use to work with mapfiles";
 	echo " -n               run through ports, but do not modify anything"
 	echo " -p portsdir      use portsdir as the root of the ports tree"
 	echo "			the default is /usr/ports/"
@@ -28,12 +30,13 @@ usage()
 	echo "                  symlinks (default is current dir)"
 }
 
-while getopts dhi:m:np:Vvw: option
+while getopts dhi:Mm:np:Vvw: option
 do    case "$option" in
 	'd')  set -x;;
 	'h')	usage;
 		exit 0;;
 	'm')	mapfile="$OPTARG";;
+	'M')	mapfile_mode="$OPTARG";;
 	'n')	dryrun="yes";;
 	'i')	index=$OPTARG;;
 	'p')  portdir=$OPTARG;;
@@ -141,8 +144,8 @@ do_map()
 		[ -z "$dryrun" ] && mkdir -p "$newport" "$whereto/$newportdir";
 	fi
 
-	[ -n "$verbose" ] && echo "ln -s \"$portdir/$oldport\" \"$whereto/$newportdir/$newport\"";
-	[ -z "$dryrun" ] && ln -s "$portdir/$oldport" "$whereto/$newportdir/$newport";
+	[ -n "$verbose" ] && echo "$mapfile_mode \"$portdir/$oldport\" \"$whereto/$newportdir/$newport\"";
+	[ -z "$dryrun" ] && $mapfile_mode "$portdir/$oldport" "$whereto/$newportdir/$newport";
 }
 
 do_mapfile()
