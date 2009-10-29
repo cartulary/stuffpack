@@ -1,10 +1,12 @@
 #!/usr/bin/env sh
 #TODO -> release new version of port
-portdir="/usr/ports"
-whereto="."
-dryrun=""
-index=""
-verbose=""
+#Allow maps to work in physical (move/cp) mode...
+portdir="/usr/ports";
+whereto=".";
+dryrun="";
+index="";
+verbose="";
+mapfile="";
 
 usage()
 {
@@ -16,6 +18,7 @@ usage()
 	echo " -h               show this usage"
 	echo " -i indexfile     use this index file instead of traversing"
 	echo "                  the ports tree"
+	echo " -m mapfile		use mapfile to create new symlinks"
 	echo " -n               run through ports, but do not modify anything"
 	echo " -p portsdir      use portsdir as the root of the ports tree"
 	echo "			the default is /usr/ports/"
@@ -25,17 +28,18 @@ usage()
 	echo "                  symlinks (default is current dir)"
 }
 
-while getopts dhi:np:Vvw: option
+while getopts dhi:m:np:Vvw: option
 do    case "$option" in
 	'd')  set -x;;
 	'h')	usage;
 		exit 0;;
+	'm')	mapfile="$OPTARG";;
 	'n')	dryrun="yes";;
 	'i')	index=$OPTARG;;
 	'p')  portdir=$OPTARG;;
 	'v')	verbose="yes";;
 	'w')	whereto=$OPTARG;;
-	'V')	echo "Version 0.4.";
+	'V')	echo "Version 0.5";
 		exit 0;;
 	'?')  usage;
 		exit 1;;
@@ -126,11 +130,48 @@ transverse_index()
 	done
 }
 
+do_map()
+{
+	oldport="$1";
+	newport=$(basename $2);
+	newportdir=$(dirname $2);
+	if [ ! -d "$whereto/$newportdir" ]
+	then
+		[ -n "$verbose" ] && echo "mkdir -p \"$newport\" \"$whereto/$newportdir\"";
+		[ -z "$dryrun" ] && mkdir -p "$newport" "$whereto/$newportdir";
+	fi
+
+	[ -n "$verbose" ] && echo "ln -s \"$portdir/$oldport\" \"$whereto/$newportdir/$newport\"";
+	[ -z "$dryrun" ] && ln -s "$portdir/$oldport" "$whereto/$newportdir/$newport";
+}
+
+do_mapfile()
+{
+	mapfile="$1";
+	while read LINE
+	do
+		oldport=$(echo $LINE|cut -d " " -f 1);
+		newport=$(echo $LINE|cut -d " " -f 2);
+		do_map "$oldport" "$newport"
+	done < "$mapfile";
+}
+
 if [ ! -d "$portdir" ];
 then
 	echo "Complete failure";
 	exit 1;
 fi;
+
+if [ -n "$mapfile" ]
+then
+	if [ ! -e "$mapfile" ]
+	then
+		echo "Mapfile does not exist";
+		exit 1;
+	fi
+	do_mapfile "$mapfile";
+	exit 0;
+fi
 
 if [ -z "$index" ];
 then
