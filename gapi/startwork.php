@@ -23,6 +23,7 @@
 		usage();
 	}
 
+	$doWhat = (empty($cli['a'])) ? '' : $cli['a'];
 	$giveuser = (empty($cli['u'])) ? '' : $cli['u'];
 	$fullname = (empty($cli['n'])) ? '' : $cli['n'];
 	$givepass = (empty($cli['p'])) ? '' : $cli['p'];
@@ -30,16 +31,48 @@
 	// split full name into given and family name	
 	$name = explode(" ", $fullname, 2);
 
-	if (empty($giveuser) || empty($name[0]) || empty($name[1]) || empty($givepass))
+	$actions = Array(
+		"add" => Array(
+			"required_opts" => Array ("u","n","p")
+		),
+		"del" => Array(
+			"required_opts" => Array ("u")
+		)
+	);
+
+	// if we don't list a valid action
+	if (!in_array($doWhat,$actions))
 	{
+		//show usage...
 		usage();
+	}
+
+	// check to make sure that all relevent fields are listed...
+	foreach ($actions[$doWhat]["required_opts"] as $opt)
+	{
+		if (empty($cli[$opt]))
+		{
+			usage();
+		}
 	}
 
 	echo "user: $giveuser pass: $givepass\n";
 	var_dump($name);
 	try
 	{
-		$service->createUser($giveuser, $name[0], $name[1], $givepass, null, null);
+		switch ($doWhat)
+		{
+			case 'add':
+				if (empty($name[0]) || empty($name[1]))
+				{
+					usage();
+				}
+				$service->createUser($giveuser, $name[0], $name[1], $givepass, null, null);
+				break;
+			case 'del':
+				$service->deleteUser($username);
+				break;
+		}			
 		echo "This appears to have worked...";
 	}
 	catch (Zend_Gdata_Gapps_ServiceException $e)
