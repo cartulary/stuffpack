@@ -1,5 +1,7 @@
 #!/usr/bin/env php
 <?php
+	// All of these are set in config.php (and thats it)
+	// username  password domain
 	require_once 'config.php';
 	require_once 'Zend/Loader.php';
 	Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
@@ -10,7 +12,7 @@
 	$service = new Zend_Gdata_Gapps($client, $domain);
 
 	$shortopts = "";
-	$shortopts = "a:";	//action [ required ]
+	$shortopts .= "a:";	//action [ required ]
 	$shortopts .= "u:";	//username [ required ]
 	$shortopts .= "n:";	//full name (first last), default: (Scardy Cat)
 	$shortopts .= "p:";	//password [ required ] 
@@ -24,6 +26,7 @@
 	}
 
 	$doWhat = (empty($cli['a'])) ? '' : $cli['a'];
+	echo "$doWhat\n";
 	$giveuser = (empty($cli['u'])) ? '' : $cli['u'];
 	$fullname = (empty($cli['n'])) ? '' : $cli['n'];
 	$givepass = (empty($cli['p'])) ? '' : $cli['p'];
@@ -41,10 +44,10 @@
 	);
 
 	// if we don't list a valid action
-	if (!in_array($doWhat,$actions))
+	if (!array_key_exists($doWhat,$actions))
 	{
 		//show usage...
-		usage();
+		usage("dowhat not in array");
 	}
 
 	// check to make sure that all relevent fields are listed...
@@ -52,12 +55,11 @@
 	{
 		if (empty($cli[$opt]))
 		{
-			usage();
+			usage("cli of $opt is empty");
 		}
 	}
 
 	echo "user: $giveuser pass: $givepass\n";
-	var_dump($name);
 	try
 	{
 		switch ($doWhat)
@@ -70,7 +72,7 @@
 				$service->createUser($giveuser, $name[0], $name[1], $givepass, null, null);
 				break;
 			case 'del':
-				$service->deleteUser($username);
+				$service->deleteUser($giveuser);
 				break;
 		}			
 		echo "This appears to have worked...";
@@ -92,9 +94,10 @@
 		}
 	}
 
-	function usage()
+	function usage($where="")
 	{
 		echo "Add: -u[sername] username -n[ame] 'full name' -p[assword] password\n";
+		echo "Message: $where\n";
 		die();
 	}
 ?>
