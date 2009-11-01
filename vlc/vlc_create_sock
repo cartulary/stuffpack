@@ -1,4 +1,18 @@
 #!/usr/bin/env sh
+
+install_me()
+{
+	whomedir=~/.vlc_extra;
+	mkdir "$whomedir";
+	touch "$whomedir/socket_name";
+	mkdir "$whomedir/sockets";
+}
+
+# if we don't exist lettuce install ourself
+if [ ! -d ~/.vlc_extra ]
+then
+	install_me;
+fi
 cleanup="";
 ncurse="";
 while getopts cn opt
@@ -11,7 +25,7 @@ do
 done
 [ -n "$cleanup" ] && echo "Yeah!";
 base="$(basename $0)";
-optdir="/home/eitan/.vlc_extra";
+optdir=~/.vlc_extra;
 current_sock="$(cat $optdir/socket_name)";
 if [ -n "$cleanup" ]
 then
