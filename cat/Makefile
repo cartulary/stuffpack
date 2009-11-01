@@ -3,11 +3,8 @@ LANG = c++
 .include	<../Makefile>
 
 #compiling options
-.PHONY:	build clean
-
-build:	$(NAME)
+.PHONY:	clean
 
 $(NAME): 
 
-clean: nameclean
-	rm -fv *.o
+clean: nameclean objclean coreclean
