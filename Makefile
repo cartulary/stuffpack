@@ -2,6 +2,7 @@
 NAME?=DOES_NOT_EXIST
 LANG?=none
 DEBUG?=off
+COMPILER?=llvm
 
 CFLAGS = -g3 -pipe
 .ifdef $(DEBUG) == on
@@ -37,6 +38,12 @@ CFLAGS += -Wunreachable-code -Winline -Wmissing-noreturn -Wpacked -Wpadded -Wred
 # Default includes...
 CFLAGS += -isystem /usr/local/include
 LDFLAGS = -L/usr/local/lib
+
+.ifdef $(COMPILER) == clang && $(LANG) == c
+CC = clang
+CFLAGS = -std=c99 -pedantic-errors -I /usr/local/include
+LDFLAGS = -L/usr/local/lib
+.endif
 
 PREFIX = /usr/local
 
