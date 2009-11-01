@@ -9,9 +9,7 @@ CFLAGS += -ffor-scope
 #compiling options
 .PHONY:	all clean
 
-all:		ttt
-
-ttt.o: ttt.h
+ttt: ttt.cpp
 
 clean: 	
 	rm -fv *.o
