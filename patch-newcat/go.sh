@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 cd new
-cat "INDEX-7" | while read LINE;
+while read LINE
 do
 	portpath=$(echo "$LINE" | awk -F\| '{print $2}');
 	portname=$(basename "$portpath");
@@ -20,4 +20,4 @@ do
 			$(sed -ibak "$cmd" ./$portcat/$portname/Makefile);
 		fi;
 	fi;
-done
+done < INDEX-8
