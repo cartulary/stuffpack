@@ -49,6 +49,7 @@ do    case "$option" in
       esac
 done
 
+# just make the link here
 do_link_port()
 {
 	[ -n "$verbose" ] && echo "  " ln -s "$1" "$2";
@@ -56,6 +57,8 @@ do_link_port()
 
 }
 
+# since we want to make sure that the directory exists call this function 
+# to create it
 do_make_cat_dir() 
 {
 	catname="$1"
@@ -119,10 +122,10 @@ transverse_tree()
 
 transverse_index()
 {
-	cat "$1/$index" | while read LINE;
+	while read LINE;
 	do
-		portpath=$(echo "$LINE" | awk -F\| '{print $2}')
-		portcats=$(echo "$LINE" | awk -F\| '{print $7}')
+		portpath=$(echo "$LINE" | cut -d "|" -f 2)
+		portcats=$(echo "$LINE" | cut -d "|" -f 7)
 		portname=$(basename "$portpath")
 		portcat=$(basename $(dirname "$portpath"))
 		echo "$portname: $portcats"
@@ -130,7 +133,7 @@ transverse_index()
 		do
 			op_port $portpath $item_cat $portname $portcat;
 		done
-	done
+	done < "$1/$index"
 }
 
 do_map()
@@ -175,7 +178,8 @@ then
 	do_mapfile "$mapfile";
 	exit 0;
 fi
-
+# we don't run the normal mode with a map....
+# perhaps we should make this an option?
 if [ -z "$index" ];
 then
 	if [ ! -e "$portdir/Makefile" ];
@@ -224,5 +228,4 @@ return 0;
 #TODO
 # add even more failure and sanity testing
 # add comments explaining what is going on
-# add "mapping" option to allow you add your own categories?
 # add the ability to change the mask used to name the ports w/i each virtual category.
