@@ -10,7 +10,7 @@
 	$service = new Zend_Gdata_Gapps($client, $domain);
 
 	$shortopts = "";
-	$shortopts = "a:"		//action [ required ]
+	$shortopts = "a:";	//action [ required ]
 	$shortopts .= "u:";	//username [ required ]
 	$shortopts .= "n:";	//full name (first last), default: (Scardy Cat)
 	$shortopts .= "p:";	//password [ required ] 
@@ -23,20 +23,42 @@
 		usage();
 	}
 
-	$username = (empty($cli['u'])) ? '' : $cli['u'];
+	$giveuser = (empty($cli['u'])) ? '' : $cli['u'];
 	$fullname = (empty($cli['n'])) ? '' : $cli['n'];
-	$password = (empty($cli['p'])) ? '' : $cli['p'];
+	$givepass = (empty($cli['p'])) ? '' : $cli['p'];
 
-	if (empty($username) || empty($fullname) || empty($password)
+	// split full name into given and family name	
+	$name = explode(" ", $fullname, 2);
+
+	if (empty($giveuser) || empty($name[0]) || empty($name[1]) || empty($givepass))
 	{
 		usage();
 	}
 
-	// split full name into given and family name
-	
-	$name = explode(" ", $fullname, 2);
+	echo "user: $giveuser pass: $givepass\n";
+	var_dump($name);
+	try
+	{
+		$service->createUser($giveuser, $name[0], $name[1], $givepass, null, null);
+		echo "This appears to have worked...";
+	}
+	catch (Zend_Gdata_Gapps_ServiceException $e)
+	{
+		if ($e->hasError(Zend_Gdata_Gapps_Error::ENTITY_DOES_NOT_EXIST))
+		{
+			return null;
+		}
+		else
+		{
+			// Outherwise, just print the errors that occured and exit
+			foreach ($e->getErrors() as $error)
+			{
+				echo "Error encountered: {$error->getReason()} ({$error->getErrorCode()})\n";
+			}
+			exit();
+		}
+	}
 
-	$service->createUser($username, $name[0], $name[1], $password, null, null)
 	function usage()
 	{
 		echo "Add: -u[sername] username -n[ame] 'full name' -p[assword] password\n";
