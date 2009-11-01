@@ -10,6 +10,7 @@
 	$service = new Zend_Gdata_Gapps($client, $domain);
 
 	$shortopts = "";
+	$shortopts = "a:"		//action [ required ]
 	$shortopts .= "u:";	//username [ required ]
 	$shortopts .= "n:";	//full name (first last), default: (Scardy Cat)
 	$shortopts .= "p:";	//password [ required ] 
@@ -38,7 +39,7 @@
 	$service->createUser($username, $name[0], $name[1], $password, null, null)
 	function usage()
 	{
-		echo "Usage: -u[sername] username -n[ame] 'full name' -p[assword] password\n";
+		echo "Add: -u[sername] username -n[ame] 'full name' -p[assword] password\n";
 		die();
 	}
 ?>
