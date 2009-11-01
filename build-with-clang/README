@@ -1,0 +1,3 @@
+This directory is designed to start to build a clang based Makefile.
+I will then merge this into my main Makefile for all to use...
+(when the merge is complete this directory goes away)
