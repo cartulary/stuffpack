@@ -2,7 +2,6 @@
 
 #include <iostream>
 
-using namespace std;
 int main (int argc, char *argv[])
 {
 	// we are not going to test for flags here - this would cause compat problems */
@@ -18,12 +17,12 @@ int main (int argc, char *argv[])
 		}
 		else
 		{
-			cout << argv[i] << " ";
+			std::cout << argv[i] << " ";
 			passedFirstN = true;
 		}
 	}
 	if (! noNewlineFlag)
 	{
-		cout << endl;
+		std::cout << std::endl;
 	}
 }
