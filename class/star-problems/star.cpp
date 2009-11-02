@@ -22,7 +22,7 @@ int main (int argc, char* argv[])
 {
 	long rows = 0;
 	int c;
-	const char* diamond_char= "*";
+	char* diamond_char= "*";
 	// Lets get the command line arguments
 	while (( c = getopt (argc, argv, "c:n:")) != -1)
 	{
