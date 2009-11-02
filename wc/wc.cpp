@@ -18,6 +18,8 @@ void doWcFile (std::istream &toWc);
 /* make these flags default to false */
 bool wordFlag = false, lineFlag = false, charFlag = false, byteFlag = false, longestLineFlag = false;
 
+int totalChars = 0, totalLines = 0, totalWords = 0, totalLongestLine = 0;
+
 int main(int argc, char *argv[])
 {
 	int c;
@@ -82,7 +84,28 @@ int main(int argc, char *argv[])
 	{
 		doWcFile(std::cin);
 	}
-      return toReturn;
+	if (argc > 2)
+	{
+		std::cout << "\t";
+		if (lineFlag)
+		{
+			std::cout << totalLines << "\t";
+		}
+		if (wordFlag)
+		{
+			std::cout << totalWords << "\t";
+		}
+		if (charFlag)
+		{
+			std::cout << totalChars << "\t";
+		}
+		if (longestLineFlag)
+		{
+			std::cout << totalLongestLine << " ";
+		}
+		std::cout << "total" << std::endl;
+	}
+	return toReturn;
 }
 /**********************************************
  * Name:    doWcFile                          *
@@ -102,17 +125,28 @@ void doWcFile (std::istream &toWc)
 
 	/* display the result; what I'd really like to do is return this in some sort of array form...*/
 	std::cout << "\t";
+	int current = wcObj->getNumLines();
+	if (totalLongestLine < current)
+	{
+		totalLongestLine = current;
+	}
 	if (lineFlag)
 	{
-		std::cout << wcObj->getNumLines() << "\t";
+		/* lines fetched above */
+		totalLines += current;
+		std::cout << current << "\t";
 	}
 	if (wordFlag)
 	{
-		std::cout << wcObj->getNumWords() << "\t";
+		current = wcObj->getNumWords();
+		totalWords += current;
+		std::cout << current << "\t";
 	}
 	if (charFlag)
 	{
-		std::cout << wcObj->getNumChars() << "\t";
+		current = wcObj->getNumChars();
+		totalChars += current;
+		std::cout << current << "\t";
 	}
 	if (longestLineFlag)
 	{
