@@ -4,6 +4,8 @@ LANG?=none
 DEBUG?=off
 COMPILER?=llvm
 
+USE_NCURSES?=no
+
 CFLAGS = -g3 -pipe
 .ifdef $(DEBUG) == on
 .else
@@ -38,6 +40,11 @@ CFLAGS += -Wunreachable-code -Winline -Wmissing-noreturn -Wpacked -Wpadded -Wred
 # Default includes...
 CFLAGS += -isystem /usr/local/include
 LDFLAGS = -L/usr/local/lib
+
+.if $(USE_NCURSES) == yes
+LDFLAGS += -lncurses
+.endif
+
 
 .ifdef $(COMPILER) == clang && $(LANG) == c
 CC = clang
