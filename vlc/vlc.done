@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+if [ "$1" = "-y" ]
+then
+	vlc.do -c "quit";
+else
+	echo "You don't appear to be all done....">/dev/stderr
+fi
