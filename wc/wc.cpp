@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
 				wordFlag = true;
 				break;
 			default:
+				// print usage
 				charFlag = lineFlag = byteFlag = wordFlag = true;
 		}
 
@@ -112,11 +113,8 @@ int main(int argc, char *argv[])
  * Purpose: perform the "wc" action to file   *
  * Returns: nothing	 		          *
  * Parameters: istream - open isstream to file*
- * Known bugs: many unworking features;       *
- * compatibility: very limited                *
- * notes: keep some kind of pointer to an     *
- *	array of the const data that main()     *
- *	could use later? something else?	    *
+ * Known bugs: counts words incorrectly       *
+ * compatibility: nearly perfect              *
  *********************************************/
 
 void doWcFile (std::istream &toWc)
