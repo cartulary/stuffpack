@@ -2,3 +2,4 @@ a) split into multiple files
 b) add computer "hard mode" (where computer can't lose). atm it is easy only
 c) use the symetrical winning approach (rotating the board and checking 3 spots) ??
 d) fix the fixmes
+e) use some kind of interface-independant TTT class...
