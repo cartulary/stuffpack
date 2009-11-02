@@ -75,7 +75,7 @@
 				$service->deleteUser($giveuser);
 				break;
 		}			
-		echo "This appears to have worked...";
+		echo "This appears to have worked...\n";
 	}
 	catch (Zend_Gdata_Gapps_ServiceException $e)
 	{
@@ -96,8 +96,10 @@
 
 	function usage($where="")
 	{
-		echo "Add: -u[sername] username -n[ame] 'full name' -p[assword] password\n";
-		echo "Message: $where\n";
+		$me = basename ( __FILE__ );
+		echo "Add: $me -a add -u username -n 'full name' -p password\n";
+		echo "Del: $me -a del -u username\n";
+		if (!empty($message)) {echo "Message: $where\n";}
 		die();
 	}
 ?>
