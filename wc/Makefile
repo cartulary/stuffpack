@@ -5,6 +5,8 @@ LANG = c++
 #compiling options
 .PHONY:     clean
 
-$(NAME):
+$(NAME): fileCount.o $(NAME).cpp
+
+fileCount.o: fileCount.h fileCount.cpp
 
 clean: nameclean coreclean objclean 

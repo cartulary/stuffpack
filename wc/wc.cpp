@@ -10,10 +10,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
-using namespace std;
+#include "fileCount.cpp"
 
 bool wcFile(const char *file);
-void doWcFile (istream &toWc);
+void doWcFile (std::istream &toWc);
 
 /* make these flags default to false */
 bool wordFlag = false, lineFlag = false, charFlag = false, byteFlag = false, longestLineFlag = false;
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 	{
 		charFlag = lineFlag = byteFlag = wordFlag = true;
 	}
-	/* If we have files on command line - display them; else just display cin once.*/
+	/* If we have files on command line - display them; else just display std::cin once.*/
 	if (argc > 1)
 	{
 		for (int i = optind; i < argc; ++i)
@@ -62,25 +62,25 @@ int main(int argc, char *argv[])
 				if ( ! wcFile(argv[i]) )
 				{
 					/* exact message produced by BSD wc */
-	      			cerr << "wc: " << argv[i] << ": open: No such file or directory" << endl;
+	      			std::cerr << "wc: " << argv[i] << ": open: No such file or directory" << std::endl;
 					toReturn = 1;
 				}
 				else
 				{
 					/* we don't pass the filename so print it here */
-					cout << argv[i] << endl;
+					std::cout << argv[i] << std::endl;
 				}
 			}
 			else
 			{
 				/* we have stdin so go directly to "wc" */
-				doWcFile(cin);
+				doWcFile(std::cin);
 			}
 		}
 	}
 	else
 	{
-		doWcFile(cin);
+		doWcFile(std::cin);
 	}
       return toReturn;
 }
@@ -96,72 +96,27 @@ int main(int argc, char *argv[])
  *	could use later? something else?	    *
  *********************************************/
 
-void doWcFile (istream &toWc)
+void doWcFile (std::istream &toWc)
 {
-	/* store some kind of const to generate total */
-	unsigned long int lineNums = 0;
-	unsigned long int charNums = 0;
-	unsigned long int words = 1; /* begin at one because we look for spaces; not words */
-	unsigned long int longestLine = 0;
-	unsigned int lineLen;
-	bool lastSpace = false; /* use so double spaces are not counted as words */
-	//bool curCharIsSpace = false;
-	string line;
-
-	while (! toWc.eof() )
-	{
-		//lastSpace = false;
-		getline(toWc, line);
-		/* does not deal with -c vs -m yet! */
-		lineLen = line.size();
-		charNums += lineLen + 1;
-		++lineNums;
-//		std::cout << lineNums << "\t"<< line <<std::endl;
-
-		if (lineLen > longestLine)
-		{
-			longestLine = lineLen;
-		}
-
-		for(unsigned int i = 1; i < lineLen; ++i)
-		{
-			/* we are not going to use .at() because we know we are in range */
-			if (iswspace(line[i]))
-			{
-				if (!lastSpace)
-				{
-					++words;
-				}
-				lastSpace = true;
-			}
-			else
-			{
-				lastSpace = false;
-			}
-		}
-	}
-
-	/* we count one extra character and line - remove it*/
-	--charNums;
-	--lineNums;
+	fileCount *wcObj = new fileCount(toWc);
 
 	/* display the result; what I'd really like to do is return this in some sort of array form...*/
-	cout << "\t";
+	std::cout << "\t";
 	if (lineFlag)
 	{
-		cout << lineNums << "\t";
+		std::cout << wcObj->getNumLines() << "\t";
 	}
 	if (wordFlag)
 	{
-		cout << words << "\t";
+		std::cout << wcObj->getNumWords() << "\t";
 	}
 	if (charFlag)
 	{
-		cout << charNums << "\t";
+		std::cout << wcObj->getNumChars() << "\t";
 	}
 	if (longestLineFlag)
 	{
-		cout << longestLine << " ";
+		std::cout << wcObj->getLongestLineLen() << " ";
 	}
 	/*  filename printed by calling function */
 }
@@ -175,8 +130,8 @@ void doWcFile (istream &toWc)
 
 bool wcFile(const char *file)
 {
-      ifstream toWc;
-      toWc.open(file, ios::in);
+      std::ifstream toWc;
+      toWc.open(file, std::ios::in);
 	if ( ! toWc)
       {
 		return false;
