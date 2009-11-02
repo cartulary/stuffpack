@@ -31,9 +31,24 @@ class tttBoard
 				}
 			}
 		}
+
 		bool requestPosition(player piece, int row, int col)
 		{
 			return setPosition(piece, row, col);
+		}
+
+		inline int getRowFromID(int id)
+		{
+			switch (id)
+			{
+				case '1': case '2': case '3':
+					return 1;
+				case '4': case '5': case '6':
+					return 2;
+				case '7': case '8': case '9':
+					return 3;
+				default: return -1;
+			}
 		}
 };
 

@@ -64,9 +64,9 @@ int main(int argc, char *argv[])
 		{
 			case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
 				mvwaddch(turn_window,0,1,c);
-				row = getRowFromID(c) - 1;
+				row = gameBoard->getRowFromID(c) - 1;
 				col = getColFromID(c) - 1;
-				if (board[row][col]==(player)(none))
+				if (board[row][col]==none)
 				{
 					board[row][col] = turn;
 					switchTurn(turn);
@@ -169,20 +169,6 @@ void destroy_window(WINDOW *local_window)
 	delwin(local_window);
 }
 
-inline int getRowFromID(int id)
-{
-	switch (id)
-	{
-		case '1': case '2': case '3':
-			return 1;
-		case '4': case '5': case '6':
-			return 2;
-		case '7': case '8': case '9':
-			return 3;
-		default: return -1;
-	}
-}
-
 inline int getColFromID(int id)
 {
 	//from a number between 1 and 9, return the col
@@ -191,5 +177,5 @@ inline int getColFromID(int id)
 
 inline void switchTurn(player &turn)
 {
-	turn = (turn == (player)(X)) ? O : X;
+	turn = (turn == X) ? O : X;
 }
