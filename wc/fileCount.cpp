@@ -15,7 +15,6 @@ fileCount::fileCount(std::istream &file) : lineNums(0), charNums(0), words(0), l
 		lineLen = line.size();
 		charNums += lineLen + 1;
 		++lineNums;
-//		std::cout << lineNums << "\t"<< line <<std::endl;
 
 		if (lineLen > longestLine)
 		{
@@ -25,18 +24,16 @@ fileCount::fileCount(std::istream &file) : lineNums(0), charNums(0), words(0), l
 		for(unsigned int i = 1; i < lineLen; ++i)
 		{
 			/* we are not going to use .at() because we know we are in range */
-			if (iswspace(line[i]))
+			// failure at no space\n
+			if (!iswspace(line[i]) && iswspace(line[i+1]))
 			{
-				if (!lastSpace)
-				{
-					++words;
-				}
-				lastSpace = true;
+				++words;
 			}
-			else
-			{
-				lastSpace = false;
-			}
+		}
+		// count one extra where last word does not have a space...
+		if (!iswspace(line[lineLen]) && lineLen!=0)
+		{
+			++words;
 		}
 	}
 
