@@ -15,17 +15,18 @@ then
 fi
 cleanup="";
 ncurse="";
-while getopts cn opt
+optdir=~/.vlc_extra;
+while getopts co:n opt
 do
 	case "$opt" in
 		'c') cleanup="YES";;
 		'n') ncurse="YES";;
+		'o') optdir="$OPTARG";;
 		'?') exit 1;;
 	esac
 done
 [ -n "$cleanup" ] && echo "Yeah!";
 base="$(basename $0)";
-optdir=~/.vlc_extra;
 current_sock="$(cat $optdir/socket_name)";
 if [ -n "$cleanup" ]
 then
