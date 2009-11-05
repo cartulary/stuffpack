@@ -14,10 +14,18 @@
 	$actions = Array(
 		"add" => Array(
 			"required_opts" => Array ('u','f','l','p'),
-			"help" => "-u username -n 'full name' -p password"
+			"help" => "-u username -f first name -l last name -p password"
 		),
 		"del" => Array(
 			"required_opts" => Array ('u'),
+			"help" => "-u username"
+		),
+		"suspend" => Array (
+			"required_opts" => Array('u'),
+			"help" => "-u username"
+		),
+		"restore" => Array (
+			"required_opts" => Array('u'),
 			"help" => "-u username"
 		)
 	);
@@ -40,9 +48,8 @@
 		usage();
 	}
 
-	print_r($cli);
 	$doWhat = (empty($cli['action'])) ? '' : $cli['action'];
-	echo "$doWhat\n";
+	echo "Trying to $doWhat...\n";
 	$giveuser = (empty($cli['u'])) ? '' : $cli['u'];
 	$name[0] = (empty($cli['f'])) ? '' : $cli['f'];
 	$name[1] = (empty($cli['l'])) ? '' : $cli['l'];
@@ -60,11 +67,11 @@
 	{
 		if (empty($cli[$opt]))
 		{
-			usage("cli of $opt is empty");
+			usage("Missing $opt option\n");
 		}
 	}
 
-	echo "user: $giveuser pass: $givepass\n";
+	echo "Editing user: $giveuser\n";
 	try
 	{
 		switch ($doWhat)
@@ -79,6 +86,10 @@
 			case 'del':
 				$service->deleteUser($giveuser);
 				break;
+			case 'suspend':
+				$service->suspendUser($username);
+			case 'restore':
+				$service->restoreUser($username);
 		}			
 		echo "This appears to have worked...\n";
 	}
