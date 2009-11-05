@@ -7,10 +7,6 @@
 	Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
 	Zend_Loader::loadClass('Zend_Gdata_Gapps');
 
-	$config['email']= $config['user'].'@'.$config['domain'];
-	$client = Zend_Gdata_ClientLogin::getHttpClient($config['email'], $config['password'], Zend_Gdata_Gapps::AUTH_SERVICE_NAME);
-	$service = new Zend_Gdata_Gapps($client, $domain);
-
 	$actions = Array(
 		"add" => Array(
 			"required_opts" => Array ('u','f','l','p'),
@@ -75,6 +71,11 @@
 		}
 	}
 
+	$config['email']= $config['user'].'@'.$config['domain'];
+	$client = Zend_Gdata_ClientLogin::getHttpClient($config['email'], $config['password'], Zend_Gdata_Gapps::AUTH_SERVICE_NAME);
+	$service = new Zend_Gdata_Gapps($client, $config['domain']);
+
+
 	echo "Editing user: $username\n";
 
 	// I think we should move to getting the user object before the case and submitting it after the case
@@ -99,10 +100,7 @@
 			case 'restore':
 				$service->restoreUser($username);
 			case 'display':
-				$user = $service->getUserEntry($username);
-				$info['nicks'] = $service->retrieveNicknames($username);
-				$info['lists'] = $service->retrieveEmailLists($username);
-				displayUser($user, $info);
+				displayUser($username);
 				
 		}			
 		echo 	"This appears to have worked...\n";
@@ -137,9 +135,12 @@
 		die();
 	}
 
-	function displayUser($user, $info)
+	function displayUser($username)
 	{
-		$user = $gdata->getUserEntry($query);
+		global $service;
+		$user = $service->retrieveUser($username);
+//		$info['nicks'] = $service->retrieveNicknames($username);
+//		$info['lists'] = $service->retrieveEmailLists($username);
 
 		echo 'Username: ' . $user->login->userName . "\n";
 		echo 'Given Name: ' . $user->login->givenName . "\n";
@@ -150,7 +151,7 @@
 			($user->login->changePasswordAtNextLogin ? 'Yes' : 'No') . "\n";
 		echo 'Has Agreed To Terms: ' .
 			($user->login->agreedToTerms ? 'Yes' : 'No') . "\n";
-		echo 'List of Nicknames: ';
+/*		echo 'List of Nicknames: ';
 			foreach ($info['nicks'] as $nickname)
 			{
 				echo '  * ' . $nickname->nickname->name . "\n";
@@ -160,6 +161,6 @@
 			{
 				echo '  * ' . $list->emailList->name . "\n";
 			}
-		
+*/		
 	}
 ?>
