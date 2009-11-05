@@ -27,7 +27,7 @@
 		"restore" => Array (
 			"required_opts" => Array('u'),
 			"help" => "-u username"
-		)
+		),
 		"display" => Array (
 			"required_opts" => Array('u'),
 			"help" => "-u username"
