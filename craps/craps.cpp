@@ -1,5 +1,5 @@
 /**********************************************
- * Name:                                      *
+	 * Name:                                      *
  * Purpose: 					    *
  * Returns: 	                            *
  * Parameters: 					    *
@@ -7,32 +7,36 @@
  * compatibility:					    *
  * notes:						    *
  *********************************************/
-
+// http://en.wikipedia.org/wiki/Hazard_%28game%29
 #include <iostream>
 #include <time.h>
 #include <limits>
+#include <string>
 int rollDice(int numRolls);
+
+int lose(std::string msg);
+int win(std::string msg);
 
 int main (int argc, char* argv[])
 {
 	srand(time(0));
 
-	int winCounter=0;
-	int loseCounter=0;
-	for (int count = 0; count <= 10000; ++count)
+	// go 100 times
+	for (int count = 1; count <= 10000; ++count)
 	{
-		std::cin.clear();
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		int shooterMain;
-		std::cin >> shooterMain;
+	//	std::cin.clear();
+	//	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+//		int shooterMain;
+//		std::cin >> shooterMain;
+		int shooterMain = 7;
 		int roll = rollDice(2);
 		int chance =0;
+		//std::cout << count << " (" << roll << ") \n";
 		switch (roll) //sooters first roll
 		{
 			case 2:
 			case 3:
-				std::cout << "Throws out (lose)!" << std::endl;
-				++loseCounter;
+				lose("Throws out (lose)!");
 				break;
 			case 11:
 			case 12:
@@ -40,32 +44,27 @@ int main (int argc, char* argv[])
 				{
 					case 5:
 					case 9:
-						std::cout << "Throws out (lose)" << std::endl;
-						++loseCounter;
+						lose("Throws out (lose)");
 						break;
 					case 6:
 					case 8:
 						if (roll==11)
 						{
-							std::cout << "Throws out (lose)" << std::endl;
-							++loseCounter;
+							lose("Throws out (lose)");
 						}
 						else
 						{
-							std::cout << "Nicks" << std::endl;
-							++winCounter;
+							win("Nicks");
 						}
 						break;
 					case 7:
 						if (roll==11)
 						{
-							std::cout << "Nicks" << std::endl;
-							++winCounter;
+							win("nicks");
 						}
 						else
 						{
-							std::cout << "Throws out (lose)" << std::endl;
-							++winCounter;
+							lose("Throws out");
 						}
 						break;
 				}
@@ -74,30 +73,32 @@ int main (int argc, char* argv[])
 					if (roll != shooterMain)
 					{
 						chance = roll;
-						while (roll != chance && roll != shooterMain)
+						//std::cout << "[" <<count << "] ";
+						/* use a do loop b/c we set roll=chance above */
+						do
 						{
 							roll = rollDice(2);
 							if (roll == chance)
 							{
-								std::cout <<"win by chance" << std::endl;
-								++winCounter;
+								win("win by chance");
 							}
-							else
+							else if (roll == shooterMain)
 							{
-								std::cout << "lose by main" << std::endl;
-								++loseCounter;
+								lose ("lose by main");
 								// make sure you only lose up to 3 times
 							}
-						}
+							//std::cout << "[" << roll << "]";
+						} while (roll != chance && roll != shooterMain);
+
+						//std::cout << std::endl;
 					}
 					else
 					{
-						std::cout << "Win!" << std::endl;
-						++winCounter;
+						win("Win!");
 					}
 		}
 	}
-	std::cout << "Win:" <<winCounter << "Lose: " << loseCounter;
+	std::cout << "Win:" <<win("")<< " " << "Lose: " << lose("") << std::endl;
 	return 0;
 }
 
@@ -109,4 +110,23 @@ int rollDice(int numRolls)
 		result += rand() % 6 + 1;
 	}
 	return result;
+}
+
+
+/* start both of these functions @ -1 b/c we will call them to read the end value */
+
+int lose(std::string msg)
+{
+	static int loseCounter = -1;
+	std::cout << msg << std::endl;
+	++loseCounter;
+	return loseCounter;
+}
+
+int win(std::string msg)
+{
+	static int winCounter = -1;
+	std::cout << msg << std::endl;
+	++winCounter;
+	return winCounter;
 }
