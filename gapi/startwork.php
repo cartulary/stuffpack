@@ -1,14 +1,14 @@
 #!/usr/bin/env php
 <?php
 	// All of these are set in config.php (and thats it)
-	// username  password domain
+	// $config['user password domain']
 	require_once 'config.php';
 	require_once 'Zend/Loader.php';
 	Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
 	Zend_Loader::loadClass('Zend_Gdata_Gapps');
 
-	$email="$username@$domain";
-	$client = Zend_Gdata_ClientLogin::getHttpClient($email, $password, Zend_Gdata_Gapps::AUTH_SERVICE_NAME);
+	$config['email']= $config['user'].'@'.$config['domain'];
+	$client = Zend_Gdata_ClientLogin::getHttpClient($config['email'], $config['password'], Zend_Gdata_Gapps::AUTH_SERVICE_NAME);
 	$service = new Zend_Gdata_Gapps($client, $domain);
 
 	$actions = Array(
@@ -25,6 +25,10 @@
 			"help" => "-u username"
 		),
 		"restore" => Array (
+			"required_opts" => Array('u'),
+			"help" => "-u username"
+		)
+		"display" => Array (
 			"required_opts" => Array('u'),
 			"help" => "-u username"
 		)
@@ -50,7 +54,7 @@
 
 	$doWhat = (empty($cli['action'])) ? '' : $cli['action'];
 	echo "Trying to $doWhat...\n";
-	$giveuser = (empty($cli['u'])) ? '' : $cli['u'];
+	$username = (empty($cli['u'])) ? '' : $cli['u'];
 	$name[0] = (empty($cli['f'])) ? '' : $cli['f'];
 	$name[1] = (empty($cli['l'])) ? '' : $cli['l'];
 	$givepass = (empty($cli['p'])) ? '' : $cli['p'];
@@ -71,7 +75,11 @@
 		}
 	}
 
-	echo "Editing user: $giveuser\n";
+	echo "Editing user: $username\n";
+
+	// I think we should move to getting the user object before the case and submitting it after the case
+	// This should make it easier to do certain things (like updating an account).
+	// Only problem is what if user does not exist?
 	try
 	{
 		switch ($doWhat)
@@ -81,33 +89,39 @@
 				{
 					usage();
 				}
-				$service->createUser($giveuser, $name[0], $name[1], $givepass, null, null);
+				$service->createUser($username, $name[0], $name[1], $givepass, null, null);
 				break;
 			case 'del':
-				$service->deleteUser($giveuser);
+				$service->deleteUser($username);
 				break;
 			case 'suspend':
 				$service->suspendUser($username);
 			case 'restore':
 				$service->restoreUser($username);
+			case 'display':
+				$user = $service->getUserEntry($username);
+				$info['nicks'] = $service->retrieveNicknames($username);
+				$info['lists'] = $service->retrieveEmailLists($username);
+				displayUser($user, $info);
+				
 		}			
-		echo "This appears to have worked...\n";
+		echo 	"This appears to have worked...\n";
 	}
 	catch (Zend_Gdata_Gapps_ServiceException $e)
 	{
 		if ($e->hasError(Zend_Gdata_Gapps_Error::ENTITY_DOES_NOT_EXIST))
 		{
-			return null;
+			echo "Our Error encountered: User does nto exist\n";
 		}
 		else
 		{
 			// Outherwise, just print the errors that occured and exit
 			foreach ($e->getErrors() as $error)
 			{
-				echo "Error encountered: {$error->getReason()} ({$error->getErrorCode()})\n";
+				echo "Our Error encountered: {$error->getReason()} ({$error->getErrorCode()})\n";
 			}
-			exit();
 		}
+		exit();
 	}
 
 	function usage($where="")
@@ -121,5 +135,31 @@
 		}
 		if (!empty($message)) {echo "Message: $where\n";}
 		die();
+	}
+
+	function displayUser($user, $info)
+	{
+		$user = $gdata->getUserEntry($query);
+
+		echo 'Username: ' . $user->login->userName . "\n";
+		echo 'Given Name: ' . $user->login->givenName . "\n";
+		echo 'Family Name: ' . $user->login->familyName . "\n";
+		echo 'Suspended: ' . ($user->login->suspended ? 'Yes' : 'No') . "\n";
+		echo 'Admin: ' . ($user->login->admin ? 'Yes' : 'No') . "\n";
+		echo 'Must Change Password: ' .
+			($user->login->changePasswordAtNextLogin ? 'Yes' : 'No') . "\n";
+		echo 'Has Agreed To Terms: ' .
+			($user->login->agreedToTerms ? 'Yes' : 'No') . "\n";
+		echo 'List of Nicknames: ';
+			foreach ($info['nicks'] as $nickname)
+			{
+				echo '  * ' . $nickname->nickname->name . "\n";
+			}
+		echo 'List of Email Lists: ';
+			foreach ($info['lists'] as $list)
+			{
+				echo '  * ' . $list->emailList->name . "\n";
+			}
+		
 	}
 ?>
