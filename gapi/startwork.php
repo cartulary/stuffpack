@@ -53,6 +53,7 @@
 	$name[0] = (empty($cli['f'])) ? '' : $cli['f'];
 	$name[1] = (empty($cli['l'])) ? '' : $cli['l'];
 	$givepass = (empty($cli['p'])) ? '' : $cli['p'];
+	$nickname = (empty($cli['n'])) ? '' : $cli['n'];
 
 	$debug = (array_key_exists('debug',$cli)) ? true : false;
 
