@@ -42,7 +42,6 @@
 	$longopts = Array ("action:", 'debug');
 
 	$cli = getopt($shortopts, $longopts);
-
 	if (!is_null($cli['h']))
 	{
 		usage();
@@ -57,6 +56,10 @@
 
 	$debug = (array_key_exists('debug',$cli)) ? true : false;
 
+	if ($debug)
+	{
+		echo "We are in debug mode. Operations may change output mode\n";
+	}
 	// if we don't list a valid action
 	if (!array_key_exists($doWhat,$actions))
 	{
@@ -139,15 +142,15 @@
 
 	function displayUser($username)
 	{
-		global $service;
+		global $service, $debug;
 		$user = $service->retrieveUser($username);
 		if ($debug)
 		{
 			var_dump($user);
 			return;
 		}
-//		$info['nicks'] = $service->retrieveNicknames($username);
-//		$info['lists'] = $service->retrieveEmailLists($username);
+		$info['nicks'] = $service->retrieveNicknames($username);
+		$info['lists'] = $service->retrieveEmailLists($username);
 
 		echo 'Username: ' . $user->login->userName . "\n";
 		echo 'Given Name: ' . $user->name->givenName . "\n";
@@ -158,16 +161,20 @@
 			($user->login->changePasswordAtNextLogin ? 'Yes' : 'No') . "\n";
 		echo 'Has Agreed To Terms: ' .
 			($user->login->agreedToTerms ? 'Yes' : 'No') . "\n";
-/*		echo 'List of Nicknames: ';
+		echo "IP whitelisted: ";
+			echo ($user->login->extensionAttributes->ipWhitelisted) ? "Yes" : "No" . "\n";
+		echo 'List of Nicknames: ';
 			foreach ($info['nicks'] as $nickname)
 			{
 				echo '  * ' . $nickname->nickname->name . "\n";
 			}
+		echo "\n";
 		echo 'List of Email Lists: ';
 			foreach ($info['lists'] as $list)
 			{
 				echo '  * ' . $list->emailList->name . "\n";
 			}
-*/		
+		echo "\n";
+		
 	}
 ?>
