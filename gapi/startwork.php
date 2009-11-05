@@ -34,6 +34,11 @@
 			"required_opts" => Array('u','f','l'),
 			"help" => "-u username -f first name -l last name"
 		),
+		"force-pw-change" => Array(
+			"required_opts" => Array('u'),
+			"help" => "-u username",
+			"descr" => "Require a user to change the password at next login"
+		),		
 		"update" => Array(
 			"enabled" => false,
 			"required_opts" => Array('u'),
@@ -146,6 +151,10 @@
 			case 'display':
 				displayUser($username);
 				break;
+			case 'force-pw-change':
+				$user = $gdata->retrieveUser($username);
+				$user->login->changePasswordAtNextLogin = true;
+				$user = $user->save();
 			case 'change-name':
 				if ($verbose)
 				{
@@ -171,14 +180,14 @@
 	{
 		if ($e->hasError(Zend_Gdata_Gapps_Error::ENTITY_DOES_NOT_EXIST))
 		{
-			echo "Our Error encountered: User does nto exist\n";
+			echo "Our Error encountered: ".colorText(1,"User does not exist")."\n";
 		}
 		else
 		{
 			// Outherwise, just print the errors that occured and exit
 			foreach ($e->getErrors() as $error)
 			{
-				echo "Our Error encountered: {$error->getReason()} ({$error->getErrorCode()})\n";
+				echo "Our Error encountered: ".colorText(1,$error->getReason())." (". colorText(1,$error->getErrorCode()).")\n";
 			}
 		}
 		exit();
@@ -188,7 +197,7 @@
 	{
 		global $actions, $doWhat;
 		$me = colorText(1,basename ( __FILE__ ));
-		echo "This file is called $me\n";
+		echo "This file is called $me\n\n";
 		foreach ($actions as $key => $params)
 		{
 			$helpline = $params['help'];
@@ -200,7 +209,7 @@
 			}
 			if (!empty($params['descr']))
 			{
-				echo $params['descr'] . "\n\t";
+				echo $params['descr'] . "\n";
 			}
 			$key_print = colorText(1,$key);
 			// Indicate which action we want to use";
@@ -209,10 +218,10 @@
 				$key_print = colorText(32,$key);
 				$helpline = colorText(32,$helpline);
 			}
-			echo "$sur_text --action $key_print $helpline\n";
+			echo "\t$sur_text --action $key_print $helpline\n";
 		}
-		echo colorText(1," --check-config")."\t Verifies that your configuration options are correct\n";
-		if (!empty($message)) {echo "Message: $message\n";}
+		echo colorText(1," \t--check-config")."\t Verifies that your configuration options are correct\n";
+		if (!empty($message)) {echo "\n". colorText(33,$message)."\n";}
 		echo "Please send all bug reports to Eitan Adler\n";
 		die();
 	}
