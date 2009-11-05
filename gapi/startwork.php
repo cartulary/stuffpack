@@ -27,6 +27,23 @@
 		"display" => Array (
 			"required_opts" => Array('u'),
 			"help" => "-u username"
+		),
+		"update" => Array(
+			"enabled" => false,
+			"required_opts" => Array('u'),
+			"help" => "-u username ... "
+		),
+		"list-add" => Array(
+			"enabled" => false,
+			"required_opts" => Array('u'),
+			"help" => "-u username -e listname ",
+			"descr" => "Adds username to email list"
+		),
+		"list-rm" => Array(
+			"enabled" => false,
+			"required_opts" => Array('u'),
+			"help" => "-u username ... -e listname",
+			"descr" => "Removed username from email list"
 		)
 	);
 
@@ -67,7 +84,10 @@
 		//show usage...
 		usage("dowhat not in array");
 	}
-
+	if ($actions[$doWhat]["enabled"] == false)
+	{
+		usage("This action is not enabled");
+	}
 	// check to make sure that all relevent fields are listed...
 	foreach ($actions[$doWhat]["required_opts"] as $opt)
 	{
@@ -135,7 +155,18 @@
 		foreach ($actions as $key => $params)
 		{
 			$helpline = $params['help'];
-			echo "$key: $me -a $action $helpline\n";
+			$sur_text="";
+			// triple equals to avoid null
+			if ($params['enabled'] === false)
+			{	
+				$sur_text=colorText(31,'Disabled');
+			}
+			if (!empty($params['descr']))
+			{
+				echo $params['descr'] . "\n\t";
+			}
+			$key_print = colorText(1,$key);
+			echo "$sur_text $key_print: $me -a $action $helpline\n";
 		}
 		if (!empty($message)) {echo "Message: $where\n";}
 		die();
@@ -177,5 +208,10 @@
 			}
 		echo "\n";
 		
+	}
+
+	function colorText($color,$text)
+	{
+		return "\033[".$color."m$text\033[0m";
 	}
 ?>
