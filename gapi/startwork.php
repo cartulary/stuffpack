@@ -39,7 +39,7 @@
 	$shortopts .= "p:";	//password 
 	$shortopts .= "h";	//print usage info
 
-	$longopts = Array ("action:");
+	$longopts = Array ("action:", 'debug');
 
 	$cli = getopt($shortopts, $longopts);
 
@@ -54,6 +54,8 @@
 	$name[0] = (empty($cli['f'])) ? '' : $cli['f'];
 	$name[1] = (empty($cli['l'])) ? '' : $cli['l'];
 	$givepass = (empty($cli['p'])) ? '' : $cli['p'];
+
+	$debug = (array_key_exists('debug',$cli)) ? true : false;
 
 	// if we don't list a valid action
 	if (!array_key_exists($doWhat,$actions))
@@ -139,12 +141,17 @@
 	{
 		global $service;
 		$user = $service->retrieveUser($username);
+		if ($debug)
+		{
+			var_dump($user);
+			return;
+		}
 //		$info['nicks'] = $service->retrieveNicknames($username);
 //		$info['lists'] = $service->retrieveEmailLists($username);
 
 		echo 'Username: ' . $user->login->userName . "\n";
-		echo 'Given Name: ' . $user->login->givenName . "\n";
-		echo 'Family Name: ' . $user->login->familyName . "\n";
+		echo 'Given Name: ' . $user->name->givenName . "\n";
+		echo 'Family Name: ' . $user->name->familyName . "\n";
 		echo 'Suspended: ' . ($user->login->suspended ? 'Yes' : 'No') . "\n";
 		echo 'Admin: ' . ($user->login->admin ? 'Yes' : 'No') . "\n";
 		echo 'Must Change Password: ' .
