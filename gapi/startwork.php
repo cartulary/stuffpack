@@ -11,37 +11,42 @@
 	$client = Zend_Gdata_ClientLogin::getHttpClient($email, $password, Zend_Gdata_Gapps::AUTH_SERVICE_NAME);
 	$service = new Zend_Gdata_Gapps($client, $domain);
 
+	$actions = Array(
+		"add" => Array(
+			"required_opts" => Array ('u','f','l','p'),
+			"help" => "-u username -n 'full name' -p password"
+		),
+		"del" => Array(
+			"required_opts" => Array ('u'),
+			"help" => "-u username"
+		)
+	);
+
+	// short opts == for the api
+	// long opts == for the script
 	$shortopts = "";
-	$shortopts .= "a:";	//action [ required ]
-	$shortopts .= "u:";	//username [ required ]
-	$shortopts .= "n:";	//full name (first last), default: (Scardy Cat)
-	$shortopts .= "p:";	//password [ required ] 
+	$shortopts .= "u:";	//username 
+	$shortopts .= "f:";	//First Name
+	$shortopts .= "l:";	//Last name 
+	$shortopts .= "p:";	//password 
 	$shortopts .= "h";	//print usage info
 
-	$cli = getopt($shortopts);
+	$longopts = Array ("action:");
+
+	$cli = getopt($shortopts, $longopts);
 
 	if (!is_null($cli['h']))
 	{
 		usage();
 	}
 
-	$doWhat = (empty($cli['a'])) ? '' : $cli['a'];
+	print_r($cli);
+	$doWhat = (empty($cli['action'])) ? '' : $cli['action'];
 	echo "$doWhat\n";
 	$giveuser = (empty($cli['u'])) ? '' : $cli['u'];
-	$fullname = (empty($cli['n'])) ? '' : $cli['n'];
+	$name[0] = (empty($cli['f'])) ? '' : $cli['f'];
+	$name[1] = (empty($cli['l'])) ? '' : $cli['l'];
 	$givepass = (empty($cli['p'])) ? '' : $cli['p'];
-
-	// split full name into given and family name	
-	$name = explode(" ", $fullname, 2);
-
-	$actions = Array(
-		"add" => Array(
-			"required_opts" => Array ("u","n","p")
-		),
-		"del" => Array(
-			"required_opts" => Array ("u")
-		)
-	);
 
 	// if we don't list a valid action
 	if (!array_key_exists($doWhat,$actions))
@@ -96,9 +101,13 @@
 
 	function usage($where="")
 	{
+		global $actions;
 		$me = basename ( __FILE__ );
-		echo "Add: $me -a add -u username -n 'full name' -p password\n";
-		echo "Del: $me -a del -u username\n";
+		foreach ($actions as $key => $params)
+		{
+			$helpline = $params['help'];
+			echo "$key: $me -a $action $helpline\n";
+		}
 		if (!empty($message)) {echo "Message: $where\n";}
 		die();
 	}
