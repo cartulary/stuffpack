@@ -1,5 +1,12 @@
 #!/usr/bin/env php
 <?php
+	/*
+		This script is designed for corporate or educational users
+		of google apps. It lets you add, remove, suspend, or view
+		info about users from a command line script. It is best 
+		used in conjuction with existing create-a-user scripts for
+		other applications.
+	*/
 	// All of these are set in config.php (and thats it)
 	// $config['user password domain']
 	require_once 'config.php';
