@@ -24,7 +24,8 @@ int main(int argc, char *argv[])
 {
 	int c;
 	int toReturn = 0;
-      while ((c = getopt (argc, argv, "Lclmw")) != -1)
+	int numFiles = 0;
+	while ((c = getopt (argc, argv, "Lclmw")) != -1)
 	{
       	switch (c)
 		{
@@ -60,6 +61,7 @@ int main(int argc, char *argv[])
 		for (int i = optind; i < argc; ++i)
 		{
 			/* if what we have is not stdin deal with it as a file */
+			/* Is this standard behavior - I'm not sure? */
 			if ( strcmp(argv[i] , "-") != 0 )
 			{
 				if ( ! wcFile(argv[i]) )
@@ -70,6 +72,7 @@ int main(int argc, char *argv[])
 				}
 				else
 				{
+					++numFiles;
 					/* we don't pass the filename so print it here */
 					std::cout << argv[i] << std::endl;
 				}
@@ -85,7 +88,7 @@ int main(int argc, char *argv[])
 	{
 		doWcFile(std::cin);
 	}
-	if (argc > 2)
+	if (numFiles >= 2)
 	{
 		std::cout << "\t";
 		if (lineFlag)
