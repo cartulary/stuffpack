@@ -56,3 +56,4 @@ then
 else
 	vlc --intf rc $vlc_opts;
 fi
+return 0;
