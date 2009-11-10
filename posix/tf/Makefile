@@ -8,4 +8,4 @@ LANG = c
 all:	true false
 
 clean: objclean
-	rm ./true ./false
+	rm -f ./true ./false
