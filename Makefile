@@ -55,11 +55,11 @@ LDFLAGS = -L/usr/local/lib
 
 PREFIX = /usr/local
 
-nameclean: .NOTMAIN
+nameclean: .NOTMAIN .USE .PHONY
 	rm -f ./$(NAME)
-coreclean: .NOTMAIN
+coreclean: .NOTMAIN .USE .PHONY
 	rm -f ./$(NAME).core
-objclean: .NOTMAIN
+objclean: .NOTMAIN .USE .PHONY
 	rm -fv ./*.o
 
 check: .NOTMAIN
