@@ -34,7 +34,7 @@ CFLAGS += -Wformat=2 -Wformat-y2k -Wformat-nonliteral -Wformat-security
 CFLAGS += -Wunused -Wunused-parameter -Wswitch-default -Wswitch-enum 
 CFLAGS += -Winit-self -Wmissing-include-dirs -Wpointer-arith -Wconversion
 CFLAGS += -Wfloat-equal -Wundef -Wshadow -Wcast-qual -Wcast-align -Wwrite-strings
-CFLAGS += -fabi-version=0 -funroll-loops -Waggregate-return
+CFLAGS += -fabi-version=0 -funroll-loops
 CFLAGS += -Wunreachable-code -Winline -Wmissing-noreturn -Wpacked -Wpadded -Wredundant-decls
 
 # Default includes...
