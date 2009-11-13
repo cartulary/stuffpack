@@ -6,8 +6,10 @@
  *********************************************/
 
 #include <iostream>
+#include <gmp.h>
+#include <gmpxx.h>
 
-long getFibN(long nthFib);
+mpz_class getFibN(long nthFib);
 
 int main (int argc, char* argv[])
 {
@@ -24,10 +26,10 @@ int main (int argc, char* argv[])
 	return 0;
 }
 
-long getFibN(long nthFib)
+mpz_class getFibN(long nthFib)
 {
 	// since we want to deal with the users idea of numbers ignore fibMap[0]
-	long *fibMap = new long[nthFib + 1];
+	mpz_class *fibMap = new mpz_class[nthFib + 1];
 
 	int i;
 	//Mathematiclly we start at 0...
@@ -37,6 +39,9 @@ long getFibN(long nthFib)
 	{
 		fibMap[i] = fibMap[i - 1] + fibMap[i - 2];
 	}
-	return fibMap[nthFib];
+	mpz_class result = fibMap[nthFib];
+	delete[] fibMap;
+	fibMap = NULL;
+	return result;
 
 }
