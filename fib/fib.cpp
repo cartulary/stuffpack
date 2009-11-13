@@ -28,12 +28,17 @@ int main (int argc, char* argv[])
 
 mpz_class getFibN(long nthFib)
 {
+	if (nthFib == 0)
+	{
+		// Otherwise we end up with a segfault later on (fibMap[1]...)
+		return 0;
+	}
 	// since we want to deal with the users idea of numbers ignore fibMap[0]
 	mpz_class *fibMap = new mpz_class[nthFib + 1];
 
 	int i;
 	//Mathematiclly we start at 0...
-	fibMap[0] = 0; // error - this should never be used
+	fibMap[0] = 0;
 	fibMap[1] = 1;
 	for (i = 2; i <= nthFib; ++i)
 	{
