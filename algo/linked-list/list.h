@@ -1,23 +1,18 @@
+#include "node.h"
+
 class list
 {
 	public:
-		/* link to next item in chain */
-		list* next;
-		/* link to prev item in chain */
-		list* prev;
-
 		/* first item in chain - useful? */
-		static list* head;
-
-		/* well - the most important part*/
-		int data;
+		node* head;
 
 		/* adds item right after this node?? */
-		list* add();
+		node* add(int data);
 		/* removes this node */
-		list* rm();
+		node* rm();
 
 		/* constructor */
 		list();
 
+		node nodes[5];
 };
