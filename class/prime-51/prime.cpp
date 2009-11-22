@@ -1,31 +1,46 @@
 #include <iostream>
 #include <math.h>
 
-bool isPrime(int num);
+bool checkPrime(int num);
 
 /* only accpet the CLI arguments */
 int main (int argc, char *argv[])
 {
-	int num;
-
 	const int num_primes = 51;
+	int primelist[num_primes];
+	int primeCount=0;
+	int num=0;
 
-	if (argc < 2)
+	while (primeCount < num_primes)
 	{
-		std::cerr << "sorry" << std::endl;
-		return 1;
+		bool isPrime = checkPrime(num);
+		if (isPrime)
+		{
+			primelist[primeCount] = num;
+			++primeCount;
+		}
+		++num;
 	}
 
-	/* get the first integer; maybe check them all eventually? */
-	num = strtol(argv[1],NULL, 10);
+	int i;
+	long sum;
+	for (i=0; i < num_primes; ++i)
+	{
+		/* the middle */
+		if (i==28)
+		{
+			std::cout << "*";
+		}
+		std::cout << primelist[i] << " ";
+		sum += primelist[i];
+	}
+	std::cout << std::endl;
+	std::cout << sum << std::endl;
 
-
-	/* print our result -> only print 'npt' if we not prime*/
-	std::cout << ((isPrime(num)) ? "" : "not ") << "prime" << std::endl;
 	return 0;
 }
 
-bool isPrime(int num)
+bool checkPrime(int num)
 {
 	/* we only check until the square root */
 	int maxFactor = static_cast<int>(floor(sqrt(num)));
