@@ -8,6 +8,8 @@ int main (int argc, char *argv[])
 {
 	int num;
 
+	const int num_primes = 51;
+
 	if (argc < 2)
 	{
 		std::cerr << "sorry" << std::endl;
@@ -15,7 +17,7 @@ int main (int argc, char *argv[])
 	}
 
 	/* get the first integer; maybe check them all eventually? */
-	num = atoi(argv[1]);
+	num = strtol(argv[1],NULL, 10);
 
 
 	/* print our result -> only print 'npt' if we not prime*/
