@@ -27,7 +27,7 @@ int main (int argc, char *argv[])
 	for (i=0; i < num_primes; ++i)
 	{
 		/* the middle */
-		if (i==28)
+		if (i==26)
 		{
 			std::cout << "*";
 		}
