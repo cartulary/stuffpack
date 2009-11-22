@@ -23,7 +23,7 @@ int main (int argc, char *argv[])
 	}
 
 	int i;
-	long sum;
+	long sum =0;
 	for (i=0; i < num_primes; ++i)
 	{
 		/* the middle */
