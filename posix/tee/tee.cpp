@@ -17,10 +17,6 @@ int main(int argc, char *argv[])
 {
 	std::vector<std::ofstream*> fileList;
 
-	/* register the signal handler */
-	/* why won't SIG_IGN work?	*/
-	signal(SIGINT, signal_handler);
-
       int c;
 	/* start parsing options */
       while ((c = getopt (argc, argv, "ai")) != -1)
@@ -37,18 +33,26 @@ int main(int argc, char *argv[])
 				break;
 		}
 	}
-	// lets make sure we have enouph room for all the CLI options.  We may not use it all but it should be minimal.
-	fileList.reserve (argc - 1);
+
+	/* register the signal handler */
+	/* why won't SIG_IGN work?	*/
+	if (ignoreSignalFlag)
+	{
+		signal(SIGINT, SIG_IGN);
+	}
+
+	// lets make sure we have enouph room for all the CLI files...
+	fileList.reserve (argc - optind);
 	/* since the CLI index includes options we want to maintain a count of files */
 	int fileCount = 0;
 	/* add files to fileList; */
 	for (int i = optind; i < argc; ++i )
 	{
 		//I need to find a better way to do this?  Is there a way to keep a pointer to the "mode"?
-            if (appendFlag)
-            {
-                  fileList.push_back (new std::ofstream(argv[i], ios::app | ios::binary));
-            }
+		if (appendFlag)
+		{
+            	fileList.push_back (new std::ofstream(argv[i], ios::app | ios::binary));
+		}
             else
             {
                   fileList.push_back (new std::ofstream(argv[i], ios::out | ios::binary));
@@ -74,21 +78,4 @@ int main(int argc, char *argv[])
 		cout << line << endl;
 	}
 	return 0;
-}
-
-/**********************************************
- * Name:    singal_handler                    *
- * Purpose: handle signals; ignore sigint     *
- * Returns: nothing                           *
- * Parameters: int - which signal did we get  *
- * compatibility: tee -i	                *
- *********************************************/
-
-void signal_handler(int signal)
-{
-	/* if we are  SIGINT and -i has been set ignore it else: */
-	if (! (signal == SIGINT && ignoreSignalFlag) )
-	{
-		exit(0);
-	}
 }
