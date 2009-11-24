@@ -1,7 +1,7 @@
 NAME=fib
 LANG = c++
+USE_GMP=yes
 .include	<../Makefile>
-CFLAGS += -lgmpxx -lgmp 
 
 #compiling options
 .PHONY:	clean

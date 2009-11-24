@@ -5,6 +5,7 @@ DEBUG?=off
 COMPILER?=llvm
 
 USE_NCURSES?=no
+USE_GMP?=no
 
 CFLAGS = -g3 -pipe
 .ifdef $(DEBUG) == on
@@ -43,6 +44,13 @@ LDFLAGS = -L/usr/local/lib
 
 .if $(USE_NCURSES) == yes
 LDFLAGS += -lncurses
+.endif
+
+.if $(USE_GMP) == yes
+.if $(LANG) == c++
+LDFLAGS += -lgmpxx
+.endif
+LDFLAGS += -lgmp
 .endif
 
 
