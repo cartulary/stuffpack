@@ -7,6 +7,8 @@
 		used in conjuction with existing create-a-user scripts for
 		other applications.
 	*/
+	error_reporting(E_ALL ^ (E_NOTICE|E_WARNING));
+
 	// All of these are set in config.php (and thats it)
 	// $config['user password domain']
 	require_once 'config.php';
@@ -68,6 +70,7 @@
 	// short opts == for the api
 	// long opts == for the script
 	$shortopts = "";
+	$shortopts .= "a:";	//action
 	$shortopts .= "u:";	//username 
 	$shortopts .= "f:";	//First Name
 	$shortopts .= "l:";	//Last name 
@@ -84,6 +87,10 @@
 
 	//convert from getopt moe to useable mode...
 	$doWhat = (empty($cli['action'])) ? '' : $cli['action'];
+	if (empty($doWhat))
+	{
+		$doWhat = (empty($cli['a'])) ? '' : $cli['a'];
+	}
 	$doWhatPrint = colorText(32,$doWhat);
 	echo "Trying to $doWhatPrint...\n";
 	$username = (empty($cli['u'])) ? '' : $cli['u'];
@@ -225,7 +232,7 @@
 				$key_print = colorText(32,$key);
 				$helpline = colorText(32,$helpline);
 			}
-			echo "\t$sur_text --action $key_print $helpline\n";
+			echo "\t$sur_text [-a|--action] $key_print $helpline\n";
 		}
 		echo colorText(1," \t--check-config")."\t Verifies that your configuration options are correct\n";
 		if (!empty($message)) {echo "\n". colorText(33,$message)."\n";}
