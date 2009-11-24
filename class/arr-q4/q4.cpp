@@ -4,7 +4,7 @@
 int main (int argc, char* argv[])
 {
 	int num;
-	std::cout << "
+	std::cout << "Please enter a number:\n";
 
 	while ( !( std::cin >> num ))
 	{
