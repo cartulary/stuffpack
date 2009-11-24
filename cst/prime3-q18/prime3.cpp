@@ -14,16 +14,30 @@
 #include <gmpxx.h>
 
 
-int sumDigits(int num);
-bool isPrime(int num);
+int sumDigits(long num);
+bool isPrime(long num);
 
 int main (int argc, char* argv[])
 {
-	std::cout<< sumDigits(415) << std::endl;
+	long i;
+	int answerCount=0;
+	for (i=0; i < 1000000; ++i)
+	{
+		/* We want the number of primes below 1,000,000 that
+		*  have the sum of their digits equal to the number
+		*  of days in a fortnight.
+		*/	
+		if (isPrime(i) && sumDigits(i) == 14)
+		{
+			std::cout << i << "\n";
+			++answerCount;
+		}
+	}
+	std::cout << "Answer=" << answerCount << std::endl;
 	return 0;
 }
 
-int sumDigits(int num)
+int sumDigits(long num)
 {
 	int sum=0;
 	while (num > 0)
@@ -34,16 +48,16 @@ int sumDigits(int num)
 	return sum;
 }
 
-bool isPrime(int num)
+bool isPrime(long num)
 {
 	/* we only check until the square root */
-	int maxFactor = static_cast<int>(floor(sqrt(num)));
+	long maxFactor = static_cast<long>(floor(sqrt(num)));
 
 	/* for == 2 and <1 use the "else" */
 	if (num >= 3 && num %2 != 0)
 	{
 		/* check for all odd numbers  */
-		for (int i = 3; i <= maxFactor; i += 2)
+		for (long i = 3; i <= maxFactor; i += 2)
 		{
 			/* check to see if we are prime */
 			if (num % i == 0)
