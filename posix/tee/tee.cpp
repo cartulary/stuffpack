@@ -8,8 +8,6 @@
 #include <string>
 #include <vector>
 
-void signal_handler(int signal);
-
 bool appendFlag = false, ignoreSignalFlag = false;
 
 using namespace std;
