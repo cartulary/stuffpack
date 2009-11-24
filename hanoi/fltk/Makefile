@@ -1,10 +1,19 @@
 DIST = fltk
 DISTPATH = fltk
+NAME=main
 .include    <../Makefile.inc>
-CFLAGS = -I/usr/local/include -I/usr/local/include/freetype2 -I/usr/local/include -O2 -fno-strict-aliasing -pipe -I/usr/local/include -Wno-non-virtual-dtor 
-LINKCFLAGS += -L/usr/local/lib -lfltk2 -R/usr/local/lib -pthread -lX11 -lXi -lXft -lpthread -lm -lXext -lsupc++ -lstdc++
 
-main: inputWindow.cpp ../hanoi.cpp main.cpp
-	$(CC) main.cpp -o $(NAME) $(CFLAGS) $(LINKCFLAGS)
+EXTRA_CFLAGS != fltk-config --use-forms --cxxflags --libs
+CFLAGS += $(EXTRA_CFLAGS)
 
-inputWindow.o:
+EXTRA_LDFLAGS != fltk-config --use-forms --ldflags --libs
+LDFLAGS += $(EXTRA_LDFLAGS)
+
+main:
+	fltk2-config --compile main.cpp
+
+#main: inputWindow.cpp ../hanoi.cpp main.cpp
+
+#inputWindow.o:
+
+clean: nameclean coreclean objclean
