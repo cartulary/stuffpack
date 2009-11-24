@@ -2,11 +2,11 @@
 #which file) we use
 .ifmake dirclean
 .include <../Makefile>
+SUBDIRS!= ls -F|grep \/
 .else
 .include <../../Makefile>
 .endif
 
-SUBDIRS!= ls -F|grep \/
 
 dirclean: .NOTMAIN
 	for d in $(SUBDIRS); do \
