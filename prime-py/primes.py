@@ -3,7 +3,7 @@
 from math import sqrt
 
 def isPrime(num):
-	for i in range(3, int(sqrt(num))):
+	for i in range(3, int(sqrt(num)) + 1):
 		if num % i == 0:
 			return False
 	return True
