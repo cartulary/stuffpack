@@ -1,6 +1,9 @@
+#!/usr/bin/env -S python -tt3
+
 # We want to test to see if our argument list is prime.
 
 from math import sqrt
+import sys;
 
 def isPrime(num):
 	for i in range(3, int(sqrt(num)) + 1):
@@ -8,5 +11,6 @@ def isPrime(num):
 			return False
 	return True
 
-print isPrime(11);
-print isPrime(12);
+for arg in sys.argv:
+	if arg != sys.argv[0]:
+		print isPrime(int(arg));
