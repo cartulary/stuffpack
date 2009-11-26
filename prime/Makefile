@@ -6,6 +6,6 @@ USE_HELLO=yes
 .PHONY:	clean
 
 primeA: primeA.o
-	$(CC) -o $(NAME) $(NAME).o $(LDFLAGS)
+	$(CC) $(.ALLSRC) -o $(NAME) $(LDFLAGS)
 
-primeA.o: primeA.cpp 
+$(OBJS): $(.PREFIX).cpp

@@ -1,4 +1,4 @@
-.include <../../Makefile>
+.include "../Makefile"
 
 NAME = hanoi
 .ifdef $(LANG) == c++
