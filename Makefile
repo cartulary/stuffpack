@@ -6,6 +6,7 @@ COMPILER?=llvm
 
 USE_NCURSES?=no
 USE_GMP?=no
+USE_HELLO?=no
 
 CFLAGS = -g3 -pipe
 .ifdef $(DEBUG) == on
@@ -42,6 +43,10 @@ CFLAGS += -Wunreachable-code -Winline -Wmissing-noreturn -Wpacked -Wpadded -Wred
 CFLAGS += -isystem /usr/local/include
 LDFLAGS = -L/usr/local/lib
 
+.if $(USE_HELLO) == yes
+LDFLAGS += -L../libhello/ -L ../../libhello -lhello
+.endif
+
 .if $(USE_NCURSES) == yes
 LDFLAGS += -lncurses
 .endif
@@ -76,5 +81,5 @@ check: .NOTMAIN
 	## run on all code...
 	#rats -rw3 *
 	## only run these on C code....
-	#splint -strict-lib -showcolumn -showfunc -strict *.c *.h
-	#lint -aabcehprsxH -I /usr/local/include/ *.c *.h
+	splint -strict-lib -showcolumn -showfunc -strict *.c *.h
+	lint -aabcehprsxH -I /usr/local/include/ *.c *.h

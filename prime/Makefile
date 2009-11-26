@@ -1,10 +1,13 @@
 NAME=primeA
 LANG = c++
+USE_HELLO=yes
 .include	<../Makefile>
 
-#compiling options
 .PHONY:	clean
 
-primeA:
+primeA: primeA.o
+	$(CC) -o $(NAME) $(NAME).o $(LDFLAGS)
+
+primeA.o: primeA.cpp 
 
 clean: nameclean objclean coreclean
