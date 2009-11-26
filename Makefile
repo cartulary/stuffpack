@@ -44,7 +44,8 @@ CFLAGS += -isystem /usr/local/include
 LDFLAGS = -L/usr/local/lib
 
 .if $(USE_HELLO) == yes
-LDFLAGS += -L../libhello/ -L ../../libhello -lhello
+CFLAGS += -I../libhello/ -I../../libhello
+LDFLAGS += -L../libhello/ -L../../libhello -lhello
 .endif
 
 .if $(USE_NCURSES) == yes
@@ -74,6 +75,9 @@ coreclean: .NOTMAIN .USE .PHONY
 	rm -f ./$(NAME).core
 objclean: .NOTMAIN .USE .PHONY
 	rm -fv ./*.o
+.if ! target(clean)
+clean: .NOTMAIN .PHONY nameclean coreclean objclean
+.endif
 
 check: .NOTMAIN
 	## only run this on C++ code
