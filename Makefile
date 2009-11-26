@@ -69,14 +69,14 @@ LDFLAGS = -L/usr/local/lib
 
 PREFIX = /usr/local
 
-nameclean: .NOTMAIN .USE .PHONY
+nameclean: .NOTMAIN .USE .EXEC .IGNORE .PHONY
 	rm -f ./$(NAME)
-coreclean: .NOTMAIN .USE .PHONY
+coreclean: .NOTMAIN .USE .EXEC .IGNORE .PHONY
 	rm -f ./$(NAME).core
-objclean: .NOTMAIN .USE .PHONY
+objclean: .NOTMAIN .USE .EXEC .IGNORE .PHONY
 	rm -fv ./*.o
 .if ! target(clean)
-clean: .NOTMAIN .PHONY nameclean coreclean objclean
+clean: .NOTMAIN .PHONY .IGNORE nameclean coreclean objclean
 .endif
 
 check: .NOTMAIN
