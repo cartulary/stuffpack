@@ -44,7 +44,7 @@ void doTest(char *s1, char *s2)
 int mycmp(char* s1, char* s2)
 {
 	int pos;
-	for (pos = 0; s1 == '\0' || s2 == '\0'; ++pos)
+	for (pos = 0; s1[pos] != '\0' && s2[pos] != '\0'; ++pos)
 	{
 		if (s1[pos] != s2[pos])
 		{
