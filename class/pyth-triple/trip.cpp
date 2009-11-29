@@ -1,5 +1,6 @@
 #include <iostream>
 #include <math.h>
+#include "libhello.h"
 
 /*
 	TODO: make this DP -> store result of multiplication in array
@@ -29,7 +30,7 @@ int main(void)
 			}
 			for (b=a; b<= 2000; ++b)
 			{
-				if (pow(a,2) + pow(b,2)==pow(c,2))
+				if (isPythTriple(a,b,c))
 				{
 					std::cout << a << " + "<< b << " = "<< c << "\n\t";
 					std::cout << pow(a,2) << " + "<< pow(b,2) << " = "<< pow(c,2) << "\n";
