@@ -88,11 +88,17 @@ int myncmp(char* s1, char* s2, int len)
 	int pos;
 	for (pos = 0; s1[pos] != '\0' && s2[pos] != '\0' && pos < len; ++pos)
 	{
+//		std::cerr << "pos=" << pos << "len=" << len << "s1/s2" << s1[pos] << " " << s2[pos] <<"\n";
 		if (s1[pos] != s2[pos])
 		{
 			return s1[pos] - s2[pos];
 		}
 	}
+//	std::cerr << "!pos=" << pos << "len=" << len << "s1/s2" << s1[pos] << " " << s2[pos] <<"\n";
 	// we got to the end of a string and they are so far equal
+	if (len == pos)
+	{
+		++pos;
+	}
 	return s1[pos] - s2[pos];
 }
