@@ -1,10 +1,11 @@
 NAME=trip
 LANG=c++
+USE_HELLO=yes
 .include	<../../Makefile>
 
 #compiling options
 .PHONY:	clean
 
-$(NAME):
-
-clean: nameclean coreclean objclean
+$(NAME): $(NAME).o
+	$(CC) -o $(NAME) $(.ALLSRC) $(LDFLAGS)
+$(NAME).o:
