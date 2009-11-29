@@ -11,11 +11,11 @@
 #include <iostream>
 #include <math.h>
 
-int mycmp(char* s1, char* s2);
+int mycmp(const char* s1, const char* s2);
+int myncmp(const char* s1, const char* s2, size_t len);
 void doTest(char *s1, char *s2);
 void doNTest(char *s1, char *s2, int len);
 void printTest(int good, int my);
-int myncmp(char* s1, char* s2, int len);
 
 int main (int argc, char* argv[])
 {
@@ -69,7 +69,7 @@ void printTest(int goodVal, int myVal)
 	std::cout << testID << " Real = " << goodVal << " My = " << myVal << ((goodVal==myVal) ? "" : " failed") << "\n";
 }
 
-int mycmp(char* s1, char* s2)
+int mycmp(const char* s1, const char* s2)
 {
 	int pos;
 	for (pos = 0; s1[pos] != '\0' && s2[pos] != '\0'; ++pos)
@@ -83,7 +83,7 @@ int mycmp(char* s1, char* s2)
 	return s1[pos] - s2[pos];
 }
 
-int myncmp(char* s1, char* s2, int len)
+int myncmp(const char* s1, const char* s2, size_t len)
 {
 	int pos;
 	for (pos = 0; s1[pos] != '\0' && s2[pos] != '\0' && pos < len; ++pos)
