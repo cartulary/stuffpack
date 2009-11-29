@@ -29,3 +29,13 @@ bool isPrime(long num)
 	}
 	return true;
 }
+
+bool isPythTriple(int a, int b, int c)
+{
+	return (pow(a,2) + pow(b,2) == pow(c,2));
+}
+
+bool isEven(int num)
+{
+	return (num % 2 == 0);
+}
