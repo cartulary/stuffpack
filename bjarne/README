@@ -1,0 +1,7 @@
+How this directory is organized:
+c#-?#-name
+The first part is the chapter number.
+The second part is either "e" for exercise, "d" for drill, or "tt" for try this.
+If it is an "e" or a "d" the number is the number of the drill/exercise.
+If it is a "tt" the number is the page number.
+The third part is a descriptive name of what the program does.
