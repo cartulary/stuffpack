@@ -38,7 +38,14 @@ void doTest(char *s1, char *s2)
 {
 	static int testID = 0;
 	++testID;
-	std::cout << testID << " Real = " << strcmp(s1, s2) << " My = " << mycmp(s1,s2) << "\n";
+	int goodVal = strcmp(s1,s2);
+	int myVal = mycmp(s1,s2);
+	char failed = 'Y';
+	if (goodVal == myVal)
+	{
+		failed = 'N';
+	}
+	std::cout << testID << " Real = " << goodVal << " My = " << myVal << " failed = "<< failed << "\n";
 }
 
 int mycmp(char* s1, char* s2)
