@@ -48,7 +48,7 @@ int main (int argc, char* argv[])
 		}
 		current_guess = getNextGuess(current_guess, min, max, lessThanCurrent);
 	}
-	return 0;
+	return EX_OK;
 }
 
 int getNextGuess(int current, int min, int max, bool lessThanCurrent)
