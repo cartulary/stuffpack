@@ -5,4 +5,11 @@ LANG=c++
 #compiling options
 .PHONY:	clean
 
+all: ptrcmp strcmp
+
 $(NAME):
+
+ptrcmp:
+
+clean: nameclean objclean coreclean
+	rm -f ptrcmp
