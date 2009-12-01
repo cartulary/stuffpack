@@ -11,6 +11,8 @@
 #include <iostream>
 #include <sysexits.h>
 
+int getNextGuess(int current, int min, int max, bool lessThanCurrent);
+
 using namespace std;
 
 int main (int argc, char* argv[])
@@ -21,29 +23,42 @@ int main (int argc, char* argv[])
 	int current_guess = MAX_TO_TRY / 2;
 	int max = MAX_TO_TRY;
 	int min = 0;
+	int tries = 0;
 	while (1)
 	{
 		if (max == min)
 		{
-			cout << "Your number is " << min << "\n";
+			cout << "Your number is " << min << " in "<< tries <<" tries!\n";
 			break;
 		}
-		cout << "(max=" << max << " min=" << min << ")\n";
+		++tries;
 		cout << "Is your number less than " << current_guess << "? ";
 		cin >> answer;
 		cout << "\n";
+		bool lessThanCurrent = false;
+		last_guess = current_guess;
 		if (answer=='Y' || answer=='y')
 		{
-			last_guess = current_guess;
+			lessThanCurrent = true;
 			max = current_guess - 1;
-			current_guess = max - ((current_guess - min) / 2);
 		}
 		else if (answer=='N' || answer=='n')
 		{
-			last_guess = current_guess;
 			min = current_guess;
-			current_guess = max - ((max-current_guess) / 2);
 		}
+		current_guess = getNextGuess(current_guess, min, max, lessThanCurrent);
 	}
 	return 0;
+}
+
+int getNextGuess(int current, int min, int max, bool lessThanCurrent)
+{
+	if (lessThanCurrent)
+	{
+		return max - ((current - min) /2);
+	}
+	else
+	{
+		return max - ((max - current) / 2);
+	}
 }
