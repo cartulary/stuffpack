@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <sysexits.h>
+#include <ctype.h>
 
 int getNextGuess(int current, int min, int max, bool lessThanCurrent);
 
@@ -37,12 +38,13 @@ int main (int argc, char* argv[])
 		cout << "\n";
 		bool lessThanCurrent = false;
 		last_guess = current_guess;
-		if (answer=='Y' || answer=='y')
+		answer = tolower(answer);
+		if (answer=='y')
 		{
 			lessThanCurrent = true;
 			max = current_guess - 1;
 		}
-		else if (answer=='N' || answer=='n')
+		else if (answer=='n')
 		{
 			min = current_guess;
 		}
