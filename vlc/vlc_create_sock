@@ -2,17 +2,12 @@
 
 install_me()
 {
-	whomedir=~/.vlc_extra;
+	whomedir="$1";
 	mkdir "$whomedir";
 	touch "$whomedir/socket_name";
 	mkdir "$whomedir/sockets";
 }
 
-# if we don't exist lettuce install ourself
-if [ ! -d ~/.vlc_extra ]
-then
-	install_me;
-fi
 cleanup="";
 ncurse="";
 optdir=~/.vlc_extra;
@@ -25,6 +20,12 @@ do
 		'?') exit 1;;
 	esac
 done
+# if we don't exist lettuce install ourself
+if [ ! -d "$optdir" ]
+then
+	install_me "$optdir";
+fi
+
 [ -n "$cleanup" ] && echo "Yeah!";
 base="$(basename $0)";
 current_sock="$(cat $optdir/socket_name)";
