@@ -13,9 +13,14 @@ int main (int argc, char* argv[])
 {
 	double num1;
 	double num2;
+	double lowest;
+	double highest;
+	cin >> lowest >> highest;
 	while (1)
 	{
 		cin >> num1 >> num2;
+		lowest = (num1 < lowest) ? num1 : lowest;
+		highest = (num1 > highest) ? num1 : highest;
 		if (num2 < num1)
 		{
 			swap(num1, num2);
