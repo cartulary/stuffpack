@@ -1,13 +1,14 @@
 #!/usr/bin/env sh
 #TODO -> release new version of port
-##### Permission bug -> is the command not getting run?" ####
-portdir="/usr/ports";
-whereto=".";
-dryrun="";
-index="";
-verbose="";
-mapfile="";
-mapfile_mode="ln -s";
+#TODO
+# add even more failure and sanity testing
+# add comments explaining what is going on
+# add the ability to change the mask used to name the ports w/i each virtual category.
+portdir="/usr/ports"
+whereto="."
+dryrun=""
+index=""
+verbose=""
 
 usage()
 {
@@ -19,8 +20,6 @@ usage()
 	echo " -h               show this usage"
 	echo " -i indexfile     use this index file instead of traversing"
 	echo "                  the ports tree"
-	echo " -m mapfile		use mapfile to create new symlinks"
-	echo " -M mapfile mode	what command to use to work with mapfiles";
 	echo " -n               run through ports, but do not modify anything"
 	echo " -p portsdir      use portsdir as the root of the ports tree"
 	echo "			the default is /usr/ports/"
@@ -30,19 +29,17 @@ usage()
 	echo "                  symlinks (default is current dir)"
 }
 
-while getopts dhi:Mm:np:Vvw: option
+while getopts dhi:np:Vvw: option
 do    case "$option" in
 	'd')  set -x;;
 	'h')	usage;
 		exit 0;;
-	'm')	mapfile="$OPTARG";;
-	'M')	mapfile_mode="$OPTARG";;
 	'n')	dryrun="yes";;
 	'i')	index=$OPTARG;;
 	'p')  portdir=$OPTARG;;
 	'v')	verbose="yes";;
 	'w')	whereto=$OPTARG;;
-	'V')	echo "Version 0.5";
+	'V')	echo "Version 0.4.";
 		exit 0;;
 	'?')  usage;
 		exit 1;;
@@ -57,8 +54,6 @@ do_link_port()
 
 }
 
-# since we want to make sure that the directory exists call this function 
-# to create it
 do_make_cat_dir() 
 {
 	catname="$1"
@@ -68,7 +63,8 @@ do_make_cat_dir()
 		[ -z "$dryrun" ] && mkdir -p "$whereto/$catname";
 	fi;
 }
-
+# since we want to make sure that the directory exists call this function
+# to create it
 op_port()
 {
 	portpath=$1;
@@ -136,50 +132,12 @@ transverse_index()
 	done < "$1/$index"
 }
 
-do_map()
-{
-	oldport="$1";
-	newport=$(basename $2);
-	newportdir=$(dirname $2);
-	if [ ! -d "$whereto/$newportdir" ]
-	then
-		[ -n "$verbose" ] && echo "mkdir -p \"$newport\" \"$whereto/$newportdir\"";
-		[ -z "$dryrun" ] && mkdir -p "$newport" "$whereto/$newportdir";
-	fi
-
-	[ -n "$verbose" ] && echo "$mapfile_mode \"$portdir/$oldport\" \"$whereto/$newportdir/$newport\"";
-	[ -z "$dryrun" ] && $mapfile_mode "$portdir/$oldport" "$whereto/$newportdir/$newport";
-}
-
-do_mapfile()
-{
-	mapfile="$1";
-	while read LINE
-	do
-		oldport=$(echo $LINE|cut -d " " -f 1);
-		newport=$(echo $LINE|cut -d " " -f 2);
-		do_map "$oldport" "$newport"
-	done < "$mapfile";
-}
-
 if [ ! -d "$portdir" ];
 then
 	echo "Complete failure";
 	exit 1;
 fi;
 
-if [ -n "$mapfile" ]
-then
-	if [ ! -e "$mapfile" ]
-	then
-		echo "Mapfile does not exist";
-		exit 1;
-	fi
-	do_mapfile "$mapfile";
-	exit 0;
-fi
-# we don't run the normal mode with a map....
-# perhaps we should make this an option?
 if [ -z "$index" ];
 then
 	if [ ! -e "$portdir/Makefile" ];
@@ -222,10 +180,3 @@ return 0;
 #THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 #(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 #THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-
-
-#TODO
-# add even more failure and sanity testing
-# add comments explaining what is going on
-# add the ability to change the mask used to name the ports w/i each virtual category.
