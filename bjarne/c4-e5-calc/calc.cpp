@@ -21,7 +21,7 @@ Token get_token();
 // deals with + and - (pri 2); uses term() and get_token()
 double expression();
 // deals with */% (pri 1); uses primary() and get_token()
-Token term();
+double term();
 // deals with numbers and () (pri 0); uses expression() and get_token();
 double primary();
 
@@ -77,15 +77,15 @@ int main (int argc, char* argv[])
 double expression()
 {
 	// infinite recursion
-	Token l = term();
+	Token l = get_token();
 	Token t = get_token();
 	switch (l.kind)
 	{
 		case '+':
-			l.value += term().value;
+			l.value += term();
 			break;
 		case '-':
-			l.value -= t.value;
+			l.value -= term();
 			break;
 		default:
 			l.value = t.value;
@@ -95,11 +95,29 @@ double expression()
 	return l.value;
 }
 
-Token term()
+double term()
 {
 	cout << "(term)\n";
+	double left = primary();
 	Token t = get_token();
-	return t;
+	while (true)
+	{
+		switch (t.kind)
+		{
+			case '*':
+				left *= primary();
+				t = get_token();
+				break;
+			case '/':
+				left /= primary();
+				t = get_token();
+				break;
+			//case '%':
+			default:
+				return left;
+		}
+	}
+	return primary();
 }
 
 Token get_token()
@@ -111,4 +129,10 @@ Token get_token()
 	Token t(op, rvalue);
 	cout << "(tkn) O = " << op <<" R = " << rvalue <<"\n";
 	return t;
+}
+
+double primary()
+{
+	Token t = get_token();
+	return t.value;
 }
