@@ -5,4 +5,5 @@ LANG=c++
 #compiling options
 .PHONY:	clean
 
-$(NAME):
+$(NAME): token.o $(NAME).cpp
+token.o: token.h
