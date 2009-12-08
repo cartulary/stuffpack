@@ -6,4 +6,5 @@ LANG=c++
 .PHONY:	clean
 
 $(NAME): token.o $(NAME).cpp
-token.o: token.h
+token.o: token.cpp
+token.cpp: token.h
