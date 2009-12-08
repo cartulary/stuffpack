@@ -99,6 +99,7 @@ Token get_token()
 	cin >> ch;
 	if (ch >= '0' && ch <= '9' || '.' == ch)
 	{
+		cin.putback(ch);
 		double val;
 		cin >> val;
 		return Token('#',val);
