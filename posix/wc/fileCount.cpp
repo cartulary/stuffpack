@@ -31,7 +31,7 @@ fileCount::fileCount(std::istream &file) : lineNums(0), charNums(0), words(0), l
 			}
 		}
 		// count one extra where last word does not have a space...
-		if (!iswspace(line[lineLen]) && lineLen!=0)
+		if (!iswspace(line[lineLen - 1]) && lineLen!=0)
 		{
 			++words;
 		}
