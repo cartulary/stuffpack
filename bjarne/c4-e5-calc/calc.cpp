@@ -27,49 +27,20 @@ double primary();
 
 int main (int argc, char* argv[])
 {
-	// Each of the numbers we will be working with
-	double lval =0;
-	double rval;
-	// what operation to perform
-	char op;
-
-	cout << expression();
-	return EX_OK;
-
-	cin >> lval;
-	if (!cin)
+	try
 	{
-		errx(EX_NOINPUT,"%s","You didn't enter any data");
+		while (cin)
+		{
+			cout << "RESULT ="<<expression();
+		}
 	}
-
-	// as long as we still have an operator continue to do stuff
-	while (cin >> op)
+	catch (exception e)
 	{
-		// get the ultra simple expression
-		cin >> rval;
-		if (!cin)
-		{
-			errx(EX_NOINPUT,"%s", "You didn't enter an rvalue");
-		}
-		// ok - now we decide on a result
-		switch (op)
-		{
-			case '+':
-				lval += rval;
-				break;
-			case '-':
-				lval -= rval;
-				break;
-			case '*':
-				lval *= rval;
-				break;
-			case '/':
-				lval /= rval;
-				break;
-			default:
-				cout << "Result = " << lval << "\n";
-				return EX_OK;
-		}
+		cerr << e.what() << "\n";
+	}
+	catch (...)
+	{
+		cerr << "Housten we got cheese!\n";
 	}
 	return EX_OK;
 }
@@ -77,22 +48,24 @@ int main (int argc, char* argv[])
 double expression()
 {
 	// infinite recursion
-	Token l = get_token();
+	double left = term();
 	Token t = get_token();
-	switch (l.kind)
+	switch (t.kind)
 	{
 		case '+':
-			l.value += term();
+			left += term();
+			t = get_token();
 			break;
 		case '-':
-			l.value -= term();
+			left -= term();
+			t = get_token();
 			break;
 		default:
-			l.value = t.value;
+			0;
 			//we do nothing... let our calling function deal with that
 	}
-	cout << "(expr) L = " << l.value <<" O = " << t.kind << " R = " << t.value << "\n";
-	return l.value;
+	cout << "(expr) L = " << left <<" O = " << "\n";
+	return left;
 }
 
 double term()
@@ -122,17 +95,55 @@ double term()
 
 Token get_token()
 {
+	char ch;
+	cin >> ch;
+	if (ch >= '0' && ch <= '9' || '.' == ch)
+	{
+		double val;
+		cin >> val;
+		return Token('#',val);
+	}
+	else
+	{
+		switch (ch)
+		{
+			case '(': case ')': case '+': case '-': case '*': case '/': case '%':
+				return Token(ch);
+				break;
+			default:
+				err(EX_DATAERR, "%s", "Bad token");
+		}
+	}
 	double rvalue;
 	char op;
 	cin >> rvalue;
 	cin >> op;
 	Token t(op, rvalue);
-	cout << "(tkn) O = " << op <<" R = " << rvalue <<"\n";
+	cout << "(get_tkn) O = " << op <<" R = " << rvalue <<"\n";
 	return t;
 }
 
 double primary()
 {
 	Token t = get_token();
-	return t.value;
+	double result;
+	switch (t.kind)
+	{
+		case '#':
+			result =  t.value;
+			break;
+		case '(':
+			result = expression();
+			t = get_token();
+			if (t.kind != ')')
+			{
+				err(EX_DATAERR, "%s", "Missing )");
+			}
+			break;
+		default:
+			result = 0;
+			break;
+	}
+	cout << "(prim) T.v= " << t.value << " T.k = " << t.kind << "\n";
+	return result;
 }
