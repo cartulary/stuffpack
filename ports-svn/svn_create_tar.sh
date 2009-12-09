@@ -53,28 +53,22 @@ if [ "$use_scm" = "svn" ]
 then
 	echo "We don't yet handle non svn based projects. This is a future feature";
 	return 1;
-else
 fi
 
 if [ -n "$opt_get_head" ]
 then
 	do_get_head;
 	echo "Head = $svn_head";
-else
-	echo "Not getting head";
 fi
 
 if [ -n "$opt_export" ]
 then
 	do_get_src;
-else
-	echo "Not getting src";
 fi
 
 if [ -n "$opt_make_tar" ]
 then
 	do_make_tar;
-else
 	echo "Not making tar";
 fi
 
