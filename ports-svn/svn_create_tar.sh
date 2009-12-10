@@ -3,13 +3,16 @@ use_scm="";
 opt_get_head="";
 opt_export="";
 opt_make_tar="";
-while getopts d:het option
+while getopts ad:hetV option
 do
 	case "$option" in
+		'a') opt_get_head="yes"; opt_export="yes"; opt_make_tar="yes";;
 		'd') port="$OPTARG";;
 		'h') opt_get_head="yes";; #get head
 		'e') opt_export="yes";; #export files
 		't') opt_make_tar="yes";; #tar files
+		'V') echo "Tool maintained by Eitan Adler (EitanAdlerList@gmail.com). Please contact him with updates, changes, and fixes.";
+			return 0;
 	esac
 done
 echo "Dir: $port";
