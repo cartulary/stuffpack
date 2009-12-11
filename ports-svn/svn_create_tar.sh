@@ -38,7 +38,7 @@ do_get_head()
 		echo "SVN_REV=    $svn_rev" >$mk_masterdir/Makefile.svn_rev;
 	else
 		echo "Makefile.svn_rev is not writable. Set SVN_REV to $svn_rev manually";
-	fi	
+	fi
 }
 
 do_get_src()
@@ -65,7 +65,7 @@ then
 	echo "We don't yet handle non svn based projects. This is a future feature";
 	return 1;
 else
-	scm_export_args="export -r $svm_rev"
+	scm_export_args="export -r $scm_rev"
 fi
 
 if [ -n "$opt_get_head" ]
