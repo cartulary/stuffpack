@@ -9,6 +9,14 @@
  *		the book				    *
  *********************************************/
 
+/*
+	Slight bug: due to term() requiring an '=' sign for each time it is called the following odd syntax is required
+	2 * 2 = =
+	Due to expression() also requiring an equal sign the current syntax is
+	2 * 2 = = =
+	//Final number getting cut off --> term() eats last primary
+*/
+
 #include <iostream>
 #include <sysexits.h>
 #include <err.h>
@@ -31,7 +39,8 @@ int main (int argc, char* argv[])
 	{
 		while (cin)
 		{
-			cout << "RESULT ="<<expression();
+			double t = term();
+			cout << "RESULT =" << t << '\n';
 		}
 	}
 	catch (exception e)
@@ -64,13 +73,12 @@ double expression()
 			0;
 			//we do nothing... let our calling function deal with that
 	}
-	cout << "(expr) L = " << left <<" O = " << "\n";
+	cout << "(expr) L = " << left <<"\n";
 	return left;
 }
 
 double term()
 {
-	cout << "(term)\n";
 	double left = primary();
 	Token t = get_token();
 	while (true)
@@ -78,19 +86,21 @@ double term()
 		switch (t.kind)
 		{
 			case '*':
-				left *= primary();
-				t = get_token();
+				left *= term();
 				break;
 			case '/':
-				left /= primary();
-				t = get_token();
+				left /= term();
 				break;
 			//case '%':
 			default:
+				cout << "\n";
 				return left;
 		}
+		t = get_token();
+		cout << "(term) left: " << left;
 	}
-	return primary();
+	cout << "\n";
+	return left;
 }
 
 Token get_token()
@@ -108,11 +118,12 @@ Token get_token()
 	{
 		switch (ch)
 		{
-			case '(': case ')': case '+': case '-': case '*': case '/': case '%':
+			case '(': case ')': case '+': case '-': case '*': case '/': case '%': case '=':
 				return Token(ch);
 				break;
 			default:
-				err(EX_DATAERR, "%s", "Bad token");
+				//This might have to be warnx
+				errx(EX_DATAERR, "%s", "Bad token");
 		}
 	}
 	double rvalue;
@@ -120,7 +131,7 @@ Token get_token()
 	cin >> rvalue;
 	cin >> op;
 	Token t(op, rvalue);
-	cout << "(get_tkn) O = " << op <<" R = " << rvalue <<"\n";
+//	cout << "(get_tkn) O = " << op <<" R = " << rvalue <<"\n";
 	return t;
 }
 
@@ -134,17 +145,17 @@ double primary()
 			result =  t.value;
 			break;
 		case '(':
-			result = expression();
+			result = term();
 			t = get_token();
 			if (t.kind != ')')
 			{
-				err(EX_DATAERR, "%s", "Missing )");
+				errx(EX_DATAERR, "%s", "Missing )");
 			}
 			break;
 		default:
 			result = 0;
 			break;
 	}
-	cout << "(prim) T.v= " << t.value << " T.k = " << t.kind << "\n";
+//	cout << "(prim) T.k= " << t.kind << " T.v = " << t.value << "\n";
 	return result;
 }
