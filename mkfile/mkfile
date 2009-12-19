@@ -13,34 +13,24 @@ get_sed()
 
 templatedir=~/.templates;
 rpcfile="";
-file="";
 while getopts f:r:t: option
 do
 	case "$option" in
-		'f') file="$OPTARG";;
 		'r') rpcfile="$OPTARG";;
 		't') template="$OPTARG";;
 	esac
 done
 
-if [ -z "$file" -o -z "$template" ]
+if [ -z "$template" ]
 then
-	echo "Missing file or template" >/dev/stderr;
+	echo "Missing template" >/dev/stderr;
 	return 0;
 fi
-file=$(realpath "$file");
 echo "Template: $templatedir/$template";
-echo "File: $file";
 
 if [ ! -e $templatedir/$template ]
 then
 	echo "Invalid template" >/dev/stderr;
-	exit 1;
-fi
-
-if [ -e "$file" ]
-then
-	echo "File exists" >/dev/stderr
 	exit 1;
 fi
 
@@ -51,6 +41,5 @@ then
 	cat "$templatedir/$template"|$cmd;
 fi
 
-touch "$file";
-cat "$templatedir/$template" > "$file";
+cat "$templatedir/$template";
 exit 0;
