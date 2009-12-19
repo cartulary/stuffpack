@@ -18,7 +18,7 @@ int main (int argc, char* argv[])
 {
 	const int magic=4;
 	float a[magic]={0};
-	float b[magic]={1,2,3,magic};
+	float b[magic]={1,2,3,4};
 	int s;
 	for (s=0;s<magic; ++s)
 	{
