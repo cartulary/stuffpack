@@ -1,3 +1,5 @@
+#ifndef STRING_H
+#define STRING_H
 #include <stddef.h>
 char* stpcpy(char *dst, const char *src);
 /* POSIX */
@@ -39,3 +41,6 @@ char * strtok(char *s, const char *delim);
 char * index(const char *s, int c);
 char * rindex(const char *s, int c);
  
+/* NOT_IN_BSD */
+//int strnlen(const char* s, size_t maxlen);
+#endif
