@@ -7,12 +7,16 @@ int main(void)
 	const char* hello="hello";
 	const char* bello="bello";
 	const char* hello2="hello";
+	char cArr[6], cArr2[6], cArr3[10];
 
 	// This will be replaced with cunit soon.... a real unit testing system
 	printf("Strcmp: %d\n", strcmp(hello,bello));
 	printf("StrNcmp: %d\n", strncmp(hello,bello,3));
 	printf("Strlen: %d\n", strlen(hello));
 	//printf("StrNlen: %d\n", strnlen(hello,3));
+	(void)strncpy(cArr, "12345", sizeof(cArr));
+	(void)strncpy(cArr2, "1234567890", sizeof(cArr2));
+	printf("StrNcpy: %s && %s\n", cArr, cArr2);
 	return EX_OK;
 }
 
@@ -68,3 +72,21 @@ size_t strnlen(const char* s, size_t maxlen)
 	*//*
 	return (i > maxlen) ? maxlen : i;
 }*/
+
+char* strcpy(char* dst, const char* src)
+{
+	for (int i=0; src[i] != 0; ++i)
+	{
+		dst[i]=src[i];
+	}
+	return dst;
+}
+
+char* strncpy(char* dst, const char* src, size_t len)
+{
+	for (int i=0; src[i] != 0 && i < len; ++i)
+	{
+		dst[i]=src[i];
+	}
+	return dst;
+}
