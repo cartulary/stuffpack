@@ -8,3 +8,8 @@ LANG=c
 $(NAME):
 string.o: string.c
 string.c: string.h
+
+mycheck: lint
+	splint -strict-lib -showcolumn -showfunc -strict -isoreserved -namechecks *.c *.h
+lint: 
+	lint -aabcehprsxH -I /usr/local/include/ *.c *.h | grep -v "//"
