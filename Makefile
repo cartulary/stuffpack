@@ -81,9 +81,13 @@ clean: .NOTMAIN .PHONY .IGNORE nameclean coreclean objclean
 
 check: .NOTMAIN
 	## only run this on C++ code
+.if $(LANG) == c++
 	cppcheck -v -a -s --unused-functions .
+.endif
+.if $(LANG) == c
+	splint -strict-lib -showcolumn -showfunc -strict *.c *.h
+	lint -aabcehprsxH -I /usr/local/include/ *.c *.h
+.endif
 	## run on all code...
 	#rats -rw3 *
 	## only run these on C code....
-	splint -strict-lib -showcolumn -showfunc -strict *.c *.h
-	lint -aabcehprsxH -I /usr/local/include/ *.c *.h
