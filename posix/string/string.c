@@ -14,11 +14,11 @@ int main(void)
 	printf("Strcmp: %d\n", strcmp(hello,bello));
 	printf("StrNcmp: %d\n", strncmp(hello,bello,3));
 	printf("Strlen: %d\n", strlen(hello));
-	//printf("StrNlen: %d\n", strnlen(hello,3));
+	printf("StrNlen: %d\n", strnlen(hello,3));
 	(void)strncpy(cArr, "12345", sizeof(cArr));
 	(void)strncpy(cArr2, "1234567890", sizeof(cArr2));
 	printf("StrNcpy: %s && %s\n", cArr, cArr2);
-	//printf("index: %c rindex: %c\n", (int)index("foo",'f'), (int)rindex("foo",'o'));
+//	printf("index: %c rindex: %c\n", *index("foo",'f'), *rindex("foo",'o'));
 	return EX_OK;
 }
 
@@ -109,15 +109,23 @@ size_t strlen(const char* s)
 	// Return the number of characters BEFORE the null
 	return i;
 }
-/*
+
 size_t strnlen(const char* s, size_t maxlen)
 {
-	unsigned int i;
+	size_t i;
 	for (i=0; s[i]!=0; ++i){}
 	// Return the number of characters BEFORE the null
 	// except if it greater than maxlen - if so return maxlen..
 	return (i > maxlen) ? maxlen : i;
-}*/
+}
+
+// Use strcpy to do the copying then do my own return */
+char* stpcpy(char* dst, const char* src)
+{
+	size_t len = strlen(dst);
+	strcpy(dst, src);
+	return &dst[len];
+}
 
 char* strcpy(char* dst, const char* src)
 {
@@ -150,7 +158,7 @@ char* index(const char *s, int c)
 	if (s[i] == (char)c)
 	{
 		printf("(l) We found %d\n", i);
-		return (s + i);
+		return &s[i];
 	}
 	printf("(l) null\n");
 	return NULL;
@@ -170,8 +178,41 @@ char* rindex(const char *s, int c)
 	if (s[i] == (char)c)
 	{
 		printf("(r) We found %d\n", i);
-		return s + i;
+		return &s[i];
 	}
 	printf("(r) null\n");
 	return NULL;
+}
+
+char* strcat(char* restrict s, const char* restrict append)
+{
+	size_t sLen = strlen(s);
+	for (size_t i=sLen; i < strlen(append); ++i)
+	{
+		s[sLen+i] = append[i];
+	}
+	return NULL;
+}
+
+char* strncat(char* restrict s, const char* restrict append, size_t len)
+{
+	size_t sLen = strlen(s);
+	size_t i;
+	for (i=sLen; i < strlen(append) && i<=len; ++i)
+	{
+		s[sLen+i] = append[i];
+	}
+	s[sLen+i+1] = 0;
+	return NULL;
+}
+
+/* it seems from the man page that strchr==index and strrchr==index */
+inline char* strchr(const char *s, int c)
+{
+	return index(s,c);
+}
+
+inline char* strrchr(const char *s, int c)
+{
+	return rindex(s,c);
 }
