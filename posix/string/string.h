@@ -7,9 +7,9 @@ char* strcat(char *s, const char *append);
 /* POSIX */
 char* strncat(char *s, const char *append, size_t len);
 /* POSIX */
-char* strchr(const char *s, int c);
+inline char* strchr(const char *s, int c);
 /* POSIX */
-char* strrchr(const char *s, int c);
+inline char* strrchr(const char *s, int c);
 /* POSIX */
 int strcmp(const char *s1, const char *s2);
 /* POSIX */
@@ -42,5 +42,5 @@ char * index(const char *s, int c);
 char * rindex(const char *s, int c);
  
 /* NOT_IN_BSD */
-/*int strnlen(const char* s, size_t maxlen);*/
+size_t strnlen(const char* s, size_t maxlen);
 #endif
