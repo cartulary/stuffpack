@@ -1,0 +1,2 @@
+prog	lock  no-entry   xlock
+prog	vol	tap	vol_gauge

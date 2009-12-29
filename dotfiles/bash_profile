@@ -1,0 +1,55 @@
+# $FreeBSD: src/share/skel/dot.profile,v 1.22.8.1 2009/04/15 03:14:26 kensmith Exp $
+#
+# .profile - Bourne Shell startup script for login shells
+#
+# see also sh(1), environ(7).
+#
+
+# remove /usr/games if you want
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/games:/usr/local/sbin:/usr/local/bin:$HOME/bin; export PATH
+
+# Setting TERM is normally done through /etc/ttys.  Do only override
+# if you're sure that you'll never log in via telnet or xterm or a
+# serial line.
+# Use cons25l1 for iso-* fonts
+# TERM=cons25; 	export TERM
+
+BLOCKSIZE=K;	export BLOCKSIZE;
+EDITOR=nano;   	export EDITOR;
+PAGER=less;  	export PAGER;
+POSIXLY_CORRECT="YES"; export POSIXLY_CORRECT;
+HISTSIZE=2000; export HISTSIZE;
+
+#top default argumments
+TOP="-I"; export TOP;
+
+# kbdcontrol quiet.visual
+
+# set ENV to a file invoked each time sh is started for interactive use.
+ENV=$HOME/.shrc; export ENV
+
+shopt -s checkwinsize
+shopt -s cmdhist
+shopt -s histappend
+shopt -s lithist
+shopt -s histverify
+
+alias mv="mv -i"
+alias cp="cp -i"
+alias Eterm="Eterm -O -T 'Warped Eterm' -f'green'";
+alias cEterm="\Eterm -C -T 'Console Eterm' -f'red'";
+alias utime="uptime |cut -d ' ' -f '5,6'|sed 's/,//'";
+alias nvlc="nvlc --volume 1024";
+alias vlc="vlc_create_sock";
+alias firefox3="firefox3 -no-remote";
+alias python="python -tt3";
+alias python3="python3.1"
+umask 0002
+
+FORTUNE_PATH="/usr/share/games/fortune:/home/eitan/.fortune"; export FORTUNE_PATH;
+
+if [ "$NOZSH" != "yes" ]
+then
+	[ -x /usr/local/bin/zsh ] && exec /usr/local/bin/zsh
+fi
+[ -x /usr/games/fortune ] && /usr/games/fortune freebsd-tips
