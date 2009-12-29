@@ -20,7 +20,7 @@ CC = llvm-g++
 CFLAGS += -ansi -Wabi
 CFLAGS += -Weffc++
 CFLAGS += -fno-gnu-keywords
-CFLAGS += -Wstrict-null-sentinel -Wctor-dtor-privacy -Wnon-virtual-dtor -Woverloaded-virtual -Wsign-promo -Wold-style-cast	
+CFLAGS += -Wstrict-null-sentinel -Wctor-dtor-privacy -Wnon-virtual-dtor -Woverloaded-virtual -Wsign-promo -Wold-style-cast
 CFLAGS += -ffor-scope
 .elif $(LANG) == c
 CC = llvm-gcc
