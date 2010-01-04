@@ -67,6 +67,9 @@ int main(int argc, char *argv[])
 			case 'F':
 				flagShowPathSymbol = true;
 				break;
+			case 'I':
+				flagShowHidden = false;
+				break;
 			case 'a':
 				flagShowHidden = true;
 				flagShowDotLinks = true;
