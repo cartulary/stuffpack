@@ -62,6 +62,7 @@ int main(int argc, char *argv[])
 	{
 		flagShowHidden = true;
 	}
+	// SUcfrtux are not compatible with our system as they require sorting
 	while ((c = getopt (argc, argv, "ABCFGHILPRSTUWZabcdfhiklmnopqrstuwx1")) != -1)
 	{
 		switch (c)
@@ -122,7 +123,7 @@ int main(int argc, char *argv[])
 
 void usage()
 {
-	std::cout << "usage: ls [-ABCFGHILPRSTUWZabcdfhiklmnopqrstuwx1] [file ...]" << std::endl;
+	std::cout << "usage: ls [-ABCFGHILPRSTUWZabcdfhiklmnopqrstuwx1] [-D format] [file ...]" << std::endl;
 //	exit(EX_USAGE);
 }
 
