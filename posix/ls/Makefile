@@ -7,6 +7,8 @@ CFLAGS += -pthread -isystem /usr/local/include/boost/ -isystem /usr/local/includ
 #compiling options
 .PHONY:	clean
 
-$(NAME): dols.o
-dols.o: dols.cpp
-dols.cpp: dols.h
+$(NAME):# $(NAME).o
+#$(NAME).o: #dols.o
+#ls.o: ls.cpp
+#dols.o: dols.cpp
+#dols.cpp: dols.h

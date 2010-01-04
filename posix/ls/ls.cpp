@@ -5,11 +5,11 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include <sys/stat.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
 #include <sys/types.h>
+#include <sys/stat.h>
 #define BOOST_FILESYSTEM_NO_DEPRECATED
 #include <boost/config/warning_disable.hpp>
 #include <boost/config.hpp>
@@ -53,7 +53,6 @@ void opArg(char* arg);
 
 int main(int argc, char *argv[])
 {
-	std::cout << "This is my ls\n";
 	/* lets go through the arguments now */
 	int c;
 	while ((c = getopt (argc, argv, "ABCFGHILPRSTUWZabcdfghiklmnopqrstuwx1")) != -1)
@@ -109,6 +108,17 @@ void usage()
 void printFile(bf::directory_iterator dir_itr)
 {
 	std::string file_name = dir_itr->path().filename();
+
+
+	struct stat buf;
+	int status;
+	errno=0;
+	status = stat(file_name.c_str(), &buf);
+	if (errno!=0)
+	{
+		std::cerr << "errno != 0 on stat\n";
+	}
+
 	if (file_name[0] != '.' || flagShowHidden)
 	{
 		std::cout << file_name;
@@ -124,17 +134,24 @@ void printFile(bf::directory_iterator dir_itr)
 	/* -F stuff */
 	if (flagShowPathSymbol)
 	{
+		char post_symbol;
 		if (bf::is_directory(*dir_itr))
 		{
-			std::cout << "/";
+			post_symbol= '/';
 		}
-		else if ( bf::is_regular_file(dir_itr->status()) )
+		else if ( bf::is_regular_file( dir_itr->status() ))
 		{
+			post_symbol = 0;
+		}
+		else if ( bf::is_symlink( dir_itr->status() ))
+		{
+			post_symbol = '@';
 		}
 		else
 		{
-			std::cout << "*";
+			post_symbol='&';
 		}
+		std::cout << post_symbol;
 	}
 	if (flagOneColOutput)
 	{
