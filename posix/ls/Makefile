@@ -8,5 +8,3 @@ CFLAGS += -pthread -isystem /usr/local/include/boost/ -isystem /usr/local/includ
 .PHONY:	clean
 
 $(NAME): 
-
-clean: nameclean objclean coreclean
