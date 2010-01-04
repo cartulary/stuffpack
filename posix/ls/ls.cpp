@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string>
 #include <sys/types.h>
+#define BOOST_FILESYSTEM_NO_DEPRECATED
 #include <boost/config/warning_disable.hpp>
 #include <boost/config.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -69,10 +70,10 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	if (argc > 1)
+	if (argc > optind)
 	{
 		int i;
-		for (i = 1; i < argc; ++i)
+		for (i = optind; i < argc; ++i)
 		{
 			opArg(argv[i]);
 		}
@@ -91,18 +92,20 @@ void usage()
 
 void printFile(bf::directory_iterator dir_itr)
 {
-	if (bf::is_directory(*dir_itr))
+	std::cout << dir_itr->path().filename();
+	if (flagShowPathSymbol)
 	{
-		std::cout << dir_itr->leaf();
-		if (flagShowPathSymbol)
+		if (bf::is_directory(*dir_itr))
 		{
 			std::cout << "/";
 		}
-		/* recurse this function if I'm supposed to */
-	}
-	else
-	{
-		std::cout << dir_itr->leaf();
+		else if ( bf::is_regular_file(dir_itr->status()) )
+		{
+		}
+		else
+		{
+			std::cout << "*";
+		}
 	}
 	if (flagOneColOutput)
 	{
@@ -118,38 +121,34 @@ void opArg(char* arg)
 {
 	try
 	{
-			bf::path workingDir(arg);
-			std::cout <<  arg << ": ";
-			/* resolve the path */
-			workingDir = bf::system_complete(workingDir);
-  			if ( bf::exists( workingDir ) )
+		bf::path workingDir(arg);
+		std::cout <<  arg << ": ";
+		/* resolve the path */
+		workingDir = bf::system_complete(workingDir);
+  		if ( bf::exists( workingDir ) )
+		{
+			if ( bf::is_directory( workingDir ) )
 			{
-				if ( bf::is_directory( workingDir ) )
+    			bf::directory_iterator end_iter;
+				for (bf::directory_iterator dir_itr( workingDir ); dir_itr != end_iter; ++dir_itr)
 				{
-    				bf::directory_iterator end_iter;
-					for (bf::directory_iterator dir_itr( workingDir ); dir_itr != end_iter; ++dir_itr)
-					{
-						printFile(dir_itr);
-					}
-
-					/* we have a directory */
-					std::cout << "dir!" <<std::endl;
-				}
-				else
-				{
-					std::cout << "file!" <<std::endl;
-					/* we have a file or something special - will deal with this later */
+					printFile(dir_itr);
 				}
 			}
 			else
 			{
-				std::cout << "doesn't exist" <<std::endl;
+				/* we have a file or something special - will deal with this later */
 			}
 		}
-		catch (bf::filesystem_error e)
+		else
 		{
-			std::cout << "Exception occured!" << e.what() << std::endl;
+			std::cout << "doesn't exist" <<std::endl;
 		}
+	}
+	catch (bf::filesystem_error e)
+	{
+		std::cout << "Exception occured!" << e.what() << std::endl;
+	}
 }
 
 
