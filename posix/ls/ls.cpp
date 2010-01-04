@@ -73,6 +73,11 @@ int main(int argc, char *argv[])
 				flagShowHidden = true;
 				flagShowDotLinks = true;
 				break;
+			case 'i':
+				flagDisplayFileInodeNum = true;
+				break;
+			case 'l':
+				flagDisplayLong = true;
 			case 'p':
 				flagShowDirSymbol = true;
 				break;
@@ -118,11 +123,23 @@ void printFile(bf::directory_iterator dir_itr)
 	{
 		std::cerr << "errno != 0 on stat\n";
 	}
-
+	if (flagDisplayLong)
+	{
+		std::cout << buf.st_mode << ' '<< buf.st_uid<< ' ' << buf.st_gid << ' ';
+	}
+	if (flagDisplayFileInodeNum)
+	{
+		std::cout << ' '<<buf.st_ino << ' ';
+	}
+	if (flagDisplayLong)
+	{
+		std::cout << buf.st_size;
+	}
 	if (file_name[0] != '.' || flagShowHidden)
 	{
 		std::cout << file_name;
 	}
+
 	/* -p stuff */
 	if (flagShowDirSymbol)
 	{
@@ -147,13 +164,29 @@ void printFile(bf::directory_iterator dir_itr)
 		{
 			post_symbol = '@';
 		}
+		else if (false) //is_executible
+		{
+			post_symbol = '*';
+		}
+		else if (S_ISFIFO(buf.st_mode))
+		{
+			post_symbol = '|'
+		}
+		else if (S_SOCKET(buf.st_mode))
+		{
+			post_symbol = '=';
+		}
+		else if (S_ISWHT(buf.st_mode))
+		{
+			post_symbol = '%';
+		}
 		else
 		{
 			post_symbol='&';
 		}
 		std::cout << post_symbol;
 	}
-	if (flagOneColOutput)
+	if (flagOneColOutput || flagDisplayLong)
 	{
 		std::cout << std::endl;
 	}
