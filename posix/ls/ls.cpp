@@ -3,6 +3,7 @@
 #include <fstream>
 #include <getopt.h>
 #include <iostream>
+#include <string>
 #include <sstream>
 #include <sys/stat.h>
 #include <stdio.h>
@@ -27,6 +28,7 @@ bool flagShowHidden = false, flagShowDotLinks = false;
 bool flagPrintUnprintableChars = false, flagUseCEscapeCodes = false;
 /* multi col should be false when piping */
 bool flagMultiColOutput = true, flagOneColOutput = false, flagSortAcross = false;
+/* showPathSymbol == -P			showDirSymbol == -F */
 bool flagShowPathSymbol = false, flagShowDirSymbol = false;
 bool flagColorize = false;
 bool flagFollowSymLinks = true, flagFollowArgumentSymLinks = false;
@@ -51,7 +53,6 @@ void opArg(char* arg);
 
 int main(int argc, char *argv[])
 {
-	char* current_dir=".";
 	std::cout << "This is my ls\n";
 	/* lets go through the arguments now */
 	int c;
@@ -59,11 +60,22 @@ int main(int argc, char *argv[])
 	{
 		switch (c)
 		{
-			case '1':
-				flagOneColOutput = true;
+			case 'A':
+				flagShowHidden = true;
+				flagShowDotLinks = false;
 				break;
 			case 'F':
 				flagShowPathSymbol = true;
+				break;
+			case 'a':
+				flagShowHidden = true;
+				flagShowDotLinks = true;
+				break;
+			case 'p':
+				flagShowDirSymbol = true;
+				break;
+			case '1':
+				flagOneColOutput = true;
 				break;
 			default:
 				break;
@@ -80,8 +92,9 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		opArg(current_dir);
+		opArg(".");
 	}
+	std::cout << std::endl;
 }
 
 void usage()
@@ -92,7 +105,20 @@ void usage()
 
 void printFile(bf::directory_iterator dir_itr)
 {
-	std::cout << dir_itr->path().filename();
+	std::string file_name = dir_itr->path().filename();
+	if (file_name[0] != '.' || flagShowHidden)
+	{
+		std::cout << file_name;
+	}
+	/* -p stuff */
+	if (flagShowDirSymbol)
+	{
+		if (bf::is_directory(*dir_itr))
+		{
+			std::cout << "/";
+		}
+	}
+	/* -F stuff */
 	if (flagShowPathSymbol)
 	{
 		if (bf::is_directory(*dir_itr))
@@ -122,7 +148,6 @@ void opArg(char* arg)
 	try
 	{
 		bf::path workingDir(arg);
-		std::cout <<  arg << ": ";
 		/* resolve the path */
 		workingDir = bf::system_complete(workingDir);
   		if ( bf::exists( workingDir ) )
