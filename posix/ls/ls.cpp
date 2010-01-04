@@ -10,12 +10,15 @@
 #include <string>
 #include <sys/types.h>
 #include <sys/stat.h>
+/* for the non-standard user_from_uid and group_from_gid functions */
+#include <pwd.h>
+#include <grp.h>
 #define BOOST_FILESYSTEM_NO_DEPRECATED
 #include <boost/config/warning_disable.hpp>
 #include <boost/config.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
-
+#include "ls_helper.cpp"
 void usage();
 
 namespace bf = boost::filesystem;
@@ -55,6 +58,10 @@ int main(int argc, char *argv[])
 {
 	/* lets go through the arguments now */
 	int c;
+	if (getuid() == static_cast<uid_t>(0))
+	{
+		flagShowHidden = true;
+	}
 	while ((c = getopt (argc, argv, "ABCFGHILPRSTUWZabcdfghiklmnopqrstuwx1")) != -1)
 	{
 		switch (c)
@@ -78,6 +85,10 @@ int main(int argc, char *argv[])
 				break;
 			case 'l':
 				flagDisplayLong = true;
+				break;
+			case 'n':
+				flagDisplayUidAsNumber = true;
+				break;
 			case 'p':
 				flagShowDirSymbol = true;
 				break;
@@ -121,11 +132,21 @@ void printFile(bf::directory_iterator dir_itr)
 	status = stat(file_name.c_str(), &buf);
 	if (errno!=0)
 	{
+		//I think we have some kind of problem - so lets get out of here for now. I will have to deal with this case later
+		return;
 		std::cerr << "errno != 0 on stat\n";
 	}
 	if (flagDisplayLong)
 	{
-		std::cout << buf.st_mode << ' '<< buf.st_uid<< ' ' << buf.st_gid << ' ';
+		if (flagDisplayUidAsNumber)
+		{
+			std::cout << buf.st_mode << ' '<< buf.st_uid<< ' ' << buf.st_gid << ' ';
+		}
+		else
+		{
+			// not standard - see if there is a better way of doing this
+			std::cout << buf.st_mode << ' '<< user_from_uid(buf.st_uid,0)<< ' ' << group_from_gid(buf.st_gid,0) << ' ';
+		}
 	}
 	if (flagDisplayFileInodeNum)
 	{
@@ -135,10 +156,12 @@ void printFile(bf::directory_iterator dir_itr)
 	{
 		std::cout << buf.st_size;
 	}
-	if (file_name[0] != '.' || flagShowHidden)
+	if (file_name[0] == '.' && !flagShowHidden)
 	{
-		std::cout << file_name;
+		// we are a hidden file so lets get outa here
+		return;
 	}
+	std::cout << file_name;
 
 	/* -p stuff */
 	if (flagShowDirSymbol)
@@ -151,39 +174,7 @@ void printFile(bf::directory_iterator dir_itr)
 	/* -F stuff */
 	if (flagShowPathSymbol)
 	{
-		char post_symbol;
-		if (bf::is_directory(*dir_itr))
-		{
-			post_symbol= '/';
-		}
-		else if ( bf::is_regular_file( dir_itr->status() ))
-		{
-			post_symbol = 0;
-		}
-		else if ( bf::is_symlink( dir_itr->status() ))
-		{
-			post_symbol = '@';
-		}
-		else if (false) //is_executible
-		{
-			post_symbol = '*';
-		}
-		else if (S_ISFIFO(buf.st_mode))
-		{
-			post_symbol = '|'
-		}
-		else if (S_SOCKET(buf.st_mode))
-		{
-			post_symbol = '=';
-		}
-		else if (S_ISWHT(buf.st_mode))
-		{
-			post_symbol = '%';
-		}
-		else
-		{
-			post_symbol='&';
-		}
+		char post_symbol = get_post_symbol(dir_itr, buf);
 		std::cout << post_symbol;
 	}
 	if (flagOneColOutput || flagDisplayLong)
