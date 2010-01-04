@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 	{
 		flagShowHidden = true;
 	}
-	while ((c = getopt (argc, argv, "ABCFGHILPRSTUWZabcdfghiklmnopqrstuwx1")) != -1)
+	while ((c = getopt (argc, argv, "ABCFGHILPRSTUWZabcdfhiklmnopqrstuwx1")) != -1)
 	{
 		switch (c)
 		{
@@ -72,9 +72,13 @@ int main(int argc, char *argv[])
 				break;
 			case 'F':
 				flagShowPathSymbol = true;
+				flagFollowSymLinks = false;
 				break;
 			case 'I':
 				flagShowHidden = false;
+				break;
+			case 'H':
+				flagFollowSymLinks = true;
 				break;
 			case 'a':
 				flagShowHidden = true;
@@ -85,6 +89,7 @@ int main(int argc, char *argv[])
 				break;
 			case 'l':
 				flagDisplayLong = true;
+				flagFollowSymLinks = false;
 				break;
 			case 'n':
 				flagDisplayUidAsNumber = true;
@@ -117,7 +122,7 @@ int main(int argc, char *argv[])
 
 void usage()
 {
-	std::cout << "usage: ls [-ABCFGHILPRSTUWZabcdfghiklmnopqrstuwx1] [file ...]" << std::endl;
+	std::cout << "usage: ls [-ABCFGHILPRSTUWZabcdfhiklmnopqrstuwx1] [file ...]" << std::endl;
 //	exit(EX_USAGE);
 }
 
@@ -129,7 +134,14 @@ void printFile(bf::directory_iterator dir_itr)
 	struct stat buf;
 	int status;
 	errno=0;
-	status = stat(file_name.c_str(), &buf);
+	if (flagFollowSymLinks)
+	{
+		status = lstat(file_name.c_str(), &buf);
+	}
+	else
+	{
+		status = stat(file_name.c_str(), &buf);
+	}
 	if (errno!=0)
 	{
 		//I think we have some kind of problem - so lets get out of here for now. I will have to deal with this case later
