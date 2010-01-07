@@ -243,26 +243,68 @@ std::string permStringFromStatMode(mode_t mode)
 	// set all values to "-"
 	for (int i=0; i<10; result[i++]='-');
 
+	/* As per man page the third item of each "set" gets treated differently */
+
 	//-rw-rw-r--
 	//0123456789
 	if (mode & S_IRUSR)
 		result[1]='r';
 	if (mode & S_IWUSR)
 		result[2]='w';
-	if (mode & S_IXUSR)
+	if (mode & S_ISUID)
+	{
+		if (mode & S_IXUSR)
+		{
+			result[3]='s';
+		}
+		else
+		{
+			result[3]='S';
+		}
+	}
+	else if (mode & S_IXUSR)
+	{
 		result[3]='x';
+	}
 	if (mode & S_IRGRP)
 		result[4]='r';
 	if (mode & S_IWGRP)
 		result[5]='w';
-	if (mode & S_IXGRP)
+	if (mode & S_ISGID)
+	{
+		if (mode & S_IXGRP)
+		{
+			result[6]='s';
+		}
+		else
+		{
+			result[6]='S';
+		}
+	}
+	else if (mode & S_IXGRP)
+	{
 		result[6]='x';
+	}
+
 	if (mode & S_IROTH)
 		result[7]='r';
 	if (mode & S_IWOTH)
 		result[8]='w';
-	if (mode & S_IXOTH)
+	if (mode & S_ISTXT)
+	{
+		if (mode & S_IXOTH)
+		{
+			result[9]='t';
+		}
+		else
+		{
+			result[9]='T';
+		}
+	}
+	else if (mode & S_IXOTH)
+	{
 		result[9]='x';
+	}
 
 	if (mode & S_IFREG)
 		result[0]='-';
