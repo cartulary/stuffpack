@@ -16,7 +16,7 @@ case "$1" in
 	"grep")
 		#move everthing over to get rid of "svn" and then ask grep to help us
 		shift 1;
-		grep --exlude "*svn*" ;;
+		grep --exclude "*svn*" ;;
 	*)
 		#since we have an invalid command lets call the real svn -> get a usage message -> then print our extension
 		\svn $@;
