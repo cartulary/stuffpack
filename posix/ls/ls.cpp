@@ -53,6 +53,7 @@ bool flagRawNonGraphic = true;
 
 void printFile(bf::directory_iterator dir_itr);
 void opArg(char* arg);
+std::string permStringFromStatMode(mode_t mode);
 
 int main(int argc, char *argv[])
 {
@@ -151,14 +152,15 @@ void printFile(bf::directory_iterator dir_itr)
 	}
 	if (flagDisplayLong)
 	{
+		std::cout <<  permStringFromStatMode(buf.st_mode) << ' ';
 		if (flagDisplayUidAsNumber)
 		{
-			std::cout << buf.st_mode << ' '<< buf.st_uid<< ' ' << buf.st_gid << ' ';
+			std::cout << buf.st_uid<< ' ' << buf.st_gid << ' ';
 		}
 		else
 		{
 			// not standard - see if there is a better way of doing this
-			std::cout << buf.st_mode << ' '<< user_from_uid(buf.st_uid,0)<< ' ' << group_from_gid(buf.st_gid,0) << ' ';
+			std::cout << user_from_uid(buf.st_uid,0)<< ' ' << group_from_gid(buf.st_gid,0) << ' ';
 		}
 	}
 	if (flagDisplayFileInodeNum)
@@ -234,3 +236,49 @@ void opArg(char* arg)
 }
 
 
+std::string permStringFromStatMode(mode_t mode)
+{
+	std::string result;
+	result.resize(10);
+	// set all values to "-"
+	for (int i=0; i<10; result[i++]='-');
+
+	//-rw-rw-r--
+	//0123456789
+	if (mode & S_IRUSR)
+		result[1]='r';
+	if (mode & S_IWUSR)
+		result[2]='w';
+	if (mode & S_IXUSR)
+		result[3]='x';
+	if (mode & S_IRGRP)
+		result[4]='r';
+	if (mode & S_IWGRP)
+		result[5]='w';
+	if (mode & S_IXGRP)
+		result[6]='x';
+	if (mode & S_IROTH)
+		result[7]='r';
+	if (mode & S_IWOTH)
+		result[8]='w';
+	if (mode & S_IXOTH)
+		result[9]='x';
+
+	if (mode & S_IFREG)
+		result[0]='-';
+	else if (mode & S_IFBLK)
+		result[0]='b';
+	else if (mode & S_IFCHR)
+		result[0]='c';
+	else if (mode & S_IFDIR)
+		result[0]='d';
+	else if (mode & S_IFLNK)
+		result[0]='l';
+	else if (mode & S_IFIFO)
+		result[0]='p';
+	else if (mode & S_IFSOCK)
+		result[0]='s';
+	else if (mode & S_IFWHT)
+		result[0]='w';
+	return result;
+}
