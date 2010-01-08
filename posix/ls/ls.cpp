@@ -158,60 +158,49 @@ fileMap getFileMap(bf::directory_iterator dir_itr)
 	{
 		status = lstat(file_name.c_str(), &buf);
 	}
-	/* if we don't display whiteouts -> and this is a whiteout get out of here */
-	if (!flagDisplayWhiteouts && S_ISWHT(buf.st_mode))
-	{
-		return foo;
-	}
 	if (errno!=0)
 	{
 		//I think we have some kind of problem - so lets get out of here for now. I will have to deal with this case later
 		return foo;
 		std::cerr << "errno != 0 on stat\n";
 	}
+	/* if we don't display whiteouts -> and this is a whiteout get out of here */
+	if (!flagDisplayWhiteouts && S_ISWHT(buf.st_mode))
+	{
+		return foo;
+	}
 	if (file_name[0] == '.' && !flagShowHidden)
 	{
 		// we are a hidden file so lets get outa here
 		return foo;
 	}
-	if (flagDisplayLong)
+	result["permstring"] = permStringFromStatMode(buf.st_mode);
+	result["link_to"] = buf.st_nlink;
+	if (flagDisplayUidAsNumber)
 	{
-		result["permstring"] = permStringFromStatMode(buf.st_mode);
-		std::cout << std::setw(3) << buf.st_nlink << ' ';
-		if (flagDisplayUidAsNumber)
-		{
-			std::cout << buf.st_uid<< ' ' << buf.st_gid;
-		}
-		else
-		{
-			// not standard - see if there is a better way of doing this
-			std::cout << user_from_uid(buf.st_uid,0)<< ' ' << group_from_gid(buf.st_gid,0);
-		}
-		std::cout << ' ' << buf.st_mtime << ' ';
+		result["uid"] = buf.st_uid;
+		result["gid"] = buf.st_gid;
 	}
-	if (flagDisplayFileInodeNum)
+	else
 	{
-		std::cout << ' '<<buf.st_ino << ' ';
+		// not standard - see if there is a better way of doing this
+		result["uid"] = user_from_uid(buf.st_uid,0);
+		result["gid"] = group_from_gid(buf.st_gid,0);
 	}
-	if (flagDisplayLong)
-	{
-		std::cout << ' ' << buf.st_size;
-	}
-	std::cout << ' ' << file_name;
+	result["mod_time"]= buf.st_mtime;
+	result["inodes"]= buf.st_ino;
+	result["size"]= buf.st_size;
+	result["filename"]=file_name;
 
-	/* -p stuff */
-	if (flagShowDirSymbol)
-	{
-		if (bf::is_directory(*dir_itr))
-		{
-			std::cout << "/";
-		}
-	}
 	/* -F stuff */
 	if (flagShowPathSymbol)
 	{
-		char post_symbol = get_post_symbol(dir_itr, buf);
-		std::cout << post_symbol;
+		result["post_symbol"]=get_post_symbol(dir_itr,buf);
+	}
+	/* -p stuff */
+	else if (flagShowDirSymbol && bf::is_directory(*dir_itr))
+	{
+			result["post_symbol"]="/";
 	}
 	return result;
 }
@@ -342,10 +331,16 @@ std::string permStringFromStatMode(mode_t mode)
 
 void printFile(fileMap data)
 {
+	// we got a foo - we will have to fix this method of testing later...
 	if (data["noprint"]=="true")
-		// we got a foo - we will have to fix this method of testing later...
 		return;
-	std::cout << data["permstring"];
+
+	if (flagDisplayLong)
+	{
+		std::cout << data["permstring"];
+	}
+	std::cout << data["filename"];
+	/* should this be moved to the "meta-printer" as each file should not know how it will be printed? ? ? ?*/
 	if (flagOneColOutput || flagDisplayLong)
 	{
 		std::cout << std::endl;
