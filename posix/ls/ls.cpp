@@ -3,6 +3,7 @@
 #include <fstream>
 #include <getopt.h>
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <sstream>
 #include <stdio.h>
@@ -40,6 +41,7 @@ bool flagBeRecursive = false, flagNeverBeRecursive = false;
 /* don't sort should be false - but I don't feel like sorting yet */
 bool flagSortBySize = false, flagSortTimeCreated = false, flagSortByLastChanged = false, flagDontSort = true, flagReverseSort = false, flagSortTimeModified, flagSortLastAccess;
 bool flagShowCompleteTimeInfo = false;
+/* the -W option */
 bool flagDisplayWhiteouts = false;
 bool flagDisplayMacLabel = false;
 bool flagFileSizeHumanReadable = false;
@@ -81,6 +83,9 @@ int main(int argc, char *argv[])
 				break;
 			case 'H':
 				flagFollowSymLinks = true;
+				break;
+			case 'W':
+				flagDisplayWhiteouts=true;
 				break;
 			case 'a':
 				flagShowHidden = true;
@@ -132,17 +137,21 @@ void printFile(bf::directory_iterator dir_itr)
 {
 	std::string file_name = dir_itr->path().filename();
 
-
 	struct stat buf;
 	int status;
 	errno=0;
 	if (flagFollowSymLinks)
 	{
-		status = lstat(file_name.c_str(), &buf);
+		status = stat(file_name.c_str(), &buf);
 	}
 	else
 	{
-		status = stat(file_name.c_str(), &buf);
+		status = lstat(file_name.c_str(), &buf);
+	}
+	/* if we don't display whiteouts -> and this is a whiteout get out of here */
+	if (!flagDisplayWhiteouts && S_ISWHT(buf.st_mode))
+	{
+		return;
 	}
 	if (errno!=0)
 	{
@@ -152,16 +161,17 @@ void printFile(bf::directory_iterator dir_itr)
 	}
 	if (flagDisplayLong)
 	{
-		std::cout <<  permStringFromStatMode(buf.st_mode) << ' ';
+		std::cout << permStringFromStatMode(buf.st_mode) << ' ' << std::setw(3) << buf.st_nlink << ' ';
 		if (flagDisplayUidAsNumber)
 		{
-			std::cout << buf.st_uid<< ' ' << buf.st_gid << ' ';
+			std::cout << buf.st_uid<< ' ' << buf.st_gid;
 		}
 		else
 		{
 			// not standard - see if there is a better way of doing this
-			std::cout << user_from_uid(buf.st_uid,0)<< ' ' << group_from_gid(buf.st_gid,0) << ' ';
+			std::cout << user_from_uid(buf.st_uid,0)<< ' ' << group_from_gid(buf.st_gid,0);
 		}
+		std::cout << ' ' << buf.st_mtime << ' ';
 	}
 	if (flagDisplayFileInodeNum)
 	{
@@ -169,14 +179,14 @@ void printFile(bf::directory_iterator dir_itr)
 	}
 	if (flagDisplayLong)
 	{
-		std::cout << buf.st_size;
+		std::cout << ' ' << buf.st_size;
 	}
 	if (file_name[0] == '.' && !flagShowHidden)
 	{
 		// we are a hidden file so lets get outa here
 		return;
 	}
-	std::cout << file_name;
+	std::cout << ' ' << file_name;
 
 	/* -p stuff */
 	if (flagShowDirSymbol)
@@ -198,7 +208,7 @@ void printFile(bf::directory_iterator dir_itr)
 	}
 	else
 	{
-		std::cout << " ";
+		std::cout << ' ';
 	}
 }
 
