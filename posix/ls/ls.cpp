@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
+#include <map>
 #include <sys/types.h>
 #include <sys/stat.h>
 /* for the non-standard user_from_uid and group_from_gid functions */
@@ -53,9 +54,15 @@ bool flagDisplayUidAsNumber = false;
 bool flagDisplayNonGraphicAsQuestionMark = false;
 bool flagRawNonGraphic = true;
 
-void printFile(bf::directory_iterator dir_itr);
+/* we use these quite often and std:: is annoying) */
+using std::string;
+
+typedef std::map<string,string> fileMap;
+
+fileMap getFileMap(bf::directory_iterator dir_itr);
+void printFile(fileMap data);
 void opArg(char* arg);
-std::string permStringFromStatMode(mode_t mode);
+string permStringFromStatMode(mode_t mode);
 
 int main(int argc, char *argv[])
 {
@@ -133,8 +140,11 @@ void usage()
 //	exit(EX_USAGE);
 }
 
-void printFile(bf::directory_iterator dir_itr)
+fileMap getFileMap(bf::directory_iterator dir_itr)
 {
+	fileMap foo;
+	foo["noprint"]="true";
+	fileMap result;
 	std::string file_name = dir_itr->path().filename();
 
 	struct stat buf;
@@ -151,17 +161,23 @@ void printFile(bf::directory_iterator dir_itr)
 	/* if we don't display whiteouts -> and this is a whiteout get out of here */
 	if (!flagDisplayWhiteouts && S_ISWHT(buf.st_mode))
 	{
-		return;
+		return foo;
 	}
 	if (errno!=0)
 	{
 		//I think we have some kind of problem - so lets get out of here for now. I will have to deal with this case later
-		return;
+		return foo;
 		std::cerr << "errno != 0 on stat\n";
+	}
+	if (file_name[0] == '.' && !flagShowHidden)
+	{
+		// we are a hidden file so lets get outa here
+		return foo;
 	}
 	if (flagDisplayLong)
 	{
-		std::cout << permStringFromStatMode(buf.st_mode) << ' ' << std::setw(3) << buf.st_nlink << ' ';
+		result["permstring"] = permStringFromStatMode(buf.st_mode);
+		std::cout << std::setw(3) << buf.st_nlink << ' ';
 		if (flagDisplayUidAsNumber)
 		{
 			std::cout << buf.st_uid<< ' ' << buf.st_gid;
@@ -181,11 +197,6 @@ void printFile(bf::directory_iterator dir_itr)
 	{
 		std::cout << ' ' << buf.st_size;
 	}
-	if (file_name[0] == '.' && !flagShowHidden)
-	{
-		// we are a hidden file so lets get outa here
-		return;
-	}
 	std::cout << ' ' << file_name;
 
 	/* -p stuff */
@@ -202,14 +213,7 @@ void printFile(bf::directory_iterator dir_itr)
 		char post_symbol = get_post_symbol(dir_itr, buf);
 		std::cout << post_symbol;
 	}
-	if (flagOneColOutput || flagDisplayLong)
-	{
-		std::cout << std::endl;
-	}
-	else
-	{
-		std::cout << ' ';
-	}
+	return result;
 }
 
 void opArg(char* arg)
@@ -226,7 +230,8 @@ void opArg(char* arg)
     			bf::directory_iterator end_iter;
 				for (bf::directory_iterator dir_itr( workingDir ); dir_itr != end_iter; ++dir_itr)
 				{
-					printFile(dir_itr);
+					fileMap data = getFileMap(dir_itr);
+					printFile(data);
 				}
 			}
 			else
@@ -333,4 +338,20 @@ std::string permStringFromStatMode(mode_t mode)
 	else if (mode & S_IFWHT)
 		result[0]='w';
 	return result;
+}
+
+void printFile(fileMap data)
+{
+	if (data["noprint"]=="true")
+		// we got a foo - we will have to fix this method of testing later...
+		return;
+	std::cout << data["permstring"];
+	if (flagOneColOutput || flagDisplayLong)
+	{
+		std::cout << std::endl;
+	}
+	else
+	{
+		std::cout << ' ';
+	}
 }
