@@ -23,6 +23,7 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/optional.hpp>
+#include <boost/foreach.hpp>
 #include "ls_helper.cpp"
 void usage();
 
@@ -247,10 +248,9 @@ void opArg(char* arg)
 	{
 		std::cout << "Exception occured!" << e.what() << std::endl;
 	}
-	std::vector<fileMap>::iterator it;
-	for (it = fileList.begin(); it != fileList.end(); ++it)
+	BOOST_FOREACH(fileMap &it, fileList)
 	{
-    	printFile(*it);
+    	printFile(it);
 		if (flagOneColOutput || flagDisplayLong)
 		{
 			std::cout << std::endl;
