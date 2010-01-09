@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
+#include <sysexits.h>
 #include <map>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -21,6 +22,7 @@
 #include <boost/config.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
+#include <boost/optional.hpp>
 #include "ls_helper.cpp"
 void usage();
 
@@ -59,12 +61,12 @@ bool flagRawNonGraphic = true;
 using std::string;
 
 typedef std::map<string,string> fileMap;
+typedef boost::optional<fileMap> optFileMap;
 
-fileMap getFileMap(bf::directory_iterator dir_itr);
+optFileMap getFileMap(bf::directory_iterator dir_itr);
 void printFile(fileMap data);
 void opArg(char* arg);
 string permStringFromStatMode(mode_t mode);
-
 
 int main(int argc, char *argv[])
 {
@@ -142,18 +144,10 @@ int main(int argc, char *argv[])
 void usage()
 {
 	std::cout << "usage: ls [-ABCFGHILPRSTUWZabcdfhiklmnopqrstuwx1] [-D format] [file ...]" << std::endl;
-//	exit(EX_USAGE);
+	exit(EX_USAGE);
 }
 
-class noShowFile: public std::exception
-{
-	virtual const char* what() const throw()
-	{
-    	return "We don't want to show this file";
-	}
-} exNoShowFile;
-
-fileMap getFileMap(bf::directory_iterator dir_itr)
+optFileMap getFileMap(bf::directory_iterator dir_itr)
 {
 	fileMap result;
 	std::string file_name = dir_itr->path().filename();
@@ -173,17 +167,16 @@ fileMap getFileMap(bf::directory_iterator dir_itr)
 	{
 		//I think we have some kind of problem - so lets get out of here for now. I will have to deal with this case later
 		std::cerr << "errno != 0 on stat\n";
-		throw exNoShowFile;
-
+		return optFileMap();
 	}
 	/* if we don't display whiteouts -> and this is a whiteout get out of here */
 	if (!flagDisplayWhiteouts && S_ISWHT(buf.st_mode))
 	{
-		throw exNoShowFile;
+		return optFileMap();
 	}
 	if (file_name[0] == '.' && !flagShowHidden)
 	{
-		throw exNoShowFile;
+		return optFileMap();
 		// we are a hidden file so lets get outa here
 	}
 	result["permstring"] = permStringFromStatMode(buf.st_mode);
@@ -233,13 +226,11 @@ void opArg(char* arg)
     			bf::directory_iterator end_iter;
 				for (bf::directory_iterator dir_itr( workingDir ); dir_itr != end_iter; ++dir_itr)
 				{
-					try
+					optFileMap data = getFileMap(dir_itr);
+					if (data)
 					{
-						fileMap data = getFileMap(dir_itr);
-						fileList.push_back(data);
+						fileList.push_back(*data);
 					}
-					catch (std::exception& nsf)
-					{}
 				}
 			}
 			else
@@ -260,6 +251,18 @@ void opArg(char* arg)
 	for (it = fileList.begin(); it != fileList.end(); ++it)
 	{
     	printFile(*it);
+		if (flagOneColOutput || flagDisplayLong)
+		{
+			std::cout << std::endl;
+		}
+		else if (flagStreamOutput)
+		{
+			std::cout << ",";
+		}
+		else
+		{
+			std::cout << ' ';
+		}
 	}
 }
 
@@ -371,16 +374,4 @@ void printFile(fileMap data)
 	}
 	std::cout << data["filename"] << data["post_symbol"];
 	/* should this be moved to the "meta-printer" as each file should not know how it will be printed? ? ? ?*/
-	if (flagOneColOutput || flagDisplayLong)
-	{
-		std::cout << std::endl;
-	}
-	else if (flagStreamOutput)
-	{
-		std::cout << ",";
-	}
-	else
-	{
-		std::cout << ' ';
-	}
 }
