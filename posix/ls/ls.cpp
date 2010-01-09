@@ -65,6 +65,7 @@ void printFile(fileMap data);
 void opArg(char* arg);
 string permStringFromStatMode(mode_t mode);
 
+
 int main(int argc, char *argv[])
 {
 	/* lets go through the arguments now */
@@ -144,10 +145,16 @@ void usage()
 //	exit(EX_USAGE);
 }
 
+class noShowFile: public std::exception
+{
+	virtual const char* what() const throw()
+	{
+    	return "We don't want to show this file";
+	}
+} exNoShowFile;
+
 fileMap getFileMap(bf::directory_iterator dir_itr)
 {
-	fileMap foo;
-	foo["noprint"]="true";
 	fileMap result;
 	std::string file_name = dir_itr->path().filename();
 
@@ -165,18 +172,19 @@ fileMap getFileMap(bf::directory_iterator dir_itr)
 	if (errno!=0)
 	{
 		//I think we have some kind of problem - so lets get out of here for now. I will have to deal with this case later
-		return foo;
 		std::cerr << "errno != 0 on stat\n";
+		throw exNoShowFile;
+
 	}
 	/* if we don't display whiteouts -> and this is a whiteout get out of here */
 	if (!flagDisplayWhiteouts && S_ISWHT(buf.st_mode))
 	{
-		return foo;
+		throw exNoShowFile;
 	}
 	if (file_name[0] == '.' && !flagShowHidden)
 	{
+		throw exNoShowFile;
 		// we are a hidden file so lets get outa here
-		return foo;
 	}
 	result["permstring"] = permStringFromStatMode(buf.st_mode);
 	result["link_to"] = buf.st_nlink;
@@ -225,9 +233,13 @@ void opArg(char* arg)
     			bf::directory_iterator end_iter;
 				for (bf::directory_iterator dir_itr( workingDir ); dir_itr != end_iter; ++dir_itr)
 				{
-					fileMap data = getFileMap(dir_itr);
-					fileList.push_back(data);
-					//printFile(data);
+					try
+					{
+						fileMap data = getFileMap(dir_itr);
+						fileList.push_back(data);
+					}
+					catch (std::exception& nsf)
+					{}
 				}
 			}
 			else
