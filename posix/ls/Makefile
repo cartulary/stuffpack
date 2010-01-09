@@ -12,3 +12,6 @@ $(NAME): $(NAME).cpp ls_helper.cpp
 #ls.o: ls.cpp
 #dols.o: dols.cpp
 #dols.cpp: dols.h
+
+mfilt: .PHONY
+	gfilt -B /usr/local $(NAME).cpp
