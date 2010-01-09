@@ -121,6 +121,9 @@ int main(int argc, char *argv[])
 			case 'p':
 				flagShowDirSymbol = true;
 				break;
+			case 'r':
+				flagReverseSort = true;
+				break;
 			case '1':
 				flagOneColOutput = true;
 				break;
@@ -250,8 +253,14 @@ void opArg(char* arg)
 	{
 		std::cout << "Exception occured!" << e.what() << std::endl;
 	}
-	boost::function<bool(fileMap, fileMap)> bindResult = boost::bind(std::less<std::string>(),boost::bind(&fileMap::operator[],_1,"file_name"),boost::bind(&fileMap::operator[],_2,"file_name"));
+	// by default lets go by fileName
+	const char sortBy[] = "filename";
+	boost::function<bool(fileMap, fileMap)> bindResult = boost::bind(std::less<std::string>(),boost::bind(&fileMap::operator[],_1,sortBy),boost::bind(&fileMap::operator[],_2,sortBy));
 	std::sort(fileList.begin(), fileList.end(), bindResult);
+	if (flagReverseSort)
+	{
+		swap_ranges( fileList.begin(), fileList.begin() + fileList.size() / 2, fileList.rbegin() );
+	}
 	BOOST_FOREACH(fileMap &it, fileList)
 	{
     	printFile(it);
