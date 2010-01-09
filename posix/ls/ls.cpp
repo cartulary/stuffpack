@@ -12,6 +12,7 @@
 #include <map>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <vector>
 /* for the non-standard user_from_uid and group_from_gid functions */
 #include <pwd.h>
 #include <grp.h>
@@ -105,6 +106,9 @@ int main(int argc, char *argv[])
 				flagDisplayLong = true;
 				flagFollowSymLinks = false;
 				break;
+			case 'm':
+				flagStreamOutput = true;
+				break;
 			case 'n':
 				flagDisplayUidAsNumber = true;
 				break;
@@ -188,11 +192,12 @@ fileMap getFileMap(bf::directory_iterator dir_itr)
 		result["gid"] = group_from_gid(buf.st_gid,0);
 	}
 	result["mod_time"]= buf.st_mtime;
-	result["inodes"]= buf.st_ino;
+	result["serial"]= buf.st_ino;
 	result["size"]= buf.st_size;
-	result["filename"]=file_name;
+	result["filename"] = file_name;
 
 	/* -F stuff */
+	result["post_symbol"]="";
 	if (flagShowPathSymbol)
 	{
 		result["post_symbol"]=get_post_symbol(dir_itr,buf);
@@ -207,6 +212,7 @@ fileMap getFileMap(bf::directory_iterator dir_itr)
 
 void opArg(char* arg)
 {
+	std::vector<fileMap> fileList;
 	try
 	{
 		bf::path workingDir(arg);
@@ -220,7 +226,8 @@ void opArg(char* arg)
 				for (bf::directory_iterator dir_itr( workingDir ); dir_itr != end_iter; ++dir_itr)
 				{
 					fileMap data = getFileMap(dir_itr);
-					printFile(data);
+					fileList.push_back(data);
+					//printFile(data);
 				}
 			}
 			else
@@ -236,6 +243,11 @@ void opArg(char* arg)
 	catch (bf::filesystem_error e)
 	{
 		std::cout << "Exception occured!" << e.what() << std::endl;
+	}
+	std::vector<fileMap>::iterator it;
+	for (it = fileList.begin(); it != fileList.end(); ++it)
+	{
+    	printFile(*it);
 	}
 }
 
@@ -337,13 +349,23 @@ void printFile(fileMap data)
 
 	if (flagDisplayLong)
 	{
-		std::cout << data["permstring"];
+		std::cout << data["permstring"] << ' ' << data["link_to"] << ' ' <<data["uid"] << ' ' <<data["gid"];
+		std::cout << ' ' << data["mod_time"];
+		if (flagDisplayFileInodeNum)
+		{
+			std::cout << ' ' << data["serial"];
+		}
+		std::cout << ' ' << data["size"] << ' ';
 	}
-	std::cout << data["filename"];
+	std::cout << data["filename"] << data["post_symbol"];
 	/* should this be moved to the "meta-printer" as each file should not know how it will be printed? ? ? ?*/
 	if (flagOneColOutput || flagDisplayLong)
 	{
 		std::cout << std::endl;
+	}
+	else if (flagStreamOutput)
+	{
+		std::cout << ",";
 	}
 	else
 	{
