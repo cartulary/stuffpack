@@ -24,6 +24,8 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/optional.hpp>
 #include <boost/foreach.hpp>
+#include <boost/bind.hpp>
+#include <boost/function.hpp>
 #include "ls_helper.cpp"
 void usage();
 
@@ -248,6 +250,8 @@ void opArg(char* arg)
 	{
 		std::cout << "Exception occured!" << e.what() << std::endl;
 	}
+	boost::function<bool(fileMap, fileMap)> bindResult = boost::bind(std::less<std::string>(),boost::bind(&fileMap::operator[],_1,"file_name"),boost::bind(&fileMap::operator[],_2,"file_name"));
+	std::sort(fileList.begin(), fileList.end(), bindResult);
 	BOOST_FOREACH(fileMap &it, fileList)
 	{
     	printFile(it);
