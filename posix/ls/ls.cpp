@@ -194,21 +194,28 @@ optFileMap getFileMap(bf::directory_iterator dir_itr)
 		// we are a hidden file so lets get outa here
 	}
 	result["permstring"] = permStringFromStatMode(buf.st_mode);
-	result["link_to"] = buf.st_nlink;
-	if (flagDisplayUidAsNumber)
+	try
 	{
-		result["uid"] = boost::lexical_cast<std::string>(buf.st_uid);
-		result["gid"] = boost::lexical_cast<std::string>(buf.st_gid);
+		result["link_to"] = boost::lexical_cast<std::string>(buf.st_nlink);
+		if (flagDisplayUidAsNumber)
+		{
+			result["uid"] = boost::lexical_cast<std::string>(buf.st_uid);
+			result["gid"] = boost::lexical_cast<std::string>(buf.st_gid);
+		}
+		else
+		{
+			// not standard - see if there is a better way of doing this
+			result["uid"] = user_from_uid(buf.st_uid,0);
+			result["gid"] = group_from_gid(buf.st_gid,0);
+		}
+		result["mod_time"]= boost::lexical_cast<std::string>(buf.st_mtime);
+		result["serial"]= boost::lexical_cast<std::string>(buf.st_ino);
+		result["size"]= boost::lexical_cast<std::string>(buf.st_size);
 	}
-	else
+	catch(boost::bad_lexical_cast& e)
 	{
-		// not standard - see if there is a better way of doing this
-		result["uid"] = user_from_uid(buf.st_uid,0);
-		result["gid"] = group_from_gid(buf.st_gid,0);
+		errx(1,"bad lexical cast");
 	}
-	result["mod_time"]= boost::lexical_cast<std::string>(buf.st_mtime);
-	result["serial"]= boost::lexical_cast<std::string>(buf.st_ino);
-	result["size"]= boost::lexical_cast<std::string>(buf.st_size);
 	result["filename"] = file_name;
 
 	/* -F stuff */
