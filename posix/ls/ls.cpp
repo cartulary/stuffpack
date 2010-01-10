@@ -26,6 +26,7 @@
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
+#include <boost/lexical_cast.hpp>
 #include "ls_helper.cpp"
 void usage();
 
@@ -196,8 +197,8 @@ optFileMap getFileMap(bf::directory_iterator dir_itr)
 	result["link_to"] = buf.st_nlink;
 	if (flagDisplayUidAsNumber)
 	{
-		result["uid"] = buf.st_uid;
-		result["gid"] = buf.st_gid;
+		result["uid"] = boost::lexical_cast<std::string>(buf.st_uid);
+		result["gid"] = boost::lexical_cast<std::string>(buf.st_gid);
 	}
 	else
 	{
@@ -205,9 +206,9 @@ optFileMap getFileMap(bf::directory_iterator dir_itr)
 		result["uid"] = user_from_uid(buf.st_uid,0);
 		result["gid"] = group_from_gid(buf.st_gid,0);
 	}
-	result["mod_time"]= buf.st_mtime;
-	result["serial"]= buf.st_ino;
-	result["size"]= buf.st_size;
+	result["mod_time"]= boost::lexical_cast<std::string>(buf.st_mtime);
+	result["serial"]= boost::lexical_cast<std::string>(buf.st_ino);
+	result["size"]= boost::lexical_cast<std::string>(buf.st_size);
 	result["filename"] = file_name;
 
 	/* -F stuff */
