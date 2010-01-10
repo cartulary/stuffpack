@@ -241,12 +241,12 @@ void opArg(char* arg)
 			}
 			else
 			{
-				/* we have a file or something special - will deal with this later */
+				/* deal with this later */
 			}
 		}
 		else
 		{
-			std::cout << "doesn't exist" <<std::endl;
+			errx(1,"No such file or directory");
 		}
 	}
 	catch (bf::filesystem_error e)
