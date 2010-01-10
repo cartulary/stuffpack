@@ -68,7 +68,7 @@ typedef boost::optional<fileMap> optFileMap;
 
 optFileMap getFileMap(bf::directory_iterator dir_itr);
 void printFile(fileMap data);
-void opArg(char* arg);
+void opArg(const char* arg);
 string permStringFromStatMode(mode_t mode);
 
 int main(int argc, char *argv[])
@@ -98,12 +98,18 @@ int main(int argc, char *argv[])
 			case 'H':
 				flagFollowSymLinks = true;
 				break;
+			case 'R':
+				flagBeRecursive = true;
+				break;
 			case 'W':
 				flagDisplayWhiteouts=true;
 				break;
 			case 'a':
 				flagShowHidden = true;
 				flagShowDotLinks = true;
+				break;
+			case 'd':
+				flagNeverBeRecursive = true;
 				break;
 			case 'i':
 				flagDisplayFileInodeNum = true;
@@ -172,7 +178,8 @@ optFileMap getFileMap(bf::directory_iterator dir_itr)
 	if (errno!=0)
 	{
 		//I think we have some kind of problem - so lets get out of here for now. I will have to deal with this case later
-		std::cerr << "errno != 0 on stat\n";
+		// this really should be errx + EX_OSERR -> but I'm leaving it as warnx as this is OUR problem while I clean up stuff from the data/print split 
+		warnx("stat != 0");
 		return optFileMap();
 	}
 	/* if we don't display whiteouts -> and this is a whiteout get out of here */
@@ -217,7 +224,7 @@ optFileMap getFileMap(bf::directory_iterator dir_itr)
 	return result;
 }
 
-void opArg(char* arg)
+void opArg(const char* arg)
 {
 	std::vector<fileMap> fileList;
 	try
@@ -235,6 +242,11 @@ void opArg(char* arg)
 					optFileMap data = getFileMap(dir_itr);
 					if (data)
 					{
+						if ( bf::is_directory( dir_itr->status() ) )
+    	    			{
+							std::cout << dir_itr->path().filename() << ": [directory]\n";
+							opArg(dir_itr->path().filename().c_str());
+        				}
 						fileList.push_back(*data);
 					}
 				}
