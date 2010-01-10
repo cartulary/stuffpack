@@ -2,5 +2,7 @@
 #define DOLS_H
 class dols
 {
+	public:
+		dols();
 };
 #endif
