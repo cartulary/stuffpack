@@ -1,11 +1,13 @@
 NAME=string
 LANG=c
+USE_CUNIT=yes
+USE_NCURSES=yes
 .include	<../../Makefile>
 
 #compiling options
 .PHONY:	clean
 
-$(NAME):
+doTest: string.o doTest.c
 string.o: string.c
 string.c: string.h
 

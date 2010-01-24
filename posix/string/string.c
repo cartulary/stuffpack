@@ -4,24 +4,6 @@
 #include <stdio.h>
 #include <ctype.h>
 
-int main(void)
-{
-	const char* hello="hello";
-	const char* bello="bello";
-	char cArr[6], cArr2[6];
-
-	// This will be replaced with cunit soon.... a real unit testing system
-	printf("Strcmp: %d\n", strcmp(hello,bello));
-	printf("StrNcmp: %d\n", strncmp(hello,bello,3));
-	printf("Strlen: %d\n", strlen(hello));
-	printf("StrNlen: %d\n", strnlen(hello,3));
-	(void)strncpy(cArr, "12345", sizeof(cArr));
-	(void)strncpy(cArr2, "1234567890", sizeof(cArr2));
-	printf("StrNcpy: %s && %s\n", cArr, cArr2);
-//	printf("index: %c rindex: %c\n", *index("foo",'f'), *rindex("foo",'o'));
-	return EX_OK;
-}
-
 int strcasecmp(const char *s1, const char *s2)
 {
 	int pos;
