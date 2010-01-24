@@ -29,7 +29,7 @@ void test_strlen_strings(void)
 	const char* s = "abcd";
 	const int s_size = 4;
 	CU_ASSERT_EQUAL(1, strlen("A"));
-	CU_ASSERT_EQUAL(s_size, s);
+	CU_ASSERT_EQUAL(s_size, strlen(s));
 }
 
 void test_strlen_emptystring(void)
@@ -41,6 +41,9 @@ void test_strlen_emptystring(void)
 
 int main(void)
 {
+#ifdef REAL_STRING == 1
+	printf("We are testing for realz");
+#endif
 	CU_pSuite pSuite = NULL;
 
 	/* create the registry */

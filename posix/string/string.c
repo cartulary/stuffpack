@@ -111,7 +111,8 @@ char* stpcpy(char* dst, const char* src)
 
 char* strcpy(char* dst, const char* src)
 {
-	for (int i=0; src[i] != 0; ++i)
+	int i;
+	for (i=0; src[i] != 0; ++i)
 	{
 		dst[i]=src[i];
 	}
@@ -120,7 +121,8 @@ char* strcpy(char* dst, const char* src)
 
 char* strncpy(char* dst, const char* src, size_t len)
 {
-	for (size_t i=0; src[i] != 0 && i < len; ++i)
+	size_t i;
+	for (i=0; src[i] != 0 && i < len; ++i)
 	{
 		dst[i]=src[i];
 	}
