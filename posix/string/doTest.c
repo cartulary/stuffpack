@@ -10,7 +10,7 @@
 int suite_strlen_init(void);
 int suite_strlen_clean(void);
 void test_strlen_strings(void);
-
+void test_strlen_emptystring(void);
 /* all functions return 0 on success and non-zero otherwise */
 
 /* This is the initilization function for testing strlen*/
@@ -26,7 +26,17 @@ int suite_strlen_clean(void)
 
 void test_strlen_strings(void)
 {
-	CU_ASSERT(1 == strlen("A"));
+	const char* s = "abcd";
+	const int s_size = 4;
+	CU_ASSERT_EQUAL(1, strlen("A"));
+	CU_ASSERT_EQUAL(s_size, s);
+}
+
+void test_strlen_emptystring(void)
+{
+	const char* s="";
+	CU_ASSERT_EQUAL(0, strlen(""));
+	CU_ASSERT_EQUAL(0, strlen(s));
 }
 
 int main(void)
@@ -48,6 +58,11 @@ int main(void)
 	}
 
 	if (NULL == CU_add_test(pSuite, "test of strlen", test_strlen_strings))
+	{
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+	if (NULL == CU_add_test(pSuite, "test of strlen-empty", test_strlen_emptystring))
 	{
 		CU_cleanup_registry();
 		return CU_get_error();
