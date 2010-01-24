@@ -1,5 +1,8 @@
 # To protect us from stupid errors (like running make nameclean in the root directory)
 NAME?=DOES_NOT_EXIST
+.if $(NAME) == DOES_NOT_EXIST
+.error Can't work from global makefile - please call make in a project
+.endif
 LANG?=none
 DEBUG?=off
 COMPILER?=llvm
@@ -7,6 +10,7 @@ COMPILER?=llvm
 USE_NCURSES?=no
 USE_GMP?=no
 USE_HELLO?=no
+USE_CUNIT?=no
 
 CFLAGS = -g3 -pipe
 .ifdef $(DEBUG) == on
@@ -52,6 +56,10 @@ LDFLAGS += -L../libhello/ -L../../libhello -lhello
 LDFLAGS += -lncurses
 .endif
 
+.if $(USE_CUNIT) == yes
+LDFLAGS += -lcunit
+.endif
+
 .if $(USE_GMP) == yes
 .if $(LANG) == c++
 LDFLAGS += -lgmpxx
@@ -78,6 +86,8 @@ objclean: .NOTMAIN .USE .EXEC .IGNORE .PHONY
 .if ! target(clean)
 clean: .NOTMAIN .PHONY .IGNORE nameclean coreclean objclean
 .endif
+
+rebuild: .NOTMAIN .PHONY clean $(NAME)
 
 check: .NOTMAIN
 	## only run this on C++ code
