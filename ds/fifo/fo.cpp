@@ -31,26 +31,25 @@ void Fo::push(int data)
 
 void Fo::printAll(bool doPop)
 {
-	int count;
-	int a=0;
-	// I really should make this into getNextWithoutPopping();
-	while (this->hasNext())
+
+	Node *cur=head;
+	if (doPop)
 	{
-		if (doPop)
+		while (this->hasNext())
 		{
-			a = this->pop();
+			std::cout << this->pop() << ' ';
 		}
-		else
+	}
+	else
+	{
+		if (cur)
 		{
-			Node* n = this->getNextNode(count++);
-			if (!n)
-			{
-				break;
+			std::cout << cur->data << ' ';
+			while (cur->next) {
+				cur=cur->next;
+				std::cout << cur->data << ' ';
 			}
-			a=n->data;
 		}
-		std::cout << a;
-		std::cout << ' ';
 	}
 	std::cout << '\n';
 }
