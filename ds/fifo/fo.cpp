@@ -35,7 +35,9 @@ void Fo::printAll()
 	{
 		a = this->pop();
 		std::cout << a;
+		std::cout << ' ';
 	}
+	std::cout << '\n';
 }
 
 inline bool Fo::hasNext()

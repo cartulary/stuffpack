@@ -30,6 +30,10 @@ int main(void)
     std::cout << myfifo.pop() << myfifo.pop() << myfifo.pop() << '\n';
     myfifo.push(4);
     std::cout << myfifo.pop() << '\n';
+	mylifo.push(9);
+	mylifo.push(10);
+	mylifo.push(11);
+	mylifo.printAll();
     return 0;
 
 }
