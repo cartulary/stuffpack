@@ -18,6 +18,7 @@ int main(void)
 	mylifo.push(9);
 	mylifo.push(10);
 	mylifo.push(11);
+	std::cout << "==printall==\n";
 	mylifo.printAll();
 	std::cout << "==popprint==\n";
 	mylifo.printAll(true);
@@ -35,6 +36,7 @@ int main(void)
 	mylifo.push(9);
 	mylifo.push(10);
 	mylifo.push(11);
+	std::cout << "==printall==\n";
 	mylifo.printAll();
 	std::cout << "==popprint==\n";
 //	myfifo.printAll(true);
