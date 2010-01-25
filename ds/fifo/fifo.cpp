@@ -9,8 +9,7 @@ Fifo::Fifo() : numNodes(0)
 
 int Fifo::pop()
 {
-	Node* current = head;
-	Node* prev = NULL;
+	Node* current = getNextNode();
 	if (current == NULL)
 	{
 		return -1;
@@ -18,15 +17,14 @@ int Fifo::pop()
 	}
 	while (current->next)
 	{
-		prev = current;
 		current = current->next;
 	}
 	int ret = current->data;
-	if (prev)
+	if (current->prev)
 	{
-		delete current;
-		prev->next= NULL;
+		current->prev->next = NULL;
 	}
+	delete current;
 	--numNodes;
 	return ret;
 
@@ -40,7 +38,7 @@ void Fifo::push(int data)
 
 Node* Fifo::getNextNode(int fastfoward)
 {
-	int count = numNodes - fastfoward;
+	int count = fastfoward;
 	Node* current = head;
 	if (current == NULL)
 	{
