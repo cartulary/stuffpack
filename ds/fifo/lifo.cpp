@@ -1,10 +1,7 @@
 #include "lifo.h"
+#include "fo.h"
 #include <cstdio>
 #include <iostream>
-
-Lifo::Lifo() : head(NULL)
-{
-}
 
 int Lifo::pop()
 {
@@ -19,21 +16,4 @@ int Lifo::pop()
 	head = tmp;
 	return ret;
 
-}
-void Lifo::push(int data)
-{
-	if (head == NULL)
-	{
-		head = new Node(data);
-		return;
-	}
-	Node* current = head;
-	if (current != NULL)
-	{
-		while (current->next != NULL)
-		{
-			current=current->next;
-		}
-	}
-	current->next = new Node(data);
-}
+}	
