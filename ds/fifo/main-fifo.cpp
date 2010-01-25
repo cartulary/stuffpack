@@ -1,6 +1,7 @@
 #include <iostream>
 #include "fifo.cpp"
 #include "node.cpp"
+#include "fo.cpp"
 int main(void)
 {
 	Fifo myfifo;

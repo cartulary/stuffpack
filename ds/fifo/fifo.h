@@ -1,12 +1,9 @@
 #ifndef FIFO_H
 #define FIFO_H
 #include "node.h"
-class Fifo {
+#include "fo.h"
+class Fifo : public Fo {
 	public:
-		Node* head;
-		Fifo();
 		int pop();
-		void push(int data);
-		//void printAll();
 };
 #endif

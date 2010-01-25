@@ -5,6 +5,5 @@
 class Lifo : public Fo {
 	public:
 		int pop();
-		//void printAll();
 };
 #endif
