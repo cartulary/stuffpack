@@ -9,6 +9,7 @@ int main(void)
 
 	Lifo mylifo;
 
+	std::cout << "pushing 1,2,3\n";
 	mylifo.push(1);
 	mylifo.push(2);
 	mylifo.push(3);
@@ -26,20 +27,20 @@ int main(void)
 	std::cout << "\n\n---- FIFO ----\n\n";
 
     Fifo myfifo;
-
+	std::cout << "pushing 1,2,3\n";
     myfifo.push(1);
     myfifo.push(2);
     myfifo.push(3);
     std::cout << myfifo.pop() << myfifo.pop() << myfifo.pop() << '\n';
-//    myfifo.push(4);
-  //  std::cout << myfifo.pop() << '\n';
-	mylifo.push(9);
-	mylifo.push(10);
-	mylifo.push(11);
+    myfifo.push(4);
+    std::cout << myfifo.pop() << '\n';
+	myfifo.push(9);
+	myfifo.push(10);
+	myfifo.push(11);
 	std::cout << "==printall==\n";
-	mylifo.printAll();
+	myfifo.printAll();
 	std::cout << "==popprint==\n";
-//	myfifo.printAll(true);
+	myfifo.printAll(true);
     return 0;
 
 }
