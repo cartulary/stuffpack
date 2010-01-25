@@ -5,6 +5,5 @@ class Node {
 		Node(int data);
 		int data;
 		Node* next;
-		Node* prev;
 };
 #endif

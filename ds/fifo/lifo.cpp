@@ -5,17 +5,31 @@
 
 int Lifo::pop()
 {
-	Node* current = getNextNode();
-	if (current == NULL)
+		Node* current = head;
+	int ret;
+	if (current)
 	{
-		return -1;
-		//throw exception
+		if (current->next)
+		{
+			while (current->next->next)
+			{
+				current = current->next;
+			}
+			ret = current->next->data;
+			delete current->next;
+			current->next = NULL;
+		}
+		else
+		{
+			ret = current->data;
+			delete head;
+			head = NULL;
+		}
+		return ret;
 	}
-	int ret = current->data;
-	Node* tmp = current->next;
-	delete current;
-	head = tmp;
-	return ret;
+	//throw exception
+	return -1;
+
 
 }
 

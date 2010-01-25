@@ -26,7 +26,6 @@ void Fo::push(int data)
 	}
 	current->next = new Node(data);
 	/* we want to tell our new node who we are */
-	current->next->prev = current;
 }
 
 void Fo::printAll(bool doPop)
@@ -35,9 +34,9 @@ void Fo::printAll(bool doPop)
 	Node *cur=head;
 	if (doPop)
 	{
-		while (this->hasNext())
+		while (head)
 		{
-			std::cout << this->pop() << ' ';
+			std::cout << this->pop() << '-';
 		}
 	}
 	else
@@ -45,7 +44,8 @@ void Fo::printAll(bool doPop)
 		if (cur)
 		{
 			std::cout << cur->data << ' ';
-			while (cur->next) {
+			while (cur->next)
+			{
 				cur=cur->next;
 				std::cout << cur->data << ' ';
 			}
