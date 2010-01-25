@@ -25,6 +25,8 @@ void Fo::push(int data)
 		}
 	}
 	current->next = new Node(data);
+	/* we want to tell our new node who we are */
+	current->next->prev = current;
 }
 
 void Fo::printAll(bool doPop)
