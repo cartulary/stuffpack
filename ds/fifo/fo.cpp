@@ -27,13 +27,26 @@ void Fo::push(int data)
 	current->next = new Node(data);
 }
 
-void Fo::printAll()
+void Fo::printAll(bool doPop)
 {
+	int count;
 	int a=0;
 	// I really should make this into getNextWithoutPopping();
 	while (this->hasNext())
 	{
-		a = this->pop();
+		if (doPop)
+		{
+			a = this->pop();
+		}
+		else
+		{
+			Node* n = this->getNextNode(count++);
+			if (!n)
+			{
+				break;
+			}
+			a=n->data;
+		}
 		std::cout << a;
 		std::cout << ' ';
 	}
