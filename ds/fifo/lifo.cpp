@@ -13,7 +13,7 @@ int Lifo::pop()
 	}
 	int ret = current->data;
 	Node* tmp = current->next;
-	delete tmp;
+	delete current;
 	head = tmp;
 	return ret;
 
