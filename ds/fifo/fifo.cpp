@@ -1,10 +1,7 @@
 #include "fifo.h"
+#include "fo.h"
 #include <cstdio>
 #include <iostream>
-
-Fifo::Fifo() : head(NULL)
-{
-}
 
 int Fifo::pop()
 {
@@ -26,32 +23,6 @@ int Fifo::pop()
 		delete current;
 		prev->next= NULL;
 	}
-	/*
-		this is for a LIFO
-	*/
-	/*
-	int ret = head->data;
-	Node* tmp = head->next;
-	delete tmp;
-	head = tmp;
-	*/
 	return ret;
 
-}
-void Fifo::push(int data)
-{
-	if (head == NULL)
-	{
-		head = new Node(data);
-		return;
-	}
-	Node* current = head;
-	if (current != NULL)
-	{
-		while (current->next != NULL)
-		{
-			current=current->next;
-		}
-	}
-	current->next = new Node(data);
 }

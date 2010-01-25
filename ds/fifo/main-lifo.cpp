@@ -1,9 +1,12 @@
 #include <iostream>
 #include "lifo.cpp"
+#include "fifo.cpp"
 #include "node.cpp"
 #include "fo.cpp"
 int main(void)
 {
+	std::cout << "---- LIFO ----\n\n";
+
 	Lifo mylifo;
 
 	mylifo.push(1);
@@ -16,5 +19,17 @@ int main(void)
 	mylifo.push(10);
 	mylifo.push(11);
 	mylifo.printAll();
-	return 0;
+
+	std::cout << "\n\n---- FIFO ----\n\n";
+
+    Fifo myfifo;
+
+    myfifo.push(1);
+    myfifo.push(2);
+    myfifo.push(3);
+    std::cout << myfifo.pop() << myfifo.pop() << myfifo.pop() << '\n';
+    myfifo.push(4);
+    std::cout << myfifo.pop() << '\n';
+    return 0;
+
 }

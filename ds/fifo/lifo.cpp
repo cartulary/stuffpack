@@ -16,4 +16,4 @@ int Lifo::pop()
 	head = tmp;
 	return ret;
 
-}	
+}
