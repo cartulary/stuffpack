@@ -1,8 +1,8 @@
 #include "node.cpp"
-class Fifo {
+class Lifo {
 	public:
 		Node* head;
-		Fifo();
+		Lifo();
 		int pop();
 		void push(int data);
 		//void printAll();
