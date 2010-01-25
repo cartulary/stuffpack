@@ -1,9 +1,17 @@
-#include "node.cpp"
+#ifndef FO_H
+#define FO_H
+#include "node.h"
 class Fo {
 	public:
 		Node* head;
 		Fo();
-		int pop();
+		virtual ~Fo();
+		//must override = and copy
+
+		virtual int pop() = 0;
+
 		void push(int data);
-		//void printAll();
+		inline bool hasNext();
+		void printAll();
 };
+#endif

@@ -1,4 +1,6 @@
-#include "node.cpp"
+#ifndef FIFO_H
+#define FIFO_H
+#include "node.h"
 class Fifo {
 	public:
 		Node* head;
@@ -7,3 +9,4 @@ class Fifo {
 		void push(int data);
 		//void printAll();
 };
+#endif

@@ -1,9 +1,10 @@
-#include "node.cpp"
-class Lifo {
+#ifndef LIFO_H
+#define LIFO_H
+#include "node.h"
+#include "fo.h"
+class Lifo : public Fo {
 	public:
-		Node* head;
-		Lifo();
 		int pop();
-		void push(int data);
 		//void printAll();
 };
+#endif
