@@ -1,14 +1,14 @@
 #include <iostream>
-#include "fifo.cpp"
+#include "lifo.cpp"
 int main(void)
 {
-	Fifo myfifo;
+	Lifo mylifo;
 
-	myfifo.push(1);
-	myfifo.push(2);
-	myfifo.push(3);
-	std::cout << myfifo.pop() << myfifo.pop() << myfifo.pop() << '\n';
-	myfifo.push(4);
-	std::cout << myfifo.pop() << '\n';
+	mylifo.push(1);
+	mylifo.push(2);
+	mylifo.push(3);
+	std::cout << mylifo.pop() << mylifo.pop() << mylifo.pop() << '\n';
+	mylifo.push(4);
+	std::cout << mylifo.pop() << '\n';
 	return 0;
 }

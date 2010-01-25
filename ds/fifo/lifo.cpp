@@ -1,12 +1,12 @@
-#include "fifo.h"
+#include "lifo.h"
 #include <cstdio>
 #include <iostream>
 
-Fifo::Fifo() : head(NULL)
+Lifo::Lifo() : head(NULL)
 {
 }
 
-int Fifo::pop()
+int Lifo::pop()
 {
 	Node* current = head;
 	Node* prev = NULL;
@@ -38,7 +38,7 @@ int Fifo::pop()
 	return ret;
 
 }
-void Fifo::push(int data)
+void Lifo::push(int data)
 {
 	if (head == NULL)
 	{
