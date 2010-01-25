@@ -22,29 +22,84 @@ void test_lifo_hasnext(void);
 
 /* all functions return 0 on success and non-zero otherwise */
 
+/* t_ == test */
 Node* t_node;
+Node* t_nodes[10];
 Fifo* t_fifo;
+Fifo* t_fifos[10];
 Lifo* t_lifo;
+Lifo* t_lifos[10];
+
+/* m_ == magic */
+const int m_node_data = 5;
+const int m_fo_nodata = -1;
 
 int suite_node_init(void)
 {
+	t_node = new Node(m_node_data);
+	t_node->next = NULL;
+	t_node->prev = NULL;
 	return 0;
 }
 
 int suite_node_clean(void)
 {
+	delete t_node;
 	return 0;
 }
 
+void test_node_data(void)
+{
+	CU_ASSERT_EQUAL(t_node->data, m_node_data);
+}
+
+
+
 int suite_fifo_init(void)
 {
+	t_fifo = new Fifo();
+	int i=1;
+	t_fifo->push(i++);
+	t_fifo->push(i++);
+	t_fifo->push(i++);
 	return 0;
 }
 
 int suite_fifo_clean(void)
 {
+	delete t_fifo;
 	return 0;
 }
+
+void test_fifo_pop(void)
+{
+	/* in init we pushed 1, 2, 3 */
+	CU_ASSERT_EQUAL(t_fifo->pop(), 1);
+	CU_ASSERT_EQUAL(t_fifo->pop(), 2);
+	CU_ASSERT_EQUAL(t_fifo->pop(), 3);
+//	CU_ASSERT_EQUAL(t_fifo->pop(), m_fo_nodata);
+//	i++;
+}
+
+void test_fifo_pushpop(void)
+{
+	CU_ASSERT_EQUAL(t_fifo->push(6),0);
+//	CU_ASSERT_EQUAL(t_fifo->pop(), 6);
+	CU_FAIL("we can't push then pop");
+}
+
+
+void test_fifo_hasnext(void)
+{
+	CU_ASSERT_FALSE(t_fifo->hasNext());
+	t_fifo->push(12);
+	CU_ASSERT_TRUE(t_fifo->hasNext());
+}
+
+
+
+
+
 int suite_lifo_init(void)
 {
 	return 0;
@@ -56,28 +111,11 @@ int suite_lifo_clean(void)
 }
 
 
-void test_node_data(void)
-{
-	CU_ASSERT_EQUAL(1, 1);
-}
-
-void test_fifo_pop(void)
-{
-}
-
 void test_lifo_pop(void)
 {
 }
 
-void test_fifo_pushpop(void)
-{
-}
-
 void test_lifo_pushpop(void)
-{
-}
-
-void test_fifo_hasnext(void)
 {
 }
 
