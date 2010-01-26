@@ -4,7 +4,7 @@
 #include "fo.h"
 class Lifo : public Fo {
 	private:
-		Node* getNextNode(int fastfoward=0);
+		Node<int>* getNextNode(int fastfoward=0);
 	public:
 		int pop();
 		void printAll(bool doPop=false);

@@ -14,10 +14,10 @@ void Fo::push(int data)
 {
 	if (head == NULL)
 	{
-		head = new Node(data);
+		head = new Node<int>(data);
 		return;
 	}
-	Node* current = head;
+	Node<int>* current = head;
 	if (current != NULL)
 	{
 		while (current->next != NULL)
@@ -25,14 +25,14 @@ void Fo::push(int data)
 			current=current->next;
 		}
 	}
-	current->next = new Node(data);
+	current->next = new Node<int>(data);
 	/* we want to tell our new node who we are */
 }
 
 std::vector<int> Fo::getAll()
 {
 	std::vector<int> ret;
-	Node *cur=head;
+	Node<int> *cur=head;
 	if (cur)
 	{
 		ret.push_back(cur->data);

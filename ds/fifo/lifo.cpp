@@ -8,7 +8,7 @@ extern Printit doprint;
 
 int Lifo::pop()
 {
-		Node* current = head;
+	Node<int>* current = head;
 	int ret;
 	if (current)
 	{
@@ -36,9 +36,9 @@ int Lifo::pop()
 
 }
 
-Node* Lifo::getNextNode(int fastfoward)
+Node<int>* Lifo::getNextNode(int fastfoward)
 {
-	Node* current=head;
+	Node<int>* current=head;
 	if (current == NULL)
 	{
 		return NULL;

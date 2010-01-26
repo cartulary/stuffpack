@@ -1,5 +1,4 @@
 #include "node.h"
 #include <cstdio>
-Node::Node(int d) : data(d), next(NULL)
-{
-}
+template <class T> Node<T>::Node(T d) : data(d), next(NULL)
+{}
