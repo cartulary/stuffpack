@@ -1,26 +1,26 @@
 #include "ll.h"
 Ll::Ll() : head(NULL)
 {
-	
+
 }
 
 Ll::~Ll()
 {
-	
+
 }
 
-void Ll:push(int data, int loc)
+void Ll::push(int data, int loc)
 {
-	/* This assumes that loc = 0 
-	 * 
+	/* This assumes that loc = 0
+	 *
 	 */
 	++numnodes;
 	if (head == NULL)
 	{
-		head = new Node<T>(data);
+		head = new Node<int>(data);
 		return;
 	}
-	Node<T>* current = head;
+	Node<int>* current = head;
 	if (current != NULL)
 	{
 		while (current->next != NULL)
@@ -28,7 +28,7 @@ void Ll:push(int data, int loc)
 			current=current->next;
 		}
 	}
-	current->next = new Node<T>(data);
+	current->next = new Node<int>(data);
 	/* we want to tell our new node who we are */
 
 }
