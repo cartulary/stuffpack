@@ -5,10 +5,6 @@
 #include <iostream>
 #include <algorithm>
 
-template <class T> Fifo<T>::Fifo()
-{
-}
-
 template <class T> T Fifo<T>::pop()
 {
 	Node<T>* current = this->head;
