@@ -2,19 +2,19 @@
 #define FO_H
 #include "node.h"
 #include <vector>
-class Fo {
+template <class T> class Fo {
 	public:
-		Node<int>* head;
+		Node<T>* head;
 		Fo();
 		virtual ~Fo();
 		//must override = and copy
 
-		virtual int pop() = 0;
-		virtual Node<int>* getNextNode(int fastfoward=0) = 0;
+		virtual T pop() = 0;
+		virtual Node<T>* getNextNode(int fastfoward=0) = 0;
 
-		void push(int data);
+		void push(T data);
 		inline bool hasNext();
 		virtual void printAll(bool doPop=false) =0;
-		std::vector<int> getAll();
+		std::vector<T> getAll();
 };
 #endif

@@ -3,21 +3,21 @@
 #include <iostream>
 #include <vector>
 
-Fo::Fo() : head(NULL)
+template <class T> Fo<T>::Fo() : head(NULL)
 {
 }
 
-Fo::~Fo()
+template <class T> Fo<T>::~Fo()
 {}
 
-void Fo::push(int data)
+template <class T> void Fo<T>::push(T data)
 {
 	if (head == NULL)
 	{
-		head = new Node<int>(data);
+		head = new Node<T>(data);
 		return;
 	}
-	Node<int>* current = head;
+	Node<T>* current = head;
 	if (current != NULL)
 	{
 		while (current->next != NULL)
@@ -25,14 +25,14 @@ void Fo::push(int data)
 			current=current->next;
 		}
 	}
-	current->next = new Node<int>(data);
+	current->next = new Node<T>(data);
 	/* we want to tell our new node who we are */
 }
 
-std::vector<int> Fo::getAll()
+template <class T> std::vector<T> Fo<T>::getAll()
 {
-	std::vector<int> ret;
-	Node<int> *cur=head;
+	std::vector<T> ret;
+	Node<T> *cur=head;
 	if (cur)
 	{
 		ret.push_back(cur->data);
@@ -45,7 +45,7 @@ std::vector<int> Fo::getAll()
 	return ret;
 }
 
-inline bool Fo::hasNext()
+template <class T> inline bool Fo<T>::hasNext()
 {
 	/*
 		We know that if head is not null there is at least one more datapoint left
