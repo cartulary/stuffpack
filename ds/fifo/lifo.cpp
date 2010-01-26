@@ -4,12 +4,10 @@
 #include <cstdio>
 #include <iostream>
 
-extern Printit doprint;
-
-int Lifo::pop()
+template <class T> T Lifo<T>::pop()
 {
-	Node<int>* current = head;
-	int ret;
+	Node<T>* current = this->head;
+	T ret;
 	if (current)
 	{
 		if (current->next)
@@ -25,8 +23,8 @@ int Lifo::pop()
 		else
 		{
 			ret = current->data;
-			delete head;
-			head = NULL;
+			delete this->head;
+			this->head = NULL;
 		}
 		return ret;
 	}
@@ -36,9 +34,9 @@ int Lifo::pop()
 
 }
 
-Node<int>* Lifo::getNextNode(int fastfoward)
+template <class T> Node<T>* Lifo<T>::getNextNode(int fastfoward)
 {
-	Node<int>* current=head;
+	Node<T>* current=this->head;
 	if (current == NULL)
 	{
 		return NULL;
@@ -57,19 +55,20 @@ Node<int>* Lifo::getNextNode(int fastfoward)
 	return current;
 }
 
-void Lifo::printAll(bool doPop)
+template <class T> void Lifo<T>::printAll(bool doPop)
 {
     if (doPop)
     {
-        while (head)
+        while (this->head)
         {
             std::cout << this->pop() << ' ';
         }
     }
     else
     {
-		std::vector<int> vals = getAll();
+		std::vector<T> vals = this->getAll();
 		std::reverse(vals.begin(), vals.end());
+		Printit<int> doprint;
 		std::for_each(vals.begin(), vals.end(), doprint);
     }
     std::cout << '\n';

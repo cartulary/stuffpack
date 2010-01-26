@@ -2,11 +2,11 @@
 #define LIFO_H
 #include "node.h"
 #include "fo.h"
-class Lifo : public Fo<int> {
+template <class T> class Lifo : public Fo<T> {
 	private:
-		Node<int>* getNextNode(int fastfoward=0);
+		Node<T>* getNextNode(int fastfoward=0);
 	public:
-		int pop();
+		T pop();
 		void printAll(bool doPop=false);
 };
 #endif
