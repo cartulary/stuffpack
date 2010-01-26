@@ -8,7 +8,7 @@ int main(void)
 {
 	std::cout << "---- LIFO ----\n\n";
 
-	Lifo mylifo;
+	Lifo<int> mylifo;
 
 	std::cout << "pushing 1,2,3\n";
 	mylifo.push(1);

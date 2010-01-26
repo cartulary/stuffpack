@@ -1,8 +1,8 @@
 #ifndef PRINTIT_H
 #define PRINTIT_H
 #include <iostream>
-struct Printit
+template <class T> struct Printit
 {
-    void operator() (int i);
-} doprint;
+    void operator() (T i);
+};
 #endif

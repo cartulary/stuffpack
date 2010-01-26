@@ -5,8 +5,6 @@
 #include <iostream>
 #include <algorithm>
 
-extern Printit doprint;
-
 Fifo::Fifo() : numNodes(0)
 {
 }
@@ -55,6 +53,7 @@ void Fifo::printAll(bool doPop)
 	else
 	{
 		std::vector<int> vals = getAll();
+		Printit<int> doprint;
 		std::for_each(vals.begin(), vals.end(), doprint);
 	}
 	std::cout << '\n';

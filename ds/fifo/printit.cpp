@@ -1,6 +1,6 @@
 #include <iostream>
 #include "printit.h"
-void Printit::operator() (int i)
+template <class T> void Printit<T>::operator() (T i)
 {
     std::cout << i <<' ';
 }
