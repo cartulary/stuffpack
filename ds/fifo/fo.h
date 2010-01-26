@@ -3,6 +3,10 @@
 #include "node.h"
 #include <vector>
 template <class T> class Fo {
+	private:
+		int numnodes;
+	protected:
+		std::vector<T> getAll();
 	public:
 		Node<T>* head;
 		Fo();
@@ -15,6 +19,5 @@ template <class T> class Fo {
 		void push(T data);
 		inline bool hasNext();
 		virtual void printAll(bool doPop=false) =0;
-		std::vector<T> getAll();
 };
 #endif
