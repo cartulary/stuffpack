@@ -2,14 +2,13 @@
 #define FIFO_H
 #include "node.h"
 #include "fo.h"
-class Fifo : public Fo<int> {
+template <class T> class Fifo : public Fo<T> {
 	private:
-		Node<int>* getNextNode(int fastfoward=0);
-		int numNodes;
+		Node<T>* getNextNode(int fastfoward=0);
 	public:
 		//needed as we count number of nodes
 		Fifo();
-		int pop();
+		T pop();
 		void printAll(bool doPop=false);
 };
 #endif
