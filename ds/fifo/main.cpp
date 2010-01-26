@@ -27,7 +27,7 @@ int main(void)
 
 	std::cout << "\n\n---- FIFO ----\n\n";
 
-    Fifo myfifo;
+    Fifo<int> myfifo;
 	std::cout << "pushing 1,2,3\n";
     myfifo.push(1);
     myfifo.push(2);

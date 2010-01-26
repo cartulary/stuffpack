@@ -5,30 +5,30 @@
 #include <iostream>
 #include <algorithm>
 
-Fifo::Fifo() : numNodes(0)
+template <class T> Fifo<T>::Fifo()
 {
 }
 
-int Fifo::pop()
+template <class T> T Fifo<T>::pop()
 {
-	Node<int>* current = head;
+	Node<T>* current = this->head;
 	if (current == NULL)
 	{
 		return -1;
 		//throw exception
 	}
-	int ret = current->data;
-	Node<int>* tmp = current->next;
+	T ret = current->data;
+	Node<T>* tmp = current->next;
 	delete current;
-	head = tmp;
+	this->head = tmp;
 	return ret;
 
 }
 
-Node<int>* Fifo::getNextNode(int fastfoward)
+template <class T> Node<T>* Fifo<T>::getNextNode(int fastfoward)
 {
 	int count = fastfoward;
-	Node<int>* current = head;
+	Node<T>* current = this->head;
 	if (current == NULL)
 	{
 		return NULL;
@@ -41,19 +41,19 @@ Node<int>* Fifo::getNextNode(int fastfoward)
 	return current;
 }
 
-void Fifo::printAll(bool doPop)
+template <class T> void Fifo<T>::printAll(bool doPop)
 {
 	if (doPop)
 	{
-		while (head)
+		while (this->head)
 		{
 			std::cout << this->pop() << ' ';
 		}
 	}
 	else
 	{
-		std::vector<int> vals = getAll();
-		Printit<int> doprint;
+		std::vector<T> vals = this->getAll();
+		Printit<T> doprint;
 		std::for_each(vals.begin(), vals.end(), doprint);
 	}
 	std::cout << '\n';
