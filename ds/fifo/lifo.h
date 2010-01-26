@@ -7,5 +7,6 @@ class Lifo : public Fo {
 		Node* getNextNode(int fastfoward=0);
 	public:
 		int pop();
+		void printAll(bool doPop=false);
 };
 #endif

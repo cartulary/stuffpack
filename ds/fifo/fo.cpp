@@ -1,6 +1,7 @@
 #include "fo.h"
 #include <cstdio>
 #include <iostream>
+#include <vector>
 
 Fo::Fo() : head(NULL)
 {
@@ -28,30 +29,20 @@ void Fo::push(int data)
 	/* we want to tell our new node who we are */
 }
 
-void Fo::printAll(bool doPop)
+std::vector<int> Fo::getAll()
 {
-
+	std::vector<int> ret;
 	Node *cur=head;
-	if (doPop)
+	if (cur)
 	{
-		while (head)
+		ret.push_back(cur->data);
+		while (cur->next)
 		{
-			std::cout << this->pop() << '-';
+			cur=cur->next;
+			ret.push_back(cur->data);
 		}
 	}
-	else
-	{
-		if (cur)
-		{
-			std::cout << cur->data << ' ';
-			while (cur->next)
-			{
-				cur=cur->next;
-				std::cout << cur->data << ' ';
-			}
-		}
-	}
-	std::cout << '\n';
+	return ret;
 }
 
 inline bool Fo::hasNext()

@@ -3,6 +3,7 @@
 #include "fifo.cpp"
 #include "node.cpp"
 #include "fo.cpp"
+#include "printit.cpp"
 int main(void)
 {
 	std::cout << "---- LIFO ----\n\n";
