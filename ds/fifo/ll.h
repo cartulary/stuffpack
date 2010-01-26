@@ -6,19 +6,20 @@ class Ll
 {
 	public:
 		Node<int>* head;
-		
+
 		/* add a piece of data after a particular location;
 		 * 0 == default first location	*/
 		void push(int data, int loc=0);
 		/*
 		 * return value at specific location
 		 */
-		void read(int loc);
-		
+		int read(int loc);
+
 		Ll();
 		~Ll();
-	
+
 	private:
+		int numnodes;
 };
 
-#endif /* LL_H */ 
+#endif /* LL_H */
