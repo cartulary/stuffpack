@@ -68,8 +68,9 @@ void Lifo::printAll(bool doPop)
     }
     else
     {
-        std::vector<int> vals = getAll();
-        std::for_each(vals.begin(), vals.end(), doprint);
+		std::vector<int> vals = getAll();
+		std::reverse(vals.begin(), vals.end());
+		std::for_each(vals.begin(), vals.end(), doprint);
     }
     std::cout << '\n';
 }
