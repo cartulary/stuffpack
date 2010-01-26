@@ -1,7 +1,11 @@
 #include "fifo.h"
 #include "fo.h"
+#include "printit.h"
 #include <cstdio>
 #include <iostream>
+#include <algorithm>
+
+extern Printit doprint;
 
 Fifo::Fifo() : numNodes(0)
 {
@@ -37,4 +41,21 @@ Node* Fifo::getNextNode(int fastfoward)
 		current = current->next;
 	}
 	return current;
+}
+
+void Fifo::printAll(bool doPop)
+{
+	if (doPop)
+	{
+		while (head)
+		{
+			std::cout << this->pop() << ' ';
+		}
+	}
+	else
+	{
+		std::vector<int> vals = getAll();
+		std::for_each(vals.begin(), vals.end(), doprint);
+	}
+	std::cout << '\n';
 }

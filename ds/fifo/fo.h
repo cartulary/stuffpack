@@ -1,6 +1,7 @@
 #ifndef FO_H
 #define FO_H
 #include "node.h"
+#include <vector>
 class Fo {
 	public:
 		Node* head;
@@ -13,6 +14,7 @@ class Fo {
 
 		void push(int data);
 		inline bool hasNext();
-		void printAll(bool doPop=false);
+		virtual void printAll(bool doPop=false) =0;
+		std::vector<int> getAll();
 };
 #endif

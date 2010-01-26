@@ -10,5 +10,6 @@ class Fifo : public Fo {
 		//needed as we count number of nodes
 		Fifo();
 		int pop();
+		void printAll(bool doPop=false);
 };
 #endif
