@@ -46,10 +46,27 @@ int main(void)
 	myfifo.printAll();
 	std::cout << "==popprint==\n";
 	myfifo.printAll(true);
-	
-	std::cout << "\n\n---LL---\n\n";
+
+	std::cout << "\n\n-=--LL----\n\n";
 	Ll myll;
-	//myll.push(1)
+	std::cout << "pushing 1\n";
+	myll.push(1);
+	std::cout << "pushing 2\n";
+	myll.push(2);
+	std::cout << "pushing 3\n";
+	myll.push(3);
+	std::cout << "popping\n";
+	std::cout << myll.read(1) << myll.read(2) << myll.read(3);
+	std::cout << "\npushing 4 as new 2nd item\n";
+	myll.push(4,1);
+	std::cout << "\nreading 2nd item\n";
+	std::cout << myll.read(2);
+	std::cout << "\nreading 4nd item\n";
+	std::cout << myll.read(4);
+
+	std::cout << "\nreading all\n";\
+	myll.printAll();
+	std::cout << '\n';
     return 0;
 
 }
