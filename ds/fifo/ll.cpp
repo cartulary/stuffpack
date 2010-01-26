@@ -85,7 +85,6 @@ std::vector<int> Ll::getAllNodes()
 	}
 	while (current->next)
 	{
-		std::cout << "pushing next in getAllNodes\n";
 		ret.push_back(current->data);
 		current = current->next;
 	}
@@ -97,4 +96,42 @@ void Ll::printAll()
 	std::vector<int> vals = getAllNodes();
 	Printit<int> doprint;
 	std::for_each(vals.begin(), vals.end(), doprint);
+}
+
+
+//removes wrong item...
+void Ll::remove(int loc)
+{
+	/* if we have a total of one item */
+	Node<int>* current = head;
+	if (!head)
+	{
+		//throw exception - tried to delete bad item
+		return;
+	}
+	if (!current->next)
+	{
+		if (loc == 0)
+		{
+			//remove first item
+			return;
+		}
+		//throw exception tried to delete bad item
+		delete current;
+		head = NULL;
+		return;
+	}
+	while (current->next->next)
+	{
+		int count = loc;
+		--count;
+		current=current->next;
+		if (count == 0)
+		{
+				break;
+		}
+	}
+	Node<int>* tmp = current->next->next;
+	delete current->next;
+	current->next = tmp;
 }
