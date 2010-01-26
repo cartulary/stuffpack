@@ -2,7 +2,7 @@
 #define LIFO_H
 #include "node.h"
 #include "fo.h"
-class Lifo : public Fo {
+class Lifo : public Fo<int> {
 	private:
 		Node<int>* getNextNode(int fastfoward=0);
 	public:
