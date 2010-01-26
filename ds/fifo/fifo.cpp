@@ -7,6 +7,7 @@
 
 template <class T> T Fifo<T>::pop()
 {
+	int ignore = Fo<T>::pop();
 	Node<T>* current = this->head;
 	if (current == NULL)
 	{

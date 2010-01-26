@@ -6,6 +6,7 @@
 
 template <class T> T Lifo<T>::pop()
 {
+    int ignore = Fo<T>::pop();
 	Node<T>* current = this->head;
 	T ret;
 	if (current)
