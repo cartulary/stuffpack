@@ -13,24 +13,24 @@ Fifo::Fifo() : numNodes(0)
 
 int Fifo::pop()
 {
-	Node* current = head;
+	Node<int>* current = head;
 	if (current == NULL)
 	{
 		return -1;
 		//throw exception
 	}
 	int ret = current->data;
-	Node* tmp = current->next;
+	Node<int>* tmp = current->next;
 	delete current;
 	head = tmp;
 	return ret;
 
 }
 
-Node* Fifo::getNextNode(int fastfoward)
+Node<int>* Fifo::getNextNode(int fastfoward)
 {
 	int count = fastfoward;
-	Node* current = head;
+	Node<int>* current = head;
 	if (current == NULL)
 	{
 		return NULL;

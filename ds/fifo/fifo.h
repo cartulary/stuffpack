@@ -4,7 +4,7 @@
 #include "fo.h"
 class Fifo : public Fo {
 	private:
-		Node* getNextNode(int fastfoward=0);
+		Node<int>* getNextNode(int fastfoward=0);
 		int numNodes;
 	public:
 		//needed as we count number of nodes
