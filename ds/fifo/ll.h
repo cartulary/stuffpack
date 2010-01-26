@@ -16,6 +16,7 @@ class Ll
 		 * return value at specific location
 		 */
 		int read(int loc);
+		void remove(int loc);
 
 		void printAll();
 

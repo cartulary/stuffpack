@@ -63,8 +63,12 @@ int main(void)
 	std::cout << myll.read(2);
 	std::cout << "\nreading 4nd item\n";
 	std::cout << myll.read(4);
-
 	std::cout << "\nreading all\n";\
+	myll.printAll();
+	std::cout << "removing 3rd item\n";
+	std::cout << "removing 3rd item\n";
+	myll.remove(2);
+	std::cout << "\nreading all\n";
 	myll.printAll();
 	std::cout << '\n';
     return 0;
