@@ -13,11 +13,12 @@ template <class T> class Fo {
 		virtual ~Fo();
 		//must override = and copy
 
-		virtual T pop() = 0;
+		virtual T pop();
 		virtual Node<T>* getNextNode(int fastfoward=0) = 0;
 
 		void push(T data);
 		inline bool hasNext();
 		virtual void printAll(bool doPop=false) =0;
+		int getNumNodes();
 };
 #endif

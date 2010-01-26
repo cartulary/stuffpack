@@ -4,6 +4,8 @@
 #include "node.cpp"
 #include "fo.cpp"
 #include "printit.cpp"
+#include "ll.cpp"
+
 int main(void)
 {
 	std::cout << "---- LIFO ----\n\n";
@@ -20,6 +22,7 @@ int main(void)
 	mylifo.push(9);
 	mylifo.push(10);
 	mylifo.push(11);
+	std::cout << mylifo.getNumNodes() << " nodes left\n";
 	std::cout << "==printall==\n";
 	mylifo.printAll();
 	std::cout << "==popprint==\n";
@@ -38,10 +41,15 @@ int main(void)
 	myfifo.push(9);
 	myfifo.push(10);
 	myfifo.push(11);
+	std::cout << myfifo.getNumNodes() << " nodes left\n";
 	std::cout << "==printall==\n";
 	myfifo.printAll();
 	std::cout << "==popprint==\n";
 	myfifo.printAll(true);
+	
+	std::cout << "\n\n---LL---\n\n";
+	Ll myll;
+	//myll.push(1)
     return 0;
 
 }

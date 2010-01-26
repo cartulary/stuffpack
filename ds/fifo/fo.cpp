@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-template <class T> Fo<T>::Fo() : head(NULL)
+template <class T> Fo<T>::Fo() : numnodes(0), head(NULL)
 {
 }
 
@@ -12,6 +12,7 @@ template <class T> Fo<T>::~Fo()
 
 template <class T> void Fo<T>::push(T data)
 {
+	++numnodes;
 	if (head == NULL)
 	{
 		head = new Node<T>(data);
@@ -27,6 +28,12 @@ template <class T> void Fo<T>::push(T data)
 	}
 	current->next = new Node<T>(data);
 	/* we want to tell our new node who we are */
+}
+
+template <class T> T Fo<T>::pop()
+{
+	--this->numnodes;
+	return 0;
 }
 
 template <class T> std::vector<T> Fo<T>::getAll()
@@ -51,4 +58,9 @@ template <class T> inline bool Fo<T>::hasNext()
 		We know that if head is not null there is at least one more datapoint left
 	*/
 	return (head != NULL);
+}
+
+template <class T> int Fo<T>::getNumNodes()
+{
+	return this->numnodes;
 }
