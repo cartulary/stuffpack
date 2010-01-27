@@ -72,7 +72,6 @@ void test_fifo_hasnext(void)
 	CU_ASSERT_TRUE(t_fifo.hasNext());
 	(void)t_fifo.pop();
 	CU_ASSERT_FALSE(t_fifo.hasNext());
-
 }
 
 int suite_lifo_init(void)
@@ -83,7 +82,6 @@ int suite_lifo_init(void)
 int suite_lifo_clean(void)
 {
 	return 0;
-
 }
 
 void test_lifo_pop(void)
@@ -96,8 +94,27 @@ void test_lifo_pop(void)
 	CU_ASSERT_EQUAL(t_lifo.pop(), 1);
 }
 
+
 void test_ll_works(void)
 {
+	Ll myll;
+    myll.push(10);
+    myll.push(11);
+    myll.push(12);
+	//LL now looks like 10 11 12
+	CU_ASSERT_EQUAL(myll.read(0),10);
+	CU_ASSERT_EQUAL(myll.read(1),11);
+	CU_ASSERT_EQUAL(myll.read(2),12);
+    myll.push(4,1);
+	//LL now looks like 4 10 11 12
+	CU_ASSERT_EQUAL(myll.read(0),4);
+	CU_ASSERT_EQUAL(myll.read(1),10);
+	CU_ASSERT_EQUAL(myll.read(3),12);
+    myll.remove(2);
+	//LL now looks like 4 10 12
+	CU_ASSERT_EQUAL(myll.read(0),4);
+	CU_ASSERT_EQUAL(myll.read(1),11);
+	CU_ASSERT_EQUAL(myll.read(2),12);
 }
 
 void test_lifo_pushpop(void)
@@ -108,9 +125,11 @@ void test_lifo_pushpop(void)
 
 void test_lifo_hasnext(void)
 {
-	t_lifo.push(1);
+	CU_ASSERT_FALSE(t_lifo.hasNext());
+	t_lifo.push(12);
 	CU_ASSERT_TRUE(t_lifo.hasNext());
 	(void)t_lifo.pop();
+	CU_ASSERT_FALSE(t_lifo.hasNext());
 }
 
 void test_lifo_numnodes(void)
