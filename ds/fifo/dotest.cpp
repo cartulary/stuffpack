@@ -6,7 +6,7 @@
 /* t_ == test */
 Node<int>* t_node;
 Node<int>* t_nodes[10];
-Fifo<int>* t_fifo;
+Fifo<int> t_fifo;
 Fifo<int>* t_fifos[10];
 Lifo<int> t_lifo;
 Lifo<int>* t_lifos[10];
@@ -33,46 +33,46 @@ void test_node_data(void)
 	CU_ASSERT_EQUAL(t_node->data, m_node_data);
 }
 
-
-
 int suite_fifo_init(void)
 {
-	t_fifo = new Fifo<int>();
-	int i=1;
-	t_fifo->push(i++);
-	t_fifo->push(i++);
-	t_fifo->push(i++);
 	return 0;
 }
 
 int suite_fifo_clean(void)
 {
-	delete t_fifo;
 	return 0;
 }
 
 void test_fifo_pop(void)
 {
+	int i=1;
+	t_fifo.push(i++);
+	t_fifo.push(i++);
+	t_fifo.push(i++);
+	i=1;
 	/* in init we pushed 1, 2, 3 */
-	CU_ASSERT_EQUAL(t_fifo->pop(), 1);
-	CU_ASSERT_EQUAL(t_fifo->pop(), 2);
-	CU_ASSERT_EQUAL(t_fifo->pop(), 3);
-//	CU_ASSERT_EQUAL(t_fifo->pop(), m_fo_nodata);
+	CU_ASSERT_EQUAL(t_fifo.pop(), i++);
+	CU_ASSERT_EQUAL(t_fifo.pop(), i++);
+	CU_ASSERT_EQUAL(t_fifo.pop(), i++);
+//	CU_ASSERT_EQUAL(t_fifo.pop(), m_fo_nodata);
 //	i++;
 }
 
 void test_fifo_pushpop(void)
 {
-	t_fifo->push(6);
-	CU_ASSERT_EQUAL(t_fifo->pop(), 6);
+	t_fifo.push(6);
+	CU_ASSERT_EQUAL(t_fifo.pop(), 6);
 }
 
 
 void test_fifo_hasnext(void)
 {
-	CU_ASSERT_FALSE(t_fifo->hasNext());
-	t_fifo->push(12);
-	CU_ASSERT_TRUE(t_fifo->hasNext());
+	CU_ASSERT_FALSE(t_fifo.hasNext());
+	t_fifo.push(12);
+	CU_ASSERT_TRUE(t_fifo.hasNext());
+	(void)t_fifo.pop();
+	CU_ASSERT_FALSE(t_fifo.hasNext());
+
 }
 
 int suite_lifo_init(void)
@@ -136,7 +136,6 @@ int doTest(void)
 		return CU_get_error();
 	}
 
-	/* add the strlen suite */
 	node_suite = CU_add_suite("node",suite_node_init, suite_node_clean);
 	fifo_suite = CU_add_suite("fifo",suite_fifo_init, suite_fifo_clean);
 	lifo_suite = CU_add_suite("lifo",suite_lifo_init, suite_lifo_clean);
@@ -203,13 +202,13 @@ int doTest(void)
 		return CU_get_error();
 	}*/
 
-	if (NULL == CU_add_test(fifo_suite, "test of strlen", test_fifo_hasnext))
+	if (NULL == CU_add_test(fifo_suite, "fifo hasnext works ", test_fifo_hasnext))
 	{
 		std::cout << "t6";
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
-	if (NULL == CU_add_test(ll_suite, "test of strlen", test_lifo_hasnext))
+	if (NULL == CU_add_test(ll_suite, "lifo hasnext works", test_lifo_hasnext))
 	{
 		std::cout << "t7";
 		CU_cleanup_registry();
