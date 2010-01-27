@@ -75,7 +75,6 @@ int main(int argc, char* argv[])
 	std::cout << "\nreading all\n";\
 	myll.printAll();
 	std::cout << "removing 3rd item\n";
-	std::cout << "removing 3rd item\n";
 	myll.remove(2);
 	std::cout << "\nreading all\n";
 	myll.printAll();
