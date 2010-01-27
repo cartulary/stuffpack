@@ -25,6 +25,7 @@ void test_fifo_pushpop(void);
 void test_lifo_pushpop(void);
 void test_fifo_hasnext(void);
 void test_lifo_hasnext(void);
+void test_fifo_numnodes(void);
 void test_lifo_numnodes(void);
 void test_ll_works(void);
 #endif
