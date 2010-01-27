@@ -27,5 +27,6 @@ template <class T> class Fo {
 		inline bool hasNext();
 		virtual void printAll(bool doPop=false) =0;
 		int getNumNodes();
+		//clear function - erases all data
 };
 #endif
