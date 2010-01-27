@@ -8,7 +8,7 @@ Node<int>* t_node;
 Node<int>* t_nodes[10];
 Fifo<int>* t_fifo;
 Fifo<int>* t_fifos[10];
-Lifo<int>* t_lifo;
+Lifo<int> t_lifo;
 Lifo<int>* t_lifos[10];
 
 /* m_ == magic */
@@ -77,7 +77,17 @@ void test_fifo_hasnext(void)
 
 
 
+/*
+    mylifo.push(9);
+    mylifo.push(10);
+    mylifo.push(11);
+    std::cout << mylifo.getNumNodes() << " nodes left\n";
+    std::cout << "==printall==\n";
+    mylifo.printAll();
+    std::cout << "==popprint==\n";
+    mylifo.printAll(true);
 
+*/
 
 int suite_lifo_init(void)
 {
@@ -87,15 +97,27 @@ int suite_lifo_init(void)
 int suite_lifo_clean(void)
 {
 	return 0;
+
 }
 
-
 void test_lifo_pop(void)
+{
+	t_lifo.push(1);
+    t_lifo.push(2);
+    t_lifo.push(3);
+	CU_ASSERT_EQUAL(t_lifo.pop(), 3);
+	CU_ASSERT_EQUAL(t_lifo.pop(), 2);
+	CU_ASSERT_EQUAL(t_lifo.pop(), 1);
+}
+
+void test_ll_works(void)
 {
 }
 
 void test_lifo_pushpop(void)
 {
+    t_lifo.push(4);
+	CU_ASSERT_EQUAL(t_lifo.pop(),4);
 }
 
 void test_lifo_hasnext(void)
@@ -109,6 +131,7 @@ int doTest(void)
 	CU_pSuite node_suite = NULL;
 	CU_pSuite fifo_suite = NULL;
 	CU_pSuite lifo_suite = NULL;
+	CU_pSuite ll_suite = NULL;
 
 	/* create the registry */
 	if (CUE_SUCCESS != CU_initialize_registry())
@@ -120,6 +143,7 @@ int doTest(void)
 	node_suite = CU_add_suite("node",suite_node_init, suite_node_clean);
 	fifo_suite = CU_add_suite("fifo",suite_fifo_init, suite_fifo_clean);
 	lifo_suite = CU_add_suite("lifo",suite_lifo_init, suite_lifo_clean);
+	ll_suite = CU_add_suite("linkedlist",suite_lifo_init, suite_lifo_clean);
 	if (NULL == node_suite)
 	{
 		std::cout << "node";
@@ -135,6 +159,12 @@ int doTest(void)
 	if (NULL == lifo_suite)
 	{
 		std::cout << "lifo";
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+	if (NULL == ll_suite)
+	{
+		std::cout << "linkedlist";
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
@@ -163,6 +193,12 @@ int doTest(void)
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
+	if (NULL == CU_add_test(ll_suite, "linked list can accept data and get data from any point", test_ll_works))
+	{
+		std::cout << "t4";
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
 	/*if (NULL == CU_add_test(lifo_suite, "push newdata and pop it", test_lifo_pushpop))
 	{
 		std::cout << "t5";
@@ -176,7 +212,7 @@ int doTest(void)
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
-	if (NULL == CU_add_test(lifo_suite, "test of strlen", test_lifo_hasnext))
+	if (NULL == CU_add_test(ll_suite, "test of strlen", test_lifo_hasnext))
 	{
 		std::cout << "t7";
 		CU_cleanup_registry();
