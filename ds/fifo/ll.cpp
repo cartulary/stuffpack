@@ -89,6 +89,7 @@ std::vector<int> Ll::getAllNodes()
 		current = current->next;
 	}
 	ret.push_back(current->data);
+	return ret;
 }
 
 void Ll::printAll()

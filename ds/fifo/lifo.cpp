@@ -4,9 +4,8 @@
 #include <cstdio>
 #include <iostream>
 
-template <class T> T Lifo<T>::pop()
+template <class T> T Lifo<T>::pop_helper()
 {
-    int ignore = Fo<T>::pop();
 	Node<T>* current = this->head;
 	T ret;
 	if (current)

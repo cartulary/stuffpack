@@ -5,11 +5,20 @@
 #include "fo.cpp"
 #include "printit.cpp"
 #include "ll.cpp"
+#include "dotest.cpp"
 
-int main(void)
+int main(int argc, char* argv[])
 {
-	std::cout << "---- LIFO ----\n\n";
+	std::cout << "Test results return code is: " << doTest() << "\n\n\n\n";
+	if (argc > 1)
+	{
+		if (!strcmp("-y",argv[1]))
+		{
+			return 0;
+		}
+	}
 
+	std::cout << "---- LIFO ----\n\n";
 	Lifo<int> mylifo;
 
 	std::cout << "pushing 1,2,3\n";

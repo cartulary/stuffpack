@@ -3,6 +3,6 @@
 #include <iostream>
 template <class T> struct Printit
 {
-    void operator() (T i);
+   	void operator() (T i);
 };
 #endif
