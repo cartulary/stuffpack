@@ -41,7 +41,7 @@ CFLAGS += -Wunused -Wunused-parameter -Wswitch-default -Wswitch-enum
 CFLAGS += -Winit-self -Wmissing-include-dirs -Wpointer-arith -Wconversion
 CFLAGS += -Wfloat-equal -Wundef -Wshadow -Wcast-qual -Wcast-align -Wwrite-strings
 CFLAGS += -fabi-version=0 -funroll-loops
-CFLAGS += -Wunreachable-code -Winline -Wmissing-noreturn -Wpacked -Wpadded -Wredundant-decls
+CFLAGS += -Winline -Wmissing-noreturn -Wpacked -Wpadded -Wredundant-decls
 
 # Default includes...
 CFLAGS += -isystem /usr/local/include
@@ -85,6 +85,9 @@ objclean: .NOTMAIN .USE .EXEC .IGNORE .PHONY
 	rm -fv ./*.o
 .if ! target(clean)
 clean: .NOTMAIN .PHONY .IGNORE nameclean coreclean objclean
+.endif
+.if ! target(all)
+all: $(NAME)
 .endif
 
 rebuild: .NOTMAIN .PHONY clean $(NAME)
