@@ -8,6 +8,7 @@
 #include "lifo.h"
 #include "node.h"
 #include "fo.h"
+#include "ll.h"
 
 int doTest(void);
 int suite_node_init(void);
