@@ -75,20 +75,6 @@ void test_fifo_hasnext(void)
 	CU_ASSERT_TRUE(t_fifo->hasNext());
 }
 
-
-
-/*
-    mylifo.push(9);
-    mylifo.push(10);
-    mylifo.push(11);
-    std::cout << mylifo.getNumNodes() << " nodes left\n";
-    std::cout << "==printall==\n";
-    mylifo.printAll();
-    std::cout << "==popprint==\n";
-    mylifo.printAll(true);
-
-*/
-
 int suite_lifo_init(void)
 {
 	return 0;
@@ -122,6 +108,17 @@ void test_lifo_pushpop(void)
 
 void test_lifo_hasnext(void)
 {
+	t_lifo.push(1);
+	CU_ASSERT_TRUE(t_lifo.hasNext());
+	(void)t_lifo.pop();
+}
+
+void test_lifo_numnodes(void)
+{
+    t_lifo.push(9);
+    t_lifo.push(10);
+    t_lifo.push(11);
+	CU_ASSERT_EQUAL(t_lifo.getNumNodes(),3);
 }
 
 
