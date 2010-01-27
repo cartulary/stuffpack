@@ -5,9 +5,8 @@
 template <class T> class Fifo : public Fo<T> {
 	private:
 		Node<T>* getNextNode(int fastfoward=0);
+		T pop_helper();
 	public:
-		//needed as we count number of nodes
-		T pop();
 		void printAll(bool doPop=false);
 };
 #endif

@@ -5,9 +5,8 @@
 #include <iostream>
 #include <algorithm>
 
-template <class T> T Fifo<T>::pop()
+template <class T> T Fifo<T>::pop_helper()
 {
-	int ignore = Fo<T>::pop();
 	Node<T>* current = this->head;
 	if (current == NULL)
 	{

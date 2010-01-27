@@ -6,7 +6,8 @@ template <class T> class Lifo : public Fo<T> {
 	private:
 		Node<T>* getNextNode(int fastfoward=0);
 	public:
-		T pop();
+		T pop_helper();
+	public:
 		void printAll(bool doPop=false);
 };
 #endif
