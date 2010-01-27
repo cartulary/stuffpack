@@ -65,12 +65,12 @@ int Ll::read(int loc)
 	}
 	while (current->next)
 	{
+		current = current->next;
 		count--;
 		if (count == 0)
 		{
 			break;
 		}
-		current = current->next;
 	}
 	return current->data;
 }
@@ -100,7 +100,6 @@ void Ll::printAll()
 }
 
 
-//removes wrong item...
 void Ll::remove(int loc)
 {
 	/* if we have a total of one item */
