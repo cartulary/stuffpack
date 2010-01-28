@@ -95,14 +95,12 @@ void test_lifo_pop(void)
 	CU_ASSERT_EQUAL(t_lifo.pop(), 1);
 }
 
-
 void test_ll_works(void)
 {
 
     myll.push(10);
     myll.push(11);
     myll.push(12);
-	//LL now looks like 10 11 12
 	CU_ASSERT_EQUAL(myll.read(0),10);
 	CU_ASSERT_EQUAL(myll.read(1),11);
 	CU_ASSERT_EQUAL(myll.read(2),12);
