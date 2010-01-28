@@ -1,17 +1,32 @@
 #include <iostream>
 #include "printit.h"
 #include "ll.h"
-Ll::Ll() : head(NULL), numnodes(0)
+LL_TEMPLATE Ll<T>::Ll() : head(NULL), numnodes(0)
 {
 
 }
 
-Ll::~Ll()
+LL_TEMPLATE Ll<T>::~Ll()
 {
-
+	// I need to delete all the nodes
 }
 
-void Ll::push(int data, int loc)
+/*
+ * This function assumes you are sane. Therefore it performs NO sanity testing on the value you provide to it
+ * Use operator() to get sanity testing
+ */
+LL_TEMPLATE T& Ll<T>::operator[](const int loc)
+{
+	int count = loc;
+	Node<T>* current=head;
+	while (count--)
+	{
+		current=current->next;
+	}
+	return current->data;
+}
+
+LL_TEMPLATE void Ll<T>::push(T data, int loc)
 {
 	++numnodes;
 	if (!head)
@@ -54,7 +69,7 @@ void Ll::push(int data, int loc)
 
 }
 
-int Ll::read(int loc)
+LL_TEMPLATE T Ll<T>::read(int loc)
 {
 	int count = loc;
 	Node<int>* current = head;
@@ -75,10 +90,10 @@ int Ll::read(int loc)
 	return current->data;
 }
 
-std::vector<int> Ll::getAllNodes()
+LL_TEMPLATE std::vector<T> Ll<T>::getAllNodes()
 {
 	std::vector<int> ret;
-	Node<int>* current = head;
+	Node<T>* current = this->	head;
 	if (!current)
 	{
 		return ret;
@@ -92,15 +107,15 @@ std::vector<int> Ll::getAllNodes()
 	return ret;
 }
 
-void Ll::printAll()
+LL_TEMPLATE void Ll<T>::printAll()
 {
-	std::vector<int> vals = getAllNodes();
-	Printit<int> doprint;
+	std::vector<T> vals = getAllNodes();
+	Printit<T> doprint;
 	std::for_each(vals.begin(), vals.end(), doprint);
 }
 
 
-void Ll::remove(int loc)
+LL_TEMPLATE void Ll<T>::remove(int loc)
 {
 	/* if we have a total of one item */
 	Node<int>* current = head;

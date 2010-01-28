@@ -24,7 +24,7 @@ template <class T> class Fo {
 		virtual Node<T>* getNextNode(int fastfoward=0) = 0;
 
 		void push(T data);
-		inline bool hasNext();
+		bool hasNext();
 		virtual void printAll(bool doPop=false) =0;
 		int getNumNodes();
 		//clear function - erases all data
