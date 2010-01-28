@@ -17,6 +17,10 @@ int main(int argc, char* argv[])
 			return 0;
 		}
 	}
+	else
+	{
+		return 0;
+	}
 
 	std::cout << "---- LIFO ----\n\n";
 	Lifo<int> mylifo;
@@ -57,7 +61,7 @@ int main(int argc, char* argv[])
 	myfifo.printAll(true);
 
 	std::cout << "\n\n-=--LL----\n\n";
-	Ll myll;
+	Ll<int> myll;
 	std::cout << "pushing 1\n";
 	myll.push(1);
 	std::cout << "pushing 2\n";

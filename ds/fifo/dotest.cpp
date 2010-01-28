@@ -10,6 +10,7 @@ Fifo<int> t_fifo;
 Fifo<int>* t_fifos[10];
 Lifo<int> t_lifo;
 Lifo<int>* t_lifos[10];
+Ll<int> myll;
 
 /* m_ == magic */
 const int m_node_data = 5;
@@ -97,7 +98,7 @@ void test_lifo_pop(void)
 
 void test_ll_works(void)
 {
-	Ll myll;
+
     myll.push(10);
     myll.push(11);
     myll.push(12);
@@ -116,6 +117,17 @@ void test_ll_works(void)
 	CU_ASSERT_EQUAL(myll.read(1),11);
 	CU_ASSERT_EQUAL(myll.read(2),12);
 }
+
+//This gets run after works();
+//I really need to implement .clear()
+void test_ll_operators(void)
+{
+	//The [] operator assumes we are sane so don't bother testing undefuned values
+	CU_ASSERT_EQUAL(myll[0],4);
+	CU_ASSERT_EQUAL(myll[1],11);
+	CU_ASSERT_EQUAL(myll[2],12);
+}
+
 
 void test_lifo_pushpop(void)
 {
@@ -139,7 +151,6 @@ void test_lifo_numnodes(void)
     t_lifo.push(11);
 	CU_ASSERT_EQUAL(t_lifo.getNumNodes(),3);
 }
-
 
 
 int doTest(void)
@@ -184,56 +195,62 @@ int doTest(void)
 		return CU_get_error();
 	}
 
+	int t=0;
 	if (NULL == CU_add_test(node_suite, "node accepts data correctly", test_node_data))
 	{
-		std::cout << "t1";
+		std::cout << "t" << t++;
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
 	if (NULL == CU_add_test(fifo_suite, "pop the data we pushed in init", test_fifo_pop))
 	{
-		std::cout << "t2";
+		std::cout << "t" << t++;
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
 	if (NULL == CU_add_test(fifo_suite, "push newdata and pop it", test_fifo_pushpop))
 	{
-		std::cout << "t3";
+		std::cout << "t" << t++;
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
 	if (NULL == CU_add_test(lifo_suite, "push newdata and pop it", test_lifo_pop))
 	{
-		std::cout << "t4";
+		std::cout << "t" << t++;
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
 	if (NULL == CU_add_test(ll_suite, "linked list can accept data and get data from any point", test_ll_works))
 	{
-		std::cout << "t4";
+		std::cout << "t" << t++;
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
 	/*if (NULL == CU_add_test(lifo_suite, "push newdata and pop it", test_lifo_pushpop))
 	{
-		std::cout << "t5";
+		std::cout << "t" << t++;
 		CU_cleanup_registry();
 		return CU_get_error();
 	}*/
 
 	if (NULL == CU_add_test(fifo_suite, "fifo hasnext works ", test_fifo_hasnext))
 	{
-		std::cout << "t6";
+		std::cout << "t" << t++;
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
 	if (NULL == CU_add_test(ll_suite, "lifo hasnext works", test_lifo_hasnext))
 	{
-		std::cout << "t7";
+		std::cout << "t" << t++;
 		CU_cleanup_registry();
 		return CU_get_error();
 	}
-
+	if (NULL == CU_add_test(ll_suite, "linklist operators work as expected", test_ll_operators))
+	{
+		std::cout << "t" << t++;
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
 	/* Run all tests using the CUnit Basic interface */
 	CU_basic_set_mode(CU_BRM_VERBOSE);
 	CU_basic_run_tests();
