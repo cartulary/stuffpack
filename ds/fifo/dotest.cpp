@@ -61,16 +61,6 @@ void test_fifo_hasnext(void)
 	CU_ASSERT_FALSE(t_fifo.hasNext());
 }
 
-int suite_lifo_init(void)
-{
-	return 0;
-}
-
-int suite_lifo_clean(void)
-{
-	return 0;
-}
-
 void test_lifo_pop(void)
 {
 	t_lifo.push(1);
@@ -152,109 +142,48 @@ void test_lifo_numnodes(void)
 
 int doTest(void)
 {
-	CU_pSuite node_suite = NULL;
-	CU_pSuite fifo_suite = NULL;
-	CU_pSuite lifo_suite = NULL;
-	CU_pSuite ll_suite = NULL;
-
 	/* create the registry */
 	if (CUE_SUCCESS != CU_initialize_registry())
 	{
 		return CU_get_error();
 	}
 
-	node_suite = CU_add_suite("node",suite_node_init, suite_node_clean);
-	fifo_suite = CU_add_suite("fifo", NULL, NULL);
-	lifo_suite = CU_add_suite("lifo",suite_lifo_init, suite_lifo_clean);
-	ll_suite = CU_add_suite("linkedlist",suite_lifo_init, suite_lifo_clean);
-	if (NULL == node_suite)
-	{
-		std::cout << "node";
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
-	if (NULL == fifo_suite)
-	{
-		std::cout << "fifo";
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
-	if (NULL == lifo_suite)
-	{
-		std::cout << "lifo";
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
-	if (NULL == ll_suite)
-	{
-		std::cout << "linkedlist";
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
+	CU_TestInfo test_array_node[] = {
+		{ "node accepts data correctly", test_node_data },
+	  	CU_TEST_INFO_NULL,
+	};
 
-	int t=0;
-	if (NULL == CU_add_test(node_suite, "node accepts data correctly", test_node_data))
-	{
-		std::cout << "t" << t++;
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
-	if (NULL == CU_add_test(fifo_suite, "pop the data we pushed in init", test_fifo_pop))
-	{
-		std::cout << "t" << t++;
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
-	if (NULL == CU_add_test(fifo_suite, "push newdata and pop it", test_fifo_pushpop))
-	{
-		std::cout << "t" << t++;
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
-	if (NULL == CU_add_test(lifo_suite, "push newdata and pop it", test_lifo_pop))
-	{
-		std::cout << "t" << t++;
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
-	if (NULL == CU_add_test(ll_suite, "linked list can accept data and get data from any point", test_ll_works))
-	{
-		std::cout << "t" << t++;
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
-	/*if (NULL == CU_add_test(lifo_suite, "push newdata and pop it", test_lifo_pushpop))
-	{
-		std::cout << "t" << t++;
-		CU_cleanup_registry();
-		return CU_get_error();
-	}*/
+	CU_TestInfo test_array_fifo[] = {
+		{ "fifo pops data correctly", test_fifo_pop },
+		{ "fifo pops data correctly after new push", test_fifo_pushpop },
+		{ "fifo hasnext works", test_fifo_hasnext },
+	  	CU_TEST_INFO_NULL,
+	};
 
-	if (NULL == CU_add_test(fifo_suite, "fifo hasnext works ", test_fifo_hasnext))
-	{
-		std::cout << "t" << t++;
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
-	if (NULL == CU_add_test(ll_suite, "lifo hasnext works", test_lifo_hasnext))
-	{
-		std::cout << "t" << t++;
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
-	if (NULL == CU_add_test(ll_suite, "linklist operators work as expected", test_ll_operators))
-	{
-		std::cout << "t" << t++;
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
+	CU_TestInfo test_array_lifo[] = {
+		{ "lifo pops data correctly", test_lifo_pop },
+		{ "lifo pops data correctly after new push", test_lifo_pushpop },
+		{ "lifo hasnext works", test_lifo_hasnext },
+	  	CU_TEST_INFO_NULL,
+	};
+	CU_TestInfo test_array_ll[] = {
+		{ "linked list can accept data and get data from any point", test_ll_works},
+		{ "linklist operators work as expected", test_ll_operators },
+		{ "linklist.clear() clears all elements", test_ll_clear },
+	  	CU_TEST_INFO_NULL,
+	};
 
-	if (NULL == CU_add_test(ll_suite, "linklist.clear() clears all elements", test_ll_clear))
-	{
-		std::cout << "t" << t++;
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
+	CU_SuiteInfo suites[] = {
+	  { "node", suite_node_init, suite_node_clean, test_array_node },
+	  { "fifo", NULL, NULL, test_array_fifo },
+	  { "lifo", NULL, NULL, test_array_lifo },
+	  { "linkedlist", NULL, NULL, test_array_ll },
+	  CU_SUITE_INFO_NULL,
+	};
+
+	CU_ErrorCode error = CU_register_suites(suites);
+
+
 	/* Run all tests using the CUnit Basic interface */
 	CU_basic_set_mode(CU_BRM_VERBOSE);
 	CU_basic_run_tests();
