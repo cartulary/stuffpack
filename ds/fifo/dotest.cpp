@@ -125,9 +125,9 @@ void test_ll_works(void)
 void test_ll_operators(void)
 {
 	//The [] operator assumes we are sane so don't bother testing undefuned values
-	/*CU_ASSERT_EQUAL(myll[0],10);
+	CU_ASSERT_EQUAL(myll[0],10);
 	CU_ASSERT_EQUAL(myll[1],4);
-	CU_ASSERT_EQUAL(myll[2],12);*/
+	CU_ASSERT_EQUAL(myll[2],12);
 }
 
 
