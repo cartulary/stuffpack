@@ -118,19 +118,41 @@ void test_ll_clear(void)
 
 void test_ll_except(void)
 {
+	bool did_catch_read_exception = false;
+	try
+	{
+		myll.read(0);
+	}
+	catch(OutOfBoundsException& e)
+	{
+		did_catch_read_exception = true;
+	}
+	CU_ASSERT_TRUE(did_catch_read_exception);
+
+	did_catch_read_exception = false;
+	try
+	{
+		myll.read(10);
+	}
+	catch(OutOfBoundsException& e)
+	{
+		did_catch_read_exception = true;
+	}
+	CU_ASSERT_TRUE(did_catch_read_exception);
+
 	myll.push(1);
 	myll.push(2);
 	myll.push(3);
-	bool did_catch_exception = false;
+	bool did_catch_push_exception = false;
 	try
 	{
 		myll.push(10,500);
 	}
 	catch(OutOfBoundsException& e)
 	{
-		did_catch_exception = true;
+		did_catch_push_exception = true;
 	}
-	CU_ASSERT_TRUE(did_catch_exception);
+	CU_ASSERT_TRUE(did_catch_push_exception);
 }
 
 void test_lifo_pushpop(void)
