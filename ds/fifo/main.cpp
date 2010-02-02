@@ -6,6 +6,7 @@
 #include "printit.cpp"
 #include "ll.cpp"
 #include "dotest.cpp"
+#include "OutOfBoundsException.cpp"
 
 int main(int argc, char* argv[])
 {
