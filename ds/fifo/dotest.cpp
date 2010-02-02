@@ -101,12 +101,14 @@ void test_ll_works(void)
 	CU_ASSERT_EQUAL(myll.read(0),10);
 	CU_ASSERT_EQUAL(myll.read(1),11);
 	CU_ASSERT_EQUAL(myll.read(2),12);
+	CU_ASSERT_EQUAL(myll.getNumNodes(),3);
     myll.push(4,1);
 	//LL now looks like 10 4 11 12
 	CU_ASSERT_EQUAL(myll.read(0),10);
 	CU_ASSERT_EQUAL(myll.read(1),4);
 	CU_ASSERT_EQUAL(myll.read(2),11);
 	CU_ASSERT_EQUAL(myll.read(3),12);
+	CU_ASSERT_EQUAL(myll.getNumNodes(),4);
 	//LL now looks like 10 4 11 12
 	//                  0  1 2  3
     myll.remove(2);
@@ -114,6 +116,7 @@ void test_ll_works(void)
 	CU_ASSERT_EQUAL(myll.read(0),10);
 	CU_ASSERT_EQUAL(myll.read(1),4);
 	CU_ASSERT_EQUAL(myll.read(2),12);
+	CU_ASSERT_EQUAL(myll.getNumNodes(),3);
 }
 
 //This gets run after works();
