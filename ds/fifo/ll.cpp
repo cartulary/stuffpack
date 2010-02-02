@@ -93,13 +93,17 @@ LL_TEMPLATE void Ll<T>::push(T data, unsigned int loc)
 
 LL_TEMPLATE T Ll<T>::read(int loc)
 {
-	int count = loc -1;
+	int count = loc;
 	Node<int>* current = head;
 	if (!current)
 	{
 		throw OutOfBoundsException();
 	}
-	while (current->next && count-- >=0)
+	if (loc > numnodes)
+	{
+		throw OutOfBoundsException();
+	}
+	while (current->next && count-- >0)
 	{
 		current = current->next;
 	}
