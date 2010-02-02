@@ -143,7 +143,6 @@ LL_TEMPLATE void Ll<T>::remove(int loc)
 			delete head;
 			head = NULL;
 		}
-		return;
 	}
 	else
 	{
@@ -162,8 +161,9 @@ LL_TEMPLATE void Ll<T>::remove(int loc)
 		Node<T>* tmp = current->next->next;
 		delete current->next;
 		current->next = tmp;
-		return;
 	}
+	--numnodes;
+	return;
 }
 
 LL_TEMPLATE void Ll<T>::clear()
