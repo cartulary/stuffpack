@@ -177,4 +177,10 @@ LL_TEMPLATE void Ll<T>::clear()
 		current = tmp;
 	}
 	delete current;
+	numnodes=0;
+}
+
+LL_TEMPLATE inline unsigned int Ll<T>::getNumNodes()
+{
+	return this->numnodes;
 }

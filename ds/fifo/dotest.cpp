@@ -127,6 +127,12 @@ void test_ll_operators(void)
 }
 
 
+void test_ll_clear(void)
+{
+	myll.clear();
+	CU_ASSERT_EQUAL(myll.getNumNodes(),0);
+}
+
 void test_lifo_pushpop(void)
 {
     t_lifo.push(4);
@@ -244,6 +250,13 @@ int doTest(void)
 		return CU_get_error();
 	}
 	if (NULL == CU_add_test(ll_suite, "linklist operators work as expected", test_ll_operators))
+	{
+		std::cout << "t" << t++;
+		CU_cleanup_registry();
+		return CU_get_error();
+	}
+
+	if (NULL == CU_add_test(ll_suite, "linklist.clear() clears all elements", test_ll_clear))
 	{
 		std::cout << "t" << t++;
 		CU_cleanup_registry();

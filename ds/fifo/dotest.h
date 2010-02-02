@@ -30,6 +30,5 @@ void test_fifo_numnodes(void);
 void test_lifo_numnodes(void);
 void test_ll_works(void);
 void test_ll_operators(void);
-//TODO
 void test_ll_clear(void);
 #endif

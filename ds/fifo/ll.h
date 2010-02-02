@@ -34,12 +34,15 @@ LL_TEMPLATE class Ll
 		 */
 		void clear();
 
+		/* Return the current number of nodes */
+		inline unsigned int getNumNodes();
+
 		Ll();
 		~Ll();
 	protected:
 		std::vector<T> getAllNodes();
 	private:
-		int numnodes;
+		unsigned int numnodes;
 };
 
 #endif /* LL_H */
