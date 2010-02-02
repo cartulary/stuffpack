@@ -5,11 +5,8 @@
 
 /* t_ == test */
 Node<int>* t_node;
-Node<int>* t_nodes[10];
 Fifo<int> t_fifo;
-Fifo<int>* t_fifos[10];
 Lifo<int> t_lifo;
-Lifo<int>* t_lifos[10];
 Ll<int> myll;
 
 /* m_ == magic */
@@ -19,7 +16,6 @@ const int m_fo_nodata = -1;
 int suite_node_init(void)
 {
 	t_node = new Node<int>(m_node_data);
-	t_node->next = NULL;
 	return 0;
 }
 
