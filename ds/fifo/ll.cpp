@@ -149,26 +149,20 @@ LL_TEMPLATE void Ll<T>::remove(int loc)
 	else if (loc == 1)
 	{
 		Node<T>* current = head;
-		if (current->next)
+		int count = loc -1;
+		if (!current->next)
 		{
-			if (current->next->next)
-			{
-				Node<T>* tmp = current->next->next;
-				delete current->next;
-				current->next = tmp;
-			}
-			else
-			{
-				delete current->next;
-				current->next = NULL;
-			}
+			//throw exception - out of bounds
 			return;
 		}
-		else
+		while (current->next->next && count--)
 		{
-			//throw exception - remove out of bounds
-			return;
+			current = current->next;
 		}
+		Node<T>* tmp = current->next->next;
+		delete current->next;
+		current->next = tmp;
+		return;
 	}
 	else
 	{
