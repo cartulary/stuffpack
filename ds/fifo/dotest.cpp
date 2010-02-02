@@ -100,7 +100,6 @@ void test_ll_works(void)
 }
 
 //This gets run after works();
-//I really need to implement .clear()
 void test_ll_operators(void)
 {
 	//The [] operator assumes we are sane so don't bother testing undefuned values
