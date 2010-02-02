@@ -74,8 +74,7 @@ LL_TEMPLATE void Ll<T>::push(T data, unsigned int loc)
 	{
 		if (!current->next)
 		{
-			//throw exception - push location out of bounds
-			break;
+			throw OutOfBoundsException();
 		}
 		if (current->next->next)
 		{
@@ -98,8 +97,7 @@ LL_TEMPLATE T Ll<T>::read(int loc)
 	Node<int>* current = head;
 	if (!current)
 	{
-		//actually throw an exception
-		return -1;
+		throw OutOfBoundsException();
 	}
 	while (current->next && count-- >=0)
 	{
@@ -137,8 +135,7 @@ LL_TEMPLATE void Ll<T>::remove(int loc)
 {
 	if (!head)
 	{
-		//throw exception - remove out of bounds
-		return;
+		throw OutOfBoundsException();
 	}
 
 	if (loc == 0)
@@ -160,8 +157,7 @@ LL_TEMPLATE void Ll<T>::remove(int loc)
 		Node<T>* current = head;
 		if (!current->next)
 		{
-			//throw exception - out of bounds
-			return;
+			throw OutOfBoundsException();
 		}
 		int count = loc -1;
 
