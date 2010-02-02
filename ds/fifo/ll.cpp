@@ -145,31 +145,17 @@ LL_TEMPLATE void Ll<T>::remove(int loc)
 		}
 		return;
 	}
-	/* if we have a total of one item */
-	else if (loc == 1)
+	else
 	{
 		Node<T>* current = head;
-		int count = loc -1;
 		if (!current->next)
 		{
 			//throw exception - out of bounds
 			return;
 		}
-		while (current->next->next && count--)
+		/* if we have a total of one item */
+		if (loc == 1)
 		{
-			current = current->next;
-		}
-		Node<T>* tmp = current->next->next;
-		delete current->next;
-		current->next = tmp;
-		return;
-	}
-	else
-	{
-		Node<T>* current = head;
-		if (current->next)
-		{
-			/* loop while current->next->next */
 			int count = loc -1;
 			while (current->next->next && count--)
 			{
@@ -178,13 +164,20 @@ LL_TEMPLATE void Ll<T>::remove(int loc)
 			Node<T>* tmp = current->next->next;
 			delete current->next;
 			current->next = tmp;
-			return;
 		}
 		else
 		{
-			//throw exception - massive failure
-			return;
+			/* loop while current->next->next */
+			int count = loc -1;
+			while (current->next->next && count--)
+			{
+			current = current->next;
+			}
+			Node<T>* tmp = current->next->next;
+			delete current->next;
+			current->next = tmp;
 		}
+		return;
 	}
 }
 
