@@ -18,6 +18,7 @@ LL_TEMPLATE Ll<T>::~Ll()
 LL_TEMPLATE T& Ll<T>::operator[](const int loc)
 {
 	Node<T>* current=head;
+	int count = loc;
 	while (count--)
 	{
 		current=current->next;
@@ -25,7 +26,24 @@ LL_TEMPLATE T& Ll<T>::operator[](const int loc)
 	return current->data;
 }
 
-LL_TEMPLATE void Ll<T>::push(T data, int loc)
+LL_TEMPLATE void Ll<T>::push(T data)
+{
+	++numnodes;
+	Node<T>* current = head;
+	if (!current)
+	{
+		head = new Node<T>(data);
+		return;
+	}
+	while (current->next)
+	{
+		current=current->next;
+	}
+	current->next = new Node<T>(data);
+
+}
+
+LL_TEMPLATE void Ll<T>::push(T data, unsigned int loc)
 {
 	/*If the location is off by more than one of the total
 	 * throw an exception;
@@ -34,71 +52,47 @@ LL_TEMPLATE void Ll<T>::push(T data, int loc)
 	 * if the location is <= to the number of items place the item into the spot
 	 * and push everything else up
 	 */
-	std::cout << "We are in push\n";
-	if (loc+1 > numnodes)
+	if (loc+1 > this->numnodes)
 	{
-		std::cout << "location is greater than 1+numnodes\n";
 		//throw exception
 		return;
 	}
-	if (-1 == loc)
-	{
-		std::cout << "We want the last location\n";
-		loc = numnodes;
-	}
-	std::cout << "About to set count = loc\n";
 	unsigned int count = loc;
-	std::cout << "About to start loop\n";
-	std::cout << "count is " << count << '\n';
-	if (count == 0)
-	{
-		std::cout << "count is 0\n";
-		head = new Node<T>(data);
-		++numnodes;
-		return;
-	}
-		std::cout << "About to set current to head\n";
 	Node<T>* current = head;
-	while (count--)
+	while (count-- > -1)
 	{
-		std::cout << "In the loop" << count << "\n";
 		if (!current->next)
 		{
-			std::cout << "!current->next && count >=1\n";
 			//throw exception - push location out of bounds
 			break;
 		}
-		std::cout << "current=current->next\n";
-		current = current->next;
+		if (current->next->next)
+		{
+			current = current->next;
+		}
+		else
+		{
+			break;
+		}
 	}
-	std::cout << "We are ahead of the loop\n";
-	if (current->next)
-	{
-		std::cout << "current->next exists\n";
-		Node<T>* tmp = current->next;
-		current->next = new Node<T>(data);
-		current->next->next = tmp;
-	}
+	Node<T>* tmp = current->next;
+	current->next = new Node<T>(data);
+	current->next->next = tmp;
 	++numnodes;
 }
 
 LL_TEMPLATE T Ll<T>::read(int loc)
 {
-	int count = loc;
+	int count = loc -1;
 	Node<int>* current = head;
 	if (!current)
 	{
 		//actually throw an exception
 		return -1;
 	}
-	while (current->next)
+	while (current->next && count-- >=0)
 	{
 		current = current->next;
-		count--;
-		if (count == 0)
-		{
-			break;
-		}
 	}
 	return current->data;
 }
@@ -106,7 +100,7 @@ LL_TEMPLATE T Ll<T>::read(int loc)
 LL_TEMPLATE std::vector<T> Ll<T>::getAllNodes()
 {
 	std::vector<int> ret;
-	Node<T>* current = this->	head;
+	Node<T>* current = this->head;
 	if (!current)
 	{
 		return ret;
@@ -130,36 +124,85 @@ LL_TEMPLATE void Ll<T>::printAll()
 
 LL_TEMPLATE void Ll<T>::remove(int loc)
 {
-	/* if we have a total of one item */
-	Node<int>* current = head;
 	if (!head)
 	{
-		//throw exception - tried to delete bad item
+		//throw exception - remove out of bounds
 		return;
 	}
-	if (!current->next)
+
+	if (loc == 0)
 	{
-		if (loc == 0)
+		if (head->next)
 		{
-			//remove first item
+			Node<T>* tmp = head->next;
+			delete head;
+			head = tmp;
+		}
+		else
+		{
+			delete head;
+			head = NULL;
+		}
+		return;
+	}
+	/* if we have a total of one item */
+	else if (loc == 1)
+	{
+		Node<T>* current = head;
+		if (current->next)
+		{
+			if (current->next->next)
+			{
+				Node<T>* tmp = current->next->next;
+				delete current->next;
+				current->next = tmp;
+			}
+			else
+			{
+				delete current->next;
+				current->next = NULL;
+			}
 			return;
 		}
-		//throw exception tried to delete bad item
-		delete current;
-		head = NULL;
-		return;
-	}
-	while (current->next->next)
-	{
-		int count = loc;
-		--count;
-		current=current->next;
-		if (count == 0)
+		else
 		{
-				break;
+			//throw exception - remove out of bounds
+			return;
 		}
 	}
-	Node<int>* tmp = current->next->next;
-	delete current->next;
-	current->next = tmp;
+	else
+	{
+		Node<T>* current = head;
+		if (current->next)
+		{
+			/* loop while current->next->next */
+			int count = loc -1;
+			while (current->next->next && count--)
+			{
+				current = current->next;
+			}
+			Node<T>* tmp = current->next->next;
+			delete current->next;
+			current->next = tmp;
+			return;
+		}
+		else
+		{
+			//throw exception - massive failure
+			return;
+		}
+	}
+}
+
+LL_TEMPLATE void Ll<T>::clear()
+{
+	Node<T>* current = head;
+	Node<T>* tmp;
+	while (current->next)
+	{
+		tmp = current->next;
+		delete current;
+		current = tmp;
+	}
+	delete current;
 }

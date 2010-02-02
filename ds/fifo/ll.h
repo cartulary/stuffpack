@@ -17,9 +17,11 @@ LL_TEMPLATE class Ll
 
 
 		/* add a piece of data in a particular location;
-		 * -1 == default last location
 		 * 0 == first location	*/
-		void push(T data, int loc=-1);
+		void push(T data, unsigned int loc);
+		//default to the end
+		void push(T data);
+
 		/*
 		 * return value at specific location
 		 */
@@ -27,6 +29,10 @@ LL_TEMPLATE class Ll
 		void remove(int loc);
 
 		void printAll();
+
+		/* Clear the linked list - remove all elements
+		 */
+		void clear();
 
 		Ll();
 		~Ll();
