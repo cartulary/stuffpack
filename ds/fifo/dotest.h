@@ -13,8 +13,6 @@
 int doTest(void);
 int suite_node_init(void);
 int suite_node_clean(void);
-int suite_fifo_init(void);
-int suite_fifo_clean(void);
 int suite_lifo_init(void);
 int suite_lifo_clean(void);
 int suite_ll_init(void);

@@ -12,6 +12,7 @@ LL_TEMPLATE class Ll
 
 		//T& operator()(const int loc);
 		T& operator[](const int loc);
+		T& operator()(const int loc);
 		//bool operator==(const Ll<T>& other) const;
 		//bool operator!=(const Ll<T>& other) const;
 

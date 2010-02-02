@@ -30,16 +30,6 @@ void test_node_data(void)
 	CU_ASSERT_EQUAL(t_node->data, m_node_data);
 }
 
-int suite_fifo_init(void)
-{
-	return 0;
-}
-
-int suite_fifo_clean(void)
-{
-	return 0;
-}
-
 void test_fifo_pop(void)
 {
 	int i=1;
@@ -174,7 +164,7 @@ int doTest(void)
 	}
 
 	node_suite = CU_add_suite("node",suite_node_init, suite_node_clean);
-	fifo_suite = CU_add_suite("fifo",suite_fifo_init, suite_fifo_clean);
+	fifo_suite = CU_add_suite("fifo", NULL, NULL);
 	lifo_suite = CU_add_suite("lifo",suite_lifo_init, suite_lifo_clean);
 	ll_suite = CU_add_suite("linkedlist",suite_lifo_init, suite_lifo_clean);
 	if (NULL == node_suite)
