@@ -1,6 +1,7 @@
 #include <iostream>
 #include "printit.h"
 #include "ll.h"
+#include "OutOfBoundsException.h"
 LL_TEMPLATE Ll<T>::Ll() : head(NULL), numnodes(0)
 {
 
@@ -8,7 +9,18 @@ LL_TEMPLATE Ll<T>::Ll() : head(NULL), numnodes(0)
 
 LL_TEMPLATE Ll<T>::~Ll()
 {
-	// I need to delete all the nodes
+	if (numnodes>0)
+	{
+		Node<T>* current = head;
+		Node<T>* tmp;
+		while (current->next)
+		{
+			tmp = current->next;
+			delete current;
+			current = tmp;
+		}
+		delete current;
+	}
 }
 
 /*

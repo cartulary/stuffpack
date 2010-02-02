@@ -182,7 +182,6 @@ int doTest(void)
 
 	CU_ErrorCode error = CU_register_suites(suites);
 
-
 	/* Run all tests using the CUnit Basic interface */
 	CU_basic_set_mode(CU_BRM_VERBOSE);
 	CU_basic_run_tests();
