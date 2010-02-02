@@ -99,7 +99,10 @@ LL_TEMPLATE T Ll<T>::read(int loc)
 	{
 		throw OutOfBoundsException();
 	}
-	if (loc > numnodes)
+	/*
+		Even though the index is 0 we want to test against number of nodes
+	*/
+	if (loc+1 > numnodes)
 	{
 		throw OutOfBoundsException();
 	}
