@@ -66,8 +66,7 @@ LL_TEMPLATE void Ll<T>::push(T data, unsigned int loc)
 	 */
 	if (loc+1 > this->numnodes)
 	{
-		//throw exception
-		return;
+		throw OutOfBoundsException();
 	}
 	unsigned int count = loc;
 	Node<T>* current = head;
