@@ -97,22 +97,26 @@ void test_lifo_pop(void)
 
 void test_ll_works(void)
 {
-
+	//myll.clear();
     myll.push(10);
     myll.push(11);
     myll.push(12);
+	//LL now looks like 10 11 12
 	CU_ASSERT_EQUAL(myll.read(0),10);
 	CU_ASSERT_EQUAL(myll.read(1),11);
 	CU_ASSERT_EQUAL(myll.read(2),12);
     myll.push(4,1);
-	//LL now looks like 4 10 11 12
-	CU_ASSERT_EQUAL(myll.read(0),4);
-	CU_ASSERT_EQUAL(myll.read(1),10);
+	//LL now looks like 10 4 11 12
+	CU_ASSERT_EQUAL(myll.read(0),10);
+	CU_ASSERT_EQUAL(myll.read(1),4);
+	CU_ASSERT_EQUAL(myll.read(2),11);
 	CU_ASSERT_EQUAL(myll.read(3),12);
+	//LL now looks like 10 4 11 12
+	//                  0  1 2  3
     myll.remove(2);
-	//LL now looks like 4 10 12
-	CU_ASSERT_EQUAL(myll.read(0),4);
-	CU_ASSERT_EQUAL(myll.read(1),11);
+	//LL now looks like 10 4 12
+	CU_ASSERT_EQUAL(myll.read(0),10);
+	CU_ASSERT_EQUAL(myll.read(1),4);
 	CU_ASSERT_EQUAL(myll.read(2),12);
 }
 
@@ -121,9 +125,9 @@ void test_ll_works(void)
 void test_ll_operators(void)
 {
 	//The [] operator assumes we are sane so don't bother testing undefuned values
-	CU_ASSERT_EQUAL(myll[0],4);
-	CU_ASSERT_EQUAL(myll[1],11);
-	CU_ASSERT_EQUAL(myll[2],12);
+	/*CU_ASSERT_EQUAL(myll[0],10);
+	CU_ASSERT_EQUAL(myll[1],4);
+	CU_ASSERT_EQUAL(myll[2],12);*/
 }
 
 

@@ -9,6 +9,7 @@
 
 int main(int argc, char* argv[])
 {
+//goto skiptests;
 	std::cout << "Test results return code is: " << doTest() << "\n\n\n\n";
 	if (argc > 1)
 	{
@@ -21,6 +22,7 @@ int main(int argc, char* argv[])
 	{
 		return 0;
 	}
+skiptests:
 	std::cout << "---- LIFO ----\n\n";
 	Lifo<int> mylifo;
 
@@ -67,14 +69,14 @@ int main(int argc, char* argv[])
 	myll.push(2);
 	std::cout << "pushing 3\n";
 	myll.push(3);
-	std::cout << "popping\n";
-	std::cout << myll.read(1) << myll.read(2) << myll.read(3);
+	std::cout << "popping - should be 1 2 3\n";
+	std::cout << myll.read(0) << myll.read(1) << myll.read(2);
 	std::cout << "\npushing 4 as new 2nd item\n";
 	myll.push(4,1);
 	std::cout << "\nreading 2nd item\n";
-	std::cout << myll.read(2);
+	std::cout << myll.read(1);
 	std::cout << "\nreading 4nd item\n";
-	std::cout << myll.read(4);
+	std::cout << myll.read(3);
 	std::cout << "\nreading all\n";\
 	myll.printAll();
 	std::cout << "removing 3rd item\n";
