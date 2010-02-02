@@ -1,5 +1,6 @@
 #include <iostream>
 #include "dotest.h"
+#include "OutOfBoundsException.h"
 
 /* all functions return 0 on success and non-zero otherwise */
 
@@ -115,6 +116,23 @@ void test_ll_clear(void)
 	CU_ASSERT_EQUAL(myll.getNumNodes(),0);
 }
 
+void test_ll_except(void)
+{
+	myll.push(1);
+	myll.push(2);
+	myll.push(3);
+	bool did_catch_exception = false;
+	try
+	{
+		myll.push(10,500);
+	}
+	catch(OutOfBoundsException& e)
+	{
+		did_catch_exception = true;
+	}
+	CU_ASSERT_TRUE(did_catch_exception);
+}
+
 void test_lifo_pushpop(void)
 {
     t_lifo.push(4);
@@ -169,6 +187,7 @@ int doTest(void)
 		{ "linked list can accept data and get data from any point", test_ll_works},
 		{ "linklist operators work as expected", test_ll_operators },
 		{ "linklist.clear() clears all elements", test_ll_clear },
+		{ "linklist exceptions work", test_ll_except },
 	  	CU_TEST_INFO_NULL,
 	};
 
