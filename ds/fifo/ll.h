@@ -35,6 +35,10 @@ LL_TEMPLATE class Ll
 		 */
 		void clear();
 
+		/* Swap two locations
+		*/
+		void swap(int A, int B);
+
 		/* Return the current number of nodes */
 		inline unsigned int getNumNodes();
 
