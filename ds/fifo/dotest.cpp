@@ -164,12 +164,16 @@ void test_ll_swap(void)
 	myll.push(1);
 	myll.push(2);
 	myll.push(3);
-	/* Array now looks like 1 2 3 */
+	myll.push(4);
+	myll.push(5);
+	/* Array now looks like 1 2 3 4 5*/
 	myll.swap(0,2);
-	/* Array now looks like 3 2 1 */
+	/* Array now looks like 3 2 1 4 5*/
 	CU_ASSERT_EQUAL(myll.read(0), 3);
 	CU_ASSERT_EQUAL(myll.read(1), 2);
 	CU_ASSERT_EQUAL(myll.read(2), 1);
+	CU_ASSERT_EQUAL(myll.read(3), 4);
+	CU_ASSERT_EQUAL(myll.read(4), 5);
 }
 
 void test_lifo_pushpop(void)
