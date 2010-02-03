@@ -147,17 +147,9 @@ LL_TEMPLATE void Ll<T>::remove(int loc)
 
 	if (loc == 0)
 	{
-		if (head->next)
-		{
-			Node<T>* tmp = head->next;
-			delete head;
-			head = tmp;
-		}
-		else
-		{
-			delete head;
-			head = NULL;
-		}
+		Node<T>* tmp = head->next;
+		delete head;
+		head = tmp;
 	}
 	else
 	{
@@ -197,4 +189,9 @@ LL_TEMPLATE void Ll<T>::clear()
 LL_TEMPLATE inline unsigned int Ll<T>::getNumNodes()
 {
 	return this->numnodes;
+}
+
+LL_TEMPLATE void Ll<T>::swap(int A, int B)
+{
+	
 }
