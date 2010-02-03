@@ -12,7 +12,7 @@
 Node<int>* t_node;
 Fifo<int> t_fifo;
 Lifo<int> t_lifo;
-Ll<int> myll;
+LinkedList<int> myll;
 
 /* m_ == magic */
 const int m_node_data = 5;
@@ -157,6 +157,29 @@ void test_ll_except(void)
 		did_catch_push_exception = true;
 	}
 	CU_ASSERT_TRUE(did_catch_push_exception);
+
+	bool did_catch_swap_exception = false;
+	try
+	{
+		myll.swap(0,45);
+	}
+	catch(OutOfBoundsException& e)
+	{
+		did_catch_swap_exception = true;
+	}
+	CU_ASSERT_TRUE(did_catch_swap_exception)
+
+	did_catch_swap_exception = false;
+	try
+	{
+		myll.swap(45,0);
+	}
+	catch(OutOfBoundsException& e)
+	{
+		did_catch_swap_exception = true;
+	}
+	CU_ASSERT_TRUE(did_catch_swap_exception)
+
 	/*
 		Create test for swap bound exceptions
 	*/
