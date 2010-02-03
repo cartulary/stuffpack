@@ -1,6 +1,5 @@
 #include <iostream>
 #include "dotest.h"
-#include "OutOfBoundsException.h"
 
 /*
 	try initilization copy and copy constructor 
