@@ -1,8 +1,6 @@
 NAME=makeall
 LANG = c++
-#USE_CUNIT=yes
-USE_NCURSES=yes
-.include    <../Makefile>
+.include    <../../Makefile>
 #compiling options
 .PHONY:     clean
 
