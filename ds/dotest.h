@@ -4,11 +4,12 @@
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
 #include <iostream>
-#include "fifo.h"
-#include "lifo.h"
-#include "node.h"
-#include "fo.h"
-#include "ll.h"
+#include "fifo/fifo.h"
+#include "fifo/lifo.h"
+#include "fifo/node.h"
+#include "fifo/fo.h"
+#include "fifo/ll.h"
+#include "fifo/OutOfBoundsException.h"
 
 int doTest(void);
 int suite_node_init(void);

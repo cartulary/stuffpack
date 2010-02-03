@@ -1,10 +1,5 @@
-NAME=makeall
-LANG = c++
-.include    <../../Makefile>
-#compiling options
-.PHONY:     clean
-
-makeall: fifo.o lifo.o ll.o 
+CFLAGS += -c
+all: fifo.o lifo.o ll.o 
 
 fifo.o: node.o fo.o printit.o fifo.cpp 
 fifo.cpp: fifo.h
@@ -26,4 +21,6 @@ printit.cpp: printit.h
 
 OutOfBoundsException.o:  OutOfBoundsException.cpp
 OutOfBoundsException.cpp:  OutOfBoundsException.h
-clean: objclean
+
+clean:
+	-rm -f *.o
