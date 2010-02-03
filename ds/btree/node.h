@@ -5,7 +5,8 @@
 class MultiNode {
 	public:
 	MultiNode(int data, int numPtrs);
-	// a pointer to a pointer 
+	~MultiNode();
+	// a pointer to a pointer
 	MultiNode** ptrs;
 	int data;
 };
