@@ -153,6 +153,23 @@ void test_ll_except(void)
 		did_catch_push_exception = true;
 	}
 	CU_ASSERT_TRUE(did_catch_push_exception);
+	/*
+		Create test for swap bound exceptions
+	*/
+}
+
+void test_ll_swap(void)
+{
+	myll.clear();
+	myll.push(1);
+	myll.push(2);
+	myll.push(3);
+	/* Array now looks like 1 2 3 */
+	myll.swap(0,2);
+	/* Array now looks like 3 2 1 */
+	CU_ASSERT_EQUAL(myll.read(0), 3);
+	CU_ASSERT_EQUAL(myll.read(1), 2);
+	CU_ASSERT_EQUAL(myll.read(2), 1);
 }
 
 void test_lifo_pushpop(void)
@@ -206,10 +223,11 @@ int doTest(void)
 	  	CU_TEST_INFO_NULL,
 	};
 	CU_TestInfo test_array_ll[] = {
-		{ "linked list can accept data and get data from any point", test_ll_works},
+		{ "linkedlist can accept data and get data from any point", test_ll_works},
 		{ "linklist operators work as expected", test_ll_operators },
 		{ "linklist.clear() clears all elements", test_ll_clear },
 		{ "linklist exceptions work", test_ll_except },
+		{ "linklist swapping works", test_ll_swap },
 	  	CU_TEST_INFO_NULL,
 	};
 

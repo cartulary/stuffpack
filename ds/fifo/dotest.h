@@ -26,4 +26,5 @@ void test_ll_works(void);
 void test_ll_operators(void);
 void test_ll_clear(void);
 void test_ll_except(void);
+void test_ll_swap(void);
 #endif
