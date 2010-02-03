@@ -7,7 +7,7 @@ USE_NCURSES=yes
 #compiling options
 .PHONY:     clean
 
-$(NAME): btree.o main.cpp
+$(NAME): btree.o dotest.o main.cpp
 
 btree.o: node.o btree.cpp
 btree.cpp: btree.h
