@@ -11,6 +11,9 @@ void test_node_ptrs(void)
 
 void test_node_data(void)
 {
+	CU_ASSERT_EQUAL(t_mn->data,0);
+	t_mn->data = 1;
+	CU_ASSERT_EQUAL(t_mn->data,1);
 }
 
 
