@@ -2,5 +2,11 @@
 
 MultiNode::MultiNode(int d, int numPtrs) : data(d)
 {
-	ptrs = new MultiNode*[numPtrs];
+	this->ptrs = new MultiNode*[numPtrs];
 }
+
+MultiNode::~MultiNode()
+{
+	delete[] this->ptrs;
+}
+
