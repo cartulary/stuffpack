@@ -2,12 +2,12 @@
 #include "printit.h"
 #include "ll.h"
 #include "OutOfBoundsException.h"
-LL_TEMPLATE Ll<T>::Ll() : head(NULL), numnodes(0)
+LL_TEMPLATE LinkedList<T>::LinkedList() : head(NULL), numnodes(0)
 {
 
 }
 
-LL_TEMPLATE Ll<T>::~Ll()
+LL_TEMPLATE LinkedList<T>::~LinkedList()
 {
 	if (numnodes>0)
 	{
@@ -27,7 +27,7 @@ LL_TEMPLATE Ll<T>::~Ll()
  * This function assumes you are sane. Therefore it performs NO sanity testing on the value you provide to it
  * Use operator() to get sanity testing
  */
-LL_TEMPLATE T& Ll<T>::operator[](const int loc)
+LL_TEMPLATE T& LinkedList<T>::operator[](const int loc)
 {
 	Node<T>* current=head;
 	int count = loc;
@@ -38,7 +38,7 @@ LL_TEMPLATE T& Ll<T>::operator[](const int loc)
 	return current->data;
 }
 
-LL_TEMPLATE void Ll<T>::push(T data)
+LL_TEMPLATE void LinkedList<T>::push(T data)
 {
 	++numnodes;
 	Node<T>* current = head;
@@ -55,7 +55,7 @@ LL_TEMPLATE void Ll<T>::push(T data)
 
 }
 
-LL_TEMPLATE void Ll<T>::push(T data, unsigned int loc)
+LL_TEMPLATE void LinkedList<T>::push(T data, unsigned int loc)
 {
 	/*If the location is off by more than one of the total
 	 * throw an exception;
@@ -91,7 +91,7 @@ LL_TEMPLATE void Ll<T>::push(T data, unsigned int loc)
 	++numnodes;
 }
 
-LL_TEMPLATE T Ll<T>::read(int loc)
+LL_TEMPLATE T LinkedList<T>::read(int loc)
 {
 	int count = loc;
 	Node<int>* current = head;
@@ -113,7 +113,7 @@ LL_TEMPLATE T Ll<T>::read(int loc)
 	return current->data;
 }
 
-LL_TEMPLATE std::vector<T> Ll<T>::getAllNodes()
+LL_TEMPLATE std::vector<T> LinkedList<T>::getAllNodes()
 {
 	std::vector<int> ret;
 	Node<T>* current = this->head;
@@ -130,7 +130,7 @@ LL_TEMPLATE std::vector<T> Ll<T>::getAllNodes()
 	return ret;
 }
 
-LL_TEMPLATE void Ll<T>::printAll()
+LL_TEMPLATE void LinkedList<T>::printAll()
 {
 	std::vector<T> vals = getAllNodes();
 	Printit<T> doprint;
@@ -138,7 +138,7 @@ LL_TEMPLATE void Ll<T>::printAll()
 }
 
 
-LL_TEMPLATE void Ll<T>::remove(int loc)
+LL_TEMPLATE void LinkedList<T>::remove(int loc)
 {
 	if (!head)
 	{
@@ -172,7 +172,7 @@ LL_TEMPLATE void Ll<T>::remove(int loc)
 	return;
 }
 
-LL_TEMPLATE void Ll<T>::clear()
+LL_TEMPLATE void LinkedList<T>::clear()
 {
 	Node<T>* current = head;
 	Node<T>* tmp;
@@ -186,16 +186,20 @@ LL_TEMPLATE void Ll<T>::clear()
 	numnodes=0;
 }
 
-LL_TEMPLATE inline unsigned int Ll<T>::getNumNodes()
+LL_TEMPLATE inline unsigned int LinkedList<T>::getNumNodes()
 {
 	return this->numnodes;
 }
 
-LL_TEMPLATE void Ll<T>::swap(int A, int B)
+LL_TEMPLATE void LinkedList<T>::swap(unsigned int A, unsigned int B)
 {
+	if (A > numnodes || B > numnodes)
+	{
+		throw OutOfBoundsException();
+	}
 	Node<T>* a_loc=head;
 	Node<T>* b_loc=head;
-	/* if we assume A is smaller it makes some things easier */
+	/* if we assume A is smaLinkedLister it makes some things easier */
 	if (A > B)
 	{
 		std::swap(A,B);

@@ -5,7 +5,7 @@
 
 #define LL_TEMPLATE template <class T>
 
-LL_TEMPLATE class Ll
+LL_TEMPLATE class LinkedList
 {
 	public:
 		Node<T>* head;
@@ -37,13 +37,13 @@ LL_TEMPLATE class Ll
 
 		/* Swap two locations
 		*/
-		void swap(int A, int B);
+		void swap(unsigned int A, unsigned int B);
 
 		/* Return the current number of nodes */
 		inline unsigned int getNumNodes();
 
-		Ll();
-		~Ll();
+		LinkedList();
+		~LinkedList();
 	protected:
 		std::vector<T> getAllNodes();
 	private:
