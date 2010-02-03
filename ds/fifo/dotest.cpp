@@ -2,6 +2,10 @@
 #include "dotest.h"
 #include "OutOfBoundsException.h"
 
+/*
+	try initilization copy and copy constructor 
+*/
+
 /* all functions return 0 on success and non-zero otherwise */
 
 /* t_ == test */
