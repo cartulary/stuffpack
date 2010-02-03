@@ -193,5 +193,23 @@ LL_TEMPLATE inline unsigned int Ll<T>::getNumNodes()
 
 LL_TEMPLATE void Ll<T>::swap(int A, int B)
 {
-	
+	Node<T>* a_loc=head;
+	Node<T>* b_loc=head;
+	/* if we assume A is smaller it makes some things easier */
+	if (A > B)
+	{
+		std::swap(A,B);
+	}
+	int count = B;
+	while (B)
+	{
+		B--;
+		b_loc = b_loc->next;
+		if (A)
+		{
+			A--;
+			a_loc = a_loc->next;
+		}
+	}
+	std::swap(a_loc->data, b_loc->data);
 }
