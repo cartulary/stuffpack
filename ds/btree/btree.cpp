@@ -1,5 +1,9 @@
 #include "btree.h"
 
+BinaryTree::BinaryTree(): head(NULL)
+{
+}
+
 void BinaryTree::add(int data)
 {
 }

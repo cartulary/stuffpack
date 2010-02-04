@@ -4,7 +4,8 @@
 
 class MultiNode {
 	public:
-	MultiNode(int data, unsigned int numPtrs);
+	MultiNode(unsigned int numPtrs);
+	MultiNode(unsigned int numPtrs, int data);
 	~MultiNode();
 	// a pointer to a pointer
 	MultiNode** ptrs;
