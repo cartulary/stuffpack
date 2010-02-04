@@ -2,7 +2,7 @@
 #define BTREE_H
 class BinaryTree {
 	private:
-		unsigned int numNodes;
+		unsigned int numnodes;
 	public:
 		/* functions for adding, removing, or determining if data exists */
 		void add(int data);
