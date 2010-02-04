@@ -31,6 +31,7 @@ void BinaryTree::add(int data)
 			return;
 		}
 	}
+	this->numnodes++;
 	current = new MultiNode(2,data);
 	return;
 }
