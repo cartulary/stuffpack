@@ -15,17 +15,16 @@ void BinaryTree::add(int data)
 		else
 			throw exception dup data
 	*/
-	MultiNode* current = head;
-	while (current)
+	MultiNode** current = &head;
+	while (*current)
 	{
-		std::cout << "\nIN loop\n";
-		if (data < current->data)
+		if (data < (*current)->data)
 		{
-			current = current->ptrs[LESS_PTR];
+			current = & ((*current)->ptrs[LESS_PTR]);
 		}
-		else if (data > current->data)
+		else if (data > (*current)->data)
 		{
-			current = current->ptrs[MORE_PTR];
+			current = & ((*current)->ptrs[MORE_PTR]);
 		}
 		else
 		{
@@ -33,9 +32,7 @@ void BinaryTree::add(int data)
 			return;
 		}
 	}
-	std::cout << "\nCreating new data\n";
-	current = new MultiNode(2,data);
-	std::cout << "\n head data is " << head->data << "\n";
+	*current = new MultiNode(2,data);
 	this->numnodes++;
 	return;
 }
@@ -77,22 +74,39 @@ unsigned int BinaryTree::getNumNodes()
 
 void BinaryTree::debugPrintTree()
 {
-	debugPrintTree_helper(head);
+	debugPrintTree_helper(head,0);
 }
 
-void BinaryTree::debugPrintTree_helper(MultiNode* ptr)
+void BinaryTree::debugPrintTree_helper(MultiNode* ptr, int tabs)
 {
+	int count = tabs;
 	if (ptr)
 	{
 		std::cout << ptr->data;
-		std::cout << "\n\t";
-		debugPrintTree_helper(ptr->ptrs[LESS_PTR]);
-		std::cout << "\n\t";
-		debugPrintTree_helper(ptr->ptrs[MORE_PTR]);
 		std::cout << "\n";
+
+		count = tabs;
+		while (count--)
+		{
+			std::cout << "\t";
+		}
+		debugPrintTree_helper(ptr->ptrs[LESS_PTR], tabs+1);
+
+		count = tabs;
+		while (count--)
+		{
+			std::cout << "\t";
+		}
+		debugPrintTree_helper(ptr->ptrs[MORE_PTR], tabs+1);
 	}
 	else
 	{
+		count = tabs;
+		while (count--)
+		{
+			std::cout << "\t";
+		}
 		std::cout << "NULL";
 	}
+	std::cout << "\n";
 }
