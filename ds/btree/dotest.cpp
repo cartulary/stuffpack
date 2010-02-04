@@ -31,18 +31,43 @@ int suite_btree_clean(void)
 
 void test_btree_add(void)
 {
+	t_bt->add(1);
+	t_bt->add(2);
+	t_bt->add(3);
+	/*go out of order to ensure that we are not overwriting ourself */
+	CU_ASSERT_TRUE(t_bt->has(2));
+	CU_ASSERT_TRUE(t_bt->has(1));
+	CU_ASSERT_TRUE(t_bt->has(3));
+
+	CU_ASSERT_FALSE(t_bt->has(10));
 }
 
+/* must be run AFTER _add */
 void test_btree_remove(void)
 {
+	t_bt->remove(3);
+	CU_ASSERT_TRUE(t_bt->has(2));
+	CU_ASSERT_TRUE(t_bt->has(1));
+
+	CU_ASSERT_FALSE(t_bt->has(3));
+	CU_ASSERT_FALSE(t_bt->has(10));
 }
 
+/* must be run AFTER _add and _remove */
 void test_btree_numnodes(void)
 {
+	/* we just added 3 and removed 1 so we should have 2 nodes now */
+	CU_ASSERT_EQUAL(t_bt->getNumNodes(), 2);
 }
 
 void test_btree_clear(void)
 {
+	t_bt->clear();
+	CU_ASSERT_EQUAL(t_bt->getNumNodes(), 0);
+	CU_ASSERT_FALSE(t_bt->has(1));
+	CU_ASSERT_FALSE(t_bt->has(2));
+	CU_ASSERT_FALSE(t_bt->has(3));
+	CU_ASSERT_FALSE(t_bt->has(10));
 }
 
 int doTest(void)

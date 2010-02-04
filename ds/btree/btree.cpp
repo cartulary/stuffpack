@@ -12,3 +12,12 @@ bool BinaryTree::has(int data)
 {
 	return false;
 }
+
+void BinaryTree::clear()
+{
+}
+
+unsigned int BinaryTree::getNumNodes()
+{
+	return this->numnodes;
+}
