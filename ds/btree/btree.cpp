@@ -42,6 +42,23 @@ void BinaryTree::remove(int data)
 
 bool BinaryTree::has(int data)
 {
+	MultiNode* current = head;
+	while (current)
+	{
+		if (data < current->data)
+		{
+			current = current->ptrs[LESS_PTR];
+		}
+		else if (data > current->data)
+		{
+			current = current->ptrs[MORE_PTR];
+		}
+		else
+		{
+			return true;
+		}
+	}
+	/* We got to a null node so we want to say that we don't exist */
 	return false;
 }
 
