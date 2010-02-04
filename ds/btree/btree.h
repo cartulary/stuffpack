@@ -5,7 +5,7 @@ class BinaryTree {
 	private:
 		unsigned int numnodes;
 		MultiNode* head;
-		enum { LESS_PTR, MORE_PTR };
+		enum { LESS_PTR, MORE_PTR, PARENT_PTR };
 		void debugPrintTree_helper(MultiNode* ptr, int tabs);
 	public:
 		BinaryTree();
