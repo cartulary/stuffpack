@@ -43,6 +43,8 @@ void test_btree_add(void)
 	CU_ASSERT_TRUE(t_bt->has(3));
 
 	CU_ASSERT_FALSE(t_bt->has(10));
+
+	CU_ASSERT_EQUAL(t_bt->getNumNodes(), 3);
 }
 
 /* must be run AFTER _add */
