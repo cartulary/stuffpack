@@ -6,6 +6,7 @@ class BinaryTree {
 		unsigned int numnodes;
 		MultiNode* head;
 		enum { LESS_PTR, MORE_PTR };
+		void debugPrintTree_helper(MultiNode* ptr);
 	public:
 		BinaryTree();
 		//~BinaryTree();
@@ -20,5 +21,8 @@ class BinaryTree {
 
 		/* Return the number of active nodes */
 		unsigned int getNumNodes();
+
+		/* prints out the tree for debugging reasons */
+		void debugPrintTree();
 };
 #endif //BTREE_H
