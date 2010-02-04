@@ -1,6 +1,7 @@
 #include "dotest.h"
 
 MultiNode* t_mn;
+BinaryTree* t_bt;
 
 void test_node_ptrs(void)
 {
@@ -16,6 +17,25 @@ void test_node_data(void)
 	CU_ASSERT_EQUAL(t_mn->data,1);
 }
 
+int suite_btree_init(void)
+{
+	t_bt = new BinaryTree();
+	return 0;
+}
+
+int suite_btree_clean(void)
+{
+	delete t_bt;
+	return 0;
+}
+
+void test_btree_add(void)
+{
+}
+
+void test_btree_remove(void)
+{
+}
 
 int doTest(void)
 {
@@ -31,8 +51,15 @@ int doTest(void)
 	  	CU_TEST_INFO_NULL,
 	};
 
+	CU_TestInfo test_array_btree[] = {
+		{ "Binary Tree adds data correctly", test_btree_add },
+		{ "Binary Tree removes data correctly", test_btree_remove },
+	  	CU_TEST_INFO_NULL,
+	};
+
 	CU_SuiteInfo suites[] = {
-	  { "node", NULL, NULL, test_array_node },
+	  { "MultiNode", NULL, NULL, test_array_node },
+	  { "BinaryTree", suite_btree_init, suite_btree_clean, test_array_btree },
 	  CU_SUITE_INFO_NULL,
 	};
 
