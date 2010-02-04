@@ -17,4 +17,5 @@ void test_node_data(void);
 void test_btree_add(void);
 void test_btree_remove(void);
 void test_btree_numnodes(void);
+void test_btree_clear(void);
 #endif

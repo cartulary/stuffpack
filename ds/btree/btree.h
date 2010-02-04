@@ -8,6 +8,10 @@ class BinaryTree {
 		void add(int data);
 		void remove(int data);
 		bool has(int data);
+
+		/* Remove all nodes */
+		void clear();
+
 		/* Return the number of active nodes */
 		unsigned int getNumNodes();
 };
