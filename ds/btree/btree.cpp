@@ -7,41 +7,32 @@ BinaryTree::BinaryTree(): head(NULL)
 void BinaryTree::add(int data)
 {
 	/*
-		If head is null just stick the data into head.
-		Else
-			if data < head->data
-				attempt add and proper location or loop
-			else if data > head->data
-				attempt add and proper location or loop
-			else
-				throw exception dup data
+		if data < head->data
+			attempt add at next proper location and loop
+		else if data > head->data
+			attempt add at next proper location and loop
+		else
+			throw exception dup data
 	*/
-	if (!head)
+	MultiNode* current = head;
+	while (current)
 	{
-		head = new MultiNode(2,data);
-		return;
-	}
-	else
-	{
-		MultiNode* current = head;
-		while (current)
+		if (data < current->data)
 		{
-			if (data < current->data)
-			{
-				current = current->ptrs[LESS_PTR];
-			}
-			else if (data > current->data)
-			{
-				current = current->ptrs[MORE_PTR];
-			}
-			else
-			{
-				//throw duplicateData exception
-				return;
-			}
+			current = current->ptrs[LESS_PTR];
 		}
-		return;
+		else if (data > current->data)
+		{
+			current = current->ptrs[MORE_PTR];
+		}
+		else
+		{
+			//throw duplicateData exception
+			return;
+		}
 	}
+	current = new MultiNode(2,data);
+	return;
 }
 
 void BinaryTree::remove(int data)
