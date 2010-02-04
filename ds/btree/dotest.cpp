@@ -34,9 +34,9 @@ void test_btree_add(void)
 	t_bt->add(1);
 	t_bt->add(2);
 	t_bt->add(3);
-	std::cout << "\n\n\n";
+	/*std::cout << "\n\n";
 	t_bt->debugPrintTree();
-	std::cout << "\n\n\n";
+	std::cout << "\n\n";*/
 	/*go out of order to ensure that we are not overwriting ourself */
 	CU_ASSERT_TRUE(t_bt->has(2));
 	CU_ASSERT_TRUE(t_bt->has(1));
