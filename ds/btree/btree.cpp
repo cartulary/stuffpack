@@ -1,7 +1,7 @@
 #include "btree.h"
 #include <iostream>
 
-BinaryTree::BinaryTree(): head(NULL)
+BinaryTree::BinaryTree(): numnodes(0), head(NULL)
 {
 }
 
@@ -16,8 +16,10 @@ void BinaryTree::add(int data)
 			throw exception dup data
 	*/
 	MultiNode** current = &head;
+	MultiNode* parent = NULL;
 	while (*current)
 	{
+		parent = *current;
 		if (data < (*current)->data)
 		{
 			current = & ((*current)->ptrs[LESS_PTR]);
@@ -32,13 +34,49 @@ void BinaryTree::add(int data)
 			return;
 		}
 	}
-	*current = new MultiNode(2,data);
+	/*
+		LESS, MORE, and PARRENT
+	*/
+	*current = new MultiNode(3,data);
+	(*current)->ptrs[PARENT_PTR] = parent;
 	this->numnodes++;
 	return;
 }
 
-void BinaryTree::remove(int data)
+void BinaryTree::remove(const int data)
 {
+	MultiNode* current = head;
+	int which_child;
+	while (current)
+	{
+		if (data < current->data)
+		{
+			which_child = LESS_PTR;
+			current = current->ptrs[LESS_PTR];
+		}
+		else if (data > current->data)
+		{
+			which_child = MORE_PTR;
+			current = current->ptrs[MORE_PTR];
+		}
+		else
+		{
+			/* we found it!!! */
+			if (current->ptrs[LESS_PTR] || current->ptrs[MORE_PTR])
+			{
+				/* we are not a leaf so lets ignore it for now (eventually we need to a a mid-tree removal */
+				return;
+			}
+			MultiNode* parent;
+			parent = current->ptrs[PARENT_PTR];
+			delete current;
+			parent->ptrs[which_child] = NULL;
+			--this->numnodes;
+			return;
+		}
+	}
+	/* We got to a null node so throw an exception */
+	return;
 }
 
 bool BinaryTree::has(int data)

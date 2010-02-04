@@ -34,6 +34,10 @@ void test_btree_add(void)
 	t_bt->add(1);
 	t_bt->add(2);
 	t_bt->add(3);
+	t_bt->add(7);
+	t_bt->add(5);
+	t_bt->add(6);
+	t_bt->add(4);
 	/*std::cout << "\n\n";
 	t_bt->debugPrintTree();
 	std::cout << "\n\n";*/
@@ -41,20 +45,29 @@ void test_btree_add(void)
 	CU_ASSERT_TRUE(t_bt->has(2));
 	CU_ASSERT_TRUE(t_bt->has(1));
 	CU_ASSERT_TRUE(t_bt->has(3));
+	CU_ASSERT_TRUE(t_bt->has(4));
+	CU_ASSERT_TRUE(t_bt->has(5));
+	CU_ASSERT_TRUE(t_bt->has(7));
+	CU_ASSERT_TRUE(t_bt->has(6));
 
 	CU_ASSERT_FALSE(t_bt->has(10));
 
-	CU_ASSERT_EQUAL(t_bt->getNumNodes(), 3);
+	CU_ASSERT_EQUAL(t_bt->getNumNodes(), 7);
 }
 
 /* must be run AFTER _add */
 void test_btree_remove(void)
 {
 	t_bt->remove(3);
+	t_bt->remove(7);
 	CU_ASSERT_TRUE(t_bt->has(2));
 	CU_ASSERT_TRUE(t_bt->has(1));
+	CU_ASSERT_TRUE(t_bt->has(4));
+	CU_ASSERT_TRUE(t_bt->has(5));
+	CU_ASSERT_TRUE(t_bt->has(6));
 
 	CU_ASSERT_FALSE(t_bt->has(3));
+	CU_ASSERT_FALSE(t_bt->has(7));
 	CU_ASSERT_FALSE(t_bt->has(10));
 }
 
@@ -62,7 +75,7 @@ void test_btree_remove(void)
 void test_btree_numnodes(void)
 {
 	/* we just added 3 and removed 1 so we should have 2 nodes now */
-	CU_ASSERT_EQUAL(t_bt->getNumNodes(), 2);
+	CU_ASSERT_EQUAL(t_bt->getNumNodes(), 5);
 }
 
 void test_btree_clear(void)
