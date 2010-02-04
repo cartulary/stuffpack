@@ -5,6 +5,7 @@ class BinaryTree {
 	private:
 		unsigned int numnodes;
 		MultiNode* head;
+		enum { LESS_PTR, MORE_PTR };
 	public:
 		BinaryTree();
 		//~BinaryTree();
