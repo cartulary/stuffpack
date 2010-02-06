@@ -13,17 +13,6 @@ void test_strlen_strings(void);
 void test_strlen_emptystring(void);
 /* all functions return 0 on success and non-zero otherwise */
 
-/* This is the initilization function for testing strlen*/
-int suite_strlen_init(void)
-{
-	return 0;
-}
-
-int suite_strlen_clean(void)
-{
-	return 0;
-}
-
 void test_strlen_strings(void)
 {
 	const char* s = "abcd";
@@ -44,7 +33,6 @@ int main(void)
 #ifdef REAL_STRING == 1
 	printf("We are testing for realz");
 #endif
-	CU_pSuite pSuite = NULL;
 
 	/* create the registry */
 	if (CUE_SUCCESS != CU_initialize_registry())
@@ -52,24 +40,18 @@ int main(void)
 		return CU_get_error();
 	}
 
-	/* add the strlen suite */
-	pSuite = CU_add_suite("strlen",suite_strlen_init, suite_strlen_clean);
-	if (NULL == pSuite)
-	{
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
+	CU_TestInfo test_array_strlen[] = {
+		{ "test of strlen", test_strlen_strings },
+		{ "strlen reports empty strings correctly", test_strlen_emptystring},
+		CU_TEST_INFO_NULL,
+	};
 
-	if (NULL == CU_add_test(pSuite, "test of strlen", test_strlen_strings))
-	{
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
-	if (NULL == CU_add_test(pSuite, "test of strlen-empty", test_strlen_emptystring))
-	{
-		CU_cleanup_registry();
-		return CU_get_error();
-	}
+	CU_SuiteInfo suites[] = {
+		{"strlen", NULL, NULL, test_array_strlen },
+		CU_SUITE_INFO_NULL
+	};
+
+	CU_ErrorCode error = CU_register_suites(suites);
 
 	/* Run all tests using the CUnit Basic interface */
 	CU_basic_set_mode(CU_BRM_VERBOSE);
