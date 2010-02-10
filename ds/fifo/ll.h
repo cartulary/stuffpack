@@ -25,8 +25,8 @@ LL_TEMPLATE class LinkedList
 		/*
 		 * return value at specific location
 		 */
-		T read(int loc);
-		void remove(int loc);
+		T read(unsigned int loc);
+		void remove(unsigned int loc);
 
 		void printAll();
 

@@ -91,7 +91,7 @@ LL_TEMPLATE void LinkedList<T>::push(T data, unsigned int loc)
 	++numnodes;
 }
 
-LL_TEMPLATE T LinkedList<T>::read(int loc)
+LL_TEMPLATE T LinkedList<T>::read(unsigned int loc)
 {
 	int count = loc;
 	Node<int>* current = head;
@@ -138,7 +138,7 @@ LL_TEMPLATE void LinkedList<T>::printAll()
 }
 
 
-LL_TEMPLATE void LinkedList<T>::remove(int loc)
+LL_TEMPLATE void LinkedList<T>::remove(unsigned int loc)
 {
 	if (!head)
 	{
