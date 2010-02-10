@@ -1,6 +1,7 @@
 #include <iostream>
 #include "dotest.h"
 #include "OutOfBoundsException.h"
+#include "DuplicateEntry.h"
 
 /*
 	try initilization copy and copy constructor 
@@ -229,6 +230,7 @@ void test_lifo_numnodes(void)
 
 void test_sorted_read(void)
 {
+	/* perhaps we should also warn when data is out of order on a (data,location) push ?*/
 	t_sorted.push(2);
 	t_sorted.push(1);
 	t_sorted.push(3);
@@ -237,21 +239,41 @@ void test_sorted_read(void)
 	t_sorted.push(6);
 	t_sorted.push(4);
 
-	try {
-		//The order should be 1 2 3 4 5 6 7 now
-		CU_ASSERT_EQUAL(t_sorted.read(0), 1);
-		CU_ASSERT_EQUAL(t_sorted.read(1), 2);
-		CU_ASSERT_EQUAL(t_sorted.read(2), 3);
-		CU_ASSERT_EQUAL(t_sorted.read(3), 4);
-		CU_ASSERT_EQUAL(t_sorted.read(4), 5);
-		CU_ASSERT_EQUAL(t_sorted.read(5), 6);
-		CU_ASSERT_EQUAL(t_sorted.read(6), 7);
-	}
-	catch(OutOfBoundsException& e)
+	CU_ASSERT_EQUAL(t_sorted.read(0), 1);
+	CU_ASSERT_EQUAL(t_sorted.read(1), 2);
+	CU_ASSERT_EQUAL(t_sorted.read(2), 3);
+	CU_ASSERT_EQUAL(t_sorted.read(3), 4);
+	CU_ASSERT_EQUAL(t_sorted.read(4), 5);
+	CU_ASSERT_EQUAL(t_sorted.read(5), 6);
+	CU_ASSERT_EQUAL(t_sorted.read(6), 7);
+}
+
+void test_sorted_duplicate(void)
+{
+	/* test high number */
+	bool did_catch_duplicate_exception = false;
+	try
 	{
-		CU_FAIL("Reading failed with exception");
-		//swallow this during the VERY initially testing
+		t_sorted.push(1000);
+		t_sorted.push(1000);
 	}
+	catch(DuplicateEntryException& e)
+	{
+		did_catch_duplicate_exception = true;
+	}
+	CU_ASSERT_TRUE(did_catch_duplicate_exception);
+
+	/* test head */
+	did_catch_duplicate_exception = false;
+	try
+	{
+		t_sorted.push(1);
+	}
+	catch(DuplicateEntryException& e)
+	{
+		did_catch_duplicate_exception = true;
+	}
+	CU_ASSERT_TRUE(did_catch_duplicate_exception);
 }
 
 
@@ -292,6 +314,7 @@ int doTest(void)
 
 	CU_TestInfo test_array_sorted[] = {
 		{ "Sorted LinkedList pushes data in correct order", test_sorted_read },
+		{ "Sorted LinkedList returns exception on duplicate entry", test_sorted_duplicate },
 	  	CU_TEST_INFO_NULL,
 	};
 
