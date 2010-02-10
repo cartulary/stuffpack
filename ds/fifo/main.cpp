@@ -8,6 +8,7 @@
 #include "dotest.cpp"
 #include "sorted.cpp"
 #include "OutOfBoundsException.cpp"
+#include "DuplicateEntry.cpp"
 
 int main(int argc, char* argv[])
 {
