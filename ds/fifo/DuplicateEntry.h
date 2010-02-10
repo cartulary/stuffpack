@@ -1,9 +1,9 @@
-#ifndef OUT_OF_BOUNDS_EXCEPTION
-#define OUT_OF_BOUNDS_EXCEPTION
+#ifndef DUP_ENTRY_EXCEPTION
+#define DUP_ENTRY_EXCEPTION
 #include <stdexcept>
-class OutOfBoundsException : public std::runtime_error
+class DuplicateEntryException : public std::runtime_error
 {
 	public:
-		OutOfBoundsException();
+		DuplicateEntryException();
 };
 #endif
