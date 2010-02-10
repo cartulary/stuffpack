@@ -7,7 +7,7 @@ USE_NCURSES=yes
 #compiling options
 .PHONY:     clean
 
-$(NAME): ll.o lifo.o fifo.o dotest.o main.cpp
+$(NAME): ll.o lifo.o sorted.o fifo.o dotest.o main.cpp
 
 fifo.o: node.o fo.o printit.o fifo.cpp 
 fifo.cpp: fifo.h
@@ -32,3 +32,6 @@ dotest.cpp: dotest.h
 
 OutOfBoundsException.o:  OutOfBoundsException.cpp
 OutOfBoundsException.cpp:  OutOfBoundsException.h
+
+sorted.o: fifo.o sorted.cpp
+sorted.cpp: sorted.h

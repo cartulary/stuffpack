@@ -8,7 +8,6 @@
 LL_TEMPLATE class LinkedList
 {
 	public:
-		Node<T>* head;
 
 		//T& operator()(const int loc);
 		T& operator[](const int loc);
@@ -46,8 +45,9 @@ LL_TEMPLATE class LinkedList
 		~LinkedList();
 	protected:
 		std::vector<T> getAllNodes();
-	private:
+		Node<T>* head;
 		unsigned int numnodes;
+	private:
 };
 
 #endif /* LL_H */

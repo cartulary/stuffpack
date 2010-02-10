@@ -13,6 +13,7 @@ Node<int>* t_node;
 Fifo<int> t_fifo;
 Lifo<int> t_lifo;
 LinkedList<int> myll;
+Sorted<int> t_sorted;
 
 /* m_ == magic */
 const int m_node_data = 5;
@@ -226,6 +227,33 @@ void test_lifo_numnodes(void)
 	CU_ASSERT_EQUAL(t_lifo.getNumNodes(),3);
 }
 
+void test_sorted_read(void)
+{
+	t_sorted.push(2);
+	t_sorted.push(1);
+	t_sorted.push(3);
+	t_sorted.push(7);
+	t_sorted.push(5);
+	t_sorted.push(6);
+	t_sorted.push(4);
+
+	try {
+		//The order should be 1 2 3 4 5 6 7 now
+		CU_ASSERT_EQUAL(t_sorted.read(0), 1);
+		CU_ASSERT_EQUAL(t_sorted.read(1), 2);
+		CU_ASSERT_EQUAL(t_sorted.read(2), 3);
+		CU_ASSERT_EQUAL(t_sorted.read(3), 4);
+		CU_ASSERT_EQUAL(t_sorted.read(4), 5);
+		CU_ASSERT_EQUAL(t_sorted.read(5), 6);
+		CU_ASSERT_EQUAL(t_sorted.read(6), 7);
+	}
+	catch(OutOfBoundsException& e)
+	{
+		CU_FAIL("Reading failed with exception");
+		//swallow this during the VERY initially testing
+	}
+}
+
 
 int doTest(void)
 {
@@ -262,13 +290,20 @@ int doTest(void)
 	  	CU_TEST_INFO_NULL,
 	};
 
+	CU_TestInfo test_array_sorted[] = {
+		{ "Sorted LinkedList pushes data in correct order", test_sorted_read },
+	  	CU_TEST_INFO_NULL,
+	};
+
 	CU_SuiteInfo suites[] = {
 	  { "node", suite_node_init, suite_node_clean, test_array_node },
 	  { "fifo", NULL, NULL, test_array_fifo },
 	  { "lifo", NULL, NULL, test_array_lifo },
 	  { "linkedlist", NULL, NULL, test_array_ll },
+	  { "sortedLL", NULL, NULL, test_array_sorted },
 	  CU_SUITE_INFO_NULL,
 	};
+
 
 	CU_ErrorCode error = CU_register_suites(suites);
 
