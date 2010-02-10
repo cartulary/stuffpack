@@ -9,6 +9,7 @@
 #include "node.h"
 #include "fo.h"
 #include "ll.h"
+#include "sorted.h"
 
 int doTest(void);
 int suite_node_init(void);
@@ -28,4 +29,5 @@ void test_ll_clear(void);
 void test_ll_except(void);
 void test_ll_swap(void);
 void test_ll_copy(void);
+void test_sorted_read(void);
 #endif
