@@ -7,11 +7,9 @@
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
 
-int suite_strlen_init(void);
-int suite_strlen_clean(void);
 void test_strlen_strings(void);
 void test_strlen_emptystring(void);
-/* all functions return 0 on success and non-zero otherwise */
+void test_strlen_multinull(void);
 
 void test_strlen_strings(void)
 {
@@ -26,6 +24,17 @@ void test_strlen_emptystring(void)
 	const char* s="";
 	CU_ASSERT_EQUAL(0, strlen(""));
 	CU_ASSERT_EQUAL(0, strlen(s));
+}
+
+void test_strlen_multinull(void)
+{
+	const char *a = {0,"a",0,0,0};
+	const char *b = {0,0,0,0,0};
+	const char *c = {"a",0,0,0,0};
+
+	CU_ASSERT_EQUAL(strlen(a), 0);
+//	CU_ASSERT_EQUAL(strlen(b), 0);
+//	CU_ASSERT_EQUAL(strlen(c), 1);
 }
 
 int main(void)
@@ -43,6 +52,7 @@ int main(void)
 	CU_TestInfo test_array_strlen[] = {
 		{ "test of strlen", test_strlen_strings },
 		{ "strlen reports empty strings correctly", test_strlen_emptystring},
+		{ "strlen correctly finds the FIRST null", test_strlen_multinull },
 		CU_TEST_INFO_NULL,
 	};
 

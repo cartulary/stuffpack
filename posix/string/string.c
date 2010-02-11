@@ -95,10 +95,16 @@ size_t strlen(const char* s)
 size_t strnlen(const char* s, size_t maxlen)
 {
 	size_t i;
-	for (i=0; s[i]!=0; ++i){}
+	for (i=0; s[i]!=0; ++i)
+	{
+		if (i == maxlen)
+		{
+			break;
+		}
+	}
 	// Return the number of characters BEFORE the null
 	// except if it greater than maxlen - if so return maxlen..
-	return (i > maxlen) ? maxlen : i;
+	return i;
 }
 
 // Use strcpy to do the copying then do my own return */
@@ -155,16 +161,16 @@ char* rindex(const char *s, int c)
 	int i;
 	for (i=strlen(s); i >=0 && i!=(char)c; --i)
 	{
-		printf("(r) i=%d; strlen(s)=%d; s[i]=%c\n", i, strlen(s), s[i]);
+		//printf("(r) i=%d; strlen(s)=%d; s[i]=%c\n", i, strlen(s), s[i]);
 	}
 	//return the matching character...
 	//return NULL if not found
 	if (s[i] == (char)c)
 	{
-		printf("(r) We found %d\n", i);
+		//printf("(r) We found %d\n", i);
 		return &s[i];
 	}
-	printf("(r) null\n");
+	//printf("(r) null\n");
 	return NULL;
 }
 
