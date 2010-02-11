@@ -1,4 +1,4 @@
-NAME=main
+NAME=mall
 LANG = c++
 USE_CUNIT=yes
 USE_NCURSES=yes
@@ -7,7 +7,8 @@ USE_NCURSES=yes
 #compiling options
 .PHONY:     clean
 
-$(NAME): ll.o lifo.o sorted.o fifo.o dotest.o main.cpp
+mall: ll.o lifo.o sorted.o fifo.o ll_it.o dotest.o main_ll_it
+main_ll_it: ll_it.o main_ll_it.cpp
 
 fifo.o: node.o fo.o printit.o fifo.cpp 
 fifo.cpp: fifo.h
@@ -35,3 +36,6 @@ OutOfBoundsException.cpp:  OutOfBoundsException.h
 
 sorted.o: fifo.o sorted.cpp
 sorted.cpp: sorted.h
+
+ll_it.o: ll_it.cpp
+ll_it.cpp: ll_it.h

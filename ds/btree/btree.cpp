@@ -46,36 +46,39 @@ void BinaryTree::add(int data)
 void BinaryTree::remove(const int data)
 {
 	MultiNode* current = head;
+	MultiNode* parent = NULL;
 	int which_child;
 	while (current)
 	{
 		if (data < current->data)
 		{
 			which_child = LESS_PTR;
-			current = current->ptrs[LESS_PTR];
 		}
 		else if (data > current->data)
 		{
 			which_child = MORE_PTR;
-			current = current->ptrs[MORE_PTR];
 		}
 		else
 		{
-			/* we found it!!! */
 			if (current->ptrs[LESS_PTR] || current->ptrs[MORE_PTR])
 			{
-				/* we are not a leaf so lets ignore it for now (eventually we need to a a mid-tree removal */
-				return;
+				// We have got children so lets leave it alone now
 			}
-			MultiNode* parent;
-			parent = current->ptrs[PARENT_PTR];
-			delete current;
-			parent->ptrs[which_child] = NULL;
-			--this->numnodes;
+			else
+			{
+				delete current;
+				if (parent)
+				{
+					parent->ptrs[which_child] = NULL;
+				}
+				this->numnodes--;
+			}
 			return;
 		}
+		parent = current;
+		current = current->ptrs[which_child];
 	}
-	/* We got to a null node so throw an exception */
+	/* We got to a null node so we want to throw an exception*/
 	return;
 }
 
@@ -103,6 +106,27 @@ bool BinaryTree::has(int data)
 
 void BinaryTree::clear()
 {
+	//recurseivly clear bottom row
+	if (!head)
+	{
+		return;
+	}
+	clear_helper(head);
+	head = NULL;
+	numnodes = 0;
+}
+
+void BinaryTree::clear_helper(MultiNode* ptr)
+{
+	if (ptr->ptrs[LESS_PTR])
+	{
+		clear_helper(ptr->ptrs[LESS_PTR]);
+	}
+	if (ptr->ptrs[MORE_PTR])
+	{
+		clear_helper(ptr->ptrs[MORE_PTR]);
+	}
+	delete ptr;
 }
 
 unsigned int BinaryTree::getNumNodes()
