@@ -7,6 +7,7 @@ class BinaryTree {
 		MultiNode* head;
 		enum { LESS_PTR, MORE_PTR, PARENT_PTR };
 		void debugPrintTree_helper(MultiNode* ptr, int tabs);
+		void clear_helper(MultiNode* ptr);
 	public:
 		BinaryTree();
 		//~BinaryTree();

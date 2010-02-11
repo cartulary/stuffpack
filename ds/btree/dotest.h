@@ -7,7 +7,7 @@
 #include "node.h"
 #include "btree.h"
 
-int doTest(void);
+int btree_doTest(void);
 int suite_node_init(void);
 int suite_node_clean(void);
 int suite_btree_init(void);

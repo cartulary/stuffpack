@@ -74,7 +74,7 @@ void test_btree_remove(void)
 /* must be run AFTER _add and _remove */
 void test_btree_numnodes(void)
 {
-	/* we just added 3 and removed 1 so we should have 2 nodes now */
+	/* we just added 7 and removed 2 so we should have 5 nodes now */
 	CU_ASSERT_EQUAL(t_bt->getNumNodes(), 5);
 }
 
@@ -88,7 +88,7 @@ void test_btree_clear(void)
 	CU_ASSERT_FALSE(t_bt->has(10));
 }
 
-int doTest(void)
+int btree_doTest(void)
 {
 	/* create the registry */
 	if (CUE_SUCCESS != CU_initialize_registry())

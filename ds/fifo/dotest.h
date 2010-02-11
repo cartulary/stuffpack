@@ -11,10 +11,10 @@
 #include "ll.h"
 #include "sorted.h"
 
-int doTest(void);
+int fifo_doTest(void);
 int suite_node_init(void);
 int suite_node_clean(void);
-void test_node_data(void);
+void test_node_f_data(void);
 void test_fifo_pop(void);
 void test_lifo_pop(void);
 void test_fifo_pushpop(void);

@@ -1,10 +1,14 @@
 #include <iostream>
 #include "dotest.h"
+#include "lifo.h"
+#include "fifo.h"
+#include "ll.h"
+#include "sorted.h"
 #include "OutOfBoundsException.h"
 #include "DuplicateEntry.h"
 
 /*
-	try initilization copy and copy constructor 
+ *	try initilization copy and copy constructor
 */
 
 /* all functions return 0 on success and non-zero otherwise */
@@ -32,7 +36,7 @@ int suite_node_clean(void)
 	return 0;
 }
 
-void test_node_data(void)
+void test_node_f_data(void)
 {
 	CU_ASSERT_EQUAL(t_node->data, m_node_data);
 }
@@ -104,15 +108,19 @@ void test_ll_works(void)
 	CU_ASSERT_EQUAL(myll.read(1),4);
 	CU_ASSERT_EQUAL(myll.read(2),12);
 	CU_ASSERT_EQUAL(myll.getNumNodes(),3);
+	myll.remove(0);
+	//LL now looks like 4 12
+	CU_ASSERT_EQUAL(myll.read(0),4);
+	CU_ASSERT_EQUAL(myll.read(1),12);
+	CU_ASSERT_EQUAL(myll.getNumNodes(),2);
 }
 
 //This gets run after works();
 void test_ll_operators(void)
 {
 	//The [] operator assumes we are sane so don't bother testing undefuned values
-	CU_ASSERT_EQUAL(myll[0],10);
-	CU_ASSERT_EQUAL(myll[1],4);
-	CU_ASSERT_EQUAL(myll[2],12);
+	CU_ASSERT_EQUAL(myll[0],4);
+	CU_ASSERT_EQUAL(myll[1],12);
 }
 
 
@@ -189,7 +197,7 @@ void test_ll_except(void)
 
 void test_ll_swap(void)
 {
-	myll.clear();
+//	myll.clear();
 	myll.push(1);
 	myll.push(2);
 	myll.push(3);
@@ -277,7 +285,7 @@ void test_sorted_duplicate(void)
 }
 
 
-int doTest(void)
+int fifo_doTest(void)
 {
 	/* create the registry */
 	if (CUE_SUCCESS != CU_initialize_registry())
@@ -286,7 +294,7 @@ int doTest(void)
 	}
 
 	CU_TestInfo test_array_node[] = {
-		{ "node accepts data correctly", test_node_data },
+		{ "node accepts data correctly", test_node_f_data },
 	  	CU_TEST_INFO_NULL,
 	};
 
