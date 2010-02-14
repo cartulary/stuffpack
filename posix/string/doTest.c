@@ -14,6 +14,8 @@ void test_strnlen_lesser(void);
 void test_strnlen_zero(void);
 void test_strnlen_neg(void);
 
+void test_strcmp_works(void);
+
 void test_strlen_strings(void)
 {
 	const char* s = "abcd";
@@ -81,7 +83,20 @@ void test_strnlen_neg(void)
 	CU_ASSERT_EQUAL(s_size, strnlen(s, -1));
 }
 
+void test_strcmp_match(void)
+{
+	const char* s = "abcd";
+	const char* x = "abcd";
+	CU_ASSERT_EQUAL(0, strcmp(s,x));
+}
 
+void test_strcmp_nomatch(void)
+{
+	const char* s = "abcd";
+	const char* x = "defg";
+	CU_ASSERT(strcmp(s,x) < 0);
+	CU_ASSERT(strcmp(x,s) > 0);
+}
 
 int main(void)
 {
@@ -111,9 +126,16 @@ int main(void)
 		CU_TEST_INFO_NULL,
 	};
 
+	CU_TestInfo test_array_strcmp[] = {
+		{ "strcmp finds patterns that match", test_strcmp_match },
+		{ "strcmp returns correct value with patterns don't match", test_strcmp_nomatch },
+		CU_TEST_INFO_NULL,
+	};
+
 	CU_SuiteInfo suites[] = {
 		{"strlen", NULL, NULL, test_array_strlen },
 		{"strnlen", NULL, NULL, test_array_strnlen },
+		{"strcmp", NULL, NULL, test_array_strcmp },
 		CU_SUITE_INFO_NULL
 	};
 
