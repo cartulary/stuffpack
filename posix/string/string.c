@@ -84,6 +84,9 @@ int strncmp(const char* s1, const char* s2, size_t len)
 	return s1[pos] - s2[pos];
 }
 
+/*
+	tested: true
+*/
 size_t strlen(const char* s)
 {
 	size_t i;

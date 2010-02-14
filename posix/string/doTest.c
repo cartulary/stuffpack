@@ -1,3 +1,4 @@
+#include "doTest.h"
 #ifdef REAL_STRING
 	#include <string.h>
 #else
@@ -7,9 +8,11 @@
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
 
-void test_strlen_strings(void);
-void test_strlen_emptystring(void);
-void test_strlen_multinull(void);
+void test_strnlen_greater(void);
+void test_strnlen_equeal(void);
+void test_strnlen_lesser(void);
+void test_strnlen_zero(void);
+void test_strnlen_neg(void);
 
 void test_strlen_strings(void)
 {
@@ -37,6 +40,32 @@ void test_strlen_multinull(void)
 	CU_ASSERT_EQUAL(strlen(c), 1);
 }
 
+void test_strnlen_greater(void)
+{
+	const char* s = "abcd";
+	const int s_size = 4;
+	CU_ASSERT_EQUAL(1, strnlen("A", 10));
+	CU_ASSERT_EQUAL(s_size, strnlen(s, 10));
+}
+/*
+void test_strlen_emptystring(void)
+{
+	const char* s="";
+	CU_ASSERT_EQUAL(0, strlen(""));
+	CU_ASSERT_EQUAL(0, strlen(s));
+}
+
+void test_strlen_multinull(void)
+{
+	const char a[5] = {0,'a',0,0,0};
+	const char b[5] = {0,0,0,0,0};
+	const char c[5] = {'a',0,0,0,0};
+
+	CU_ASSERT_EQUAL(strlen(a), 0);
+	CU_ASSERT_EQUAL(strlen(b), 0);
+	CU_ASSERT_EQUAL(strlen(c), 1);
+}
+*/
 int main(void)
 {
 #ifdef REAL_STRING == 1
@@ -56,8 +85,16 @@ int main(void)
 		CU_TEST_INFO_NULL,
 	};
 
+	CU_TestInfo test_array_strnlen[] = {
+		{ "test of strnlen when N > strlen(s)", test_strnlen_greater },
+/*		{ "strlen reports empty strings correctly", test_strlen_emptystring},
+		{ "strlen correctly finds the FIRST null", test_strlen_multinull }, */
+		CU_TEST_INFO_NULL,
+	};
+
 	CU_SuiteInfo suites[] = {
 		{"strlen", NULL, NULL, test_array_strlen },
+		{"strnlen", NULL, NULL, test_array_strnlen },
 		CU_SUITE_INFO_NULL
 	};
 
