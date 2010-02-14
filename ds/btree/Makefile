@@ -1,4 +1,4 @@
-NAME=main
+NAME=mall
 LANG = c++
 USE_CUNIT=yes
 USE_NCURSES=yes
@@ -9,11 +9,11 @@ USE_NCURSES=yes
 
 mall: btree.o dotest.o
 
-btree.o: node.o btree.cpp
+btree.o: require_node btree.cpp
 btree.cpp: btree.h
-
-node.o: node.cpp
-node.cpp: node.h
 
 dotest.o: dotest.cpp
 dotest.cpp: dotest.h
+
+require_node: .PHONY
+	make -C ../node mall
