@@ -70,7 +70,7 @@ LL_TEMPLATE void LinkedList<T>::push(T data, unsigned int loc)
 	}
 	unsigned int count = loc;
 	Node<T>* current = head;
-	while (count-- > -1)
+	while (1)
 	{
 		if (!current->next)
 		{
