@@ -93,9 +93,11 @@ void test_strcmp_match(void)
 void test_strcmp_nomatch(void)
 {
 	const char* s = "abcd";
+	const char* s_extend = "abcdefg";
 	const char* x = "defg";
 	CU_ASSERT(strcmp(s,x) < 0);
 	CU_ASSERT(strcmp(x,s) > 0);
+	CU_ASSERT(strcmp(s,s_extend) < 0);
 }
 
 void test_strncmp_match(void)
@@ -115,7 +117,7 @@ void test_strncmp_nomatch(void)
 	const char* x = "defg";
 	CU_ASSERT(strcmp(s,x) < 0);
 	CU_ASSERT(strcmp(x,s) > 0);
-	CU_ASSERT(strncmp(s,s_extend,5) > 0 );
+	CU_ASSERT(strncmp(s,s_extend,5) < 0 );
 }
 
 int main(void)
