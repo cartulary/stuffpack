@@ -1,6 +1,6 @@
 #ifndef BTREE_H
 #define BTREE_H
-#include "../node/node.h"
+#include "node.h"
 class BinaryTree {
 	private:
 		unsigned int numnodes;
