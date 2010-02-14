@@ -1,7 +1,7 @@
 #include <iostream>
 #include "btree/dotest.cpp"
-#include "node/node.cpp"
 #include "btree/btree.cpp"
+#include "btree/node.cpp"
 #include "fifo/dotest.cpp"
 #include "fifo/node.cpp"
 #include "fifo/lifo.cpp"
