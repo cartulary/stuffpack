@@ -98,6 +98,26 @@ void test_strcmp_nomatch(void)
 	CU_ASSERT(strcmp(x,s) > 0);
 }
 
+void test_strncmp_match(void)
+{
+	const char* s = "abcd";
+	const char* s_extend = "abcdefg";
+	const char* x = "abcd";
+	CU_ASSERT_EQUAL(0, strncmp(s,x,4));
+	CU_ASSERT_EQUAL(0, strncmp(s,s_extend,4));
+	CU_ASSERT_EQUAL(0, strncmp(s,x,1));
+}
+
+void test_strncmp_nomatch(void)
+{
+	const char* s = "abcd";
+	const char* s_extend = "abcdefg";
+	const char* x = "defg";
+	CU_ASSERT(strcmp(s,x) < 0);
+	CU_ASSERT(strcmp(x,s) > 0);
+	CU_ASSERT(strncmp(s,s_extend,5) > 0 );
+}
+
 int main(void)
 {
 #ifdef REAL_STRING == 1
@@ -132,10 +152,17 @@ int main(void)
 		CU_TEST_INFO_NULL,
 	};
 
+	CU_TestInfo test_array_strncmp[] = {
+		{ "strcmp finds patterns that match", test_strncmp_match },
+		{ "strcmp returns correct value with patterns don't match", test_strncmp_nomatch },
+		CU_TEST_INFO_NULL,
+	};
+
 	CU_SuiteInfo suites[] = {
 		{"strlen", NULL, NULL, test_array_strlen },
 		{"strnlen", NULL, NULL, test_array_strnlen },
 		{"strcmp", NULL, NULL, test_array_strcmp },
+		{"strncmp", NULL, NULL, test_array_strncmp },
 		CU_SUITE_INFO_NULL
 	};
 
