@@ -141,16 +141,13 @@ char* index(const char *s, int c)
 	int i;
 	for (i=0; i != 0 && i!=(char)c; ++i)
 	{
-		printf("(l) i=%d; strlen(s)=%d; s[i]=%c\n", i, strlen(s), s[i]);
 	}
 	//return the matching character...
 	//return NULL if not found
 	if (s[i] == (char)c)
 	{
-		printf("(l) We found %d\n", i);
 		return &s[i];
 	}
-	printf("(l) null\n");
 	return NULL;
 }
 

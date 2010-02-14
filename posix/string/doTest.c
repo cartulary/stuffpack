@@ -28,13 +28,13 @@ void test_strlen_emptystring(void)
 
 void test_strlen_multinull(void)
 {
-	const char *a = {0,"a",0,0,0};
-	const char *b = {0,0,0,0,0};
-	const char *c = {"a",0,0,0,0};
+	const char a[5] = {0,'a',0,0,0};
+	const char b[5] = {0,0,0,0,0};
+	const char c[5] = {'a',0,0,0,0};
 
 	CU_ASSERT_EQUAL(strlen(a), 0);
-//	CU_ASSERT_EQUAL(strlen(b), 0);
-//	CU_ASSERT_EQUAL(strlen(c), 1);
+	CU_ASSERT_EQUAL(strlen(b), 0);
+	CU_ASSERT_EQUAL(strlen(c), 1);
 }
 
 int main(void)
