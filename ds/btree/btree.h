@@ -4,10 +4,10 @@
 class BinaryTree {
 	private:
 		unsigned int numnodes;
-		MultiNode* head;
+		MultiNode<int>* head;
 		enum { LESS_PTR, MORE_PTR, PARENT_PTR };
-		void debugPrintTree_helper(MultiNode* ptr, int tabs);
-		void clear_helper(MultiNode* ptr);
+		void debugPrintTree_helper(MultiNode<int>* ptr, int tabs);
+		void clear_helper(MultiNode<int>* ptr);
 	public:
 		BinaryTree();
 		//~BinaryTree();

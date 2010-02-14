@@ -15,8 +15,8 @@ void BinaryTree::add(int data)
 		else
 			throw exception dup data
 	*/
-	MultiNode** current = &head;
-	MultiNode* parent = NULL;
+	MultiNode<int>** current = &head;
+	MultiNode<int>* parent = NULL;
 	while (*current)
 	{
 		parent = *current;
@@ -37,7 +37,7 @@ void BinaryTree::add(int data)
 	/*
 		LESS, MORE, and PARRENT
 	*/
-	*current = new MultiNode(3,data);
+	*current = new MultiNode<int>(3,data);
 	(*current)->ptrs[PARENT_PTR] = parent;
 	this->numnodes++;
 	return;
@@ -45,8 +45,8 @@ void BinaryTree::add(int data)
 
 void BinaryTree::remove(const int data)
 {
-	MultiNode* current = head;
-	MultiNode* parent = NULL;
+	MultiNode<int>* current = head;
+	MultiNode<int>* parent = NULL;
 	int which_child;
 	while (current)
 	{
@@ -84,7 +84,7 @@ void BinaryTree::remove(const int data)
 
 bool BinaryTree::has(int data)
 {
-	MultiNode* current = head;
+	MultiNode<int>* current = head;
 	while (current)
 	{
 		if (data < current->data)
@@ -116,7 +116,7 @@ void BinaryTree::clear()
 	numnodes = 0;
 }
 
-void BinaryTree::clear_helper(MultiNode* ptr)
+void BinaryTree::clear_helper(MultiNode<int>* ptr)
 {
 	if (ptr->ptrs[LESS_PTR])
 	{
@@ -139,7 +139,7 @@ void BinaryTree::debugPrintTree()
 	debugPrintTree_helper(head,0);
 }
 
-void BinaryTree::debugPrintTree_helper(MultiNode* ptr, int tabs)
+void BinaryTree::debugPrintTree_helper(MultiNode<int>* ptr, int tabs)
 {
 	int count = tabs;
 	if (ptr)

@@ -1,11 +1,11 @@
 #include "dotest.h"
 
-MultiNode* t_mn;
+MultiNode<int>* t_mn;
 BinaryTree* t_bt;
 
 void test_node_ptrs(void)
 {
-	t_mn = new MultiNode(2, 0);
+	t_mn = new MultiNode<int>(2, 0);
 	CU_ASSERT_PTR_NULL(t_mn->ptrs[0]);
 	CU_ASSERT_PTR_NULL(t_mn->ptrs[1]);
 }
