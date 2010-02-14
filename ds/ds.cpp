@@ -1,6 +1,6 @@
 #include <iostream>
 #include "btree/dotest.cpp"
-#include "btree/node.cpp"
+#include "node/node.cpp"
 #include "btree/btree.cpp"
 #include "fifo/dotest.cpp"
 #include "fifo/node.cpp"

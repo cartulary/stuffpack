@@ -4,7 +4,7 @@
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
 #include <iostream>
-#include "node.h"
+#include "../node/node.h"
 #include "btree.h"
 
 int btree_doTest(void);
