@@ -14,7 +14,14 @@ void test_strnlen_lesser(void);
 void test_strnlen_zero(void);
 void test_strnlen_neg(void);
 
-void test_strcmp_works(void);
+void test_strcmp_match(void);
+void test_strcmp_match(void);
+void test_strncmp_nomatch(void);
+void test_strncmp_nomatch(void);
+
+void test_strcasecmp_match(void);
+void test_strcasecmp_mismatch(void);
+void test_strcasecmp_mismatchcase(void);
 
 void test_strlen_strings(void)
 {
@@ -120,6 +127,19 @@ void test_strncmp_nomatch(void)
 	CU_ASSERT(strncmp(s,s_extend,5) < 0 );
 }
 
+
+void test_strcasecmp_match(void)
+{
+}
+
+void test_strcasecmp_mismatch(void)
+{
+}
+
+void test_strcasecmp_mismatchcase(void)
+{
+}
+
 int main(void)
 {
 #ifdef REAL_STRING == 1
@@ -133,30 +153,37 @@ int main(void)
 	}
 
 	CU_TestInfo test_array_strlen[] = {
-		{ "test of strlen", test_strlen_strings },
-		{ "strlen reports empty strings correctly", test_strlen_emptystring},
-		{ "strlen correctly finds the FIRST null", test_strlen_multinull },
+		{ "\t works", test_strlen_strings },
+		{ "\t reports empty strings correctly", test_strlen_emptystring},
+		{ "\t correctly finds the FIRST null", test_strlen_multinull },
 		CU_TEST_INFO_NULL,
 	};
 
 	CU_TestInfo test_array_strnlen[] = {
-		{ "test of strnlen when N > strlen(s)", test_strnlen_greater },
-		{ "test of strnlen when N < strlen(s)", test_strnlen_lesser },
-		{ "test of strnlen when N == strlen(s)", test_strnlen_equal },
-		{ "test of strnlen when N == 0", test_strnlen_zero },
-		{ "test of strnlen when N < 0",  test_strnlen_neg },
+		{ "\t when N > strlen(s)", test_strnlen_greater },
+		{ "\t when N < strlen(s)", test_strnlen_lesser },
+		{ "\t when N == strlen(s)", test_strnlen_equal },
+		{ "\t when N == 0", test_strnlen_zero },
+		{ "\t when N < 0",  test_strnlen_neg },
 		CU_TEST_INFO_NULL,
 	};
 
 	CU_TestInfo test_array_strcmp[] = {
-		{ "strcmp finds patterns that match", test_strcmp_match },
-		{ "strcmp returns correct value with patterns don't match", test_strcmp_nomatch },
+		{ "\t finds patterns that match", test_strcmp_match },
+		{ "\t returns correct value with patterns don't match", test_strcmp_nomatch },
 		CU_TEST_INFO_NULL,
 	};
 
 	CU_TestInfo test_array_strncmp[] = {
-		{ "strncmp finds patterns that match", test_strncmp_match },
-		{ "strncmp returns correct value with patterns don't match", test_strncmp_nomatch },
+		{ "\t finds patterns that match", test_strncmp_match },
+		{ "\t returns correct value with patterns don't match", test_strncmp_nomatch },
+		CU_TEST_INFO_NULL,
+	};
+
+	CU_TestInfo test_array_strcasecmp[] = {
+		{ "\t finds patterns that match", test_strcasecmp_match },
+		{ "\t return correct value with patterns that don't match", test_strcasecmp_mismatch },
+		{ "\t correctly ignores case", test_strcasecmp_mismatchcase },
 		CU_TEST_INFO_NULL,
 	};
 
@@ -165,6 +192,7 @@ int main(void)
 		{"strnlen", NULL, NULL, test_array_strnlen },
 		{"strcmp", NULL, NULL, test_array_strcmp },
 		{"strncmp", NULL, NULL, test_array_strncmp },
+		{"strcasecmp", NULL, NULL, test_array_strcasecmp },
 		CU_SUITE_INFO_NULL
 	};
 
