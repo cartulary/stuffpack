@@ -155,8 +155,8 @@ int main(void)
 	};
 
 	CU_TestInfo test_array_strncmp[] = {
-		{ "strcmp finds patterns that match", test_strncmp_match },
-		{ "strcmp returns correct value with patterns don't match", test_strncmp_nomatch },
+		{ "strncmp finds patterns that match", test_strncmp_match },
+		{ "strncmp returns correct value with patterns don't match", test_strncmp_nomatch },
 		CU_TEST_INFO_NULL,
 	};
 
