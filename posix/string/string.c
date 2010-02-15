@@ -66,22 +66,18 @@ int strcmp(const char* s1, const char* s2)
 
 int strncmp(const char* s1, const char* s2, size_t len)
 {
-	size_t pos;
-	for (pos = 0; s1[pos] != '\0' && s2[pos] != '\0' && pos < len; ++pos)
+	if (len == 0)
 	{
-		if (s1[pos] != s2[pos])
-		{
-			return s1[pos] - s2[pos];
-		}
+		return 0;
 	}
-	// we got to the end of a string and they are so far equal
-	if (len == pos)
-	{
-		++pos;
-	}
-	//we can't use the optimization we used for strcmp as we may have differen
-	// sized strings..
-	return s1[pos] - s2[pos];
+	size_t i = len;
+    do {
+        if (s1[i] == 0)
+            break;
+		if (s1[i] != s2[i])
+            return (s1[i] - s2[i]);
+    } while (++i <= len);
+    return (0);
 }
 
 /*
