@@ -107,6 +107,14 @@ void test_strcmp_nomatch(void)
 	CU_ASSERT(strcmp(s,s_extend) < 0);
 }
 
+void test_strcmp_case(void)
+{
+	const char* s = "abcd";
+	const char* x = "ABCD";
+	CU_ASSERT(strcmp(s,x) > 0);
+}
+
+
 void test_strncmp_match(void)
 {
 	const char* s = "abcd";
@@ -122,22 +130,33 @@ void test_strncmp_nomatch(void)
 	const char* s = "abcd";
 	const char* s_extend = "abcdefg";
 	const char* x = "defg";
-	CU_ASSERT(strcmp(s,x) < 0);
-	CU_ASSERT(strcmp(x,s) > 0);
+	CU_ASSERT(strncmp(s,x,6) < 0);
+	CU_ASSERT(strncmp(x,s,6) > 0);
 	CU_ASSERT(strncmp(s,s_extend,5) < 0 );
 }
 
 
 void test_strcasecmp_match(void)
 {
+	const char* s = "abcd";
+	const char* x = "abcd";
+	CU_ASSERT_EQUAL(0, strcasecmp(s,x));
 }
 
 void test_strcasecmp_mismatch(void)
 {
+	const char* s = "abcd";
+	const char* s_extend = "abcdefg";
+	const char* x = "defg";
+	CU_ASSERT(strcmp(s,x) < 0);
+	CU_ASSERT(strcmp(x,s) > 0);
 }
 
-void test_strcasecmp_mismatchcase(void)
+void test_strcasecmp_matchcase(void)
 {
+	const char* s = "abcd";
+	const char* x = "ABCD";
+	CU_ASSERT_EQUAL(0,strcasecmp(s,x));
 }
 
 int main(void)
@@ -171,6 +190,7 @@ int main(void)
 	CU_TestInfo test_array_strcmp[] = {
 		{ "\t finds patterns that match", test_strcmp_match },
 		{ "\t returns correct value with patterns don't match", test_strcmp_nomatch },
+		{ "\t does not ignore case", test_strcmp_case },
 		CU_TEST_INFO_NULL,
 	};
 
@@ -183,7 +203,7 @@ int main(void)
 	CU_TestInfo test_array_strcasecmp[] = {
 		{ "\t finds patterns that match", test_strcasecmp_match },
 		{ "\t return correct value with patterns that don't match", test_strcasecmp_mismatch },
-		{ "\t correctly ignores case", test_strcasecmp_mismatchcase },
+		{ "\t correctly ignores case", test_strcasecmp_matchcase },
 		CU_TEST_INFO_NULL,
 	};
 
