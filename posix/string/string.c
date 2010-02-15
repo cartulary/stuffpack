@@ -25,28 +25,25 @@ int strcasecmp(const char *s1, const char *s2)
 
 int strncasecmp(const char *s1, const char *s2, size_t len)
 {
-	size_t pos;
-	char c1;
-	char c2;
-	for (pos = 0; s1[pos] != '\0' && s2[pos] != '\0' && pos < len; ++pos)
+	size_t i = len;
+	if (len == 0)
 	{
-		c1 = tolower(s1[pos]);
-		c2 = tolower(s2[pos]);
+		return 0;
+	}
+    do {
+		char c1 = tolower(s1[i]);
+		char c2 = tolower(s2[i]);
+        if (c1 == 0)
+            break;
 		if (c1 != c2)
 		{
-			// return at the end
-			break;
+			/*
+				we don't use the tolower value on this part...
+			*/
+            return (s1[i] - s2[i]);
 		}
-	}
-	// we got to the end of a string and they are so far equal
-	if (len == pos)
-	{
-		++pos;
-	}
-	//we can't use the optimization we used for strcmp as we may have differen
-	// sized strings..
-	//Instead we use a "break" optimization
-	return c1 - c2;
+    } while (++i <= len);
+    return (0);
 }
 
 int strcmp(const char* s1, const char* s2)
@@ -66,11 +63,11 @@ int strcmp(const char* s1, const char* s2)
 
 int strncmp(const char* s1, const char* s2, size_t len)
 {
+	size_t i = len;
 	if (len == 0)
 	{
 		return 0;
 	}
-	size_t i = len;
     do {
         if (s1[i] == 0)
             break;
