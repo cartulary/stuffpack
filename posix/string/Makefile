@@ -12,9 +12,11 @@ CFLAGS+= -DREAL_STRING
 #compiling options
 .PHONY:	clean
 
-$(NAME): string.o doTest.c
+$(NAME): string.o doTest.o
 string.o: string.c
 string.c: string.h
+doTest.o: doTest.c
+doTest.c: doTest.h
 
 mycheck: lint
 	splint -strict-lib -showcolumn -showfunc -strict -isoreserved -namechecks *.c *.h
