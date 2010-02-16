@@ -6,7 +6,7 @@ class BinaryTree {
 	private:
 		unsigned int numnodes;
 		MultiNode<int>* head;
-		enum { LESS_PTR, MORE_PTR, PARENT_PTR };
+		enum { LESS_PTR, MORE_PTR};
 		void debugPrintTree_helper(MultiNode<int>* ptr, int tabs);
 		void clear_helper(MultiNode<int>* ptr);
 	protected:
