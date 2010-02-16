@@ -51,15 +51,24 @@ void test_btree_add(void)
 	CU_ASSERT_TRUE(t_bt->has(6));
 
 	CU_ASSERT_FALSE(t_bt->has(10));
+}
 
+void test_btree_numnodesAfterAdd(void)
+{
 	CU_ASSERT_EQUAL(t_bt->getNumNodes(), 7);
 }
 
 /* must be run AFTER _add */
 void test_btree_remove(void)
 {
+//	std::cout << "\n";
+//	t_bt->debugPrintTree();
+//	std::cout << "\n";
 	t_bt->remove(3);
 	t_bt->remove(7);
+//	std::cout << "\nXXXX\n";
+//	t_bt->debugPrintTree();
+//	std::cout << "\n";
 	CU_ASSERT_TRUE(t_bt->has(2));
 	CU_ASSERT_TRUE(t_bt->has(1));
 	CU_ASSERT_TRUE(t_bt->has(4));
@@ -69,6 +78,10 @@ void test_btree_remove(void)
 	CU_ASSERT_FALSE(t_bt->has(3));
 	CU_ASSERT_FALSE(t_bt->has(7));
 	CU_ASSERT_FALSE(t_bt->has(10));
+
+	/* 6 has no children so lets test to see if we removed it*/
+	t_bt->remove(6);
+	CU_ASSERT_FALSE(t_bt->has(6));
 }
 
 /* must be run AFTER _add and _remove */
@@ -97,16 +110,17 @@ int btree_doTest(void)
 	}
 
 	CU_TestInfo test_array_node[] = {
-		{ "MultiNode accepts multiple pointers correctly", test_node_ptrs },
-		{ "MultiNode accepts data correctly", test_node_data },
+		{ "\t accepts multiple pointers correctly", test_node_ptrs },
+		{ "\t accepts data correctly", test_node_data },
 	  	CU_TEST_INFO_NULL,
 	};
 
 	CU_TestInfo test_array_btree[] = {
-		{ "Binary Tree adds data correctly", test_btree_add },
-		{ "Binary Tree removes data correctly", test_btree_remove },
-		{ "Binary Tree reports the correct number of nodes", test_btree_numnodes },
-		{ "Binary Tree clears the tree on command", test_btree_clear },
+		{ "\t adds data correctly", test_btree_add },
+		{ "\t reports correct number of nodes after add", test_btree_numnodesAfterAdd },
+		{ "\t removes data correctly", test_btree_remove },
+		{ "\t reports the correct number of nodes", test_btree_numnodes },
+		{ "\t Tree clears the tree on command", test_btree_clear },
 	  	CU_TEST_INFO_NULL,
 	};
 
