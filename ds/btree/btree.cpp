@@ -7,6 +7,14 @@ BinaryTree::BinaryTree(): numnodes(0), head(NULL)
 
 void BinaryTree::add(int data)
 {
+	MultiNode<int>* newNode = new MultiNode<int>(3,data);
+	this->add(newNode);
+	++(this->numnodes);
+	return;
+}
+
+void BinaryTree::add(MultiNode<int>* node)
+{
 	/*
 		if data < head->data
 			attempt add at next proper location and loop
@@ -20,11 +28,11 @@ void BinaryTree::add(int data)
 	while (*current)
 	{
 		parent = *current;
-		if (data < (*current)->data)
+		if (node->data < (*current)->data)
 		{
 			current = & ((*current)->ptrs[LESS_PTR]);
 		}
-		else if (data > (*current)->data)
+		else if (node->data > (*current)->data)
 		{
 			current = & ((*current)->ptrs[MORE_PTR]);
 		}
@@ -37,10 +45,11 @@ void BinaryTree::add(int data)
 	/*
 		LESS, MORE, and PARRENT
 	*/
-	*current = new MultiNode<int>(3,data);
+	*current = node;
 	(*current)->ptrs[PARENT_PTR] = parent;
-	this->numnodes++;
+	//this->numnodes++;
 	return;
+
 }
 
 void BinaryTree::remove(const int data)
@@ -60,9 +69,28 @@ void BinaryTree::remove(const int data)
 		}
 		else
 		{
+			// CAN WE re-add stuff???
 			if (current->ptrs[LESS_PTR] || current->ptrs[MORE_PTR])
 			{
-				// We have got children so lets leave it alone now
+				if (current->ptrs[LESS_PTR] && current->ptrs[MORE_PTR])
+				{
+					//if we have BOTH children leave it alone FOR NOW
+				}
+				else
+				{
+					// if our only child is the same type as what our parent considers us move it....;
+					if (current->ptrs[which_child])
+					{
+						MultiNode<int>* moveMe = current->ptrs[which_child];
+						delete current;
+						parent->ptrs[which_child] = moveMe;
+					}
+					else
+					{
+					}
+					// ME is parent->ptrs[which_child];
+					// ME is current;
+				}
 			}
 			else
 			{
