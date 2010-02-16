@@ -142,32 +142,20 @@ void BinaryTree::debugPrintTree()
 void BinaryTree::debugPrintTree_helper(MultiNode<int>* ptr, int tabs)
 {
 	int count = tabs;
+	while (count--)
+	{
+		std::cout << "  |";
+	}
+	std::cout << "- ";
 	if (ptr)
 	{
 		std::cout << ptr->data;
 		std::cout << "\n";
-
-		count = tabs;
-		while (count--)
-		{
-			std::cout << "\t";
-		}
 		debugPrintTree_helper(ptr->ptrs[LESS_PTR], tabs+1);
-
-		count = tabs;
-		while (count--)
-		{
-			std::cout << "\t";
-		}
 		debugPrintTree_helper(ptr->ptrs[MORE_PTR], tabs+1);
 	}
 	else
 	{
-		count = tabs;
-		while (count--)
-		{
-			std::cout << "\t";
-		}
 		std::cout << "NULL";
 	}
 	std::cout << "\n";
