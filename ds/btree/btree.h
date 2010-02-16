@@ -1,6 +1,7 @@
 #ifndef BTREE_H
 #define BTREE_H
 #include "node.h"
+#include "../fifo/DuplicateEntry.h"
 class BinaryTree {
 	private:
 		unsigned int numnodes;

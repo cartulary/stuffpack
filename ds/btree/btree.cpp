@@ -13,6 +13,11 @@ void BinaryTree::add(int data)
 	return;
 }
 
+/*
+	This method preserves and children that the node may have.
+	Useful for a "re-add" in ->remove(). I'd rather not walk up and then walk down
+	doubling lots of code. Does NOT add counter as it is meant to be used with existing nodes
+*/
 void BinaryTree::add(MultiNode<int>* node)
 {
 	/*
@@ -69,37 +74,23 @@ void BinaryTree::remove(const int data)
 		}
 		else
 		{
-			// CAN WE re-add stuff???
-			if (current->ptrs[LESS_PTR] || current->ptrs[MORE_PTR])
+			MultiNode<int>* childLess;
+			MultiNode<int>* childMore;
+			childLess = current->ptrs[LESS_PTR];
+			childMore = current->ptrs[MORE_PTR];
+			delete current;
+			if (parent)
 			{
-				if (current->ptrs[LESS_PTR] && current->ptrs[MORE_PTR])
-				{
-					//if we have BOTH children leave it alone FOR NOW
-				}
-				else
-				{
-					// if our only child is the same type as what our parent considers us move it....;
-					if (current->ptrs[which_child])
-					{
-						MultiNode<int>* moveMe = current->ptrs[which_child];
-						delete current;
-						parent->ptrs[which_child] = moveMe;
-					}
-					else
-					{
-					}
-					// ME is parent->ptrs[which_child];
-					// ME is current;
-				}
+				parent->ptrs[which_child] = NULL;
 			}
-			else
+			--(this->numnodes);
+			if (childLess)
 			{
-				delete current;
-				if (parent)
-				{
-					parent->ptrs[which_child] = NULL;
-				}
-				this->numnodes--;
+				this->add(childLess);
+			}
+			if (childMore)
+			{
+				this->add(childMore);
 			}
 			return;
 		}
