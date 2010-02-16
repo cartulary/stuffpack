@@ -8,6 +8,10 @@ class BinaryTree {
 		enum { LESS_PTR, MORE_PTR, PARENT_PTR };
 		void debugPrintTree_helper(MultiNode<int>* ptr, int tabs);
 		void clear_helper(MultiNode<int>* ptr);
+	protected:
+		// this is special type of add for "re-adding" a node. It is used by the
+		// remove function to avoid repeating functionality
+		void add(MultiNode<int>* data);
 	public:
 		BinaryTree();
 		//~BinaryTree();
