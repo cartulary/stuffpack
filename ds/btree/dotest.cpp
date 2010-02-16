@@ -87,8 +87,8 @@ void test_btree_remove(void)
 /* must be run AFTER _add and _remove */
 void test_btree_numnodes(void)
 {
-	/* we just added 7 and removed 2 so we should have 5 nodes now */
-	CU_ASSERT_EQUAL(t_bt->getNumNodes(), 5);
+	/* we just added 7 and removed 3 so we should have 4 nodes now */
+	CU_ASSERT_EQUAL(t_bt->getNumNodes(), 4);
 }
 
 void test_btree_clear(void)
