@@ -7,7 +7,7 @@ BinaryTree::BinaryTree(): numnodes(0), head(NULL)
 
 void BinaryTree::add(int data)
 {
-	MultiNode<int>* newNode = new MultiNode<int>(3,data);
+	MultiNode<int>* newNode = new MultiNode<int>(2,data);
 	this->add(newNode);
 	++(this->numnodes);
 	return;
@@ -51,7 +51,6 @@ void BinaryTree::add(MultiNode<int>* node)
 		LESS, MORE, and PARRENT
 	*/
 	*current = node;
-	(*current)->ptrs[PARENT_PTR] = parent;
 	//this->numnodes++;
 	return;
 

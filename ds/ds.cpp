@@ -16,7 +16,6 @@
 int main(void)
 {
 	std::cout << "Test results return code is: " << btree_doTest() << "\n";
-	return 0;
 	std::cout << "Test results return code is: " << fifo_doTest() << "\n";
 	return 0;
 }
