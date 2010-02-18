@@ -14,4 +14,3 @@ template <class T> MultiNode<T>::~MultiNode()
 {
 	delete[] this->ptrs;
 }
-

@@ -1,7 +1,7 @@
 #include "dotest.h"
-
+#include "../fifo/DuplicateEntry.h"
 MultiNode<int>* t_mn;
-BinaryTree* t_bt;
+BinaryTree<int>* t_bt;
 
 void test_node_ptrs(void)
 {
@@ -19,7 +19,7 @@ void test_node_data(void)
 
 int suite_btree_init(void)
 {
-	t_bt = new BinaryTree();
+	t_bt = new BinaryTree<int>();
 	return 0;
 }
 
@@ -82,6 +82,12 @@ void test_btree_remove(void)
 	/* 6 has no children so lets test to see if we removed it*/
 	t_bt->remove(6);
 	CU_ASSERT_FALSE(t_bt->has(6));
+
+//	This test crashes and therefore there is something wrong.
+/*	t_bt->clear();
+	t_bt->add(1);
+	t_bt->remove(1);
+	CU_ASSERT_FALSE(t_bt->has(1)); */
 }
 
 /* must be run AFTER _add and _remove */
@@ -99,6 +105,32 @@ void test_btree_clear(void)
 	CU_ASSERT_FALSE(t_bt->has(2));
 	CU_ASSERT_FALSE(t_bt->has(3));
 	CU_ASSERT_FALSE(t_bt->has(10));
+}
+
+void test_btree_exception(void)
+{
+	t_bt->clear();
+	bool did_catch_duplicate_exception = false;
+    try
+    {
+        t_bt->add(1000);
+        t_bt->add(1000);
+    }
+    catch(DuplicateEntryException& e)
+    {
+        did_catch_duplicate_exception = true;
+    }
+    CU_ASSERT_TRUE(did_catch_duplicate_exception);
+	bool did_catch_nonexist_exception = false;
+    try
+    {
+        t_bt->remove(12345);
+    }
+    catch(DataNotExistException& e)
+    {
+        did_catch_nonexist_exception = true;
+    }
+    CU_ASSERT_TRUE(did_catch_nonexist_exception);
 }
 
 int btree_doTest(void)
@@ -120,7 +152,8 @@ int btree_doTest(void)
 		{ "\t reports correct number of nodes after add", test_btree_numnodesAfterAdd },
 		{ "\t removes data correctly", test_btree_remove },
 		{ "\t reports the correct number of nodes", test_btree_numnodes },
-		{ "\t Tree clears the tree on command", test_btree_clear },
+		{ "\t clears the tree on command", test_btree_clear },
+		{ "\t correctly throws exceptions when required", test_btree_exception },
 	  	CU_TEST_INFO_NULL,
 	};
 
