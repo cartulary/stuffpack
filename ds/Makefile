@@ -7,9 +7,12 @@ FOLDERS=fifo btree
 
 ds: subs ds.cpp
 
-subs:
+subs: .MAKE fifo/fifo.o fifo/lifo.o fifo/sorted.o btree/btree.o fifo/dotest.o btree/dotest.o
 .for ITEM in $(FOLDERS)
 	make -C $(ITEM) mall
 .endfor
 
-cleanall:
+cleanall: coreclean objclean nameclean
+.for ITEM in $(FOLDERS)
+	make -C $(ITEM) clean
+.endfor

@@ -204,7 +204,6 @@ LL_TEMPLATE void LinkedList<T>::swap(unsigned int A, unsigned int B)
 	{
 		std::swap(A,B);
 	}
-	int count = B;
 	while (B)
 	{
 		B--;

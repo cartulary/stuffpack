@@ -1,13 +1,13 @@
 #include "btree.h"
 #include <iostream>
 
-BinaryTree::BinaryTree(): numnodes(0), head(NULL)
+BTREE_TEMPLATE BinaryTree<T>::BinaryTree(): numnodes(0), head(NULL)
 {
 }
 
-void BinaryTree::add(int data)
+BTREE_TEMPLATE void BinaryTree<T>::add(T data)
 {
-	MultiNode<int>* newNode = new MultiNode<int>(2,data);
+	MultiNode<T>* newNode = new MultiNode<T>(2,data);
 	this->add(newNode);
 	++(this->numnodes);
 	return;
@@ -18,7 +18,7 @@ void BinaryTree::add(int data)
 	Useful for a "re-add" in ->remove(). I'd rather not walk up and then walk down
 	doubling lots of code. Does NOT add counter as it is meant to be used with existing nodes
 */
-void BinaryTree::add(MultiNode<int>* node)
+BTREE_TEMPLATE void BinaryTree<T>::add(MultiNode<T>* node)
 {
 	/*
 		if data < head->data
@@ -28,11 +28,9 @@ void BinaryTree::add(MultiNode<int>* node)
 		else
 			throw exception dup data
 	*/
-	MultiNode<int>** current = &head;
-	MultiNode<int>* parent = NULL;
+	MultiNode<T>** current = &head;
 	while (*current)
 	{
-		parent = *current;
 		if (node->data < (*current)->data)
 		{
 			current = & ((*current)->ptrs[LESS_PTR]);
@@ -43,24 +41,26 @@ void BinaryTree::add(MultiNode<int>* node)
 		}
 		else
 		{
-			//throw duplicateData exception
+			throw DuplicateEntryException();
 			return;
 		}
 	}
-	/*
-		LESS, MORE, and PARRENT
-	*/
 	*current = node;
-	//this->numnodes++;
 	return;
-
 }
 
-void BinaryTree::remove(const int data)
+BTREE_TEMPLATE void BinaryTree<T>::remove(const T data)
 {
-	MultiNode<int>* current = head;
-	MultiNode<int>* parent = NULL;
-	int which_child;
+	if (!head)
+	{
+		return;
+	}
+	MultiNode<T>* current = head;
+	MultiNode<T>* parent = NULL;
+	/*
+		if we are the head and we match we may have issues...
+	*/
+	unsigned int which_child;
 	while (current)
 	{
 		if (data < current->data)
@@ -73,8 +73,8 @@ void BinaryTree::remove(const int data)
 		}
 		else
 		{
-			MultiNode<int>* childLess;
-			MultiNode<int>* childMore;
+			MultiNode<T>* childLess;
+			MultiNode<T>* childMore;
 			childLess = current->ptrs[LESS_PTR];
 			childMore = current->ptrs[MORE_PTR];
 			delete current;
@@ -83,6 +83,9 @@ void BinaryTree::remove(const int data)
 				parent->ptrs[which_child] = NULL;
 			}
 			--(this->numnodes);
+			//instead of readding we could go down->right and then go all the way left.
+			//this way we get a good leaf node to move up to our old spot...
+			MultiNode<T>* lastLeafParent = current->ptrs[MORE_PTR];
 			if (childLess)
 			{
 				this->add(childLess);
@@ -96,13 +99,14 @@ void BinaryTree::remove(const int data)
 		parent = current;
 		current = current->ptrs[which_child];
 	}
+	throw DataNotExistException();
 	/* We got to a null node so we want to throw an exception*/
 	return;
 }
 
-bool BinaryTree::has(int data)
+BTREE_TEMPLATE bool BinaryTree<T>::has(T data)
 {
-	MultiNode<int>* current = head;
+	MultiNode<T>* current = head;
 	while (current)
 	{
 		if (data < current->data)
@@ -122,7 +126,7 @@ bool BinaryTree::has(int data)
 	return false;
 }
 
-void BinaryTree::clear()
+BTREE_TEMPLATE void BinaryTree<T>::clear()
 {
 	//recurseivly clear bottom row
 	if (!head)
@@ -134,7 +138,7 @@ void BinaryTree::clear()
 	numnodes = 0;
 }
 
-void BinaryTree::clear_helper(MultiNode<int>* ptr)
+BTREE_TEMPLATE void BinaryTree<T>::clear_helper(MultiNode<T>* ptr)
 {
 	if (ptr->ptrs[LESS_PTR])
 	{
@@ -147,17 +151,17 @@ void BinaryTree::clear_helper(MultiNode<int>* ptr)
 	delete ptr;
 }
 
-unsigned int BinaryTree::getNumNodes()
+BTREE_TEMPLATE unsigned int BinaryTree<T>::getNumNodes()
 {
 	return this->numnodes;
 }
 
-void BinaryTree::debugPrintTree()
+BTREE_TEMPLATE void BinaryTree<T>::debugPrintTree()
 {
 	debugPrintTree_helper(head,0);
 }
 
-void BinaryTree::debugPrintTree_helper(MultiNode<int>* ptr, int tabs)
+BTREE_TEMPLATE void BinaryTree<T>::debugPrintTree_helper(MultiNode<T>* ptr, int tabs)
 {
 	int count = tabs;
 	while (count--)
