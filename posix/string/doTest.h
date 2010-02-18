@@ -26,4 +26,9 @@ void test_strncmp_nomatch(void);
 
 void test_strcasecmp_match(void);
 void test_strcasecmp_mismatch(void);
-void test_strcasecmp_mismatchcase(void);
+void test_strcasecmp_matchcase(void);
+
+void test_strncasecmp_match(void);
+void test_strncasecmp_mismatch(void);
+void test_strncasecmp_matchcase(void);
+
