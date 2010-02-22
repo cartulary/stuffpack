@@ -10,7 +10,7 @@
 
 int main(int argc, char* argv[])
 {
-	char** files = malloc(argc * sizeof(char*)) ;
+	char** files = calloc(argc,sizeof(char*));
 	int i;
 	int len;
 	bool debug = FALSE;
@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
 			if (strcmp(argv[i],"-debug"))
 			{
 				len = strlen(argv[i]);
-				files[numfiles] = malloc(len * sizeof(files[numfiles]));
+				files[numfiles] = calloc(len,sizeof(files[numfiles]));
 				strcpy(files[numfiles],argv[i]);
 				++numfiles;
 			}
