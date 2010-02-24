@@ -73,26 +73,29 @@ BTREE_TEMPLATE void BinaryTree<T>::remove(const T data)
 		}
 		else
 		{
-			MultiNode<T>* childLess;
-			MultiNode<T>* childMore;
-			childLess = current->ptrs[LESS_PTR];
-			childMore = current->ptrs[MORE_PTR];
+			MultiNode<T>* children[2];
+			children[LESS_PTR] = current->ptrs[LESS_PTR];
+			children[MORE_PTR] = current->ptrs[MORE_PTR];
 			delete current;
+
+			/* We don't want to lose our children so
+			 *	for whichever type of account which_child is move it up.
+			 * for the other one add it up ....
+			 *
+			*/
 			if (parent)
 			{
-				parent->ptrs[which_child] = NULL;
+				parent->ptrs[which_child] = children[which_child];
+			}
+			else
+			{
+				this->head = children[which_child];
 			}
 			--(this->numnodes);
-			//instead of readding we could go down->right and then go all the way left.
-			//this way we get a good leaf node to move up to our old spot...
-			MultiNode<T>* lastLeafParent = current->ptrs[MORE_PTR];
-			if (childLess)
+			// use the "!" to invert the selection from 0 to 1 or the op.
+			if (children[!which_child])
 			{
-				this->add(childLess);
-			}
-			if (childMore)
-			{
-				this->add(childMore);
+				this->add(children[!which_child]);
 			}
 			return;
 		}
@@ -161,7 +164,7 @@ BTREE_TEMPLATE void BinaryTree<T>::debugPrintTree()
 	debugPrintTree_helper(head,0);
 }
 
-BTREE_TEMPLATE void BinaryTree<T>::debugPrintTree_helper(MultiNode<T>* ptr, int tabs)
+BTREE_TEMPLATE void BinaryTree<T>::debugPrintTree_helper(MultiNode<T>* ptr, unsigned int tabs)
 {
 	int count = tabs;
 	while (count--)
@@ -171,8 +174,7 @@ BTREE_TEMPLATE void BinaryTree<T>::debugPrintTree_helper(MultiNode<T>* ptr, int 
 	std::cout << "- ";
 	if (ptr)
 	{
-		std::cout << ptr->data;
-		std::cout << "\n";
+		std::cout << ptr->data << "\n";
 		debugPrintTree_helper(ptr->ptrs[LESS_PTR], tabs+1);
 		debugPrintTree_helper(ptr->ptrs[MORE_PTR], tabs+1);
 	}

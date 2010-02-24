@@ -11,7 +11,7 @@ class BinaryTree {
 		unsigned int numnodes;
 		MultiNode<T>* head;
 		enum { LESS_PTR, MORE_PTR};
-		void debugPrintTree_helper(MultiNode<T>* ptr, int tabs);
+		void debugPrintTree_helper(MultiNode<T>* ptr, unsigned int tabs);
 		void clear_helper(MultiNode<T>* ptr);
 	protected:
 		// this is special type of add for "re-adding" a node. It is used by the
