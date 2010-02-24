@@ -1,5 +1,7 @@
 #include "doTest.h"
 
+#define CU_ASSERT_ZERO(x) CU_ASSERT_EQUAL(0,x)
+
 void test_strlen_strings(void)
 {
 	const char* s = "abcd";
@@ -136,6 +138,25 @@ void test_strcasecmp_matchcase(void)
 	CU_ASSERT_EQUAL(0,strcasecmp(s,x));
 }
 
+void test_strncasecmp_match(void)
+{
+	const char* abcd = "abcd";
+	const char* abcd2 = "abcd";
+	const char* abcdefg = "abcdefg";
+	const char* ABCDefg = "ABCDefg";
+	const char* AbCd = "AbCd";
+	CU_ASSERT_EQUAL(0, strncasecmp(abcd,abcd,4));
+	CU_ASSERT_EQUAL(0, strncasecmp(abcd,abcd2,4));
+	CU_ASSERT_EQUAL(0, strncasecmp(abcd,abcdefg,4));
+	CU_ASSERT_ZERO(strncasecmp(abcd,ABCDefg,4));
+	CU_ASSERT_ZERO(strncasecmp(abcdefg,ABCDefg,10));
+	CU_ASSERT_ZERO(strncasecmp(abcd,AbCd,100));
+}
+
+//void test_strncasecmp_mismatch(void);
+//void test_strncasecmp_matchcase(void);
+
+
 int main(void)
 {
 #ifdef REAL_STRING == 1
@@ -184,12 +205,20 @@ int main(void)
 		CU_TEST_INFO_NULL,
 	};
 
+	CU_TestInfo test_array_strncasecmp[] = {
+		{ "\t finds patterns that match", test_strncasecmp_match },
+//		{ "\t return correct value with patterns that don't match", test_strcasecmp_mismatch },
+//		{ "\t correctly ignores case", test_strcasecmp_matchcase },
+		CU_TEST_INFO_NULL,
+	};
+
 	CU_SuiteInfo suites[] = {
 		{"strlen", NULL, NULL, test_array_strlen },
 		{"strnlen", NULL, NULL, test_array_strnlen },
 		{"strcmp", NULL, NULL, test_array_strcmp },
 		{"strncmp", NULL, NULL, test_array_strncmp },
 		{"strcasecmp", NULL, NULL, test_array_strcasecmp },
+		{"strncasecmp", NULL, NULL, test_array_strncasecmp },
 		CU_SUITE_INFO_NULL
 	};
 
