@@ -9,7 +9,7 @@ CFLAGS += $(EXTRA_CFLAGS)
 EXTRA_LDFLAGS != fltk-config --use-forms --ldflags --libs
 LDFLAGS += $(EXTRA_LDFLAGS)
 
-main:
+main: inputWindow.cpp ../hanoi.cpp main.cpp
 	fltk2-config --compile main.cpp
 
 #main: inputWindow.cpp ../hanoi.cpp main.cpp

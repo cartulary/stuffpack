@@ -18,7 +18,7 @@ class SliderWindow : public Window
 	Button done_button;
 
 	static const int min_rings = 1;
-	static const int max_rings = 10;
+	static const int max_rings = 120;
 
 	int hanoiVal;
 
