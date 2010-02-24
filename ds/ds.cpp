@@ -12,6 +12,7 @@
 #include "fifo/printit.cpp"
 #include "fifo/ll.cpp"
 #include "fifo/sorted.cpp"
+#include "btree/DataNotExistException.cpp"
 
 int main(void)
 {
