@@ -14,6 +14,7 @@ ARGV.each {
 files.each {
 	|curfile|
 	begin 
+#I could also use File.exist?(file_name)
 		File.new(curfile)
 		$stderr.puts("fatal error: " + curfile + " exists")
 	rescue
