@@ -11,9 +11,3 @@ LDFLAGS += $(EXTRA_LDFLAGS)
 
 main: inputWindow.cpp ../hanoi.cpp main.cpp
 	fltk2-config --compile main.cpp
-
-#main: inputWindow.cpp ../hanoi.cpp main.cpp
-
-#inputWindow.o:
-
-clean: nameclean coreclean objclean
