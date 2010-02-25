@@ -216,7 +216,7 @@ long int getInteger(int base, int input_mode)
 /* Retrieves character input from the user, up to the specified maximum quantity. */
 char* getcharcters(int max)
 {
-      char* str = (char*)malloc(max*sizeof(int)+1);
+      char* str = (char*)calloc(max, sizeof(int)+1);
       char ch;
       int i = 0;
 

@@ -37,7 +37,7 @@ int main (int argc, char* argv[])
 char* getcharcters(int max)
 {
 	// dynamically allocate memory; convert to "new" eventually
-      char* str = (char*)malloc(max*sizeof(int)+1);
+      char* str = (char*)calloc(max,sizeof(int)+1);
       char ch;
       int i = 0;
 
