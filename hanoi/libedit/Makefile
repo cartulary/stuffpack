@@ -2,6 +2,7 @@ DIST = text
 DISTPATH = text
 LANG = c++
 NAME=main
+USE_EDITLIB=yes
 .include	<../Makefile.inc>
 
 main:	../hanoi.cpp functions.o main.cpp

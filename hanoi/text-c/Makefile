@@ -1,7 +1,7 @@
 DIST = text
 DISTPATH = text-c
 LANG = c
-COMPILER=clang
+NAME=hanoi
 .include <../Makefile.inc>
 
 hanoi: functions.o hanoi.c

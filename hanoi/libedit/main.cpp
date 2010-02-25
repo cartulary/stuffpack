@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <limits.h>
+//#include <histedit.h>
 
 #include "functions.cpp"
 #include "../hanoi.cpp"
