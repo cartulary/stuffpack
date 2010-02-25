@@ -46,5 +46,9 @@ long int getinteger(int base)
 		}
 	}
 
+	//cleanup
+	history_end(hist);
+	el_end(el);
+
 	return n;
 }
