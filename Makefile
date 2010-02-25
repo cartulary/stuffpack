@@ -11,6 +11,7 @@ USE_NCURSES?=no
 USE_GMP?=no
 USE_HELLO?=no
 USE_CUNIT?=no
+USE_EDITLIB?=no
 
 CFLAGS = -g3 -pipe
 .ifdef $(DEBUG) == on
@@ -47,25 +48,36 @@ CFLAGS += -Winline -Wmissing-noreturn -Wpacked -Wpadded -Wredundant-decls
 CFLAGS += -isystem /usr/local/include
 LDFLAGS = -L/usr/local/lib
 
+WANT_LIBS=
+
 .if $(USE_HELLO) == yes
 CFLAGS += -I../libhello/ -I../../libhello
-LDFLAGS += -L../libhello/ -L../../libhello -lhello
+LDFLAGS += -L../libhello/ -L../../libhello
+WANT_LIBS += hello
 .endif
 
 .if $(USE_NCURSES) == yes
-LDFLAGS += -lncurses
+WANT_LIBS += ncurses
 .endif
 
 .if $(USE_CUNIT) == yes
-LDFLAGS += -lcunit
+WANT_LIBS += cunit curses
 .endif
 
 .if $(USE_GMP) == yes
 .if $(LANG) == c++
-LDFLAGS += -lgmpxx
+WANT_LIBS += gmpxx
 .endif
-LDFLAGS += -lgmp
+WANT_LIBS += gmp
 .endif
+
+.if $(USE_EDITLIB) == yes
+WANT_LIBS	+=	edit termcap
+.endif
+
+.for LIB in $(WANT_LIBS)
+LDFLAGS += -l$(LIB)
+.endfor 
 
 
 .ifdef $(COMPILER) == clang && $(LANG) == c
@@ -95,7 +107,7 @@ rebuild: .NOTMAIN .PHONY clean $(NAME)
 check: .NOTMAIN
 	## only run this on C++ code
 .if $(LANG) == c++
-	cppcheck -v -a -s --unused-functions .
+	cppcheck -v -a -s --unused-functions *.cpp
 .endif
 .if $(LANG) == c
 	splint -strict-lib -showcolumn -showfunc -strict *.c *.h
