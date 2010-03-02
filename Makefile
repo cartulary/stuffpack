@@ -12,6 +12,8 @@ USE_GMP?=no
 USE_HELLO?=no
 USE_CUNIT?=no
 USE_EDITLIB?=no
+USE_LIBMAGIC?=no
+USE_FLTK?=no
 
 CFLAGS = -g3 -pipe
 .ifdef $(DEBUG) == on
@@ -73,6 +75,18 @@ WANT_LIBS += gmp
 
 .if $(USE_EDITLIB) == yes
 WANT_LIBS	+=	edit termcap
+.endif
+
+.if $(USE_LIBMAGIC) == yes
+WANT_LIBS += magic
+.endif
+
+.if $(USE_FLTK) == yes
+EXTRA_CFLAGS != fltk-config --use-forms --cxxflags --libs
+CFLAGS += $(EXTRA_CFLAGS)
+
+EXTRA_LDFLAGS != fltk-config --use-forms --ldflags --libs
+LDFLAGS += $(EXTRA_LDFLAGS)
 .endif
 
 .for LIB in $(WANT_LIBS)
