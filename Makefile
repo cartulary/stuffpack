@@ -123,10 +123,10 @@ check: .NOTMAIN
 .if $(LANG) == c++
 	cppcheck -v -a -s --unused-functions *.cpp
 .endif
+## only run these on C code....
 .if $(LANG) == c
 	splint -strict-lib -showcolumn -showfunc -strict *.c *.h
 	lint -aabcehprsxH -I /usr/local/include/ *.c *.h
 .endif
 	## run on all code...
-	#rats -rw3 *
-	## only run these on C code....
+	rats -rw3 *
