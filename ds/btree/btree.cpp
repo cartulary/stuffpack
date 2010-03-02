@@ -18,7 +18,12 @@ BTREE_TEMPLATE void BinaryTree<T>::add(T data)
 	Useful for a "re-add" in ->remove(). I'd rather not walk up and then walk down
 	doubling lots of code. Does NOT add counter as it is meant to be used with existing nodes
 */
-BTREE_TEMPLATE void BinaryTree<T>::add(MultiNode<T>* node)
+BTREE_TEMPLATE inline void BinaryTree<T>::add(MultiNode<T>* node)
+{
+	addAt(node,this->head);
+}
+
+BTREE_TEMPLATE void BinaryTree<T>::addAt(MultiNode<T>* node, MultiNode<T> * &loc)
 {
 	/*
 		if data < head->data
@@ -28,24 +33,38 @@ BTREE_TEMPLATE void BinaryTree<T>::add(MultiNode<T>* node)
 		else
 			throw exception dup data
 	*/
-	MultiNode<T>** current = &head;
-	while (*current)
+
+	if (!loc)
 	{
-		if (node->data < (*current)->data)
+		loc = node;
+		return;
+	}
+	childType which_child;
+
+	MultiNode<T>* current = loc;
+	while (current)
+	{
+		if (node->data < current->data)
 		{
-			current = & ((*current)->ptrs[LESS_PTR]);
+			which_child = LESS_PTR;
 		}
-		else if (node->data > (*current)->data)
+		else if (node->data > current->data)
 		{
-			current = & ((*current)->ptrs[MORE_PTR]);
+			which_child = MORE_PTR;
 		}
 		else
 		{
 			throw DuplicateEntryException();
 			return;
 		}
+
+		if (!current->ptrs[which_child])
+		{
+			break;
+		}
+		current = current->ptrs[which_child];
 	}
-	*current = node;
+	current->ptrs[which_child] = node;
 	return;
 }
 
@@ -60,7 +79,7 @@ BTREE_TEMPLATE void BinaryTree<T>::remove(const T data)
 	/*
 		if we are the head and we match we may have issues...
 	*/
-	unsigned int which_child;
+	childType which_child;
 	while (current)
 	{
 		if (data < current->data)
@@ -95,7 +114,7 @@ BTREE_TEMPLATE void BinaryTree<T>::remove(const T data)
 			// use the "!" to invert the selection from 0 to 1 or the op.
 			if (children[!which_child])
 			{
-				this->add(children[!which_child]);
+				this->addAt(children[!which_child], parent);
 			}
 			return;
 		}
