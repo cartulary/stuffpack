@@ -3,6 +3,6 @@
 #include "ll.h"
 template <class T> class Sorted : public LinkedList<T> {
         public:
-                void push(T data);
+                void push(const T data);
 };
 #endif

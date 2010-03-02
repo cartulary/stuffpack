@@ -167,6 +167,9 @@ int btree_doTest(void)
 
 	/* Run all tests using the CUnit Basic interface */
 	CU_basic_set_mode(CU_BRM_VERBOSE);
+
+// BROKEN PRINTING
+//	t_bt->debugPrintTree();
 	CU_basic_run_tests();
 	CU_cleanup_registry();
 	return CU_get_error();

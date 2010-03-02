@@ -284,6 +284,23 @@ void test_sorted_duplicate(void)
 	CU_ASSERT_TRUE(did_catch_duplicate_exception);
 }
 
+void test_ll_copy(void)
+{
+	myll.clear();
+	myll.push(1);
+	CU_ASSERT_EQUAL(1,myll.read(0));
+	LinkedList<int> icopyll = myll;
+	CU_ASSERT_EQUAL(1,myll.read(0));
+	CU_ASSERT_EQUAL(1,icopyll.read(0));
+
+	icopyll.remove(0);
+	CU_ASSERT_TRUE(myll.has(1));
+	CU_ASSERT_FALSE(icopyll.has(1));
+
+/*	LinkedList<int> copyll;
+	copyll = myll; */
+
+}
 
 int fifo_doTest(void)
 {
@@ -317,6 +334,7 @@ int fifo_doTest(void)
 		{ "\t clear() clears all elements", test_ll_clear },
 		{ "\t exceptions work", test_ll_except },
 		{ "\t swapping works", test_ll_swap },
+		{ "\t copying array works; modifying new data does not affect old data", test_ll_copy },
 	  	CU_TEST_INFO_NULL,
 	};
 
