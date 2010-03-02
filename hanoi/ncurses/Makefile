@@ -1,9 +1,10 @@
 DIST = ncurses
 DISTPATH = ncurses
 LANG = c++
+USE_NCURSES=yes
 .include	<../Makefile.inc>
-LDFLAGS += -lncurses 
 
 main:	../hanoi.cpp functions.o main.cpp
 
-functions.o: functions.h
+functions.o: functions.cpp
+functions.cpp: functions.h

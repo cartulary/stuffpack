@@ -1,4 +1,4 @@
-#include "functions.h"
+#include "../functions.h"
 
 /* Retrieves a positive integer from the user. */
 long int getinteger(int base)
