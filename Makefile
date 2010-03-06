@@ -58,6 +58,10 @@ CFLAGS = -std=c99 -pedantic-errors $(INCLUDE_FILES) -Wall
 CFLAGS += -Wall -Wextra -Wendif-labels -Wunused
 LDFLAGS = -L/usr/local/lib
 .endif
+.ifdef $(COMPILER) == clang && $(LANG) != c
+.error clang can't be used with non C sources
+.endif
+
 
 WANT_LIBS=
 
