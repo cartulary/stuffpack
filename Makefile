@@ -34,7 +34,7 @@ CC = llvm-gcc
 CFLAGS += -g
 CFLAGS += -std=c99 
 CFLAGS += -Wimplicit-function-declaration -Wbad-function-cast -Wdeclaration-after-statement
-CFLAGS += -Wstrict-prototypes -Wold-style-definition -Wmissing-prototypes -Wmissing-declarations
+CFLAGS += -Wstrict-prototypes -Wold-style-definition -Wmissing-prototypes -Wmissing-declarations -Wnested-externs
 .endif
 
 # set the global flags
@@ -43,13 +43,21 @@ CFLAGS += -Wformat=2 -Wformat-y2k -Wformat-nonliteral -Wformat-security
 CFLAGS += -Wunused -Wunused-parameter -Wswitch-default -Wswitch-enum 
 CFLAGS += -Winit-self -Wmissing-include-dirs -Wpointer-arith -Wconversion
 CFLAGS += -Wfloat-equal -Wundef -Wshadow -Wcast-qual -Wcast-align -Wwrite-strings
-CFLAGS += -fabi-version=0 -funroll-loops
+CFLAGS += -fabi-version=0 -funroll-loops 
 CFLAGS += -Winline -Wmissing-noreturn -Wpacked -Wpadded -Wredundant-decls
+CFLAGS += -Wlogical-op -Wnormalized=nfc
 
 INCLUDE_FILES = -I/usr/local/include
 # Default includes...
 CFLAGS += -isystem /usr/local/include
 LDFLAGS = -L/usr/local/lib
+
+.ifdef $(COMPILER) == clang && $(LANG) == c
+CC = clang
+CFLAGS = -std=c99 -pedantic-errors $(INCLUDE_FILES) -Wall
+CFLAGS += -Wall -Wextra -Wendif-labels -Wunused
+LDFLAGS = -L/usr/local/lib
+.endif
 
 WANT_LIBS=
 
@@ -94,14 +102,6 @@ LDFLAGS += $(EXTRA_LDFLAGS)
 .for LIB in $(WANT_LIBS)
 LDFLAGS += -l$(LIB)
 .endfor 
-
-
-.ifdef $(COMPILER) == clang && $(LANG) == c
-CC = clang
-CFLAGS = -std=c99 -pedantic-errors $(INCLUDE_FILES) -Wall
-CFLAGS += -Wall -Wextra -Wendif-labels -Wunused
-LDFLAGS = -L/usr/local/lib
-.endif
 
 PREFIX = /usr/local
 
