@@ -54,8 +54,9 @@ LDFLAGS = -L/usr/local/lib
 
 .ifdef $(COMPILER) == clang && $(LANG) == c
 CC = clang
-CFLAGS = -std=c99 -pedantic-errors $(INCLUDE_FILES) -Wall
-CFLAGS += -Wall -Wextra -Wendif-labels -Wunused
+CFLAGS = -std=c99 -pedantic -pedantic-errors $(INCLUDE_FILES)
+CFLAGS += -Wall -Wextra -Wunused
+CFLAGS += -Wextra-tokens -Wformat -Wcomment -Wendif-labels
 LDFLAGS = -L/usr/local/lib
 .endif
 .ifdef $(COMPILER) == clang && $(LANG) != c
