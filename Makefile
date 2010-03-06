@@ -46,6 +46,7 @@ CFLAGS += -Wfloat-equal -Wundef -Wshadow -Wcast-qual -Wcast-align -Wwrite-string
 CFLAGS += -fabi-version=0 -funroll-loops
 CFLAGS += -Winline -Wmissing-noreturn -Wpacked -Wpadded -Wredundant-decls
 
+INCLUDE_FILES = -I/usr/local/include
 # Default includes...
 CFLAGS += -isystem /usr/local/include
 LDFLAGS = -L/usr/local/lib
@@ -53,7 +54,8 @@ LDFLAGS = -L/usr/local/lib
 WANT_LIBS=
 
 .if $(USE_HELLO) == yes
-CFLAGS += -I../libhello/ -I../../libhello
+INCLUDE_FILES += -I../libhello -I ../../libhello
+CFLAGS += $(INCLUDE_FILES)
 LDFLAGS += -L../libhello/ -L../../libhello
 WANT_LIBS += hello
 .endif
@@ -96,7 +98,7 @@ LDFLAGS += -l$(LIB)
 
 .ifdef $(COMPILER) == clang && $(LANG) == c
 CC = clang
-CFLAGS = -std=c99 -pedantic-errors -I /usr/local/include -Wall
+CFLAGS = -std=c99 -pedantic-errors $(INCLUDE_FILES) -Wall
 CFLAGS += -Wall -Wextra -Wendif-labels -Wunused
 LDFLAGS = -L/usr/local/lib
 .endif
@@ -121,12 +123,12 @@ rebuild: .NOTMAIN .PHONY clean $(NAME)
 check: .NOTMAIN
 	## only run this on C++ code
 .if $(LANG) == c++
-	cppcheck -v -a -s --unused-functions *.cpp
+	cppcheck --enable=all $(INCLUDE_FILES) -j2 -v  *.cpp
 .endif
 ## only run these on C code....
 .if $(LANG) == c
 	splint -strict-lib -showcolumn -showfunc -strict *.c *.h
-	lint -aabcehprsxH -I /usr/local/include/ *.c *.h
+	lint -aabcehprsxH $(INCLUDE_FILES) *.c *.h
 .endif
 	## run on all code...
 	rats -rw3 *
