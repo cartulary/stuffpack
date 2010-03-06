@@ -1,12 +1,16 @@
 #include <stdio.h>
 #include <magic.h>
 #include <err.h>
+#include <sysexits.h>
 
-// if argc == 1 then stdin is used - how odd...
 int main(int argc, char* argv[])
 {
 	const char *mstring, *merror;
 	magic_t m;
+	if (argc == 1)
+	{
+		errx(EX_USAGE, "Requires filename as first argument");
+	}
 
 	m = magic_open(MAGIC_SYMLINK | MAGIC_ERROR);
 	magic_load(m,"/usr/share/misc/magic");
