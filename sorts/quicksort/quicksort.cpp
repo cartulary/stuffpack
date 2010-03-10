@@ -71,8 +71,11 @@ sortReturnType quickSort_helper(sortReturnType& toSort, int left, int right)
 	{
 		int pivot = (left+right)/2;
 		int newPivot = partition(toSort, left, right, pivot);
-		quickSort_helper(toSort, left,  newPivot -1);
-		quickSort_helper(toSort, newPivot + 1, right);
+		#pragma omp parallel
+		{
+			quickSort_helper(toSort, left,  newPivot -1);
+			quickSort_helper(toSort, newPivot + 1, right);
+		}
 	}
 
 	return toSort;
