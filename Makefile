@@ -14,6 +14,8 @@ USE_CUNIT?=no
 USE_EDITLIB?=no
 USE_LIBMAGIC?=no
 USE_FLTK?=no
+USE_OPENMP?=no
+USE_PTHREAD?=no
 
 CFLAGS = -g3 -pipe
 .ifdef $(DEBUG) == on
@@ -45,7 +47,7 @@ CFLAGS += -Winit-self -Wmissing-include-dirs -Wpointer-arith -Wconversion
 CFLAGS += -Wfloat-equal -Wundef -Wshadow -Wcast-qual -Wcast-align -Wwrite-strings
 CFLAGS += -fabi-version=0 -funroll-loops 
 CFLAGS += -Winline -Wmissing-noreturn -Wpacked -Wpadded -Wredundant-decls
-CFLAGS += -Wlogical-op -Wnormalized=nfc
+#CFLAGS += -Wlogical-op -Wnormalized=nfc
 
 INCLUDE_FILES = -I/usr/local/include
 # Default includes...
@@ -96,12 +98,20 @@ WANT_LIBS	+=	edit termcap
 WANT_LIBS += magic
 .endif
 
+.if $(USE_PTHREAD) == yes
+WANT_LIBS += pthread
+.endif
+
 .if $(USE_FLTK) == yes
 EXTRA_CFLAGS != fltk-config --use-forms --cxxflags --libs
 CFLAGS += $(EXTRA_CFLAGS)
 
 EXTRA_LDFLAGS != fltk-config --use-forms --ldflags --libs
 LDFLAGS += $(EXTRA_LDFLAGS)
+.endif
+
+.if (USE_OPENMP) && $(COMPILER) == llvm
+CFLAGS += -fopenmp
 .endif
 
 .for LIB in $(WANT_LIBS)
