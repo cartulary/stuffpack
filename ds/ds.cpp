@@ -1,7 +1,7 @@
 #include <iostream>
 #include "btree/dotest.cpp"
-#include "btree/node.cpp"
 #include "btree/btree.cpp"
+#include "btree/node.cpp"
 #include "fifo/dotest.cpp"
 #include "fifo/node.cpp"
 #include "fifo/lifo.cpp"
@@ -12,9 +12,11 @@
 #include "fifo/printit.cpp"
 #include "fifo/ll.cpp"
 #include "fifo/sorted.cpp"
+#include "btree/DataNotExistException.cpp"
 
 int main(void)
 {
 	std::cout << "Test results return code is: " << btree_doTest() << "\n";
 	std::cout << "Test results return code is: " << fifo_doTest() << "\n";
+	return 0;
 }
