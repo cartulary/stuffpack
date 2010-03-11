@@ -7,8 +7,8 @@ USE_NCURSES=yes
 #compiling options
 .PHONY:     clean
 
-mall: ll.o lifo.o sorted.o fifo.o ll_it.o dotest.o #main_ll_it
-#main_ll_it: ll_it.o main_ll_it.cpp
+mall: ll.o lifo.o sorted.o fifo.o ll_it.o dotest.o main_ll_it
+main_ll_it: ll_it.o main_ll_it.cpp
 
 fifo.o: node.o fo.o printit.o fifo.cpp 
 fifo.cpp: fifo.h

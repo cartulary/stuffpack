@@ -38,7 +38,7 @@ LL_TEMPLATE T& LinkedList<T>::operator[](const int loc)
 	return current->data;
 }
 
-LL_TEMPLATE void LinkedList<T>::push(const T data)
+LL_TEMPLATE void LinkedList<T>::push(T data)
 {
 	++numnodes;
 	Node<T>* current = head;
@@ -55,7 +55,7 @@ LL_TEMPLATE void LinkedList<T>::push(const T data)
 
 }
 
-LL_TEMPLATE void LinkedList<T>::push(const T data, const unsigned int loc)
+LL_TEMPLATE void LinkedList<T>::push(T data, unsigned int loc)
 {
 	/*If the location is off by more than one of the total
 	 * throw an exception;
@@ -91,7 +91,7 @@ LL_TEMPLATE void LinkedList<T>::push(const T data, const unsigned int loc)
 	++numnodes;
 }
 
-LL_TEMPLATE T LinkedList<T>::read(const unsigned int loc)
+LL_TEMPLATE T LinkedList<T>::read(unsigned int loc)
 {
 	int count = loc;
 	Node<int>* current = head;
@@ -204,6 +204,7 @@ LL_TEMPLATE void LinkedList<T>::swap(unsigned int A, unsigned int B)
 	{
 		std::swap(A,B);
 	}
+	int count = B;
 	while (B)
 	{
 		B--;
@@ -215,21 +216,4 @@ LL_TEMPLATE void LinkedList<T>::swap(unsigned int A, unsigned int B)
 		}
 	}
 	std::swap(a_loc->data, b_loc->data);
-}
-
-/*
-	This is a singly linked list so binary sort - or even starting in the middle won't help.
-*/
-LL_TEMPLATE bool LinkedList<T>::has(const T data)
-{
-	Node<T>* current = head;
-	while (current)
-	{
-		if (data == current->data)
-		{
-			return true;
-		}
-		current = current->next;
-	}
-	return false;
 }

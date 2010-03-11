@@ -284,23 +284,6 @@ void test_sorted_duplicate(void)
 	CU_ASSERT_TRUE(did_catch_duplicate_exception);
 }
 
-void test_ll_copy(void)
-{
-	myll.clear();
-	myll.push(1);
-	CU_ASSERT_EQUAL(1,myll.read(0));
-	LinkedList<int> icopyll = myll;
-	CU_ASSERT_EQUAL(1,myll.read(0));
-	CU_ASSERT_EQUAL(1,icopyll.read(0));
-
-	icopyll.remove(0);
-	CU_ASSERT_TRUE(myll.has(1));
-	CU_ASSERT_FALSE(icopyll.has(1));
-
-/*	LinkedList<int> copyll;
-	copyll = myll; */
-
-}
 
 int fifo_doTest(void)
 {
@@ -311,45 +294,44 @@ int fifo_doTest(void)
 	}
 
 	CU_TestInfo test_array_node[] = {
-		{ "\t accepts data correctly", test_node_f_data },
+		{ "node accepts data correctly", test_node_f_data },
 	  	CU_TEST_INFO_NULL,
 	};
 
 	CU_TestInfo test_array_fifo[] = {
-		{ "\t pops data correctly", test_fifo_pop },
-		{ "\t pops data correctly after new push", test_fifo_pushpop },
-		{ "\t hasnext works", test_fifo_hasnext },
+		{ "fifo pops data correctly", test_fifo_pop },
+		{ "fifo pops data correctly after new push", test_fifo_pushpop },
+		{ "fifo hasnext works", test_fifo_hasnext },
 	  	CU_TEST_INFO_NULL,
 	};
 
 	CU_TestInfo test_array_lifo[] = {
-		{ "\t pops data correctly", test_lifo_pop },
-		{ "\t pops data correctly after new push", test_lifo_pushpop },
-		{ "\t hasnext works", test_lifo_hasnext },
+		{ "lifo pops data correctly", test_lifo_pop },
+		{ "lifo pops data correctly after new push", test_lifo_pushpop },
+		{ "lifo hasnext works", test_lifo_hasnext },
 	  	CU_TEST_INFO_NULL,
 	};
 	CU_TestInfo test_array_ll[] = {
-		{ "\t can accept data and get data from any point", test_ll_works},
-		{ "\t operators work as expected", test_ll_operators },
-		{ "\t clear() clears all elements", test_ll_clear },
-		{ "\t exceptions work", test_ll_except },
-		{ "\t swapping works", test_ll_swap },
-		{ "\t copying array works; modifying new data does not affect old data", test_ll_copy },
+		{ "linkedlist can accept data and get data from any point", test_ll_works},
+		{ "linklist operators work as expected", test_ll_operators },
+		{ "linklist.clear() clears all elements", test_ll_clear },
+		{ "linklist exceptions work", test_ll_except },
+		{ "linklist swapping works", test_ll_swap },
 	  	CU_TEST_INFO_NULL,
 	};
 
 	CU_TestInfo test_array_sorted[] = {
-		{ "\t pushes data in correct order", test_sorted_read },
-		{ "\t returns exception on duplicate entry", test_sorted_duplicate },
+		{ "Sorted LinkedList pushes data in correct order", test_sorted_read },
+		{ "Sorted LinkedList returns exception on duplicate entry", test_sorted_duplicate },
 	  	CU_TEST_INFO_NULL,
 	};
 
 	CU_SuiteInfo suites[] = {
-	  { "Node", suite_node_init, suite_node_clean, test_array_node },
-	  { "Fifo", NULL, NULL, test_array_fifo },
-	  { "Lifo", NULL, NULL, test_array_lifo },
-	  { "LinkedList", NULL, NULL, test_array_ll },
-	  { "Sorted LinkedLink", NULL, NULL, test_array_sorted },
+	  { "node", suite_node_init, suite_node_clean, test_array_node },
+	  { "fifo", NULL, NULL, test_array_fifo },
+	  { "lifo", NULL, NULL, test_array_lifo },
+	  { "linkedlist", NULL, NULL, test_array_ll },
+	  { "sortedLL", NULL, NULL, test_array_sorted },
 	  CU_SUITE_INFO_NULL,
 	};
 

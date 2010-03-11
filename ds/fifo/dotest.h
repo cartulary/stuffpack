@@ -31,5 +31,4 @@ void test_ll_swap(void);
 void test_ll_copy(void);
 void test_sorted_read(void);
 void test_sorted_duplicate(void);
-void test_ll_copy(void);
 #endif

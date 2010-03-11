@@ -2,7 +2,7 @@
 #define SORTED_H
 #include "ll.h"
 template <class T> class Sorted : public LinkedList<T> {
-        public:
-                void push(const T data);
+	public:
+		void push(T data);
 };
 #endif
