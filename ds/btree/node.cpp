@@ -1,16 +1,17 @@
 #include "node.h"
 
-template <class T> MultiNode<T>::MultiNode(unsigned int numPtrs)
+MultiNode::MultiNode(unsigned int numPtrs)
 {
 	this->ptrs = new MultiNode*[numPtrs];
 }
 
-template <class T> MultiNode<T>::MultiNode(unsigned int numPtrs, T d) : data(d)
+MultiNode::MultiNode(unsigned int numPtrs, int d) : data(d)
 {
 	this->ptrs = new MultiNode*[numPtrs];
 }
 
-template <class T> MultiNode<T>::~MultiNode()
+MultiNode::~MultiNode()
 {
 	delete[] this->ptrs;
 }
+
