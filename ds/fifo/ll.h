@@ -18,15 +18,15 @@ LL_TEMPLATE class LinkedList
 
 		/* add a piece of data in a particular location;
 		 * 0 == first location	*/
-		void push(T data, unsigned int loc);
+		void push(const T data, const unsigned int loc);
 		//default to the end
-		void push(T data);
+		virtual void push(const T data);
 
 		/*
 		 * return value at specific location
 		 */
-		T read(unsigned int loc);
-		void remove(unsigned int loc);
+		T read(const unsigned int loc);
+		void remove(const unsigned int loc);
 
 		void printAll();
 
@@ -37,6 +37,11 @@ LL_TEMPLATE class LinkedList
 		/* Swap two locations
 		*/
 		void swap(unsigned int A, unsigned int B);
+
+		/*
+			Returns true if a particular piece of data exists
+		*/
+		bool has(const T data);
 
 		/* Return the current number of nodes */
 		inline unsigned int getNumNodes();
