@@ -12,11 +12,16 @@
 #include "fifo/printit.cpp"
 #include "fifo/ll.cpp"
 #include "fifo/sorted.cpp"
+#include "fixedfifo/fixedFifo.cpp"
+#include "fixedfifo/dotest.cpp"
+#include "fixedfifo/boolnode.cpp"
+
 #include "btree/DataNotExistException.cpp"
 
 int main(void)
 {
 	std::cout << "Test results return code is: " << btree_doTest() << "\n";
 	std::cout << "Test results return code is: " << fifo_doTest() << "\n";
+	std::cout << "Test results return code is: " << fixedFifo_doTest() << "\n";
 	return 0;
 }
