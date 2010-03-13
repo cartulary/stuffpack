@@ -34,11 +34,13 @@ void test_fixedfifo_pop(void)
 	t_ffifo.push(i++);
 	t_ffifo.push(i++);
 	t_ffifo.push(i++);
+	CU_ASSERT_EQUAL(t_ffifo.getNumNodes(), i);
 	i=1;
 	/* in init we pushed 1, 2, 3 */
 	CU_ASSERT_EQUAL(t_ffifo.pop(), i++);
 	CU_ASSERT_EQUAL(t_ffifo.pop(), i++);
 	CU_ASSERT_EQUAL(t_ffifo.pop(), i++);
+	CU_ASSERT_EQUAL(t_ffifo.getNumNodes(), 0);
 //	CU_ASSERT_EQUAL(t_ffifo.pop(), m_fo_nodata);
 //	i++;
 }

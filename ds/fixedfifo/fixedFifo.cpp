@@ -3,7 +3,7 @@
 #include <iostream>
 #include <err.h>
 
-FixedFifo::FixedFifo(unsigned int m): head(0), tail(0), max(m)
+FixedFifo::FixedFifo(unsigned int m): head(0), tail(0), max(m), numNodes(0)
 {
 	vals = new BoolNode<int>[m];
 	location i=0;
@@ -18,14 +18,16 @@ void FixedFifo::push(BoolNode<int>::dataType d)
 {
 	if (!vals[head].isActive())
 	{
+		++numNodes;
 		vals[head].setValue(d);
+		head = (head++) % this->max;
+		return;
 	}
 	else
 	{
 		//throw exception - tooMuchData
 		return;
 	}
-	head = (head++) % this->max;
 }
 bool FixedFifo::hasNext()
 {
@@ -40,7 +42,9 @@ int FixedFifo::pop()
 		//errx(0,"leave");
 		//return 0;
 		int ret = vals[tail].getValue();
+		vals[tail].deactivate();
 		tail = (tail++) % this->max;
+		--numNodes;
 		return ret;
 	}
 	else
@@ -67,4 +71,9 @@ void FixedFifo::print()
 		std::cout << " ";
 	}
 	std::cout << "head (" << head <<") tail (" << tail << ")\n";
+}
+
+int FixedFifo::getNumNodes()
+{
+	return this->numNodes;
 }

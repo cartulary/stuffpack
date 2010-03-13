@@ -15,11 +15,14 @@ public:
 
 	void print();
 
+	int getNumNodes();
+
 private:
 	location head;
 	location tail;
 	location max;
 	BoolNode<int>* vals;
+	int numNodes;
 };
 
 #endif
