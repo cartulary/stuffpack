@@ -61,6 +61,22 @@ void test_fixedfifo_hasnext(void)
 	CU_ASSERT_FALSE(t_ffifo.hasNext());
 }
 
+void test_fixedfifo_overflow(void)
+{
+	t_ffifo.push(1);
+	t_ffifo.push(2);
+	t_ffifo.push(3);
+	t_ffifo.push(4);
+	t_ffifo.push(5);
+	t_ffifo.push(6);
+	t_ffifo.push(7);
+	t_ffifo.push(8);
+	t_ffifo.push(9);
+	t_ffifo.push(10);
+	t_ffifo.push(11);
+	//test that correct values are stored; exceptions should be thrown; etc....
+}
+
 int fixedFifo_doTest()
 {
 	/* create the registry */
@@ -79,6 +95,7 @@ int fixedFifo_doTest()
 		{ "\t pops data correctly", test_fixedfifo_pop },
 		{ "\t pops data correctly after new push", test_fixedfifo_pushpop },
 		{ "\t hasnext works", test_fixedfifo_hasnext },
+		{ "\t handles overflows correctly", test_fixedfifo_overflow },
 	  	CU_TEST_INFO_NULL,
 	};
 
