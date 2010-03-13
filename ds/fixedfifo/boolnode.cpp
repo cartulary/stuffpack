@@ -1,7 +1,7 @@
 #include "boolnode.h"
 
 template <class T>
-BoolNode<T>::BoolNode(): active(false)
+BoolNode<T>::BoolNode(): active(false), data(0)
 {
 }
 
