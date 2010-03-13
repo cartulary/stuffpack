@@ -13,6 +13,8 @@ public:
 	BoolNode<int>::dataType pop();
 	bool hasNext();
 
+	void print();
+
 private:
 	location head;
 	location tail;
