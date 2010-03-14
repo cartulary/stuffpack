@@ -1,6 +1,8 @@
 DIST = smallval
 DISTPATH = smallval
 LANG = c
+COMPILER=clang
+NAME=smallval
 .include	<../Makefile.inc>
 
 #compiling options
@@ -9,6 +11,3 @@ LANG = c
 build:	smallval
 
 smallval:
-
-clean:
-	rm -fv *.o smallval smallval.core
