@@ -1,7 +1,7 @@
-NAME= fortune500
-LANG= c
+NAME=fortune500
+LANG=c
+USE_PTHREAD=yes
 .include <../Makefile>
-CFLAGS += -pthread
 #replace with a for loop to autoexpand a path?
 INCLUDE_PATHS = -I/usr/local/include/gnet -I/usr/local/include/glib12
 CFLAGS += $(INCLUDE_PATHS)
