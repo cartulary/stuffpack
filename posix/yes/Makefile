@@ -7,5 +7,3 @@ COMPILER=clang
 .PHONY:     clean
 
 $(NAME):
-
-clean: nameclean coreclean objclean 

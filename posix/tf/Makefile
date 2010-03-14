@@ -1,5 +1,6 @@
 NAME=tf
 LANG = c
+COMPILER=clang
 .include	<../Makefile>
 
 #compiling options

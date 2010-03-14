@@ -1,6 +1,7 @@
 #we want to include the makefile depending on which target (and therefore
 #which file) we use
 .ifmake dirclean
+NAME=XXX
 .include <../Makefile>
 SUBDIRS!= ls -F|grep \/
 .else
