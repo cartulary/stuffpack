@@ -9,7 +9,7 @@ USE_NCURSES=yes
 
 mall: fixedFifo.o dotest.o
 
-fixedFifo.o: boolnode.o fixedFifo.cpp
+fixedFifo.o: boolnode.o ../fifo/OutOfBoundsException.h fixedFifo.cpp
 fixedFifo.cpp: fixedFifo.h
 
 boolnode.o: boolnode.cpp

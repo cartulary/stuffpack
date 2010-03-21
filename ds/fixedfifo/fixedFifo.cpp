@@ -1,5 +1,6 @@
 #include "fixedFifo.h"
 #include "boolnode.h"
+#include "../fifo/OutOfBoundsException.h"
 #include <iostream>
 #include <err.h>
 
@@ -26,6 +27,7 @@ void FixedFifo::push(BoolNode<int>::dataType d)
 	else
 	{
 		//throw exception - tooMuchData
+		throw OutOfBoundsException();
 		return;
 	}
 }
@@ -70,7 +72,7 @@ void FixedFifo::print()
 		}
 		std::cout << " ";
 	}
-	std::cout << "head (" << head <<") tail (" << tail << ")\n";
+	std::cout << "\nhead (" << head <<") tail (" << tail << ") with " << numNodes << " nodes\n";
 }
 
 int FixedFifo::getNumNodes()

@@ -33,7 +33,7 @@ void test_fixedfifo_pop(void)
 	int i=1;
 	t_ffifo.push(i++);
 	t_ffifo.push(i++);
-	t_ffifo.push(i++);
+	t_ffifo.push(i); // don't increase the last one
 	CU_ASSERT_EQUAL(t_ffifo.getNumNodes(), i);
 	i=1;
 	/* in init we pushed 1, 2, 3 */
@@ -41,6 +41,7 @@ void test_fixedfifo_pop(void)
 	CU_ASSERT_EQUAL(t_ffifo.pop(), i++);
 	CU_ASSERT_EQUAL(t_ffifo.pop(), i++);
 	CU_ASSERT_EQUAL(t_ffifo.getNumNodes(), 0);
+//	t_ffifo.print();
 //	CU_ASSERT_EQUAL(t_ffifo.pop(), m_fo_nodata);
 //	i++;
 }
@@ -50,7 +51,6 @@ void test_fixedfifo_pushpop(void)
 	t_ffifo.push(6);
 	CU_ASSERT_EQUAL(t_ffifo.pop(), 6);
 }
-
 
 void test_fixedfifo_hasnext(void)
 {
