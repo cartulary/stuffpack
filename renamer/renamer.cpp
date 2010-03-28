@@ -12,19 +12,26 @@
 #include <sysexits.h>
 #include <string>
 #include <dirent.h>
-
-static int one(struct dirent* dir);
-std::string moveTo(std::string filename, bool confirmed);
+#include <ctype.h>
+#include <sys/stat.h>
+#include <errno.h>
+#include <stdio.h>
 
 enum doChoice {
+	FIRST_ASK,
 	CONFIRM_MOVE,
-	DENY_MOVE,
-	LESS_PATH
+	DENY_MOVE
 };
 
+static int one(struct dirent* dir);
+std::string moveTo(std::string filename, doChoice confirmed);
+
+doChoice confirm();
+
+//I know, globals are a bad idea :(
+char* folder = ".";
 int main (int argc, char* argv[])
 {
-	char* folder = ".";
 	/* if we specified a folder... */
 	if (1 != argc)
 	{
@@ -57,7 +64,13 @@ int main (int argc, char* argv[])
 			if ((eps[cnt]->d_name)[0] != '.')
 			{
 				std::cout << eps[cnt]->d_name << " ";
-				std::cout << "moved to " << moveTo(eps[cnt]->d_name,false) << "/ \n";
+				std::string newDir = moveTo(eps[cnt]->d_name, FIRST_ASK);
+				if ("" != newDir)
+				{
+					std::cout << "moving to " << newDir << "/\n";
+					doChoice val = confirm();
+					static_cast<void>(moveTo(eps[cnt]->d_name, val));
+				}
 			}
 		}
 		std::cout << "\n";
@@ -70,15 +83,35 @@ int main (int argc, char* argv[])
 	return EX_OK;
 }
 
-std::string moveTo(std::string filename, bool confirmed)
+std::string moveTo(std::string filename, doChoice confirmed)
 {
 	std::string::size_type idx;
 
-	idx = filename.find_last_of('.');
+	idx = filename.find_first_of('.');
+    std::string dirpart = filename.substr(0,idx);
+
 	if(idx != std::string::npos)
 	{
-    	std::string extension = filename.substr(0,idx);
-		return extension;
+		if (CONFIRM_MOVE == confirmed)
+		{
+			// this is a very simple test for file existance...
+			// I should test for file existance + ability to write...
+			if ( access( dirpart.c_str(), 0) == 0 )
+			{
+				std::cout << "Directory already exists\n";
+			}
+			else
+			{
+				errno = 0;
+				int ret = mkdir (dirpart.c_str(),0777);
+				std::cout << "We returned " << ret << "with" << errno <<" and " << strerror(errno) << " \n";
+			}
+			std::string newname = dirpart + "/" + filename;
+			std::cout << "\nrenaming " << filename << " to " << newname << "\n";
+			int ret = rename(filename.c_str(), newname.c_str());
+			std::cout << "We returned " << ret << "with" << errno <<" and " << strerror(errno) << " \n";
+		}
+		return dirpart;
 	}
 	else
 	{
@@ -92,4 +125,16 @@ std::string moveTo(std::string filename, bool confirmed)
 static int one(struct dirent* dir)
 {
 	return 1;
+}
+
+doChoice confirm()
+{
+	std::cout << "Confirm? [y/N]: ";
+	char choice;
+	std::cin >> choice;
+	if (tolower(choice) == 'y')
+	{
+		return CONFIRM_MOVE;
+	}
+	return DENY_MOVE;
 }
