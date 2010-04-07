@@ -5,5 +5,3 @@ LANG = c++
 .PHONY: clean
 
 $(NAME):
-
-clean: nameclean coreclean objclean
