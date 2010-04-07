@@ -14,6 +14,7 @@ public:
 	bool hasNext();
 
 	void print();
+	void clear();
 
 	int getNumNodes();
 

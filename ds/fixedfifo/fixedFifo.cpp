@@ -56,6 +56,20 @@ int FixedFifo::pop()
 	}
 }
 
+void FixedFifo::clear()
+{
+	int i;
+	for (i=0; i < max; ++i)
+	{
+		if (vals[i].isActive())
+		{
+			vals[i].deactivate();
+			//delete vals[i];
+		}
+	}
+	head = tail = 0;
+}
+
 void FixedFifo::print()
 {
 	std::cout << "\n";
