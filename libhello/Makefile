@@ -6,6 +6,7 @@ LANG=c++
 CFLAGS += -fPIC
 .endif
 
+$(NAME): static shared
 
 static: $(NAME).o $(NAME).a
 
