@@ -1,6 +1,7 @@
 NAME=ds
 USE_CUNIT=yes
 USE_NCURSES=yes
+USE_GFILT=yes
 .include <../Makefile>
 
 #-depth is an extension - perhaps use -mindepth and -maxdepth instead?
