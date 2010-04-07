@@ -48,6 +48,7 @@ CFLAGS += -Winit-self -Wmissing-include-dirs -Wpointer-arith -Wconversion
 CFLAGS += -Wfloat-equal -Wundef -Wshadow -Wcast-qual -Wcast-align -Wwrite-strings
 CFLAGS += -fabi-version=0 -funroll-loops 
 CFLAGS += -Winline -Wmissing-noreturn -Wpacked -Wpadded -Wredundant-decls
+CFLAGS += -Wno-write-strings
 #CFLAGS += -Wlogical-op -Wnormalized=nfc
 
 INCLUDE_FILES = -I/usr/local/include
