@@ -115,7 +115,7 @@ int fixedFifo_doTest()
 
 	CU_SuiteInfo suites[] = {
 	  { "Node", NULL, NULL, test_array_node },
-	  { "Fifo", NULL, NULL, test_array_fifo },
+	  { "FixedFifo", NULL, NULL, test_array_fifo },
 	  CU_SUITE_INFO_NULL,
 	};
 
