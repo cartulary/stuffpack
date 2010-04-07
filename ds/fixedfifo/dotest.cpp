@@ -3,6 +3,8 @@
 #include "dotest.h"
 #include "boolnode.h"
 #include "fixedFifo.h"
+#include "../fifo/OutOfBoundsException.h"
+
 /*
  *	try initilization copy and copy constructor
 */
@@ -63,6 +65,7 @@ void test_fixedfifo_hasnext(void)
 
 void test_fixedfifo_overflow(void)
 {
+	t_ffifo.clear();
 	t_ffifo.push(1);
 	t_ffifo.push(2);
 	t_ffifo.push(3);
@@ -73,7 +76,18 @@ void test_fixedfifo_overflow(void)
 	t_ffifo.push(8);
 	t_ffifo.push(9);
 	t_ffifo.push(10);
-	t_ffifo.push(11);
+	bool did_catch_outofbounds_exception = false;
+	try
+	{
+		t_ffifo.push(11);
+	}
+	catch(OutOfBoundsException& e)
+	{
+		did_catch_outofbounds_exception = true;
+	}
+	CU_ASSERT_TRUE(did_catch_outofbounds_exception);
+
+
 	//test that correct values are stored; exceptions should be thrown; etc....
 }
 
