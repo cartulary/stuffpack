@@ -71,12 +71,29 @@ sortReturnType quickSort_helper(sortReturnType& toSort, int left, int right)
 	{
 		int pivot = (left+right)/2;
 		int newPivot = partition(toSort, left, right, pivot);
-		#pragma omp parallel
-		{
-			quickSort_helper(toSort, left,  newPivot -1);
-			quickSort_helper(toSort, newPivot + 1, right);
-		}
+		#ifdef _OPENMP
+			unsigned int threadIdInit=0;
+			#pragma omp parallel num_threads(2)//create exactly two threads
+			{
+	  			unsigned int threadId;
+				#pragma omp critical
+				{
+	    			threadId=threadIdInit++; //this will make sure each thread has a unique id. in this case, you'll only get 1 or 0
+  				}
+  				if(threadId)
+				{
+	    #endif
+					quickSort_helper(toSort, left,  newPivot -1);
+		#ifdef _OPENMP
+				}
+				else
+				{
+		#endif
+				    quickSort_helper(toSort, newPivot + 1, right);
+		#ifdef _OPENMP
+				}
+		#endif
 	}
-
+	}
 	return toSort;
 }
