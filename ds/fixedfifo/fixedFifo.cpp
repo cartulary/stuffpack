@@ -7,7 +7,6 @@
 FixedFifo::FixedFifo(unsigned int m): head(0), tail(0), max(m), numNodes(0)
 {
 	vals = new BoolNode<int>[m];
-	location i=0;
 }
 
 FixedFifo::~FixedFifo()
@@ -58,7 +57,7 @@ int FixedFifo::pop()
 
 void FixedFifo::clear()
 {
-	int i;
+	unsigned int i;
 	for (i=0; i < max; ++i)
 	{
 		if (vals[i].isActive())
