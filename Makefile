@@ -16,6 +16,7 @@ USE_LIBMAGIC?=no
 USE_FLTK?=no
 USE_OPENMP?=no
 USE_PTHREAD?=no
+USE_GFILT?=no
 
 CFLAGS = -g3 -pipe
 .ifdef $(DEBUG) == on
@@ -102,12 +103,26 @@ WANT_LIBS += magic
 WANT_LIBS += pthread
 .endif
 
-.if $(USE_FLTK) == yes
+.if $(USE_FLTK) == yes || $(USE_FLTK) == 1
 EXTRA_CFLAGS != fltk-config --use-forms --cxxflags --libs
 CFLAGS += $(EXTRA_CFLAGS)
 
 EXTRA_LDFLAGS != fltk-config --use-forms --ldflags --libs
 LDFLAGS += $(EXTRA_LDFLAGS)
+.endif
+
+.if $(USE_FLTK) == 2
+EXTRA_CFLAGS != fltk2-config --use-forms --cxxflags --libs
+CFLAGS += $(EXTRA_CFLAGS)
+
+EXTRA_LDFLAGS != fltk2-config --use-forms --ldflags --libs
+LDFLAGS += $(EXTRA_LDFLAGS)
+.endif
+
+.if $(USE_GFILT)
+#we first sneak the compiler name as a option to gfilt and replace the compiler with gfilt
+CLFAGS = $(CC) $(CLFAGS)
+CC=gfilt
 .endif
 
 .if (USE_OPENMP) && $(COMPILER) == llvm
