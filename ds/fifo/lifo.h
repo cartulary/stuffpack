@@ -8,6 +8,6 @@ template <class T> class Lifo : public Fo<T> {
 	public:
 		T pop_helper();
 	public:
-		void printAll(bool doPop=false);
+		void printAll(const bool doPop=false);
 };
 #endif

@@ -60,7 +60,7 @@ template <class T> void Fo<T>::push(T data)
 	/* we want to tell our new node who we are */
 }
 
-template <class T> std::vector<T> Fo<T>::getAll()
+template <class T> std::vector<T> Fo<T>::getAll() const
 {
 	std::vector<T> ret;
 	Node<T> *cur=head;
@@ -76,7 +76,7 @@ template <class T> std::vector<T> Fo<T>::getAll()
 	return ret;
 }
 
-template <class T> inline bool Fo<T>::hasNext()
+template <class T> inline bool Fo<T>::hasNext() const
 {
 	/*
 	 * 	We know that if head is not null there is at least one more datapoint left
@@ -84,7 +84,7 @@ template <class T> inline bool Fo<T>::hasNext()
 	return (head != NULL);
 }
 
-template <class T> int Fo<T>::getNumNodes()
+template <class T> int Fo<T>::getNumNodes() const
 {
 	return this->numnodes;
 }

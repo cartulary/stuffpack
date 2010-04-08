@@ -186,7 +186,7 @@ LL_TEMPLATE void LinkedList<T>::clear()
 	numnodes=0;
 }
 
-LL_TEMPLATE inline unsigned int LinkedList<T>::getNumNodes() const
+LL_TEMPLATE const unsigned int LinkedList<T>::getNumNodes() const
 {
 	return this->numnodes;
 }
