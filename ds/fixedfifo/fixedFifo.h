@@ -11,12 +11,12 @@ public:
 
 	void push(BoolNode<int>::dataType data);
 	BoolNode<int>::dataType pop();
-	bool hasNext();
+	bool hasNext() const;
 
-	void print();
+	void print() const;
 	void clear();
 
-	int getNumNodes();
+	int getNumNodes() const;
 
 private:
 	location head;
