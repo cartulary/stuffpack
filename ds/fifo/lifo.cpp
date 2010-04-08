@@ -55,7 +55,7 @@ template <class T> Node<T>* Lifo<T>::getNextNode(int fastfoward)
 	return current;
 }
 
-template <class T> void Lifo<T>::printAll(bool doPop)
+template <class T> void Lifo<T>::printAll(const bool doPop)
 {
     if (doPop)
     {

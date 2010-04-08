@@ -44,10 +44,10 @@ LL_TEMPLATE class LinkedList
 		bool has(const T data) const;
 
 		/* Return the current number of nodes */
-		inline unsigned int getNumNodes() const;
+		const unsigned int getNumNodes() const;
 
 		LinkedList();
-		~LinkedList();
+		virtual ~LinkedList();
 	protected:
 		std::vector<T> getAllNodes() const;
 		Node<T>* head;

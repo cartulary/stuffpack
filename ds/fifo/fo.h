@@ -6,7 +6,7 @@ template <class T> class Fo {
 	private:
 		int numnodes;
 	protected:
-		std::vector<T> getAll();
+		std::vector<T> getAll() const;
 		//Because pop_helper is implemented by the derived classes
 		//pop contains the common code
 		virtual T pop_helper() = 0;
@@ -24,9 +24,9 @@ template <class T> class Fo {
 		virtual Node<T>* getNextNode(int fastfoward=0) = 0;
 
 		void push(T data);
-		bool hasNext();
-		virtual void printAll(bool doPop=false) =0;
-		int getNumNodes();
+		bool hasNext() const;
+		virtual void printAll(bool doPop=false) = 0;
+		int getNumNodes() const;
 		//clear function - erases all data
 };
 #endif
