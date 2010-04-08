@@ -30,7 +30,7 @@ void FixedFifo::push(BoolNode<int>::dataType d)
 		return;
 	}
 }
-bool FixedFifo::hasNext()
+bool FixedFifo::hasNext() const
 {
 	return vals[tail].isActive();
 }
@@ -69,7 +69,7 @@ void FixedFifo::clear()
 	head = tail = 0;
 }
 
-void FixedFifo::print()
+void FixedFifo::print() const
 {
 	std::cout << "\n";
 	unsigned int i;
@@ -88,7 +88,7 @@ void FixedFifo::print()
 	std::cout << "\nhead (" << head <<") tail (" << tail << ") with " << numNodes << " nodes\n";
 }
 
-int FixedFifo::getNumNodes()
+int FixedFifo::getNumNodes() const
 {
 	return this->numNodes;
 }
