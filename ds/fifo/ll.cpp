@@ -138,7 +138,7 @@ LL_TEMPLATE void LinkedList<T>::printAll()
 }
 
 
-LL_TEMPLATE void LinkedList<T>::remove(unsigned int loc)
+LL_TEMPLATE void LinkedList<T>::remove(const unsigned int loc)
 {
 	if (!head)
 	{
