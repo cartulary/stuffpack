@@ -10,8 +10,8 @@ LL_TEMPLATE class LinkedList
 	public:
 
 		//T& operator()(const int loc);
-		T& operator[](const int loc);
-		T& operator()(const int loc);
+		T& operator[](const int loc) const;
+		T& operator()(const int loc) const;
 		//bool operator==(const Ll<T>& other) const;
 		//bool operator!=(const Ll<T>& other) const;
 
@@ -25,10 +25,10 @@ LL_TEMPLATE class LinkedList
 		/*
 		 * return value at specific location
 		 */
-		T read(const unsigned int loc);
+		T read(const unsigned int loc) const;
 		void remove(const unsigned int loc);
 
-		void printAll();
+		void printAll() const;
 
 		/* Clear the linked list - remove all elements
 		 */
@@ -41,15 +41,15 @@ LL_TEMPLATE class LinkedList
 		/*
 			Returns true if a particular piece of data exists
 		*/
-		bool has(const T data);
+		bool has(const T data) const;
 
 		/* Return the current number of nodes */
-		inline unsigned int getNumNodes();
+		inline unsigned int getNumNodes() const;
 
 		LinkedList();
 		~LinkedList();
 	protected:
-		std::vector<T> getAllNodes();
+		std::vector<T> getAllNodes() const;
 		Node<T>* head;
 		unsigned int numnodes;
 	private:
