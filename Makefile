@@ -46,7 +46,7 @@ CFLAGS += -Wformat=2 -Wstrict-aliasing=2
 CFLAGS += -Wunused -Wunused-parameter -Wswitch-default -Wswitch-enum 
 CFLAGS += -Winit-self -Wmissing-include-dirs -Wpointer-arith -Wconversion
 CFLAGS += -Wfloat-equal -Wundef -Wshadow -Wcast-qual -Wcast-align -Wwrite-strings
-CFLAGS += -fabi-version=0 -funswitch-loops  -fprefetch-loop-arrays #-funroll-loops 
+CFLAGS += -fabi-version=0 -funswitch-loops  #-fprefetch-loop-arrays #-funroll-loops 
 CFLAGS += -Winline -Wmissing-noreturn -Wpacked -Wpadded -Wredundant-decls
 CFLAGS += -Wno-write-strings
 #CFLAGS += -Wlogical-op -Wnormalized=nfc
