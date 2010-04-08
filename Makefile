@@ -31,10 +31,10 @@ CFLAGS += -ansi -Wabi
 CFLAGS += -Weffc++
 CFLAGS += -fno-gnu-keywords
 CFLAGS += -Wstrict-null-sentinel -Wctor-dtor-privacy -Wnon-virtual-dtor -Woverloaded-virtual -Wsign-promo -Wold-style-cast
-CFLAGS += -ffor-scope
+CFLAGS += -ffor-scope -fuse-cxa-atexit
 .elif $(LANG) == c
 CC = llvm-gcc
-CFLAGS += -g
+CFLAGS += -combine
 CFLAGS += -std=c99 
 CFLAGS += -Wimplicit-function-declaration -Wbad-function-cast -Wdeclaration-after-statement
 CFLAGS += -Wstrict-prototypes -Wold-style-definition -Wmissing-prototypes -Wmissing-declarations -Wnested-externs
@@ -42,11 +42,11 @@ CFLAGS += -Wstrict-prototypes -Wold-style-definition -Wmissing-prototypes -Wmiss
 
 # set the global flags
 CFLAGS += -Wall -Wextra -pedantic
-CFLAGS += -Wformat=2 -Wformat-y2k -Wformat-nonliteral -Wformat-security
+CFLAGS += -Wformat=2 -Wstrict-aliasing=2
 CFLAGS += -Wunused -Wunused-parameter -Wswitch-default -Wswitch-enum 
 CFLAGS += -Winit-self -Wmissing-include-dirs -Wpointer-arith -Wconversion
 CFLAGS += -Wfloat-equal -Wundef -Wshadow -Wcast-qual -Wcast-align -Wwrite-strings
-CFLAGS += -fabi-version=0 -funroll-loops 
+CFLAGS += -fabi-version=0 -funswitch-loops  -fprefetch-loop-arrays #-funroll-loops 
 CFLAGS += -Winline -Wmissing-noreturn -Wpacked -Wpadded -Wredundant-decls
 CFLAGS += -Wno-write-strings
 #CFLAGS += -Wlogical-op -Wnormalized=nfc
