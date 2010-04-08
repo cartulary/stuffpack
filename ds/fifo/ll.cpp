@@ -27,7 +27,7 @@ LL_TEMPLATE LinkedList<T>::~LinkedList()
  * This function assumes you are sane. Therefore it performs NO sanity testing on the value you provide to it
  * Use operator() to get sanity testing
  */
-LL_TEMPLATE T& LinkedList<T>::operator[](const int loc)
+LL_TEMPLATE T& LinkedList<T>::operator[](const int loc) const
 {
 	Node<T>* current=head;
 	int count = loc;
@@ -91,7 +91,7 @@ LL_TEMPLATE void LinkedList<T>::push(const T data, const unsigned int loc)
 	++numnodes;
 }
 
-LL_TEMPLATE T LinkedList<T>::read(const unsigned int loc)
+LL_TEMPLATE T LinkedList<T>::read(const unsigned int loc) const
 {
 	int count = loc;
 	Node<int>* current = head;
@@ -113,7 +113,7 @@ LL_TEMPLATE T LinkedList<T>::read(const unsigned int loc)
 	return current->data;
 }
 
-LL_TEMPLATE std::vector<T> LinkedList<T>::getAllNodes()
+LL_TEMPLATE std::vector<T> LinkedList<T>::getAllNodes() const
 {
 	std::vector<int> ret;
 	Node<T>* current = this->head;
@@ -130,7 +130,7 @@ LL_TEMPLATE std::vector<T> LinkedList<T>::getAllNodes()
 	return ret;
 }
 
-LL_TEMPLATE void LinkedList<T>::printAll()
+LL_TEMPLATE void LinkedList<T>::printAll() const
 {
 	std::vector<T> vals = getAllNodes();
 	Printit<T> doprint;
@@ -186,7 +186,7 @@ LL_TEMPLATE void LinkedList<T>::clear()
 	numnodes=0;
 }
 
-LL_TEMPLATE inline unsigned int LinkedList<T>::getNumNodes()
+LL_TEMPLATE inline unsigned int LinkedList<T>::getNumNodes() const
 {
 	return this->numnodes;
 }
@@ -220,7 +220,7 @@ LL_TEMPLATE void LinkedList<T>::swap(unsigned int A, unsigned int B)
 /*
 	This is a singly linked list so binary sort - or even starting in the middle won't help.
 */
-LL_TEMPLATE bool LinkedList<T>::has(const T data)
+LL_TEMPLATE bool LinkedList<T>::has(const T data) const
 {
 	Node<T>* current = head;
 	while (current)
