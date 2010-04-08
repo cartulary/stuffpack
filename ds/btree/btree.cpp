@@ -126,7 +126,7 @@ BTREE_TEMPLATE void BinaryTree<T>::remove(const T data)
 	return;
 }
 
-BTREE_TEMPLATE bool BinaryTree<T>::has(T data)
+BTREE_TEMPLATE bool BinaryTree<T>::has(T data) const
 {
 	MultiNode<T>* current = head;
 	while (current)
@@ -173,17 +173,17 @@ BTREE_TEMPLATE void BinaryTree<T>::clear_helper(MultiNode<T>* ptr)
 	delete ptr;
 }
 
-BTREE_TEMPLATE unsigned int BinaryTree<T>::getNumNodes()
+BTREE_TEMPLATE unsigned int BinaryTree<T>::getNumNodes() const
 {
 	return this->numnodes;
 }
 
-BTREE_TEMPLATE void BinaryTree<T>::debugPrintTree()
+BTREE_TEMPLATE void BinaryTree<T>::debugPrintTree() const
 {
 	debugPrintTree_helper(head,0);
 }
 
-BTREE_TEMPLATE void BinaryTree<T>::debugPrintTree_helper(MultiNode<T>* ptr, unsigned int tabs)
+BTREE_TEMPLATE void BinaryTree<T>::debugPrintTree_helper(MultiNode<T>* ptr, unsigned int tabs) const
 {
 	int count = tabs;
 	while (count--)
