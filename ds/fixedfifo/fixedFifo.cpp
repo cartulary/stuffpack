@@ -72,7 +72,7 @@ void FixedFifo::clear()
 void FixedFifo::print()
 {
 	std::cout << "\n";
-	int i;
+	unsigned int i;
 	for (i=0; i < max; ++i)
 	{
 		if (vals[i].isActive())
