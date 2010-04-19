@@ -4,9 +4,8 @@ LANG=java
 
 #compiling options
 .PHONY:	clean
-CC=javac
-CFLAGS=-deprecation -Xlint
-SRCFILE= $(NAME).java
 
-$(NAME):
+$(NAME): $(NAME).java
 	$(CC) $(CFLAGS) $(SRCFILE)
+
+clean: javaclean

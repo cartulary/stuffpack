@@ -67,6 +67,12 @@ LDFLAGS = -L/usr/local/lib
 .error clang can't be used with non C sources
 .endif
 
+.ifdef $(LANG) == java
+CC = javac
+CFLAGS=-deprecation -Xlint
+SRCFILE=$(NAME).java
+.endif
+
 
 WANT_LIBS=
 
@@ -120,13 +126,13 @@ EXTRA_LDFLAGS != fltk2-config --use-forms --ldflags --libs
 LDFLAGS += $(EXTRA_LDFLAGS)
 .endif
 
-.if $(USE_GFILT)
+.ifdef $(USE_GFILT) == yes
 #we first sneak the compiler name as a option to gfilt and replace the compiler with gfilt
 CLFAGS = $(CC) $(CLFAGS)
 CC=gfilt
 .endif
 
-.if (USE_OPENMP) && $(COMPILER) == llvm
+.ifdef $(USE_OPENMP) == yes && $(COMPILER) == llvm
 CFLAGS += -fopenmp
 .endif
 
@@ -142,8 +148,13 @@ coreclean: .NOTMAIN .USE .EXEC .IGNORE .PHONY
 	rm -f ./$(NAME).core
 objclean: .NOTMAIN .USE .EXEC .IGNORE .PHONY
 	rm -fv ./*.o
+javaclean: .NOTMAIN .USE .EXEC .IGNORE .PHONY
+	rm -fv ./*.class 
+
 .if ! target(clean)
+.ifdef $(LANG) != java
 clean: .NOTMAIN .PHONY .IGNORE nameclean coreclean objclean
+.endif
 .endif
 .if ! target(all)
 all: $(NAME)
