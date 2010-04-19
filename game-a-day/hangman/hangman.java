@@ -1,8 +1,8 @@
 import static java.lang.System.out; import java.io.IOException; import java.util.*;
 
 class hangman {
-    public static void main(String[] args) {
-		final int maxBadGuess = 6;
+  public static void main(String[] args) {
+		final int maxBadGuess = 7;
 
 		String[] words = { "apple", "bannana", "power", "reality", "computer" };
 
@@ -43,7 +43,8 @@ class hangman {
 					out.println("You lost");
 					gameover = true;
 				}
-				out.println("Total guesses:" + guessed.size() + "  Lives: " + Integer.toString(maxBadGuess - badGuesses));
+				out.println("Total guesses:" + guessed.size() + " deaths: " + Integer.toString(maxBadGuess - badGuesses));
+				printBoard(badGuesses);
 			}
 		}
 		catch (IOException e) {
@@ -51,7 +52,7 @@ class hangman {
 			out.println("Caused by: " + e.getCause());
 		}
 
-    }
+  }
 
 	private static Boolean checkWin(String word, List<Character> guesses)
 	{
@@ -63,5 +64,79 @@ class hangman {
 			}
 		}
 		return true;
+	}
+
+	private static void printBoard(int deaths)
+	{
+		out.println ("_____________  ");
+		out.println ("|           |  ");
+		// head
+		if (deaths == 0)
+		{
+            out.println ("|               "); 
+            out.println ("|               "); 
+            out.println ("|               "); 
+            out.println ("|               "); 
+		}
+		else
+		{
+            out.println ("|           o   "); 
+            out.println ("|          o o  "); 
+            out.println ("|          o o  "); 
+            out.println ("|           o   "); 
+        }
+		// body & arms
+		if (deaths == 1)
+		{
+            out.println ("|               "); 
+            out.println ("|               "); 
+            out.println ("|               "); 
+		}
+		else if (deaths == 2)
+		{
+            out.println ("|           |    "); 
+            out.println ("|           |    "); 
+            out.println ("|           |    "); 
+		}
+		else if (deaths == 3)
+		{
+            out.println ("|           |    "); 
+            out.println ("|          /|    "); 
+            out.println ("|         / |    "); 
+		}
+		else if (deaths >= 4)
+		{
+            out.println ("|           |    "); 
+            out.println ("|          /|\\  "); 
+            out.println ("|         / | \\ "); 
+		}
+
+		//legs
+
+		if (deaths <= 4)
+		{
+            out.println ("|                ");
+            out.println ("|                ");
+            out.println ("|                ");
+		}
+		else if (deaths == 5)
+		{
+            out.println ("|           |    ");
+            out.println ("|           |    ");
+            out.println ("|           |    ");
+		}
+		else if (deaths == 6)
+		{
+            out.println ("|           |    ");
+            out.println ("|          /|    ");
+            out.println ("|         / |    ");
+		}
+		else if (deaths == 7)
+		{
+            out.println ("|           |    ");
+            out.println ("|          /|\\  ");
+            out.println ("|         / | \\ ");
+		}
+		out.println ("|________________");
 	}
 }
