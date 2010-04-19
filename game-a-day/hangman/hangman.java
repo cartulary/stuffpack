@@ -18,11 +18,16 @@ class hangman {
 		try {
 			while(!gameover) {
  				c = (char)System.in.read();
+				Character guess = c;
 				if (newline.charValue() == c)
 				{
 					continue;
 				}
-				Character guess = c;
+				if (guessed.contains(c))
+				{
+					out.println("You already guessed that.");
+					continue;
+				}
 				guessed.add(c);
 				if (checkWin(word,guessed))
 				{
@@ -38,6 +43,7 @@ class hangman {
 					out.println("You lost");
 					gameover = true;
 				}
+				out.println("Total guesses:" + guessed.size() + "  Lives: " + Integer.toString(maxBadGuess - badGuesses));
 			}
 		}
 		catch (IOException e) {
