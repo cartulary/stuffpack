@@ -2,6 +2,10 @@
 #include "printit.h"
 #include "ll.h"
 #include "OutOfBoundsException.h"
+
+// can we combine () operator and read() ?
+// subtle bugs - is numnodes being used properally (always one more than max index allowed)
+
 LL_TEMPLATE LinkedList<T>::LinkedList() : head(NULL), numnodes(0)
 {
 
@@ -50,6 +54,17 @@ LL_TEMPLATE T& LinkedList<T>::operator()(const unsigned int loc) const
 	}
 	return (*this)[loc];
 }
+
+LL_TEMPLATE LinkedList<T>::LinkedList(const LinkedList<int>& old_list) : head(NULL), numnodes(0)
+{
+	Node<T>* current = old_list.head;
+	while (current)
+	{
+		this->push(current->data);
+		current = current->next;
+	}
+}
+
 
 LL_TEMPLATE void LinkedList<T>::push(const T data)
 {

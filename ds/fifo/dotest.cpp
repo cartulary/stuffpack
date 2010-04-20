@@ -308,8 +308,15 @@ void test_ll_copy(void)
 	CU_ASSERT_TRUE(myll.has(1));
 	CU_ASSERT_FALSE(icopyll.has(1));
 
-/*	LinkedList<int> copyll;
-	copyll = myll; */
+	LinkedList<int> copyll;
+	copyll = myll;
+	CU_ASSERT_EQUAL(1,myll.read(0));
+	CU_ASSERT_EQUAL(1,copyll.read(0));
+
+	copyll.remove(0);
+	CU_ASSERT_TRUE(myll.has(1));
+	CU_ASSERT_FALSE(copyll.has(1));
+
 
 }
 
