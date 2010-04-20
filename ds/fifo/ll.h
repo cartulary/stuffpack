@@ -8,10 +8,9 @@
 LL_TEMPLATE class LinkedList
 {
 	public:
-
 		//T& operator()(const int loc);
-		T& operator[](const int loc) const;
-		T& operator()(const int loc) const;
+		T& operator[](const unsigned int loc) const;
+		T& operator()(const unsigned int loc) const;
 		//bool operator==(const Ll<T>& other) const;
 		//bool operator!=(const Ll<T>& other) const;
 

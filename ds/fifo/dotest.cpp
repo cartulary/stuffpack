@@ -121,6 +121,17 @@ void test_ll_operators(void)
 	//The [] operator assumes we are sane so don't bother testing undefuned values
 	CU_ASSERT_EQUAL(myll[0],4);
 	CU_ASSERT_EQUAL(myll[1],12);
+	//Test both sane and insane values
+	CU_ASSERT_EQUAL(myll(0),4);
+	CU_ASSERT_EQUAL(myll(1),12);
+	bool did_catch_outofbounds_exception = false;
+	try {
+		CU_ASSERT_EQUAL(myll(myll.getNumNodes()+1),4);
+	}
+	catch (OutOfBoundsException e){
+		did_catch_outofbounds_exception = true;
+	}
+	CU_ASSERT_TRUE(did_catch_outofbounds_exception);
 }
 
 

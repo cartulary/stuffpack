@@ -27,7 +27,7 @@ LL_TEMPLATE LinkedList<T>::~LinkedList()
  * This function assumes you are sane. Therefore it performs NO sanity testing on the value you provide to it
  * Use operator() to get sanity testing
  */
-LL_TEMPLATE T& LinkedList<T>::operator[](const int loc) const
+LL_TEMPLATE T& LinkedList<T>::operator[](const unsigned int loc) const
 {
 	Node<T>* current=head;
 	int count = loc;
@@ -36,6 +36,19 @@ LL_TEMPLATE T& LinkedList<T>::operator[](const int loc) const
 		current=current->next;
 	}
 	return current->data;
+}
+
+/*
+ * This function assumes you are sane. Therefore it performs NO sanity testing on the value you provide to it
+ * Use operator() to get sanity testing
+ */
+LL_TEMPLATE T& LinkedList<T>::operator()(const unsigned int loc) const
+{
+	if (loc > numnodes)
+	{
+		throw OutOfBoundsException();
+	}
+	return (*this)[loc];
 }
 
 LL_TEMPLATE void LinkedList<T>::push(const T data)
