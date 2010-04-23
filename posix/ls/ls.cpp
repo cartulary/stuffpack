@@ -71,6 +71,7 @@ optFileMap getFileMap(bf::directory_iterator dir_itr);
 void printFile(fileMap data);
 void opArg(const char* arg);
 string permStringFromStatMode(mode_t mode);
+char* get_link_location (const char *filename);
 
 int main(int argc, char *argv[])
 {
@@ -217,6 +218,12 @@ optFileMap getFileMap(bf::directory_iterator dir_itr)
 		errx(1,"bad lexical cast");
 	}
 	result["filename"] = file_name;
+	/* change to boost status??? */
+	result["linkloc"] ="___no___";
+	if (buf.st_mode && S_IFLNK)
+	{
+		result["linkloc"] = get_link_location(file_name.c_str());
+	}
 
 	/* -F stuff */
 	result["post_symbol"]="";
@@ -304,7 +311,7 @@ std::string permStringFromStatMode(mode_t mode)
 {
 	std::string result;
 	result.resize(10);
-	// set all values to "-"
+	// Use a bodyless for loop to set all members to "-"
 	for (int i=0; i<10; result[i++]='-');
 
 	/* As per man page the third item of each "set" gets treated differently */
@@ -406,5 +413,23 @@ void printFile(fileMap data)
 		std::cout << ' ' << data["size"] << ' ';
 	}
 	std::cout << data["filename"] << data["post_symbol"];
+	std::cout << "->" << data["linkloc"];
 	/* should this be moved to the "meta-printer" as each file should not know how it will be printed? ? ? ?*/
+}
+
+char* get_link_location (const char* filename)
+{
+	int size = 255;
+	while (1) {
+		char *buffer = new char[size];
+		int nchars = readlink (filename, buffer, size);
+		if (nchars < 0)
+			return NULL;
+		if (nchars < size) {
+			buffer[nchars] = '\0';
+			return buffer;
+		}
+		delete[] buffer;
+		size *= 2;
+	}
 }
