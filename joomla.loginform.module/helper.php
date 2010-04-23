@@ -4,7 +4,7 @@
 		function getForm($params)
 		{
 			return <<<END
-<form action="../tmp/foo.php" method="post" id="cross-login">
+<form action="{$params->get('formaction','')}" method="post" id="cross-login">
 <label for="username">Username</label>
 <input type="text" name="username" id="username" size="15" value="admin" />
 <label for="password">Password</label>

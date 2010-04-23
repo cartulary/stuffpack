@@ -13,6 +13,8 @@
         <filename>tmpl/index.html</filename>
     </files>
     <params>
+		<param name="formname" type="text" label="Form Action" description="What should the form link to?" size="20">
+		<param name="formtitle" type="text" label="Title" description="" size="20">
     </params>
 </install>
 
