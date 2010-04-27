@@ -40,10 +40,15 @@ then
 	:>$optdir/socket_name;
 fi
 
-if [ -e "$current_sock" ]
+if [ -n "$current_sock" ]
 then
-	Xdialog --icon ~/bin/icons/warning.xpm --infobox "VLC already running...." 0 0 2000;
-	return 1;
+	if [ -e "$current_sock" ]
+	then
+		Xdialog --icon ~/bin/icons/warning.xpm --infobox "VLC already running...." 0 0 2000;
+		return 1;
+	else
+		Xdialog --icon ~/bin/icons/warning.xpm --infobox "Last VLC proccess failed to clean up...." 0 0 2000;
+	fi
 fi
 TMPFILE=$(mktemp $optdir/sockets/XXXXXX);
 #we can't operate if the file exists....
