@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 cmd_to_tell="";
 x_mode="";
-optdir="/home/eitan/.vlc_extra";
+optdir="~/.vlc_extra";
 . "$optdir/socket_name";
 while getopts c:o:x option
 	do case "$option" in
