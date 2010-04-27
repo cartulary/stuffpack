@@ -5,7 +5,8 @@ title=$(vlc.do -c get_title);
 oldtitle=$title;
 
 optdir="/home/eitan/.vlc_extra";
-current_sock="$(cat $optdir/socket_name)";
+. "$optdir/socket_name";
+echo operating on $current_sock;
 
 while [ -e $current_sock ]
 do

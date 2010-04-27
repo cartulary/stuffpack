@@ -28,7 +28,7 @@ fi
 
 [ -n "$cleanup" ] && echo "Yeah!";
 base="$(basename $0)";
-current_sock="$(cat $optdir/socket_name)";
+. "$optdir/socket_name";
 if [ -n "$cleanup" ]
 then
 	# exit program if currently running
@@ -48,7 +48,7 @@ TMPFILE=$(mktemp $optdir/sockets/XXXXXX);
 #we can't operate if the file exists....
 rm "$TMPFILE";
 echo $TMPFILE;
-echo "$TMPFILE">$optdir/socket_name;
+echo "current_sock=\"$TMPFILE\"">$optdir/socket_name;
 # -L == loop; -d == deamon;
 vlc_opts="--rc-unix "$TMPFILE" --rc-fake-tty -L --no-media-library -d --volume 1024";
 if [ -n "$ncurse" ]
