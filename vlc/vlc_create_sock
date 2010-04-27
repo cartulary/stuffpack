@@ -3,6 +3,7 @@
 install_me()
 {
 	whomedir="$1";
+	chmod 700 "$whomedir":
 	mkdir "$whomedir";
 	touch "$whomedir/socket_name";
 	mkdir "$whomedir/sockets";
