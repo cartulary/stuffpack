@@ -2,7 +2,7 @@
 cmd_to_tell="";
 x_mode="";
 optdir="/home/eitan/.vlc_extra";
-socket="$(cat $optdir/socket_name)";
+. "$optdir/socket_name";
 while getopts c:o:x option
 	do case "$option" in
 	'c') cmd_to_tell="$OPTARG";;
@@ -24,9 +24,9 @@ then
 fi
 ## if no opts give entire line not just cmd_to_tell
 
-if [ -e "$socket" ]
+if [ -e "$current_sock" ]
 then
-	echo "$cmd_to_tell"|nc -U $socket
+	echo "$cmd_to_tell"|nc -U $current_sock
 	if [ -n "$x_mode" ]
 	then
 		Xdialog --title "VLC Remote control" --backtitle "I told vlc to " --no-buttons --icon ~/bin/icons/media-cdrom.xpm --infobox "$cmd_to_tell" 0 0 3000
