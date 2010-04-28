@@ -1,8 +1,7 @@
 #!/usr/bin/env sh
 cmd_to_tell="";
 x_mode="";
-optdir="~/.vlc_extra";
-. "$optdir/socket_name";
+. vlc.getsock.sh
 while getopts c:o:x option
 	do case "$option" in
 	'c') cmd_to_tell="$OPTARG";;
@@ -24,7 +23,7 @@ then
 fi
 ## if no opts give entire line not just cmd_to_tell
 
-if [ -e "$current_sock" ]
+if [ isrunning ]
 then
 	echo "$cmd_to_tell"|nc -U $current_sock
 	if [ -n "$x_mode" ]
