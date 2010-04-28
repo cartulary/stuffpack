@@ -29,7 +29,7 @@ fi
 
 [ -n "$cleanup" ] && echo "Yeah!";
 base="$(basename $0)";
-. "$optdir/socket_name";
+. vlc.getsock.sh
 if [ -n "$cleanup" ]
 then
 	# exit program if currently running
@@ -42,7 +42,7 @@ fi
 
 if [ -n "$current_sock" ]
 then
-	if [ -e "$current_sock" ]
+	if [ isrunning ]
 	then
 		Xdialog --icon ~/bin/icons/warning.xpm --infobox "VLC already running...." 0 0 2000;
 		return 1;

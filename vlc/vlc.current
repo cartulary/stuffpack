@@ -4,11 +4,9 @@ time=$(vlc.do -c get_time);
 title=$(vlc.do -c get_title);
 oldtitle=$title;
 
-optdir="/home/eitan/.vlc_extra";
-. "$optdir/socket_name";
-echo operating on $current_sock;
+. vlc.getsock.sh
 
-while [ -e $current_sock ]
+while [ isrunning ]
 do
 	title=$(vlc.do -c get_title);
 	oldtitle=$title;
