@@ -56,15 +56,22 @@ INCLUDE_FILES = -I/usr/local/include
 CFLAGS += -isystem /usr/local/include
 LDFLAGS = -L/usr/local/lib
 
-.ifdef $(COMPILER) == clang && $(LANG) == c
+.ifdef $(COMPILER) == clang
 CC = clang
-CFLAGS = -std=c99 -pedantic -pedantic-errors $(INCLUDE_FILES)
-CFLAGS += -Wall -Wextra -Wunused
+CFLAGS = -Wall -Wextra -Wunused
+CFLAGS += -I/usr/local/include
+.if $(LANG) == c
+CFLAGS += -std=c99 -pedantic -pedantic-errors $(INCLUDE_FILES)
 CFLAGS += -Wextra-tokens -Wformat -Wcomment -Wendif-labels
 LDFLAGS = -L/usr/local/lib
+.else
+CFLAGS += -std=c++98
+LDFLAGS = -L/usr/local/lib
 .endif
-.ifdef $(COMPILER) == clang && $(LANG) != c
-.error clang can't be used with non C sources
+.endif
+
+.ifdef $(COMPILER) == clang && $(LANG) == java
+.error clang can't be used for Java
 .endif
 
 .ifdef $(LANG) == java
@@ -150,6 +157,7 @@ objclean: .NOTMAIN .USE .EXEC .IGNORE .PHONY
 	rm -fv ./*.o
 javaclean: .NOTMAIN .USE .EXEC .IGNORE .PHONY
 	rm -fv ./*.class 
+remake: clean all
 
 .if ! target(clean)
 .ifdef $(LANG) != java
