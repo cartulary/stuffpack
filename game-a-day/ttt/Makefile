@@ -5,7 +5,14 @@ LANG=java
 #compiling options
 .PHONY:	clean
 
-$(NAME): $(NAME).java
+CFLAGS +=  -cp ttt/ -d ttt/
+$(NAME): Piece TttBoard $(NAME).java
+	export CLASSPATH=".;ttt/"
 	$(CC) $(CFLAGS) $(SRCFILE)
+TttBoard: TttBoard.java Piece
+	$(CC) $(CFLAGS) TttBoard.java
+Piece: Piece.java
+	$(CC) $(CFLAGS) Piece.java
+
 
 clean: javaclean

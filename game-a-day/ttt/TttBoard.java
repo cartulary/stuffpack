@@ -1,3 +1,4 @@
+package ttt;
 public class TttBoard {
 	// ROWS FIRST /COLUMNS SECOND
 	private Piece[][] board;
