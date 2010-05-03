@@ -1,4 +1,6 @@
-import static java.lang.System.out; import java.io.IOException; import java.util.*;
+import static java.lang.System.out;
+import java.io.IOException;
+import java.util.*;
 
 class hangman {
   public static void main(String[] args) {

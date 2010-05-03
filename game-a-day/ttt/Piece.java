@@ -1,3 +1,4 @@
+package ttt;
 public enum Piece {
-	X, O, NONE	
+	X, O, NONE
 }
