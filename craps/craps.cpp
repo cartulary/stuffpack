@@ -102,7 +102,7 @@ int main (int argc, char* argv[])
 	int didWin = win(""); // we start at -1 so don't worry about incrementing counter
 	int didLose = lose("");
 	std::cout << "Win:" <<didWin<< " " << "Lose: " << didLose << std::endl;
-	double chance = (double)didWin/(didWin+didLose);
+	double chance = static_cast<double>(didWin)/(didWin+didLose);
 	double realChance, realDisadvantage;
 	switch(shooterMain)
 	{
