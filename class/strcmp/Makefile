@@ -2,9 +2,6 @@ NAME=strcmp
 LANG=c++
 .include	<../../Makefile>
 
-#compiling options
-.PHONY:	clean
-
 all: ptrcmp strcmp
 
 $(NAME):
