@@ -57,21 +57,14 @@ CFLAGS += -isystem /usr/local/include
 LDFLAGS = -L/usr/local/lib
 
 .ifdef $(COMPILER) == clang
-CC = clang
-CFLAGS = -Wall -Wextra -Wunused
-CFLAGS += -I/usr/local/include
 .if $(LANG) == c
-CFLAGS += -std=c99 -pedantic -pedantic-errors $(INCLUDE_FILES)
-CFLAGS += -Wextra-tokens -Wformat -Wcomment -Wendif-labels
-LDFLAGS = -L/usr/local/lib
+CC = clang
+CFLAGS += -Wextra-tokens
+.elifdef $(LANG) == c++
+CC = clang++
 .else
-CFLAGS += -std=c++98
-LDFLAGS = -L/usr/local/lib
+.error clang be used for $(LANG)
 .endif
-.endif
-
-.ifdef $(COMPILER) == clang && $(LANG) == java
-.error clang can't be used for Java
 .endif
 
 .ifdef $(LANG) == java
@@ -79,7 +72,6 @@ CC = javac
 CFLAGS=-deprecation -Xlint
 SRCFILE=$(NAME).java
 .endif
-
 
 WANT_LIBS=
 
