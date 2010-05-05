@@ -18,8 +18,9 @@ USE_OPENMP?=no
 USE_PTHREAD?=no
 USE_GFILT?=no
 
-CFLAGS = -g3 -pipe
+CFLAGS = -pipe
 .ifdef $(DEBUG) == on
+CFLAGS += -g3
 .else
 CFLAGS += -O3
 .endif
@@ -154,8 +155,15 @@ remake: clean all
 .if ! target(clean)
 .ifdef $(LANG) != java
 clean: .NOTMAIN .PHONY .IGNORE nameclean coreclean objclean
+.else
+clean: .NOTMAIN .PHONY .IGNORE nameclean javaclean
 .endif
 .endif
+
+.if ! target($(NAME))
+$(NAME):
+.endif
+
 .if ! target(all)
 all: $(NAME)
 .endif
