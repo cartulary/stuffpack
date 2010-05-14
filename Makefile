@@ -150,7 +150,7 @@ objclean: .NOTMAIN .USE .EXEC .IGNORE .PHONY
 	rm -fv ./*.o
 javaclean: .NOTMAIN .USE .EXEC .IGNORE .PHONY
 	rm -fv ./*.class 
-remake: clean all
+remake: .NOTMAIN .USE .EXEC .IGNORE .PHONY clean all
 
 .if ! target(clean)
 .ifdef $(LANG) != java
