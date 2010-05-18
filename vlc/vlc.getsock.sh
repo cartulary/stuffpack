@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 optdir="/home/eitan/.vlc_extra";
 . "$optdir/socket_name";
-echo current socket is $current_sock;
+#echo current socket is $current_sock;
 
 isrunning()
 {

@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env -S sh
 length=$(vlc.do -c get_length);
 time=$(vlc.do -c get_time);
 title=$(vlc.do -c get_title);
@@ -9,7 +9,9 @@ oldtitle=$title;
 while [ isrunning ]
 do
 	title=$(vlc.do -c get_title);
+	echo "new$title";
 	oldtitle=$title;
+	echo "old$oldtitle";
 	length=$(vlc.do -c get_length);
 	(
 		while [ $time -lt $length ]
@@ -22,5 +24,5 @@ do
 			time=$(vlc.do -c get_time);
 			echo $time;
 		done
-	) | Xdialog --auto-placement --title "VLC - current status" --icon ~/.icewm/icons/media-cdrom.xpm --progress "$title" 0 0 $length;
+	) | Xdialog --auto-placement --title "$title" --icon ~/.icewm/icons/media-cdrom.xpm --progress "$title" 0 0 $length;
 done
