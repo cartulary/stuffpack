@@ -32,12 +32,15 @@ base="$(basename $0)";
 . vlc.getsock.sh
 if [ -n "$cleanup" ]
 then
+	echo "cleaning up old sockets....";
 	# exit program if currently running
 	vlc.do -c quit;
 	# remove the socket file (not deleted before if program not running)
 	rm $current_sock;
 	# empty the current socket file...
-	:>$optdir/socket_name;
+	:>"$optdir/socket_name";
+	#reset the current socket 
+	. vlc.getsock.sh
 fi
 
 if [ -n "$current_sock" ]
