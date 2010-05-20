@@ -13,7 +13,7 @@ vecho()
 {
 	if [ -n "$verbose" ]
 	then
-		echo "$*";
+		echo $@;
 	fi
 }
 
