@@ -9,15 +9,25 @@ install_me()
 	mkdir "$whomedir/sockets";
 }
 
+vecho()
+{
+	if [ -n "$verbose" ]
+	then
+		echo "$*";
+	fi
+}
+
 cleanup="";
 ncurse="";
 optdir=~/.vlc_extra;
-while getopts co:n opt
+verbose="";
+while getopts co:nv opt
 do
 	case "$opt" in
 		'c') cleanup="YES";;
 		'n') ncurse="YES";;
 		'o') optdir="$OPTARG";;
+		'v') verbose="YES";;
 		'?') exit 1;;
 	esac
 done
@@ -27,12 +37,12 @@ then
 	install_me "$optdir";
 fi
 
-[ -n "$cleanup" ] && echo "Yeah!";
+[ -n "$cleanup" ] && vecho "Yeah!";
 base="$(basename $0)";
 . vlc.getsock.sh
 if [ -n "$cleanup" ]
 then
-	echo "cleaning up old sockets....";
+	vecho "cleaning up old sockets....";
 	# exit program if currently running
 	vlc.do -c quit;
 	# remove the socket file (not deleted before if program not running)
@@ -45,6 +55,7 @@ fi
 
 if [ -n "$current_sock" ]
 then
+	vecho checking to see if program is already running...;
 	if [ isrunning ]
 	then
 		Xdialog --icon ~/bin/icons/warning.xpm --infobox "VLC already running...." 0 0 2000;
@@ -56,8 +67,8 @@ fi
 TMPFILE=$(mktemp $optdir/sockets/XXXXXX);
 #we can't operate if the file exists....
 rm "$TMPFILE";
-echo $TMPFILE;
-echo "current_sock=\"$TMPFILE\"">$optdir/socket_name;
+vecho $TMPFILE;
+vecho "current_sock=\"$TMPFILE\"">$optdir/socket_name;
 # -L == loop; -d == deamon;
 vlc_opts="--rc-unix "$TMPFILE" --rc-fake-tty -L --no-media-library -d --volume 1024";
 if [ -n "$ncurse" ]
