@@ -68,7 +68,7 @@ TMPFILE=$(mktemp $optdir/sockets/XXXXXX);
 #we can't operate if the file exists....
 rm "$TMPFILE";
 vecho $TMPFILE;
-vecho "current_sock=\"$TMPFILE\"">$optdir/socket_name;
+echo "current_sock=\"$TMPFILE\"">$optdir/socket_name;
 # -L == loop; -d == deamon;
 vlc_opts="--rc-unix "$TMPFILE" --rc-fake-tty -L --no-media-library -d --volume 1024";
 if [ -n "$ncurse" ]
