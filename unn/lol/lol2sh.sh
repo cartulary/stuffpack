@@ -1,8 +1,8 @@
-#!/usr/local/bin/bash
+#!/usr/bin/env bash
 #< Basic LOLCODE to BASH converter - see http://lolcode.com ;-)
 
 AWK="/usr/bin/awk"
-BASH="/usr/local/bin/bash"
+BASH=$(which bash)
 CHMOD="/bin/chmod"
 ECHO="/bin/echo"
 GREP="/usr/bin/grep"
