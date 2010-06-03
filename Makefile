@@ -17,6 +17,8 @@ USE_FLTK?=no
 USE_OPENMP?=no
 USE_PTHREAD?=no
 USE_GFILT?=no
+NEED_RTTI?=no
+NEED_THREADSAFE?=no
 
 CFLAGS = -pipe
 .ifdef $(DEBUG) == on
@@ -28,29 +30,37 @@ CFLAGS += -O3
 .ifdef $(LANG) == c++
 #we are using c++ add the flags that only work for c++
 CC = llvm-g++
-CFLAGS += -ansi -Wabi
+CFLAGS += -std=c++0x -Wabi
 CFLAGS += -Weffc++
 CFLAGS += -fno-gnu-keywords
 CFLAGS += -Wstrict-null-sentinel -Wctor-dtor-privacy -Wnon-virtual-dtor -Woverloaded-virtual -Wsign-promo -Wold-style-cast
-CFLAGS += -ffor-scope -fuse-cxa-atexit
+#max template depth that could be relied on is 17
+CFLAGS += -ffor-scope -fuse-cxa-atexit -ftemplate-depth-17 -fuse-cxa-atexit
 .elif $(LANG) == c
 CC = llvm-gcc
 CFLAGS += -combine
 CFLAGS += -std=c99 
 CFLAGS += -Wimplicit-function-declaration -Wbad-function-cast -Wdeclaration-after-statement
-CFLAGS += -Wstrict-prototypes -Wold-style-definition -Wmissing-prototypes -Wmissing-declarations -Wnested-externs
+CFLAGS += -Wstrict-prototypes -Wold-style-definition -Wmissing-prototypes
+CFLAGS += -Wmissing-declarations -Wnested-externs
 .endif
 
 # set the global flags
 CFLAGS += -Wall -Wextra -pedantic
-CFLAGS += -Wformat=2 -Wstrict-aliasing=2
+#change the "4" to a lower level - maybe?
+CFLAGS += -Wformat=2 -Wstrict-aliasing=2 -Wstrict-overflow=4
 CFLAGS += -Wunused -Wunused-parameter -Wswitch-default -Wswitch-enum 
 CFLAGS += -Winit-self -Wmissing-include-dirs -Wpointer-arith -Wconversion
 CFLAGS += -Wfloat-equal -Wundef -Wshadow -Wcast-qual -Wcast-align -Wwrite-strings
 CFLAGS += -fabi-version=0 -funswitch-loops  #-fprefetch-loop-arrays #-funroll-loops 
 CFLAGS += -Winline -Wmissing-noreturn -Wpacked -Wpadded -Wredundant-decls
-CFLAGS += -Wno-write-strings
+CFLAGS += -Wno-write-strings -Waggregate-return -Winvalid-pch -Wlong-long
+CFLAGS += -Wvariadic-macros -Wstack-protector -Wvolatile-register-var
+CFLAGS += -Wmissing-format-attribute
 #CFLAGS += -Wlogical-op -Wnormalized=nfc
+CFLAGS += -Wimport -Wunused-macros
+
+#-Wunreachable-code is disabled for way too many false postives
 
 INCLUDE_FILES = -I/usr/local/include
 # Default includes...
@@ -134,6 +144,14 @@ CC=gfilt
 
 .ifdef $(USE_OPENMP) == yes && $(COMPILER) == llvm
 CFLAGS += -fopenmp
+.endif
+
+.ifdef $(NEED_RTTI) != yes
+CFLAGS += -fno-rtti
+.endif
+
+.ifdef $(NEED_THREADSAFE) != yes
+CFLAGS += -fno-threadsafe-statics
 .endif
 
 .for LIB in $(WANT_LIBS)
