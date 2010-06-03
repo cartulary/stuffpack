@@ -1,4 +1,4 @@
-#!/usr/local/bin/ruby
+#!/usr/bin/env ruby
 debug = false
 files = []
 /* loop through ARGV and add files to array;*/
