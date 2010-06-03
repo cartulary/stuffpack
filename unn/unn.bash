@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash
+#!/usr/bin/env bash
 debug=false;
 declare -a files;
 while [ $# -gt 0 ];
