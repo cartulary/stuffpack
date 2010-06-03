@@ -1,31 +1,32 @@
-#!/usr/local/bin/perl
-$debug = false;
-@files = ();
-foreach $argnum (0 .. $#ARGV)
+#!/usr/bin/env perl
+use strict;
+use warnings;
+my $debug = 0;
+my @files = ();
+foreach (@ARGV)
 {
-	if ($ARGV[$argnum] == '-debug')
+	if ($_ eq '-debug')
 	{
-		$debug = true;
+		$debug = 1;
 	}
 	else
 	{
-		@files = (@files,$ARGV[$argnum]);
+		@files = (@files,$_);
 	}
 }
 
-foreach $argnum (0 .. @files -1)
+foreach (@files)
 {
-	$file = @files[$argnum];
-	if ( -e $file )
+	if ( -e $_ )
 	{
-		print STDERR "fatal error: $file exists\n"
+		print STDERR "fatal error: $_ exists\n"
 	}
 	else
 	{
 		if ($debug)
 		{
-			print "starting execution of $file ...\n";
-                  print  "we are done\n";
+			print "starting execution of $_ ...\n";
+            print  "we are done\n";
 		}
 	}
 }
