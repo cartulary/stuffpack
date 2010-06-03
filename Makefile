@@ -146,11 +146,11 @@ CC=gfilt
 CFLAGS += -fopenmp
 .endif
 
-.ifdef $(NEED_RTTI) != yes
+.ifdef $(NEED_RTTI) != yes && $(LANG) != java
 CFLAGS += -fno-rtti
 .endif
 
-.ifdef $(NEED_THREADSAFE) != yes
+.ifdef $(NEED_THREADSAFE) != yes && $(LANG) != java
 CFLAGS += -fno-threadsafe-statics
 .endif
 
