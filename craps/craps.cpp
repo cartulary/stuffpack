@@ -1,17 +1,9 @@
-/**********************************************
-	 * Name:                                      *
- * Purpose: 					    *
- * Returns: 	                            *
- * Parameters: 					    *
- * Known bugs:					    *
- * compatibility:					    *
- * notes:						    *
- *********************************************/
 // http://en.wikipedia.org/wiki/Hazard_%28game%29
 #include <iostream>
 #include <time.h>
 #include <limits>
 #include <string>
+#include <cstdlib>
 int rollDice(int numRolls);
 
 int lose(std::string msg);
