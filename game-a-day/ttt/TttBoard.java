@@ -1,38 +1,59 @@
+/*
+	There is almost no error handling here in order that the users of the class learn
+	how do deal with this themselves
+*/
 package ttt;
-public class TttBoard {
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class TttBoard implements ActionListener {
+
+	/* The stuff for the window */
+	private JFrame window = new JFrame("Tic Tac Toe");
+	private JButton buttons[] = new JButton[9];
+	private Piece turn = Piece.NONE;
+	private ButtonPressed bpx;
+
 	// ROWS FIRST /COLUMNS SECOND
-	private Piece[][] board;
-	public TttBoard()
+	public TttBoard(ButtonPressed bp)
 	{
-		board = new Piece[3][3];
-		for (Piece i[] : board)
+		bpx = bp;
+		Font buttonFont = new Font("Verdana", Font.BOLD, 48);
+
+		window.setSize(300,300);
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setLayout(new GridLayout(3,3));
+
+		for (JButton button: buttons)
 		{
-			for (Piece j : i)
-			{
-				j = Piece.NONE;
-			}
+			button = new JButton();
+			window.add(button);
+			button.addActionListener(this);
+			button.setFont(buttonFont);
+			button.setSize(100,100);
+			button.setText(Piece.NONE.toString());
 		}
+		window.setVisible(true);
 	}
 
-	public Piece getSpot(int row, int column)
+	public Piece getSpot(int id)
 	{
-		return board[row][column];
+		return Piece.valueOf(buttons[id].getText());
 	}
 
-	public void setSpot(int row, int column, Piece p)
+	public void actionPerformed(ActionEvent e)
 	{
-		board[row][column] = p;
+		JButton whichButton = (JButton)e.getSource();
 	}
 
-	public void printBoard()
+	public void disableButton(int i)
 	{
-		for (Piece i[] : board)
-		{
-			for (Piece j : i)
-			{
-				java.lang.System.out.print(j + " ");
-			}
-			java.lang.System.out.print("\n");
-		}
+		buttons[i].setEnabled(false);
+	}
+
+	public void setButton(int id, Piece p)
+	{
+		buttons[id].setText(p.toString());
 	}
 }
