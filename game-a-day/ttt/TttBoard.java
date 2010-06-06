@@ -1,11 +1,14 @@
-/*
+	/*
 	There is almost no error handling here in order that the users of the class learn
 	how do deal with this themselves
 */
 package ttt;
-import java.awt.*;
+//import java.awt.*;
+import java.awt.GridLayout;
+import java.awt.Font;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.*;
 
 /**
 	This class implements the graphical part of a Tic Tac Toe board.
@@ -16,10 +19,11 @@ import javax.swing.*;
 public class TttBoard implements ActionListener {
 
 	/* The stuff for the window */
+	private final int BUTTON_COUNT=9;
 	private JFrame window = new JFrame("Tic Tac Toe");
-	private JButton buttons[] = new JButton[9];
+	private List<JButton> buttons = new ArrayList<JButton>(BUTTON_COUNT);
 	private Piece turn = Piece.NONE;
-	public ButtonPressed bpx;
+	private ButtonPressed bpx;
 
 	// ROWS FIRST /COLUMNS SECOND
 	/**
@@ -28,20 +32,22 @@ public class TttBoard implements ActionListener {
 	*/
 	public TttBoard(ButtonPressed bp)
 	{
+		bpx = bp;
 		Font buttonFont = new Font("Verdana", Font.BOLD, 48);
 
 		window.setSize(300,300);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setLayout(new GridLayout(3,3));
 
-		for (JButton button: buttons)
+		for (int i=0; i < BUTTON_COUNT; ++i)
 		{
-			button = new JButton();
-			window.add(button);
-			button.addActionListener(this);
-			button.setFont(buttonFont);
-			button.setSize(100,100);
-			button.setText(Piece.NONE.toString());
+			JButton tmpButton = new JButton();
+			tmpButton.addActionListener(this);
+			tmpButton.setFont(buttonFont);
+			tmpButton.setSize(100,100);
+			tmpButton.setText(Piece.NONE.toString());
+			window.add(tmpButton);
+			buttons.add(tmpButton);
 		}
 		window.setVisible(true);
 	}
@@ -51,7 +57,7 @@ public class TttBoard implements ActionListener {
 	*/
 	public Piece getSpot(int id)
 	{
-		return Piece.valueOf(buttons[id].getText());
+		return Piece.valueOf(buttons.get(id).getText());
 	}
 
 	/**
@@ -61,31 +67,33 @@ public class TttBoard implements ActionListener {
 	public void actionPerformed(ActionEvent e)
 	{
 		JButton whichButton = (JButton)e.getSource();
-//		bpx.didPress(1);
+		for (int i=0; i < BUTTON_COUNT; ++i)
+		{
+			if (buttons.get(i) == whichButton)
+			{
+				bpx.didPress(i);
+			}
+		}
+		//ERROR!!!
 	}
 
 	/**
 		Disable a particular button
-		@param i which button to disable
+		@param id which button to disable
 	*/
 
-	public void disableButton(int i)
+	public void disableButton(int id)
 	{
-		buttons[i].setEnabled(false);
+		buttons.get(id).setEnabled(false);
 	}
 
 	/**
 		set a button to a particular piece
 		@param id which button to set
-		@param p what to set it to 
+		@param p what to set it to
 	*/
 	public void setButton(int id, Piece p)
 	{
-		buttons[id].setText(p.toString());
-	}
-
-	public void start()
-	{
-		window.setVisible(true);
+		buttons.get(id).setText(p.toString());
 	}
 }
