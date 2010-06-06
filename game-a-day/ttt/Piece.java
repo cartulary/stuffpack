@@ -1,6 +1,6 @@
 package ttt;
 /**
-	Has pieces for java components
+	Has pieces for tic-tac-toe components
 
 	@author Eitan Adler
 	@version 1
