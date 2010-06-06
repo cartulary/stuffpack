@@ -8,11 +8,9 @@ public class Game implements ButtonPressed {
 	public TttBoard myboard;
   public Game() {
 		myboard = new TttBoard(this);
-		myboard.bpx = this;
-		myboard.start();
 		AskAgain asker = new AskAgain();
 //		myboard.disableButton(1);
-		while (asker.ask())
+//		while (asker.ask())
 		{}
 	}
 
@@ -20,5 +18,10 @@ public class Game implements ButtonPressed {
 	{
 		System.out.println(id);
 		myboard.setButton(id, Piece.X);
+		if (id==3)
+		{
+			myboard.setButton(id,Piece.O);
+		}
+		myboard.disableButton(id);
 	}
 }
