@@ -1,20 +1,20 @@
 NAME=Ttt
 LANG=java
-.include    "../../Makefile"
+.include "../../Makefile"
 
 BuildLoc=java-obj
 PackageName=ttt
 ClassLoc=$(BuildLoc)/$(PackageName)
 
-CFLAGS +=  -cp $(BuildLoc)/ -d $(BuildLoc)/
+CFLAGS += -cp $(BuildLoc)/ -d $(BuildLoc)/
 
 .MAIN: $(NAME).jar
 $(NAME).jar: $(ClassLoc)/Ttt.class
 	cd $(BuildLoc) && \
 	jar vefc $(PackageName).$(NAME) ../$(NAME).jar $(PackageName)/*.class
 
-$(ClassLoc)/Ttt.class: $(ClassLoc)/Game.class
-	$(CC) $(CFLAGS) $(SRCFILE)
+$(ClassLoc)/Ttt.class: Ttt.java $(ClassLoc)/Game.class
+	$(CC) $(CFLAGS) Ttt.java
 
 $(ClassLoc)/Game.class: $(ClassLoc)/TttBoard.class $(ClassLoc)/ButtonPressed.class Game.java $(ClassLoc)/AskAgain.class
 	$(CC) $(CFLAGS) Game.java
