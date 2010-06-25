@@ -15,7 +15,8 @@ public:
 	Board();
 	void setSpot(const int id, const Piece p);
 	Piece getSpot(const int id) const;
-	void disableSpit(const int id);
+	void disableSpot(const int id);
+	void enableSpot(const int id);
 };
 
 }
