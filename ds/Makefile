@@ -2,6 +2,7 @@ NAME=ds
 USE_CUNIT=yes
 USE_NCURSES=yes
 USE_GFILT=yes
+LANG=c++
 .include <../Makefile>
 
 #-depth is an extension - perhaps use -mindepth and -maxdepth instead?
