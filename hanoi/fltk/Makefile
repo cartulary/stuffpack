@@ -1,6 +1,7 @@
 DIST = fltk
 DISTPATH = fltk
 USE_FLTK=yes
+LANG=c++
 .include    <../Makefile.inc>
 
 main: inputWindow.cpp ../hanoi.cpp main.cpp
