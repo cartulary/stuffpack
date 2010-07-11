@@ -179,9 +179,10 @@
 				displayUser($username);
 				break;
 			case 'force-pw-change':
-				$user = $gdata->retrieveUser($username);
+				$user = $service->retrieveUser($username);
 				$user->login->changePasswordAtNextLogin = true;
 				$user = $user->save();
+				break;
 			case 'change-name':
 				if ($verbose)
 				{
@@ -198,7 +199,11 @@
 					displayUser($username);
 				}
 				break;
-
+			case 'change-password':
+				$user = $service->retrieveUser($username);
+				$user->login->password = $givepass;
+				$user = $user->save();
+				break;
 				
 		}			
 		echo 	"This appears to have worked...\n";
