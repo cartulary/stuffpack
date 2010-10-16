@@ -8,7 +8,7 @@ import xchat
 import urllib
 
 print "\0034",__module_name__, __module_version__,"loading...\003"
-def letmeduckeit(word, word_eol, userdata):
+def letmeduckit(word, word_eol, userdata):
 	if len(word) < 2:
 		print ("Choose something to ddg for");
 		return;
