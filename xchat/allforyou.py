@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+# Written by Eitan Adler (eitan@eitanadler.com)
+# Licensed under the 2-Clause BSD license
+
 __module_name__ = "let me search that for you (/lmgi /ddg /bing /jgi /sbit)"
 __module_version__ = "1.2"
 __module_description__ = "Operates search engines for you"
