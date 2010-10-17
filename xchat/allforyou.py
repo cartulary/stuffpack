@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 
 __module_name__ = "let me search that for you (/lmgi /ddg /bing /jgi /sbit)"
-__module_version__ = "1.0"
+__module_version__ = "1.2"
 __module_description__ = "Operates search engines for you"
 
 import xchat
 import string
 import urllib
+
+#Its weird to need a new function for each site
+#instead of using constants I should make a map btwn command, url, and function
 
 
 #Url Shortners
@@ -57,8 +60,11 @@ def letmesbit(word, word_eol, userdata):
 def justGoogleIt(word, word_eol, userdata):
 	doWork(word, JUST_GOOGLE_FOR_YOU)
 
-xchat.hook_command('lmgi', letmegoogleit, HELP_TEXT.replace("[site]","lmgi"))
-xchat.hook_command('ddg', letmeddgit, HELP_TEXT.replace("[site]","ddg"))
-xchat.hook_command('bing', letmebingit, HELP_TEXT.replace("[site]","bing"))
-xchat.hook_command('sbit', letmesbit, HELP_TEXT.replace("[site]","sbit"))
-xchat.hook_command('jgi', justGoogleIt, HELP_TEXT.replace("[site]","jgi"))
+d = {"lmgi": letmegoogleit,	
+	"ddg": letmeddgit,
+	"bing": letmebingit,
+	"sbit": letmesbit,
+	"jgi": justGoogleIt}
+
+for command,function in d.items():
+	xchat.hook_command(command, function, HELP_TEXT.replace("[site]",command))
