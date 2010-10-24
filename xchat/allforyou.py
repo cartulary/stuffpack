@@ -24,6 +24,8 @@ DDG_FOR_YOU="http://lmddgtfy.com/?q=[term]"
 BING_FOR_YOU="http://www.letmebingthatforyou.com/?q=[term]"
 SEARCHBAR_FOR_YOU="http://lmsbtfy.com/?q=[term]"
 JUST_GOOGLE_FOR_YOU="http://www.justfuckinggoogleit.com/search.pl?query=[term]"
+JFGIT_URL="http://www.jfgit.com/[term]"
+JFGIT_CLEAN_URL="http://www.jfgit.com/clean/[term]"
 
 #other constants
 HELP_TEXT = "pick your search terms and type /[site] terms"
@@ -41,7 +43,7 @@ def doWork(word, searchEngine):
 		return;
 	wordStr = "+".join(word[1:])
 	wordStr = string.strip(wordStr)
-	print "serching for "+wordStr
+	print "searching for "+wordStr
 	tinyUrl=getTinyUrl(searchEngine,wordStr,TINYURL_API_URL)
 	endUrl = urllib.urlopen(tinyUrl).read()
 	print endUrl
@@ -63,11 +65,20 @@ def letmesbit(word, word_eol, userdata):
 def justGoogleIt(word, word_eol, userdata):
 	doWork(word, JUST_GOOGLE_FOR_YOU)
 
+def jfgit(word, word_eol, userdata):
+	doWork(word, JFGIT_URL)
+
+def jfgit_clean(word, word_eol, userdata):
+	doWork(word, JFGIT_CLEAN_URL)
+
 d = {"lmgi": letmegoogleit,	
 	"ddg": letmeddgit,
 	"bing": letmebingit,
 	"sbit": letmesbit,
-	"jgi": justGoogleIt}
+	"jgi": justGoogleIt,
+	"jfgit": jfgit,
+	"jfgitc": jfgit_clean
+	}
 
 for command,function in d.items():
 	xchat.hook_command(command, function, HELP_TEXT.replace("[site]",command))
