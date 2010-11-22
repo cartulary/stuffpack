@@ -3,8 +3,7 @@ __vcs_dir() {
 	git_dir() {
   		git rev-parse HEAD 2>/dev/null|| return 1
 
- 		ref=$(git symbolic-ref -q HEAD || git name-rev --name-only HEAD 2>/dev/null)
-		ref=${ref#refs/heads/}
+ 		ref=$(git name-rev --name-only HEAD)
 		vcs="git"
 	}
 	hg_dir() {
