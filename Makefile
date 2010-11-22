@@ -17,6 +17,7 @@ USE_FLTK?=no
 USE_OPENMP?=no
 USE_PTHREAD?=no
 USE_GFILT?=no
+USE_ALLEGRO?=no #all, +jpg
 NEED_RTTI?=no
 NEED_THREADSAFE?=no
 
@@ -26,9 +27,6 @@ CFLAGS = -pipe
 XCFLAGS = -g3
 .else
 XCFLAGS = -O3
-.ifdef $(COMPILER) == clang
-XCFLAGS = -O4
-.endif
 .endif
 
 CFLAGS += $(XCFLAGS)
@@ -36,7 +34,7 @@ CFLAGS += $(XCFLAGS)
 .ifdef $(LANG) == c++
 #we are using c++ add the flags that only work for c++
 CC = llvm-g++
-CFLAGS += -std=c++0x -Wabi
+CFLAGS += -Wabi
 CFLAGS += -Weffc++
 CFLAGS += -fno-gnu-keywords
 CFLAGS += -Wstrict-null-sentinel -Wctor-dtor-privacy -Wnon-virtual-dtor -Woverloaded-virtual -Wsign-promo -Wold-style-cast
@@ -64,9 +62,9 @@ CFLAGS += -Wmissing-declarations -Wnested-externs
 #CFLAGS += -fipa-struct-reorg -freciprocal-math
 #CFLAGS += -fassociative-math
 .ifdef $(LANG) == c++
-CC = g++46
+CC = g++
 .elif $(LANG) == c
-CC = gcc46
+CC = gcc
 .endif
 
 .endif
@@ -167,6 +165,13 @@ CFLAGS += $(EXTRA_CFLAGS)
 
 #EXTRA_LDFLAGS != fltk2-config -v --use-forms --ldflags --libs
 LDFLAGS += $(EXTRA_LDFLAGS)
+.endif
+
+.if $(USE_ALLEGRO) == yes
+WANT_LIBS= alleg alleg_unsharable
+.elif $(USE_ALLEGRO) == "+jpg"
+WANT_LIBS= alleg jpgal alleg_unsharable
+CFLAGS += -Wl,--export-dynamic
 .endif
 
 .ifdef $(USE_GFILT) == yes
