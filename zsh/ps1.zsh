@@ -25,7 +25,12 @@ __vcs_dir() {
 
 #some settings
 PS1_USER="%F{blue}%n";			#my username
-PS1_HOST="%F{blue}%m";			#hostname
+if [ -n "$SSH_TTY" ]
+then
+	PS1_HOST="%B%F{blue}%m%b"
+else
+	PS1_HOST="%F{blue}%m";			#hostname
+fi
 PS1_ERR="%F{red}%(?..!%?!)";  		#return code of last command (if it was not 0)
 PS1_WD="%F{magenta}%30<...<%~";	#current working directory limited to 30 chars
 PS1_PROMPT="%#";					#EOF
