@@ -1,17 +1,18 @@
 use="all"
+confpath=~/.conf/zsh/
 
 #Set some useful variables
 HOST="$(hostname)"
 HOST="${HOST%%.*}"
 
-source ~/.conf/env.sh
-source ~/.conf/aliases.sh
-source ~/.conf/zsh.load.zsh
-source ~/.conf/zsh.alias.zsh
-source ~/.conf/zsh.complete.zsh
-source ~/.conf/ps1.zsh
-source ~/.conf/home-end.zsh
-source ~/.conf/eval_spin.func
+source $confpath/env.sh
+source $confpath/aliases.sh
+source $confpath/zsh.load.zsh
+source $confpath/zsh.alias.zsh
+source $confpath/zsh.complete.zsh
+source $confpath/ps1.zsh
+source $confpath/home-end.zsh
+source $confpath/eval_spin.func
 
 fpath=( $fpath ~/bin/zsh-bin )
 
