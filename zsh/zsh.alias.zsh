@@ -1,5 +1,5 @@
-alias -s txt=nano
-alias -s cpp=nano
+alias -s txt=$EDITOR
+alias -s cpp=$EDITOR
 #alias -s awk=awk
 #alias -s nawk=nawk
 # cd to a file should take you to the dir that contains the file
