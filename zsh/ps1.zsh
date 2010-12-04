@@ -1,12 +1,18 @@
+__exists () {
+	which $1 >/dev/null 2>&1;
+	return $?;
+}
 __vcs_dir() {
 	local vcs ref
 	git_dir() {
-  		git rev-parse HEAD 2>/dev/null|| return 1
+		__exists git || return 1;
+  		git rev-parse HEAD 2>/dev/null || return 1;
 
  		ref=$(git name-rev --name-only HEAD)
 		vcs="git"
 	}
 	hg_dir() {
+		__exists hg || return 1;
 		hg branch 1>/dev/null 2>/dev/null || return 1;
 
 		ref="$(hg identify)";
@@ -14,6 +20,7 @@ __vcs_dir() {
 	}
 
 	svn_dir() {
+		__exists svn || return 1;
       	[ -d ".svn" ] || return 1
 
         	ref=$(svn info . | awk '/^Revision/ { sub("[^0-9]*","",$0); print $0}')
