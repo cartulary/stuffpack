@@ -12,7 +12,6 @@ fi
 alias cEterm="\Eterm -C -T 'Console Eterm' -f'red'";
 #alias nvlc="nvlc --volume 1024";
 #alias vlc="vlc_create_sock";
-alias firefox3="firefox3 -no-remote";
 alias python2="python -tt3";
 alias python="python3.1"
 alias noflash="pkill -3 -l npviewer.bin";
