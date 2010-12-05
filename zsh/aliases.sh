@@ -24,7 +24,7 @@ alias srcloc="whereis -qs";
 alias portmaster="portmaster -m'-DNO_DEPENDS'";
 alias su="su -l"
 alias pc="proxychains";
-alias shareThisDir="python3 -m http.server 8000";
+alias shareThisDir="python -m http.server 8000";
 
 alias p="pushd"
 alias b="popd"
