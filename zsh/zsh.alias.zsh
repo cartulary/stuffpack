@@ -30,7 +30,7 @@ alias cp='nocorrect cp'
 alias touch='nocorrect touch'
 alias ln='nocorrect ln'
 alias mkdir='nocorrect mkdir'
-alias firefox3="nocorrect firefox3 -no-remote";
+alias firefox="nocorrect firefox -no-remote";
 
 alias cd\?="dirs";
 alias back='cd "$OLDPWD";pwd'
