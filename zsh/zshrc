@@ -14,22 +14,8 @@ source $confpath/ps1.zsh
 source $confpath/home-end.zsh
 source $confpath/eval_spin.func
 
-fpath=( $fpath ~/bin/zsh-bin )
-
-umask 0022;
-
 #To discover what keycode is being sent, hit ^v
 #and then the key you want to test.
-
-setopt auto_pushd
-setopt pushd_ignore_dups
-setopt complete_aliases
-setopt hist_expire_dups_first
-setopt hist_reduce_blanks
-setopt hist_verify
-#unsetopt check_jobs #don't warn me when I have jobs in the background
-unsetopt hup #when the shell exits keep background jobs.
-#setopt bsd_echo # make zsh echo act like bsd echo
 
 # title/precmd/postcmd
 function precmd() {
@@ -94,23 +80,14 @@ function title() {
   setopt LOCAL_OPTIONS
 }
 
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.zsh_history
-HISTSIZE=10100
-SAVEHIST=10000
-setopt appendhistory extendedglob
-setopt autocd
-#setopt share_history
-setopt hist_verify
-setopt inc_append_history
-setopt extended_history
-setopt hist_expire_dups_first
-setopt hist_ignore_space
-setopt correct_all
+function __inSSH() {
+	parent_process_name=$(ps -o comm= -p $PPID)
+	case ${parent_process_name##*/} in
+  		sshd) return 0;;
+	esac
 
-#setopt SHARE_HISTORY
-setopt APPEND_HISTORY
-unsetopt nomatch
-bindkey -e
-# End of lines configured by zsh-newuser-install
-#cd
+	return 1;
+}
+__inSSH && __exists tmux && source $confpath/start-tmux.sh 
+
+return 0;
