@@ -34,3 +34,4 @@ alias firefox="nocorrect firefox -no-remote";
 
 alias cd\?="dirs";
 alias back='cd "$OLDPWD";pwd'
+h () { history 0 | grep "$1" }
