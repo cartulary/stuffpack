@@ -5,6 +5,9 @@ confpath=~/.conf/zsh/
 HOST="$(hostname)"
 HOST="${HOST%%.*}"
 
+source $confpath/inSSH.func
+source $confpath/exists.func
+source $confpath/set-options.zsh
 source $confpath/env.sh
 source $confpath/aliases.sh
 source $confpath/zsh.load.zsh
@@ -13,6 +16,7 @@ source $confpath/zsh.complete.zsh
 source $confpath/ps1.zsh
 source $confpath/home-end.zsh
 source $confpath/eval_spin.func
+#source $confpath/start-tmux.sh
 
 #To discover what keycode is being sent, hit ^v
 #and then the key you want to test.
@@ -80,14 +84,5 @@ function title() {
   setopt LOCAL_OPTIONS
 }
 
-function __inSSH() {
-	parent_process_name=$(ps -o comm= -p $PPID)
-	case ${parent_process_name##*/} in
-  		sshd) return 0;;
-	esac
-
-	return 1;
-}
-__inSSH && __exists tmux && source $confpath/start-tmux.sh 
 
 return 0;
