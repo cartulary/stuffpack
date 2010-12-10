@@ -2,6 +2,7 @@ __vcs_dir() {
 	local vcs ref
 	git_dir() {
 		__exists git || return 1;
+		[ -d ".git" ] || return 1;
   		git rev-parse HEAD 2>/dev/null || return 1;
 
  		ref=$(git name-rev --name-only HEAD)
@@ -9,6 +10,7 @@ __vcs_dir() {
 	}
 	hg_dir() {
 		__exists hg || return 1;
+		[ -d ".hg" ] || return 1;
 		hg branch 1>/dev/null 2>/dev/null || return 1;
 
 		ref="$(hg identify)";
