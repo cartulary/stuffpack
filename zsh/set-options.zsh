@@ -1,5 +1,5 @@
 fpath=( $fpath ~/bin/zsh-bin )
-umask 0022;
+umask 0077;
 
 #History related options
 HISTFILE=~/.zsh_history
