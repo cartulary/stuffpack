@@ -30,7 +30,7 @@ __vcs_dir() {
 
 #some settings
 PS1_USER="%F{blue}%n";			#my username
-if [ -n "$SSH_TTY" ]
+if __inSSH
 then
 	PS1_HOST="%B%F{blue}%m%b"
 else
