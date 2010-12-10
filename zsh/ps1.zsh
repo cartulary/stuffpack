@@ -1,31 +1,7 @@
 __vcs_dir() {
-	local vcs ref
-	git_dir() {
-		__exists git || return 1;
-		[ -d ".git" ] || return 1;
-  		git rev-parse HEAD 2>/dev/null || return 1;
-
- 		ref=$(git name-rev --name-only HEAD)
-		vcs="git"
-	}
-	hg_dir() {
-		__exists hg || return 1;
-		[ -d ".hg" ] || return 1;
-		hg branch 1>/dev/null 2>/dev/null || return 1;
-
-		ref="$(hg identify)";
-		vcs="hg";
-	}
-
-	svn_dir() {
-		__exists svn || return 1;
-      	[ -d ".svn" ] || return 1
-
-        	ref=$(svn info . | awk '/^Revision/ { sub("[^0-9]*","",$0); print $0}')
-        	vcs="svn"
-      }
-  	svn_dir || hg_dir || git_dir ||  echo "";
-	echo "${vcs:+[$vcs} ${vcs:+$ref]}"
+	autoload -Uz vcs_info
+	vcs_info
+	echo $vcs_info_msg_0_;
 }
 
 #some settings
