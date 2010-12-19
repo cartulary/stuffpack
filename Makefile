@@ -47,6 +47,9 @@ CFLAGS += -ffinite-math-only -ffast-math -fno-signaling-nans
 ##  can take lots of memory
 CFLAGS += -fipa-pta
 
+CFLAGS += -fgcse-sm -fgcse-las -fsee -ftree-loop-linear -ftree-loop-im -ftree-loop-ivcanon
+CFLAGS += -fdelete-null-pointer-checks -funit-at-a-time -fsection-anchors
+
 .elif $(LANG) == c
 CC = llvm-gcc
 CFLAGS += -std=c99 
