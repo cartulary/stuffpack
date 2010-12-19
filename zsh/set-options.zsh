@@ -1,4 +1,4 @@
-fpath=( $fpath ~/bin/zsh-bin )
+fpath=( $fpath ~/bin/zbin )
 umask 0077;
 
 #History related options
