@@ -10,7 +10,8 @@ export TOP="-I";
 #grep default options
 export GREP_OPTIONS="--color"
 
-export BROWSER="/usr/local/bin/firefox";
+__exists firefox && export BROWSER="/usr/local/bin/firefox";
+__exists firefox3 && export BROWSER="/usr/local/bin/firefox3";
 
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
 
