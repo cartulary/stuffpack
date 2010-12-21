@@ -23,6 +23,7 @@ alias portmaster="portmaster -m'-DNO_DEPENDS'";
 alias su="su -l"
 alias pc="proxychains";
 alias shareThisDir="python -m http.server 8000";
+alias lls="ls -lao";
 __exists firefox && alias firefox="firefox -no-remote";
 __exists firefox3 && alias firefox="firefox3 -no-remote";
 
