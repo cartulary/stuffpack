@@ -18,6 +18,8 @@ USE_OPENMP?=no
 USE_PTHREAD?=no
 USE_GFILT?=no
 USE_ALLEGRO?=no #all, +jpg
+USE_IMGMGK?=no
+BE_PEDANTIC?=yes
 NEED_RTTI?=no
 NEED_THREADSAFE?=no
 
@@ -73,7 +75,10 @@ CC = gcc
 .endif
 
 # set the global flags
-CFLAGS += -Wall -Wextra -pedantic
+CFLAGS += -Wall -Wextra
+.ifdef ${BE_PEDANTIC} == yes
+CFLAGS += -pedantic
+.endif
 #change the "4" to a lower level - maybe?
 CFLAGS += -Wformat=2 -Wstrict-aliasing=2 -Wstrict-overflow=4
 CFLAGS += -Wunused -Wunused-parameter -Wswitch-enum 
@@ -148,6 +153,15 @@ WANT_LIBS	+=	edit termcap
 
 .if $(USE_LIBMAGIC) == yes
 WANT_LIBS += magic
+.endif
+
+.ifdef $(USE_IMGMGK) == yes
+USE_PTHREAD = yes
+EXTRA_CFLAGS != Magick++-config --cppflags --cxxflags --libs
+CFLAGS += $(EXTRA_CFLAGS)
+
+EXTRA_LDFLAGS != Magick++-config  --ldflags --libs
+LDFLAGS += $(EXTRA_LDFLAGS)
 .endif
 
 .if $(USE_PTHREAD) == yes
