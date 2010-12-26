@@ -4,15 +4,16 @@
 */
 #include <stdio.h>
 #include <stdlib.h>
-#define STACKSIZE 256
 #define PROGSIZE 4096
 int main(void) {
 	int matchcount;
-	int stack[STACKSIZE] = { 0 };
+	//Start off with a small stack and grow
+	unsigned int stacksize = 25;
+	int *stack = calloc(stacksize,sizeof(int));
 	char program[PROGSIZE] = { 0 };
 	fgets(program,PROGSIZE, stdin);
-	int sp = 0;
-	int ip = 0;
+	unsigned int sp = 0;
+	unsigned int ip = 0;
 
 	while (program[ip] != 0) {
 		switch ((int)program[ip]) {
@@ -62,6 +63,14 @@ int main(void) {
 					}
 				}
 			break;
+		}
+		if (sp > stacksize) {
+			const unsigned int oldsize = stacksize;
+			stacksize *= 1.5;
+			realloc(stack, stacksize);
+			for (unsigned int i = oldsize; i < stacksize; ++i)	{
+				stack[i] = 0;
+			}
 		}
 		++ip;
 	}
