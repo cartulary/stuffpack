@@ -20,3 +20,4 @@ export CVSROOT="anoncvs@anoncvs1.FreeBSD.org:/home/ncvs";
 export XZ_OPT="-9eM 90%";
 export GZIP="-9";
 
+export TZ="EST";
