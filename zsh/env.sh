@@ -21,3 +21,4 @@ export XZ_OPT="-9eM 90%";
 export GZIP="-9";
 
 export TZ="EST";
+export CHARSET="UTF-8";
