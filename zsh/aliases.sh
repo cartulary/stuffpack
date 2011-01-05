@@ -27,8 +27,9 @@ alias lls="ls -lao";
 __exists firefox && alias firefox="firefox -no-remote";
 __exists firefox3 && alias firefox="firefox3 -no-remote";
 
-alias p="pushd"
-alias b="popd"
+alias cd="pushd";
+alias p="pushd";
+alias b="popd";
 
 __exists idprio && alias verynice="nice nice idprio 31";
 
