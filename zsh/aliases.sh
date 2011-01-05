@@ -31,3 +31,6 @@ alias p="pushd"
 alias b="popd"
 
 __exists idprio && alias verynice="nice nice idprio 31";
+
+__exists calendar && [ -f /usr/share/calendar/calendar.freebsd ] &&
+	alias bsdcal="calendar -f /usr/share/calendar/calendar.freebsd";
