@@ -12,6 +12,15 @@ function cd () {
   fi
 }
 
+function pushd () {
+	if [[ -f $1 ]]
+	then
+		builtin pushd $1:h;
+	else
+		builtin pushd $1
+	fi
+}
+
 #mkdir should cd as well
 function mcd () {
 	if [ $# -eq 1 ]
