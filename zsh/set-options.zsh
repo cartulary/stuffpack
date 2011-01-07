@@ -30,4 +30,5 @@ unsetopt hup #when the shell exits keep background jobs.
 
 bindkey -e
 
-
+#export LC_ALL="en_US.UTF-8"
+#export LANG="en_US.UTF-8"
