@@ -13,11 +13,16 @@ function cd () {
 }
 
 function pushd () {
-	if [[ -f $1 ]]
+	if [[ $# -eq 0 ]]
 	then
-		builtin pushd $1:h;
+		builtin cd;
 	else
-		builtin pushd $1
+		if [[ -f $1 ]]
+		then
+			builtin pushd $1:h;
+		else
+			builtin pushd $1;
+		fi
 	fi
 }
 
