@@ -22,3 +22,6 @@ export GZIP="-9";
 
 export TZ="EST";
 export CHARSET="UTF-8";
+
+#Yes GTK - I really do want you to listen to my config file
+export GTK_IM_MODULE="xim";
